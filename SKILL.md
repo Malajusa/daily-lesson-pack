@@ -29,6 +29,7 @@ Read the relevant planning sources:
 - `references/output-spec.md` and `print-production-preferences.md`.
 - `references/english-planning-rules.md` and `effective-printable-design.md` for English or printables.
 - `references/mathematics-planning-rules.md`, `weekly-maths-pack-patterns.md`, `year-4-5-maths-overview.json` and `wa-maths-code-map.json` for Mathematics.
+- For Term 3 Year 4/5 daily packs on Monday, Tuesday, Thursday or Friday, also read `references/term-3-four-day-overview.json` and `references/term-3-four-day-overview.md`. Use the JSON for deterministic week/day lookup and the Markdown for explanatory rules.
 
 Before constructing any teaching deck, read all of:
 
@@ -53,10 +54,11 @@ Use sources in this order:
 2. A maintained status record when it records an exception.
 3. Calendar and authoritative timetable.
 4. Active unit and assessment plan.
-5. Term/year overview and curriculum maps.
-6. Standing preferences and pedagogy.
+5. For Term 3 Monday/Tuesday/Thursday/Friday daily planning, the four-day overview day lookup.
+6. Other term/year overviews and curriculum maps.
+7. Standing preferences and pedagogy.
 
-Assume the previous scheduled lesson was covered sufficiently to advance unless an authoritative source explicitly records partial completion, cancellation or reteaching. Missing status is not evidence that a lesson was missed. Do not browse the public web to infer school dates or timetable events unless the user asks.
+Assume the previous scheduled lesson was covered sufficiently to advance unless an authoritative source explicitly records partial completion, cancellation or reteaching. Missing status is not evidence that a lesson was missed. For the Term 3 four-day overview, Monday normally follows the preceding Friday, Tuesday follows Monday, Thursday follows Tuesday and Friday follows Thursday. Wednesday remains a valid Daily Lesson Pack day from the authoritative timetable, but it is outside the four-day overview unless the user explicitly requests the overview to be applied. Do not browse the public web to infer school dates or timetable events unless the user asks.
 
 ## Scope boundary
 
@@ -64,18 +66,21 @@ Art, Japanese, Science, Music and Physical Education are specialist-led. Name th
 
 `Student guided learning` is teacher-supervised but has no standing lesson sequence in this skill. Name the block only unless a connected authoritative plan identifies its current activity; do not invent a lesson to fill it.
 
+HASS is outside the Term 3 four-day overview. Do not invent HASS content from the overview, country-reading allocation or Information Report toolkit. A Tuesday HASS block may be planned only from a separate authoritative HASS plan or an explicit current user instruction; otherwise name the block and flag that its source plan is unavailable.
+
 ## Core planning workflow
 
 1. Resolve the exact date, term/week, source index and authoritative day map.
-2. Apply explicit lesson-status exceptions; otherwise advance normally.
-3. Remove specialist subjects from resource generation.
-4. Keep Morning Work, Literacy warm-up, shared reading and guided reading as distinct functions with genuinely different passages.
-5. Match the next lesson fragment to each teacher-led block. Give each lesson a visible student-friendly Learning Intention and 2–4 observable Success Criteria.
-6. For Mathematics, run `python scripts/maths_week_brief.py --term <n> --week <n>`, identify the actual concept, then choose representations. A supporting number line does not become the lesson topic.
-7. Reuse an approved resource only when it meets the current intention. Reconstruct incompatible mathematical visuals and build clean content slides when no archetype fits.
-8. Write the teacher plan and shared source data before generating slides, printables and answers. Generate repeated questions, diagrams and keys from that shared data.
-9. Create only resources that improve learning; prefer books, mini-whiteboards, oral work or manipulatives when a printable adds no value.
-10. Build, render, inspect, validate and release through the evidence workflow below.
+2. For Term 3 Monday, Tuesday, Thursday or Friday, resolve the week/day in `references/term-3-four-day-overview.json`. Use its mathematics topic, WA code, day-level mathematics focus, Information Report toolkit component and daily stage, Shared Reading country, Guided Reading country and guided-reading group as mandatory planning inputs. Apply explicit user/status exceptions, but do not silently substitute another sequence. Wednesday uses the normal timetable and active plans unless the user explicitly requests overview use.
+3. Apply explicit lesson-status exceptions; otherwise advance normally.
+4. Remove specialist subjects from resource generation.
+5. Keep Morning Work, Literacy warm-up, shared reading and guided reading as distinct functions with genuinely different passages.
+6. Match the next lesson fragment to each teacher-led block. Give each lesson a visible student-friendly Learning Intention and 2–4 observable Success Criteria.
+7. For Mathematics, run `python scripts/maths_week_brief.py --term <n> --week <n>`, identify the actual concept, then choose representations. A supporting number line does not become the lesson topic.
+8. Reuse an approved resource only when it meets the current intention. Reconstruct incompatible mathematical visuals and build clean content slides when no archetype fits.
+9. Write the teacher plan and shared source data before generating slides, printables and answers. Generate repeated questions, diagrams and keys from that shared data.
+10. Create only resources that improve learning; prefer books, mini-whiteboards, oral work or manipulatives when a printable adds no value.
+11. Build, render, inspect, validate and release through the evidence workflow below.
 
 If actual printing is requested, an unknown copy quantity is blocking. If printing is not requested, create a digital master and record the quantity as unresolved without blocking the resource build.
 
@@ -103,9 +108,15 @@ Keep retrieval, readiness and prerequisite teaching distinct. Model at least one
 
 Create a mathematical-visual specification before drawing. Verify all claims computationally, generate coordinates deterministically and inspect each final diagram at full size. Never broadly replace text on a slide containing a diagram or relabel an inherited visual.
 
+For overview-controlled Term 3 days, the weekly mathematics topic and WA code in the four-day overview must agree with the Year 4/5 mathematics overview. The four-day overview supplies the day-level focus. Confirm the correct term/week/day, weekly topic/code, day-level focus and continuity before resource generation; task slides must not reveal answers and answer slides must model the strategy requested.
+
 ### Reading and writing
 
 Count only substantive shared-text slides towards the 250-word minimum. Display the complete text at projected size across coherent sections with genuine subheadings. Keep first-reading comprehension and second-reading analysis separate, and make every referenced word or passage visible. Model the complete target product, annotate its required features, complete joint construction when needed, and protect independent writing time. Enforce the scheduled guided-reading level and word-count band, and match teacher guides exactly.
+
+On Term 3 overview-controlled days, writing is a cumulative Information Report toolkit. Use the overview's named toolkit component and daily stage: Monday analyse/introduce, Tuesday explicitly teach, Thursday apply in drafting or revision, Friday edit/consolidate/publish. The lesson must name the component, teach or apply it explicitly, include a model/worked example when needed and require a student product demonstrating the component. Country fact collection cannot replace writing instruction.
+
+On those same days, Shared Reading and Guided Reading use the countries assigned by the overview. They must be different countries; Morning Work must use a third independent passage/context and must not pre-teach either reading passage. Shared Reading is a whole-class comprehension/information-text lesson. Guided Reading must include a student text plus teacher prompts, expected responses, vocabulary support, literal comprehension, inference and an appropriate extended response. The overview-controlled guided-reading groups are Monday very low, Tuesday low, Thursday above level and Friday approximately Year 9 complexity. Wednesday retains the normal at-level allocation when guided reading is scheduled.
 
 ### Printables
 
@@ -122,6 +133,20 @@ Generate slides, student tasks and teacher answers from the same source data. Mi
 7. Complete the same evidence-backed release gate as daily mode.
 
 ## Mandatory evidence-backed release
+
+### Term 3 four-day overview stop check
+
+For Monday, Tuesday, Thursday and Friday Term 3 packs, do not release/export until all applicable checks pass:
+
+- term/week/day lookup matches the four-day overview;
+- Wednesday has not been treated as part of the overview unless explicitly requested;
+- mathematics topic, WA code and day-level focus match the overview and the weekly mathematics authority;
+- writing matches the scheduled toolkit component and daily stage;
+- Shared and Guided Reading countries match the overview and differ from each other;
+- guided-reading level matches the overview day;
+- Morning Work, Shared Reading and Guided Reading are independent;
+- no HASS lesson/printable has been invented from the overview;
+- previous lessons were assumed complete unless an explicit exception says otherwise.
 
 A package is not complete because files exist. Follow `references/daily-pack-quality-floor.md` and `release-checklist-usage.md`.
 
