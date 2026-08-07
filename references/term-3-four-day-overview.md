@@ -47,6 +47,77 @@ Fixed overview groups:
 
 Wednesday retains the normal at-level allocation when guided reading is scheduled, but no overview country is assigned to it.
 
+## Week 1
+
+### Mathematics — Fractions and mixed numerals
+
+- **WA code:** WA5MNAUN6
+- **Monday:** Review unit fractions and counting beyond one whole; connect improper fractions and mixed numerals using concrete and visual models.
+- **Tuesday:** Locate and represent mixed numerals and improper fractions on number lines.
+- **Thursday:** Move flexibly between mixed numerals and improper fractions and explain the equivalence.
+- **Friday:** Consolidate representation, conversion and explanation through mixed problems and an exit assessment.
+
+### Writing toolkit — Purpose and audience
+
+- **Monday:** Analyse a model information report to identify its topic, purpose and intended audience.
+- **Tuesday:** Explicitly teach how factual language and selected details match the report’s purpose and audience.
+- **Thursday:** Apply the focus by revising a short report section for a specified audience.
+- **Friday:** Edit a completed section to ensure its purpose and audience are clear.
+
+## Week 2
+
+### Mathematics — Fractions on a number line
+
+- **WA code:** WA5MNAUN6
+
+## Week 3
+
+### Mathematics — Comparing fractions
+
+- **WA code:** WA5MNAUN6
+
+## Week 4
+
+### Mathematics — Comparing fractions extended
+
+- **WA code:** WA5MNAUN6
+
+## Week 5
+
+### Mathematics — Equivalent fractions
+
+- **WA code:** WA4MNAUN7
+
+## Week 6
+
+### Mathematics — Equivalent fractions extended
+
+- **WA code:** WA4MNAUN7
+
+## Week 7
+
+### Mathematics — Fractions to decimals
+
+- **WA code:** WA4MNAUN7
+
+## Week 8
+
+### Mathematics — Fractions to decimals extended
+
+- **WA code:** WA4MNAUN7
+
+## Week 9
+
+### Mathematics — Add and subtract fractions with the same denominator
+
+- **WA code:** WA5MNAC2
+
+## Week 10
+
+### Mathematics — Percentages in everyday contexts
+
+- **WA code:** WA5MNAUN7
+
 ## Pre-export stop check
 
 Do not release an overview-controlled Term 3 pack if any applicable item fails:
