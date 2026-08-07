@@ -1,0 +1,21 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor/IDE metadata
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary/backup files
+*.tmp
+*.temp
+*.bak
+*~
+
+# Python cache if validation scripts are added later
+__pycache__/
+*.py[cod]
+.pytest_cache/
