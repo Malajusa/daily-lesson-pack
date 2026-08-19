@@ -17,7 +17,7 @@ Create practical, classroom-ready resources for one school day or a complete Yea
 
 Infer the mode from the request. Ask one concise question only when the ambiguity would materially change the package.
 
-For a relief day, keep the authoritative timetable but make every teacher-led sequence self-contained for a relief teacher: explicit materials, scripts, answers, stopping points and independent alternatives. Preserve the specialist-subject boundary.
+For a relief day, keep the authoritative timetable but make every teacher-led sequence self-contained for a relief teacher: explicit materials, scripts, answers, stopping points and independent alternatives. Keep teacher-facing preparation in the briefing or notes, not on the Morning Work slide. Preserve the specialist-subject boundary.
 
 Morning Work uses the available arrival window before the first formal timetable block, up to 20–30 minutes. It must not consume the 08:30 lesson unless the authoritative timetable explicitly places it there. If the arrival duration is unavailable, provide a 10–15-minute accessible core plus extensions that carry independent work to 30 minutes, and record that conservative assumption without blocking the build.
 
@@ -29,6 +29,8 @@ Read the relevant planning sources:
 - `references/output-spec.md` and `print-production-preferences.md`.
 - `references/english-planning-rules.md` and `effective-printable-design.md` for English or printables.
 - `references/mathematics-planning-rules.md`, `weekly-maths-pack-patterns.md`, `year-4-5-maths-overview.json` and `wa-maths-code-map.json` for Mathematics.
+- `references/create-numeracy-flashcards-snapshot.md` whenever Mathematics is taught. This bundled v10 specification is authoritative for the Daily Lesson Pack mathematics warm-up. If the standalone `create-numeracy-flashcards` skill differs, the bundled 4 + 6 architecture and calibration rules take precedence within this skill.
+- For Term 3 Year 4/5 daily packs on Monday, Tuesday, Thursday or Friday, also read `references/term-3-four-day-overview.json` and `references/term-3-four-day-overview.md`. Use the JSON for deterministic week/day lookup and the Markdown for explanatory rules.
 
 Before constructing any teaching deck, read all of:
 
@@ -53,10 +55,11 @@ Use sources in this order:
 2. A maintained status record when it records an exception.
 3. Calendar and authoritative timetable.
 4. Active unit and assessment plan.
-5. Term/year overview and curriculum maps.
-6. Standing preferences and pedagogy.
+5. For Term 3 Monday/Tuesday/Thursday/Friday daily planning, the four-day overview day lookup.
+6. Other term/year overviews and curriculum maps.
+7. Standing preferences and pedagogy.
 
-Assume the previous scheduled lesson was covered sufficiently to advance unless an authoritative source explicitly records partial completion, cancellation or reteaching. Missing status is not evidence that a lesson was missed. Do not browse the public web to infer school dates or timetable events unless the user asks.
+Assume the previous scheduled lesson was covered sufficiently to advance unless an authoritative source explicitly records partial completion, cancellation or reteaching. Missing status is not evidence that a lesson was missed. For the Term 3 four-day overview, Monday normally follows the preceding Friday, Tuesday follows Monday, Thursday follows Tuesday and Friday follows Thursday. Wednesday remains a valid Daily Lesson Pack day from the authoritative timetable, but it is outside the four-day overview unless the user explicitly requests the overview to be applied. Do not browse the public web to infer school dates or timetable events unless the user asks.
 
 ## Scope boundary
 
@@ -64,18 +67,22 @@ Art, Japanese, Science, Music and Physical Education are specialist-led. Name th
 
 `Student guided learning` is teacher-supervised but has no standing lesson sequence in this skill. Name the block only unless a connected authoritative plan identifies its current activity; do not invent a lesson to fill it.
 
+HASS is outside the Term 3 four-day overview. Do not invent HASS content from the overview, country-reading allocation or Information Report toolkit. A Tuesday HASS block may be planned only from a separate authoritative HASS plan or an explicit current user instruction; otherwise name the block and flag that its source plan is unavailable.
+
 ## Core planning workflow
 
 1. Resolve the exact date, term/week, source index and authoritative day map.
-2. Apply explicit lesson-status exceptions; otherwise advance normally.
-3. Remove specialist subjects from resource generation.
-4. Keep Morning Work, Literacy warm-up, shared reading and guided reading as distinct functions with genuinely different passages.
-5. Match the next lesson fragment to each teacher-led block. Give each lesson a visible student-friendly Learning Intention and 2–4 observable Success Criteria.
-6. For Mathematics, run `python scripts/maths_week_brief.py --term <n> --week <n>`, identify the actual concept, then choose representations. A supporting number line does not become the lesson topic.
-7. Reuse an approved resource only when it meets the current intention. Reconstruct incompatible mathematical visuals and build clean content slides when no archetype fits.
-8. Write the teacher plan and shared source data before generating slides, printables and answers. Generate repeated questions, diagrams and keys from that shared data.
-9. Create only resources that improve learning; prefer books, mini-whiteboards, oral work or manipulatives when a printable adds no value.
-10. Build, render, inspect, validate and release through the evidence workflow below.
+2. For Term 3 Monday, Tuesday, Thursday or Friday, resolve the week/day in `references/term-3-four-day-overview.json`. Use its mathematics topic, WA code, day-level mathematics focus, Information Report toolkit component and daily stage, Shared Reading country, Guided Reading country and guided-reading group as mandatory planning inputs. Apply explicit user/status exceptions, but do not silently substitute another sequence. Wednesday uses the normal timetable and active plans unless the user explicitly requests overview use.
+3. Apply explicit lesson-status exceptions; otherwise advance normally.
+4. Remove specialist subjects from resource generation.
+5. Keep Morning Work, Literacy warm-up, shared reading and guided reading as distinct functions with genuinely different passages.
+6. Match the next lesson fragment to each teacher-led block. Give each lesson a visible student-friendly Learning Intention and 2–4 observable Success Criteria.
+7. For Mathematics, run `python scripts/maths_week_brief.py --term <n> --week <n>`, identify the actual concept, then choose representations. A supporting number line does not become the lesson topic.
+8. Generate the Mathematics warm-up through `create-numeracy-flashcards` when direct routing is supported, while enforcing the bundled v10 specification. Otherwise follow `references/create-numeracy-flashcards-snapshot.md` directly. Keep this cumulative 4 + 6 retrieval routine separate from the main Mathematics prerequisite check and lesson sequence.
+9. Reuse an approved resource only when it meets the current intention. Reconstruct incompatible mathematical visuals and build clean content slides when no archetype fits.
+10. Write the teacher plan and shared source data before generating slides, printables and answers. Generate repeated questions, diagrams and keys from that shared data.
+11. Create only resources that improve learning; prefer books, mini-whiteboards, oral work or manipulatives when a printable adds no value.
+12. Build, render, inspect, validate and release through the evidence workflow below.
 
 If actual printing is requested, an unknown copy quantity is blocking. If printing is not requested, create a digital master and record the quantity as unresolved without blocking the resource build.
 
@@ -83,7 +90,7 @@ If actual printing is requested, an unknown copy quantity is blocking. If printi
 
 ### Morning Work
 
-The first slide is independent Morning Work or a functional Assembly Morning entry task, never the routine and never the Literacy warm-up. Supply 20–30 minutes of accessible work with exact materials, response location, numbered retrieval, substantive application, explanation/improvement and a meaningful extension.
+The first slide is always titled `Morning Work` and contains only the student task: numbered retrieval, substantive application, explanation/improvement and a meaningful extension. Do not place a decorative cover, date/week banner, timetable, routine, assembly logistics, `Get ready`, `Get out`, `You need` or materials list on it. Students already know the normal set-up. State a response location only when it is part of the task or differs from the established routine; put preparation and materials in the briefing or speaker notes. Supply work matched to the actual arrival window, normally up to 20–30 minutes. On an assembly morning, shorten the task to the available time and place the 8:35/location reminder in the briefing and a later transition slide, never on slide 1.
 
 ### Literacy warm-up
 
@@ -97,15 +104,55 @@ Use stable phase labels where appropriate: `Retrieval`, `Model`, `We do`, `Guide
 
 Every student task visibly answers: what to do, where to respond, how much to produce and what success looks like. Put teacher-controlled branching, timing, answers and misconceptions in notes that match the visible example.
 
+### Mathematics warm-up
+
+Whenever the day includes a Mathematics lesson, include a separate Mathematics warm-up immediately before the main Mathematics section unless the user explicitly omits it. Use the bundled v10 Create Numeracy Flashcards specification as the authority; direct skill routing may generate content, but it may not replace or weaken these local requirements.
+
+Create exactly 10 prompt-and-answer pairs, for exactly 20 warm-up slides, in this order:
+
+1. Addition
+2. Subtraction
+3. Multiplication
+4. Division
+5. State it
+6. Recognise it
+7. Complete it
+8. Apply it
+9. Distinguish it
+10. Cumulative retrieval
+
+Immediately follow each prompt with its corresponding answer. Do not interleave the warm-up with main-lesson instruction. Questions 1–4 are short, year-level-appropriate calculations based on curriculum expectations. Questions 5–10 draw cumulatively from the current Mathematics Rules Worth Memorising PP–Year 10 source, an equivalent user-supplied memorisation spine, and appropriate prior-year knowledge. Do not preview later-year content merely to create challenge or force the warm-up to match the day's lesson topic.
+
+For the established mixed Year 4/5 class, make Questions 1–4 accessible to Year 4 while still worthwhile for Year 5. Extend through the answer hierarchy rather than making the prompt inaccessible. Draw Questions 5–10 mainly from Year 4/5 and earlier knowledge.
+
+Every answer slide uses exactly `All`, `Most` and `Some`:
+
+- `All`: a genuinely accessible and mathematically safe foothold.
+- `Most`: the concise, fully correct target response using precise year-level language.
+- `Some`: a modest extension through a familiar explanation, condition, example, non-example, inverse check or connection, without automatically advancing to the next year level.
+
+Treat `Most` as success. Put the complete primary answer in visually prominent bold text. Use a vinculum or properly stacked fraction rather than a forward slash on student-facing slides.
+
+Use one fixed visual hierarchy for every Mathematics warm-up pair. On both the prompt and answer slide, `All`, `Most` and `Some` are the three main left-to-right body columns, with `Most` as the expected secure response. On prompt slides, the columns contain calibrated student tasks that map directly to the three response levels. On answer slides, they contain the matched responses. Put the `Why` reasoning prompt on the question slide and the concise `Why` explanation on the answer slide inside the green footer box. Do not use a fourth `Why` body card, and do not replace the green-footer `Why` content with a generic instruction such as `Check your answer`.
+
+The warm-up is cumulative retrieval only. It does not replace lesson-specific prerequisite checking, explicit reteaching, modelling, guided practice, independent application or exit assessment. Identify the 10-question warm-up separately in the daily briefing.
+
 ### Mathematics
 
 Keep retrieval, readiness and prerequisite teaching distinct. Model at least one correct worked example from start to finish. For fraction comparison, teach strategy selection: same denominator, same numerator, equivalence, benchmark to one-half, distance from one and mixed/improper renaming; explain when a strategy is inconclusive. Differentiate through representation, reasoning and abstraction rather than only more questions.
 
 Create a mathematical-visual specification before drawing. Verify all claims computationally, generate coordinates deterministically and inspect each final diagram at full size. Never broadly replace text on a slide containing a diagram or relabel an inherited visual.
+For overview-controlled Term 3 days, the weekly mathematics topic and WA code in the four-day overview must agree with the Year 4/5 mathematics overview. The four-day overview supplies the day-level focus. Confirm the correct term/week/day, weekly topic/code, day-level focus and continuity before resource generation; task slides must not reveal answers and answer slides must model the strategy requested.
+
 
 ### Reading and writing
 
 Count only substantive shared-text slides towards the 250-word minimum. Display the complete text at projected size across coherent sections with genuine subheadings. Keep first-reading comprehension and second-reading analysis separate, and make every referenced word or passage visible. Model the complete target product, annotate its required features, complete joint construction when needed, and protect independent writing time. Enforce the scheduled guided-reading level and word-count band, and match teacher guides exactly.
+
+On Term 3 overview-controlled days, writing is a cumulative Information Report toolkit. Use the overview's named toolkit component and daily stage: Monday analyse/introduce, Tuesday explicitly teach, Thursday apply in drafting or revision, Friday edit/consolidate/publish. The lesson must name the component, teach or apply it explicitly, include a model/worked example when needed and require a student product demonstrating the component. Country fact collection cannot replace writing instruction.
+
+On those same days, Shared Reading and Guided Reading use the countries assigned by the overview. They must be different countries; Morning Work must use a third independent passage/context and must not pre-teach either reading passage. Shared Reading is a whole-class comprehension/information-text lesson. Guided Reading must include a student text plus teacher prompts, expected responses, vocabulary support, literal comprehension, inference and an appropriate extended response. The overview-controlled guided-reading groups are Monday very low, Tuesday low, Thursday above level and Friday approximately Year 9 complexity. Wednesday retains the normal at-level allocation when guided reading is scheduled.
+
 
 ### Printables
 
@@ -123,6 +170,38 @@ Generate slides, student tasks and teacher answers from the same source data. Mi
 
 ## Mandatory evidence-backed release
 
+### Mathematics warm-up stop check
+
+For every pack containing Mathematics, do not release/export until all applicable checks pass:
+
+- exactly 10 Mathematics warm-up prompts and 10 paired answer slides are present;
+- Questions 1–4 are Addition, Subtraction, Multiplication and Division in that order and are appropriate to the nominated year level;
+- Questions 5–10 are State it, Recognise it, Complete it, Apply it, Distinguish it and Cumulative retrieval in that order;
+- Questions 5–10 use the memorisation spine cumulatively without adding later-year content merely for difficulty;
+- every prompt has one unambiguous student action and every answer immediately follows its prompt;
+- every prompt and answer slide uses the same three-column `All` / `Most` / `Some` body, with the matched `Why` prompt or explanation in the green footer;
+- every answer slide contains `All`, `Most` and `Some` at the required calibration;
+- answers are mathematically correct, visually prominent and use vinculum/proper fraction formatting;
+- the warm-up remains separate from the lesson prerequisite check and main teaching sequence.
+
+A Daily Lesson Pack containing Mathematics fails pre-export QA if this warm-up is missing, shortened, reordered, replaced by generic arithmetic or absorbed into the main lesson.
+
+
+### Term 3 four-day overview stop check
+
+For Monday, Tuesday, Thursday and Friday Term 3 packs, do not release/export until all applicable checks pass:
+
+- term/week/day lookup matches the four-day overview;
+- Wednesday has not been treated as part of the overview unless explicitly requested;
+- mathematics topic, WA code and day-level focus match the overview and the weekly mathematics authority;
+- writing matches the scheduled toolkit component and daily stage;
+- Shared and Guided Reading countries match the overview and differ from each other;
+- guided-reading level matches the overview day;
+- Morning Work, Shared Reading and Guided Reading are independent;
+- no HASS lesson/printable has been invented from the overview;
+- previous lessons were assumed complete unless an explicit exception says otherwise.
+
+
 A package is not complete because files exist. Follow `references/daily-pack-quality-floor.md` and `release-checklist-usage.md`.
 
 1. Initialise the 184-item per-pack checklist before construction:
@@ -130,14 +209,16 @@ A package is not complete because files exist. Follow `references/daily-pack-qua
 2. Create the build manifest, mathematical-visual specification, render evidence, geometry report, cross-file checks, note-alignment checks and visual-QA ledger described in `references/output-spec.md`.
 3. Render the final file after its most recent edit. Store SHA-256 hashes for the deck and every render.
 4. Inspect every slide individually at full size in four separate passes: mathematical accuracy, instructional clarity, visual presentation and cross-file consistency. The contact sheet is supplementary sequence evidence only.
-5. Compare the full-size slide with the benchmark and archetypes. Any slide worse in classroom clarity fails.
-6. Fill every checklist entry with `pass` evidence or a justified `not_applicable` reason. A human failure always blocks release.
-7. Run:
+5. Complete a separate structured educational-quality review for Morning Work and every teacher-led lesson, covering source/curriculum alignment, accuracy, age pitch, cognitive load, learning value, differentiation and evidence of learning. Review the whole sequence, not isolated attractive slides.
+6. Complete a holistic visual-quality review of the final rendered deck against the benchmark, covering hierarchy, projected readability, spacing, consistency, purposeful visuals and layout variety. Any weak, generic, cluttered, sparse or unresolved slide fails.
+7. Compare every full-size slide with the benchmark and archetypes. Any slide worse in classroom clarity fails.
+8. Fill every checklist entry with `pass` evidence or a justified `not_applicable` reason. A human failure always blocks release.
+9. Run:
    - `python scripts/quality_checklist.py validate --scope daily_release --checklist <build>/qa/daily-release-checklist.json`
    - `python scripts/validate_math_visuals.py --spec <build>/qa/math-visuals.json` when visuals are present
    - `python scripts/validate_slide_geometry.py --layout-dir <layout-dir> --deck <deck> --out <build>/qa/geometry.json`
    - `python scripts/validate_daily_pack.py --pack-dir <build> --manifest <build>/qa/build-manifest.json`
-8. Release only when every gate passes and no inspection is unresolved. On failure, keep the failure report, do not present the package as classroom-ready and state plainly that full QA was not completed.
+10. Release only when every gate passes and no inspection is unresolved. On failure, keep the failure report, do not present the package as classroom-ready and state plainly that full QA was not completed.
 
 ## Final response
 
