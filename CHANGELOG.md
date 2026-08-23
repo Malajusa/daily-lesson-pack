@@ -2,6 +2,23 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 2.3.0 — 23 August 2026
+
+### Added
+- Mandatory projected-readability and space-utilisation standard in `references/slide-deck-quality-standards.md`.
+- Role-based warm-up typography hierarchy instead of a single locked font size.
+- `Largest sensible type` rule: short answers, key words and mathematical expressions should grow when space allows.
+- Rewrite/reflow-before-shrink repair order for dense slides.
+- Shared Reading projected typography guidance for paragraph and question sizing.
+- Automated screening script `scripts/audit_slide_typography.py` for undersized warm-up content and likely unused-space problems.
+- Regression examples covering Mathematics warm-ups, Literacy warm-ups and Shared Reading.
+
+### Changed
+- Warm-up main instructional content remains anchored at 36 pt minimum, while supporting content may use smaller or larger role-appropriate sizes.
+- Supporting student-facing text is now explicitly protected from becoming fine print simply to preserve fixed card geometry.
+- Visual QA now checks whether important content could be materially enlarged by using currently empty slide space.
+- Space is treated as instructional real estate: layouts should reflow or merge regions before text is reduced.
+
 ## 2.2.0 — 23 August 2026
 
 ### Added
