@@ -2,6 +2,22 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 2.2.0 — 23 August 2026
+
+### Added
+- Mandatory semantic-colour standard for instructional slides.
+- Role-based colour planning before slide generation: correspondence, category, current focus, meaningful change and reasoning panels.
+- Accessibility release checks for contrast, greyscale robustness and colour-only meaning.
+- Colour-scaffold fading from modelling towards independent and uncued performance where appropriate.
+- Regression examples for a Mathematics warm-up pair and a Shared Reading slide.
+
+### Changed
+- Visual QA now assesses whether colour supports instructional structure rather than merely improving appearance.
+- Mathematics worked examples and representations must keep corresponding concepts/quantities in consistent colours when colour coding is used.
+- All / Most / Some colour treatment must remain restrained, labelled and position-based; red/amber/green traffic-light coding is prohibited.
+- The established green `Why` footer is reserved as a semantic reasoning cue.
+- Shared Reading may use matched colour to connect a question with a relevant word/phrase, but unrelated vocabulary remains neutral and the cue must not replace layout separation.
+
 ## 2.1.0 — 19 August 2026
 
 ### Added
