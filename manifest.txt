@@ -14,6 +14,7 @@
 ./assets/classroom-slide-exemplars/strong-we-do.png
 ./assets/daily-teaching-slides-quality-template.pptx
 ./assets/icon.svg
+./examples/panel-containment-regression.md
 ./examples/projected-readability-regression.md
 ./examples/semantic-colour-regression.md
 ./manifest.txt
@@ -32,6 +33,7 @@
 ./references/mathematics-planning-rules.md
 ./references/maths-source-provenance.md
 ./references/output-spec.md
+./references/panel-containment-standard.md
 ./references/planning-context.md
 ./references/planning-state-schema.md
 ./references/print-production-preferences.md
@@ -48,6 +50,7 @@
 ./references/wa-year-4-5-english-curriculum.md
 ./references/weekly-maths-pack-patterns.md
 ./references/year-4-5-maths-overview.json
+./scripts/audit_panel_containment.py
 ./scripts/audit_slide_typography.py
 ./scripts/audit_teaching_deck.py
 ./scripts/maths_week_brief.py
