@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "orchestrator": {
+    "name": "daily-lesson-pack",
+    "entrypoint": "SKILL.md"
+  },
+  "components": [
+    {
+      "name": "dlp-morning-work",
+      "entrypoint": "skills/dlp-morning-work/SKILL.md",
+      "owner": "Morning Work"
+    },
+    {
+      "name": "dlp-literacy-warmup",
+      "entrypoint": "skills/dlp-literacy-warmup/SKILL.md",
+      "owner": "Literacy warm-up"
+    },
+    {
+      "name": "dlp-shared-reading",
+      "entrypoint": "skills/dlp-shared-reading/SKILL.md",
+      "owner": "Shared Reading"
+    },
+    {
+      "name": "dlp-guided-reading",
+      "entrypoint": "skills/dlp-guided-reading/SKILL.md",
+      "owner": "Guided Reading"
+    },
+    {
+      "name": "dlp-writing-lesson",
+      "entrypoint": "skills/dlp-writing-lesson/SKILL.md",
+      "owner": "Writing lesson"
+    },
+    {
+      "name": "dlp-numeracy-warmup",
+      "entrypoint": "skills/dlp-numeracy-warmup/SKILL.md",
+      "owner": "Mathematics warm-up"
+    },
+    {
+      "name": "dlp-maths-lesson",
+      "entrypoint": "skills/dlp-maths-lesson/SKILL.md",
+      "owner": "Main Mathematics lesson"
+    },
+    {
+      "name": "dlp-pack-qa",
+      "entrypoint": "skills/dlp-pack-qa/SKILL.md",
+      "owner": "Independent Daily Lesson Pack QA"
+    }
+  ],
+  "routing": {
+    "preferred": "Register each component as a separately invokable skill when the host supports local or custom skill registration.",
+    "fallback": "The daily-lesson-pack orchestrator reads the component SKILL.md directly from the bundled path when direct cross-skill invocation is unavailable."
+  }
+}
