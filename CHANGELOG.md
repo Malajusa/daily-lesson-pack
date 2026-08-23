@@ -2,6 +2,28 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## Unreleased — modular refactor
+
+### Added
+- Orchestrator + specialised component-skill architecture.
+- Separate skills for Morning Work, Literacy warm-up, Shared Reading, Guided Reading, Writing, Mathematics warm-up, main Mathematics teaching and independent pack QA.
+- Bundled-contract fallback when direct cross-skill invocation is unavailable.
+- Modular routing regression suite.
+- Architecture and migration audit in `docs/MODULAR-REFACTOR-AUDIT.md`.
+
+### Changed
+- Root `SKILL.md` now owns context, routing, assembly and release decisions rather than detailed component pedagogy.
+- Complete weekly Mathematics requests are delegated to the standalone Weekly Maths Pack skill instead of being duplicated in Daily Lesson Pack.
+- Existing-pack audit/revision requests route through the independent QA skill.
+- Literacy warm-up default is 10 prompt/answer pairs.
+- Mathematics All / Most / Some prompts are explicitly three separate questions/tasks of increasing complexity.
+- Shared Reading explicitly uses one short paragraph plus one question per substantive slide.
+- Generic whiteboard-use footers are removed from warm-up requirements.
+
+### Reliability
+- QA no longer self-certifies generation. Defects are routed to the owning component and the full applicable QA suite reruns after repair.
+- The refactor avoids carrying forward dangling filenames from the monolithic skill unless their source content is actually available.
+
 ## 2.4.0 — 23 August 2026
 
 ### Added
