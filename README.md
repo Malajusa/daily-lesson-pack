@@ -4,7 +4,7 @@ Version-controlled development repository for the **Daily Lesson Pack** skill.
 
 ## Purpose
 
-The Daily Lesson Pack is being refactored from one large skill into a small orchestrator plus independently owned teaching components. The aim is to prevent a change to one component from silently changing another.
+Daily Lesson Pack 3.0 uses a small orchestrator plus independently owned teaching components. The architecture is designed to prevent a change to one component from silently changing another.
 
 ## Modular architecture
 
@@ -12,6 +12,7 @@ The Daily Lesson Pack is being refactored from one large skill into a small orch
 .
 ├── SKILL.md                              # Daily Lesson Pack orchestrator
 ├── skills/
+│   ├── registry.json                    # Canonical component registry
 │   ├── dlp-morning-work/SKILL.md
 │   ├── dlp-literacy-warmup/SKILL.md
 │   ├── dlp-shared-reading/SKILL.md
@@ -21,11 +22,13 @@ The Daily Lesson Pack is being refactored from one large skill into a small orch
 │   ├── dlp-maths-lesson/SKILL.md
 │   └── dlp-pack-qa/SKILL.md
 ├── references/                           # Shared visual/QA standards
-├── scripts/                              # Automated QA screening
+├── scripts/                              # QA + component packaging
 ├── docs/
 │   ├── DEVELOPMENT.md
-│   └── MODULAR-REFACTOR-AUDIT.md
-├── examples/                             # Regression examples
+│   ├── MODULAR-REFACTOR-AUDIT.md
+│   └── COMPONENT-SKILL-INSTALLATION.md
+├── examples/
+│   └── benchmarks/                       # Approved quality-floor fixtures
 └── .github/
 ```
 
@@ -33,13 +36,27 @@ The root skill owns context, routing, assembly and release decisions. Each child
 
 A complete Term/Week Mathematics pack remains the responsibility of the standalone **Weekly Maths Pack** skill rather than being duplicated inside Daily Lesson Pack.
 
+## Approved regression benchmark
+
+`examples/benchmarks/t3w6-monday-modular-regression.md` records the first approved modular Daily Lesson Pack quality benchmark. Relevant architecture or presentation changes must preserve or improve its approved characteristics unless a later explicit teacher instruction deliberately changes them.
+
 ## Skill routing and installation
+
+The canonical list of child skills is `skills/registry.json`.
 
 When the host supports direct cross-skill routing, install/register the component skills separately under the names in their frontmatter and let the root orchestrator invoke them.
 
+Build individually installable packages with:
+
+```bash
+python scripts/package_component_skills.py
+```
+
+See `docs/COMPONENT-SKILL-INSTALLATION.md` for the package layout and registration workflow.
+
 When direct routing is unavailable, the root skill uses the bundled contracts under `skills/<skill-name>/SKILL.md` as a deterministic fallback. This preserves modular ownership without forcing the parent `SKILL.md` to absorb every rule again.
 
-Do not assume that placing several `SKILL.md` files in one repository automatically registers each one as a separately invokable skill. Registration/packaging depends on the host environment and should be verified before production use.
+Do not assume that placing several `SKILL.md` files in one repository automatically registers each one as a separately invokable skill. Registration depends on the host environment and should be verified before production use.
 
 ## Development principles
 
@@ -53,16 +70,18 @@ Do not assume that placing several `SKILL.md` files in one repository automatica
 - A fix to one component must not trigger an unrelated rewrite of other components.
 - Preserve classroom-facing clarity, curriculum alignment and the established visual-quality floor.
 
-## Suggested workflow
+## Update workflow
 
 1. Develop or revise the owning component skill only.
-2. Run its component regression checks.
+2. Run its component checks.
 3. Assemble a representative Daily Lesson Pack.
 4. Run `dlp-pack-qa` over the entire assembled pack.
-5. Review the diff for unintended rule loss or contradiction.
-6. Merge only after the modular branch passes representative classroom regressions.
-7. Synchronise/register the accepted component skills in the production host.
+5. Compare against the approved T3W6 Monday benchmark where applicable.
+6. Rebuild the affected component package.
+7. Review the diff for unintended rule loss or contradiction.
+8. Merge only after representative classroom regression passes.
+9. Synchronise/register the accepted component skill in the production host where supported.
 
-## Current refactor
+## Current version
 
-The modular architecture is under review in the `refactor/modular-daily-lesson-pack` branch. See `docs/MODULAR-REFACTOR-AUDIT.md` for the ownership map, repository-integrity findings and migration strategy.
+**3.0.0 — modular architecture.**
