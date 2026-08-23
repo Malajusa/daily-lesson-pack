@@ -71,6 +71,12 @@ Where scripts are available, run:
 
 Automated checks are screening tools. Render and inspect the final deck at full size. A high-confidence overflow/containment failure blocks release.
 
+## Approved regression benchmark
+
+Use `examples/benchmarks/t3w6-monday-modular-regression.md` as the current representative quality floor whenever a change affects the orchestrator, component skills, warm-up architecture, Shared Reading structure, Mathematics instructional language, projected typography, semantic colour, panel containment or release QA.
+
+Compare quality and instructional function rather than copying the benchmark's exact wording. A future pack must preserve or improve its approved characteristics unless a later explicit teacher instruction deliberately changes them.
+
 ## Regression rule
 
 When revising after a FAIL, re-run the **entire** applicable checklist, not only the defect that triggered the revision. This prevents a fix in one area from breaking a previously passing requirement.
