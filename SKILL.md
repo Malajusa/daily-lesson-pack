@@ -20,6 +20,20 @@ The orchestrator owns:
 
 The specialised skills own the pedagogy, wording and slide rules for their component.
 
+## Request routing
+
+### Daily pack
+
+Use this orchestrator for a named day's Daily Lesson Pack. Resolve the context, invoke the required components, assemble them, then run independent QA.
+
+### Existing-pack audit or revision
+
+Route the supplied Daily Lesson Pack directly through `dlp-pack-qa`. If it fails, send each defect only to the owning component skill, revise that component, rebuild the affected artefact, and re-run the complete applicable QA suite.
+
+### Weekly Mathematics pack
+
+A complete Term/Week Mathematics pack belongs to the standalone `weekly-maths-pack` skill. Route the request there rather than rebuilding weekly Mathematics logic inside this Daily Lesson Pack orchestrator. If direct skill routing is unavailable, use the standalone Weekly Maths Pack contract supplied in the environment; do not duplicate its full rules here.
+
 ## Source hierarchy
 
 Use sources in this order:
@@ -27,16 +41,20 @@ Use sources in this order:
 2. explicit maintained lesson-status exceptions;
 3. connected calendar and authoritative timetable;
 4. active unit/assessment plans;
-5. term/year overviews and curriculum maps;
+5. current term/year overviews and curriculum maps;
 6. standing teaching preferences and component-skill defaults.
 
 Assume the previous scheduled lesson was covered sufficiently to advance unless an authoritative source explicitly records partial completion, cancellation or reteaching. Missing status is not evidence that a lesson was missed.
+
+For the established Term 3 four-day overview, Monday, Tuesday, Thursday and Friday use the current overview's day-level Mathematics focus, Information Report toolkit stage, Shared Reading country, Guided Reading country and guided-reading group as mandatory inputs when that overview is available. Wednesday remains outside that four-day overview unless explicitly requested, while still remaining a valid timetable day.
 
 Do not browse the public web to infer school dates or timetable events unless the user asks for verification.
 
 ## Scope boundary
 
 Art, Japanese, Science, Music and Physical Education are specialist-led. Name their timetable block only. Do not generate lessons, slides, printables, answers, contingencies, preparation tasks or status capture for them.
+
+`Student guided learning` is teacher-supervised but has no standing Daily Lesson Pack sequence. Name the block unless an authoritative current plan identifies the activity.
 
 HASS requires a separate authoritative HASS plan or an explicit current user instruction. Do not invent HASS from country-reading contexts.
 
@@ -59,16 +77,19 @@ If direct cross-skill invocation is unavailable, read and execute the correspond
 
 1. Resolve exact date, term, week, day, timetable and interruptions.
 2. Resolve active sequence and explicit status exceptions.
-3. Build one shared context object containing only information the components need: lesson focus, curriculum boundary, group/day allocation, current writing-toolkit stage, approved country contexts, time available and output constraints.
-4. Route each required component to its specialised skill.
-5. Keep Morning Work, Literacy warm-up, Shared Reading and Guided Reading as genuinely distinct tasks and texts.
-6. Keep the Mathematics warm-up separate from prerequisite checking and the main Mathematics lesson.
-7. Assemble components in timetable order. Slide 1 is always Morning Work when Morning Work is required.
-8. Create only useful printables. Prefer books, mini-whiteboards, oral work and manipulatives when a worksheet adds no value.
-9. Create the teacher briefing and Monday weekly printing plan from the actual generated resources, not from assumptions.
-10. Send the complete assembled pack to `dlp-pack-qa`.
-11. If QA returns FAIL, route each defect back only to the owning component skill, revise, and re-run QA. Do not patch unrelated components.
-12. Release only after critical QA checks pass.
+3. For an overview-controlled Term 3 day, resolve the current overview fields before component generation.
+4. Build one shared context object containing only information the components need: lesson focus, curriculum boundary, group/day allocation, current writing-toolkit stage, approved country contexts, time available and output constraints.
+5. Route each required component to its specialised skill.
+6. Keep Morning Work, Literacy warm-up, Shared Reading and Guided Reading as genuinely distinct tasks and texts.
+7. Keep the Mathematics warm-up separate from prerequisite checking and the main Mathematics lesson.
+8. Assemble components in timetable order. Slide 1 is always Morning Work when Morning Work is required.
+9. Create only useful printables. Prefer books, mini-whiteboards, oral work and manipulatives when a worksheet adds no value.
+10. Create the teacher briefing and Monday weekly printing plan from the actual generated resources, not from assumptions.
+11. Send the complete assembled pack to `dlp-pack-qa`.
+12. If QA returns FAIL, route each defect back only to the owning component skill, revise, and re-run the full applicable QA suite. Do not patch unrelated components.
+13. Release only after critical QA checks pass.
+
+If actual printing is requested and copy quantity cannot be resolved from an authoritative source, treat quantity as unresolved rather than inventing it.
 
 ## Cross-component invariants
 
