@@ -14,6 +14,7 @@
 ./assets/classroom-slide-exemplars/strong-we-do.png
 ./assets/daily-teaching-slides-quality-template.pptx
 ./assets/icon.svg
+./examples/semantic-colour-regression.md
 ./manifest.txt
 ./references/2026-term-3-timetable.yaml
 ./references/assembly-cycle.md
@@ -38,6 +39,7 @@
 ./references/regression-test-matrix.md
 ./references/release-checklist-usage.md
 ./references/release-checklist.json
+./references/semantic-colour-standard.md
 ./references/slide-deck-quality-standards.md
 ./references/source-index.md
 ./references/student-facing-instructions.md
