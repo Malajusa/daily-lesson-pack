@@ -46,7 +46,14 @@ dist/component-skills/
 └── daily-lesson-pack-component-skills.zip
 ```
 
-Each individual ZIP contains a self-contained skill folder with `SKILL.md` and `PACKAGE.json`. The combined ZIP contains all eight installable packages plus the registry.
+Each individual ZIP is self-contained. It includes:
+- `SKILL.md`;
+- `PACKAGE.json`;
+- the shared projected-readability, semantic-colour and panel-containment references used by the modular system.
+
+`dlp-pack-qa.zip` also includes the approved T3W6 Monday regression benchmark because its QA contract references that fixture directly.
+
+The combined ZIP contains all eight installable packages plus the component registry.
 
 ## Fallback mode
 
