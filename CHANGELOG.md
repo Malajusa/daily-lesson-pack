@@ -2,6 +2,33 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.0.0 — 23 August 2026
+
+### Added
+- Orchestrator + specialised component-skill architecture.
+- Separate skills for Morning Work, Literacy warm-up, Shared Reading, Guided Reading, Writing, Mathematics warm-up, main Mathematics teaching and independent pack QA.
+- Bundled-contract fallback when direct cross-skill invocation is unavailable.
+- Modular routing regression suite.
+- Architecture and migration audit in `docs/MODULAR-REFACTOR-AUDIT.md`.
+- Approved T3W6 Monday modular regression benchmark in `examples/benchmarks/t3w6-monday-modular-regression.md`.
+- `skills/registry.json` as the canonical component-skill registry.
+- Reproducible packaging script `scripts/package_component_skills.py` and installation guidance in `docs/COMPONENT-SKILL-INSTALLATION.md`.
+
+### Changed
+- Root `SKILL.md` now owns context, routing, assembly and release decisions rather than detailed component pedagogy.
+- Complete weekly Mathematics requests are delegated to the standalone Weekly Maths Pack skill instead of being duplicated in Daily Lesson Pack.
+- Existing-pack audit/revision requests route through the independent QA skill.
+- Literacy warm-up default is 10 prompt/answer pairs.
+- Mathematics All / Most / Some prompts are explicitly three separate questions/tasks of increasing complexity.
+- Shared Reading explicitly uses one short paragraph plus one question per substantive slide.
+- Generic whiteboard-use footers are removed from warm-up requirements.
+- Pack QA now uses the approved T3W6 Monday benchmark as a representative quality floor after relevant changes.
+
+### Reliability
+- QA no longer self-certifies generation. Defects are routed to the owning component and the full applicable QA suite reruns after repair.
+- The refactor avoids carrying forward dangling filenames from the monolithic skill unless their source content is actually available.
+- Component skills can be registered independently where supported, while the bundled-contract fallback preserves the same ownership boundaries where they cannot.
+
 ## 2.4.0 — 23 August 2026
 
 ### Added
