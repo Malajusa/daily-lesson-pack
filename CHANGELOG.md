@@ -2,6 +2,22 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 2.4.0 — 23 August 2026
+
+### Added
+- Mandatory Panel Containment and Responsive Container Standard in `references/panel-containment-standard.md`.
+- Automated `scripts/audit_panel_containment.py` geometry screening for shaded/coloured panel overflow and inadequate padding.
+- Regression examples for the green `Why` footer, All / Most / Some cards and Shared Reading question panels.
+
+### Changed
+- Shaded, coloured and bordered panels must now expand/reflow with their text rather than remain fixed while typography grows.
+- Meaningful panel text should normally retain approximately `0.15–0.25 in` internal padding.
+- The green `Why` footer may grow taller when reasoning text wraps; its text may not extend above or below the green panel.
+- Visual QA now includes a fourth check: containment of text within its intended panel.
+
+### Fixed
+- Prevents the recurring failure where enlarged student-facing text crosses or visually escapes coloured panels after a readability pass.
+
 ## 2.3.0 — 23 August 2026
 
 ### Added
