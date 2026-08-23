@@ -14,6 +14,7 @@
 ./assets/classroom-slide-exemplars/strong-we-do.png
 ./assets/daily-teaching-slides-quality-template.pptx
 ./assets/icon.svg
+./examples/projected-readability-regression.md
 ./examples/semantic-colour-regression.md
 ./manifest.txt
 ./references/2026-term-3-timetable.yaml
@@ -47,6 +48,7 @@
 ./references/wa-year-4-5-english-curriculum.md
 ./references/weekly-maths-pack-patterns.md
 ./references/year-4-5-maths-overview.json
+./scripts/audit_slide_typography.py
 ./scripts/audit_teaching_deck.py
 ./scripts/maths_week_brief.py
 ./scripts/quality_checklist.py
