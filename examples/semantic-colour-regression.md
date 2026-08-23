@@ -4,6 +4,8 @@
 
 Use this example to check that the Daily Lesson Pack applies colour as an instructional signal rather than decoration. It is a specification for regression testing, not a fixed lesson that overrides the active curriculum sequence.
 
+In the source notation below, `/` is used only to keep the Markdown readable. Any student-facing slide generated from this example must render fractions with a vinculum or properly stacked fraction, never a forward slash.
+
 ## Test A — Mathematics warm-up pair
 
 ### Intended concept
