@@ -35,6 +35,7 @@ Read the relevant planning sources:
 Before constructing any teaching deck, read all of:
 
 - `references/slide-deck-quality-standards.md`
+- `references/semantic-colour-standard.md`
 - `references/student-facing-instructions.md`
 - `references/question-answer-slide-standard.md`
 - `references/mathematical-visual-validation.md`
@@ -81,8 +82,9 @@ HASS is outside the Term 3 four-day overview. Do not invent HASS content from th
 8. Generate the Mathematics warm-up through `create-numeracy-flashcards` when direct routing is supported, while enforcing the bundled v10 specification. Otherwise follow `references/create-numeracy-flashcards-snapshot.md` directly. Keep this cumulative 4 + 6 retrieval routine separate from the main Mathematics prerequisite check and lesson sequence.
 9. Reuse an approved resource only when it meets the current intention. Reconstruct incompatible mathematical visuals and build clean content slides when no archetype fits.
 10. Write the teacher plan and shared source data before generating slides, printables and answers. Generate repeated questions, diagrams and keys from that shared data.
-11. Create only resources that improve learning; prefer books, mini-whiteboards, oral work or manipulatives when a printable adds no value.
-12. Build, render, inspect, validate and release through the evidence workflow below.
+11. Before slide generation, define the semantic-colour mapping required by the lesson: which concept, quantity, category, current step or reasoning panel each non-neutral colour represents. Use `references/semantic-colour-standard.md`; do not invent decorative colour roles.
+12. Create only resources that improve learning; prefer books, mini-whiteboards, oral work or manipulatives when a printable adds no value.
+13. Build, render, inspect, validate and release through the evidence workflow below.
 
 If actual printing is requested, an unknown copy quantity is blocking. If printing is not requested, create a digital master and record the quantity as unresolved without blocking the resource build.
 
@@ -103,6 +105,14 @@ Guided reading is included only when the active plan or timetable requires it; t
 Use stable phase labels where appropriate: `Retrieval`, `Model`, `We do`, `Guided practice`, `Independent practice`, `Answer`, `Review`, `Exit check`. Completely model a strategy before student use. Move through guided or joint construction before independent work when the feature is new. Ensure exit evidence measures the intended concept, not merely the representation.
 
 Every student task visibly answers: what to do, where to respond, how much to produce and what success looks like. Put teacher-controlled branching, timing, answers and misconceptions in notes that match the visible example.
+
+### Semantic colour
+
+Colour must follow instructional structure rather than create visual variety. Keep ordinary information neutral and reserve non-neutral colour for a defined job: correspondence, category, current focus, meaningful change or an established reasoning panel. The same concept must keep the same colour while its identity is unchanged. A changed colour must signal a meaningful change.
+
+Do not use colour as the only carrier of meaning. Preserve labels, fixed position, borders, shapes, symbols, direct labels or patterns so the slide remains interpretable in greyscale and for students with colour-vision deficiency. Avoid arbitrary rainbow headings, unrelated bright icons, saturated decorative backgrounds and low-contrast pastel treatments.
+
+For worked examples, diagrams, charts and text-to-visual links, use the same restrained colour to connect corresponding information. Do not colour every step. When students are expected to identify the relationship independently, reduce teaching-only colour cues from `Model` to `We do` to `Independent practice` and assessment.
 
 ### Mathematics warm-up
 
@@ -135,6 +145,8 @@ Treat `Most` as success. Put the complete primary answer in visually prominent b
 
 Use one fixed visual hierarchy for every Mathematics warm-up pair. On both the prompt and answer slide, `All`, `Most` and `Some` are the three main left-to-right body columns, with `Most` as the expected secure response. On prompt slides, the columns contain calibrated student tasks that map directly to the three response levels. On answer slides, they contain the matched responses. Put the `Why` reasoning prompt on the question slide and the concise `Why` explanation on the answer slide inside the green footer box. Do not use a fourth `Why` body card, and do not replace the green-footer `Why` content with a generic instruction such as `Check your answer`.
 
+If colour is used to distinguish `All`, `Most` and `Some`, keep the labels and fixed positions primary and use only restrained, consistent accents or tints. Do not use red/amber/green traffic-light coding. The established green `Why` footer is a semantic reasoning signal and must not be reused for unrelated decoration.
+
 The warm-up is cumulative retrieval only. It does not replace lesson-specific prerequisite checking, explicit reteaching, modelling, guided practice, independent application or exit assessment. Identify the 10-question warm-up separately in the daily briefing.
 
 ### Mathematics
@@ -148,6 +160,8 @@ For overview-controlled Term 3 days, the weekly mathematics topic and WA code in
 ### Reading and writing
 
 Count only substantive shared-text slides towards the 250-word minimum. Display the complete text at projected size across coherent sections with genuine subheadings. Keep first-reading comprehension and second-reading analysis separate, and make every referenced word or passage visible. Model the complete target product, annotate its required features, complete joint construction when needed, and protect independent writing time. Enforce the scheduled guided-reading level and word-count band, and match teacher guides exactly.
+
+When colour links a Shared Reading question to a word, phrase or textual feature, use the same restrained colour for the correspondence and leave unrelated vocabulary neutral. Paragraph/question separation must remain clear through spacing, panel structure and typography without relying on colour alone. Do not highlight so much text that the cue loses meaning, and remove teaching-only evidence highlights when students are expected to locate evidence independently.
 
 On Term 3 overview-controlled days, writing is a cumulative Information Report toolkit. Use the overview's named toolkit component and daily stage: Monday analyse/introduce, Tuesday explicitly teach, Thursday apply in drafting or revision, Friday edit/consolidate/publish. The lesson must name the component, teach or apply it explicitly, include a model/worked example when needed and require a student product demonstrating the component. Country fact collection cannot replace writing instruction.
 
@@ -186,6 +200,22 @@ For every pack containing Mathematics, do not release/export until all applicabl
 
 A Daily Lesson Pack containing Mathematics fails pre-export QA if this warm-up is missing, shortened, reordered, replaced by generic arithmetic or absorbed into the main lesson.
 
+### Semantic colour stop check
+
+For every pack containing teaching slides, do not release/export until all applicable checks pass:
+
+- every non-neutral colour has a defined instructional role or a necessary visual-system role;
+- the same concept, quantity, category or representation keeps the same colour while its identity is unchanged;
+- no colour is changed merely for variety between slides;
+- ordinary information remains visually neutral enough for the intended signal to stand out;
+- no essential distinction depends on colour alone;
+- normal text meets at least `4.5:1` contrast, large text at least `3:1`, and meaningful graphical objects/boundaries generally meet `3:1` where applicable;
+- the final render remains interpretable in greyscale and, where tooling allows, under red–green colour-vision-deficiency simulation;
+- teaching-only colour cues are reduced when independent or uncued performance is the intended outcome;
+- the green `Why` treatment is reserved for reasoning and is not repurposed decoratively;
+- the deck contains no arbitrary rainbow coding, saturated competing decoration, red/green-only status coding or low-contrast pastel text.
+
+If any essential distinction disappears without hue, the slide fails semantic-colour QA and must be revised before release.
 
 ### Term 3 four-day overview stop check
 
@@ -206,11 +236,11 @@ A package is not complete because files exist. Follow `references/daily-pack-qua
 
 1. Initialise the 184-item per-pack checklist before construction:
    `python scripts/quality_checklist.py init --scope daily_release --out <build>/qa/daily-release-checklist.json`
-2. Create the build manifest, mathematical-visual specification, render evidence, geometry report, cross-file checks, note-alignment checks and visual-QA ledger described in `references/output-spec.md`.
+2. Create the build manifest, mathematical-visual specification, semantic-colour mapping, render evidence, geometry report, cross-file checks, note-alignment checks and visual-QA ledger described in `references/output-spec.md`.
 3. Render the final file after its most recent edit. Store SHA-256 hashes for the deck and every render.
 4. Inspect every slide individually at full size in four separate passes: mathematical accuracy, instructional clarity, visual presentation and cross-file consistency. The contact sheet is supplementary sequence evidence only.
 5. Complete a separate structured educational-quality review for Morning Work and every teacher-led lesson, covering source/curriculum alignment, accuracy, age pitch, cognitive load, learning value, differentiation and evidence of learning. Review the whole sequence, not isolated attractive slides.
-6. Complete a holistic visual-quality review of the final rendered deck against the benchmark, covering hierarchy, projected readability, spacing, consistency, purposeful visuals and layout variety. Any weak, generic, cluttered, sparse or unresolved slide fails.
+6. Complete a holistic visual-quality review of the final rendered deck against the benchmark, covering hierarchy, projected readability, spacing, consistency, purposeful visuals, semantic colour, colour-accessibility robustness and layout variety. Any weak, generic, cluttered, sparse, decorative-colour-heavy or unresolved slide fails.
 7. Compare every full-size slide with the benchmark and archetypes. Any slide worse in classroom clarity fails.
 8. Fill every checklist entry with `pass` evidence or a justified `not_applicable` reason. A human failure always blocks release.
 9. Run:
