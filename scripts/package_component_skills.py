@@ -6,23 +6,41 @@ Usage:
     python scripts/package_component_skills.py --out dist/component-skills
 
 The script reads skills/registry.json, validates each component entrypoint,
-and writes one ZIP per component plus a combined bundle ZIP.
+and writes one self-contained ZIP per component plus a combined bundle ZIP.
+Shared presentation/QA references are copied into each package so a separately
+registered skill does not depend on the parent repository's relative paths.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import shutil
-import tempfile
 import zipfile
 from pathlib import Path
+
+
+SHARED_REFERENCES = (
+    "references/slide-deck-quality-standards.md",
+    "references/semantic-colour-standard.md",
+    "references/panel-containment-standard.md",
+)
+
+QA_ONLY_FILES = (
+    "examples/benchmarks/t3w6-monday-modular-regression.md",
+)
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", default="dist/component-skills", help="Output directory")
     return parser.parse_args()
+
+
+def add_repo_file(zf: zipfile.ZipFile, repo: Path, package_root: str, relative_path: str) -> None:
+    source = repo / relative_path
+    if not source.exists():
+        raise FileNotFoundError(f"Missing package dependency: {source}")
+    zf.write(source, f"{package_root}/{relative_path}")
 
 
 def main() -> int:
@@ -57,11 +75,20 @@ def main() -> int:
                         "entrypoint": "SKILL.md",
                         "source": component["entrypoint"],
                         "owner": component["owner"],
+                        "shared_references": list(SHARED_REFERENCES),
                     },
                     indent=2,
                 )
                 + "\n",
             )
+
+            for relative_path in SHARED_REFERENCES:
+                add_repo_file(zf, repo, name, relative_path)
+
+            if name == "dlp-pack-qa":
+                for relative_path in QA_ONLY_FILES:
+                    add_repo_file(zf, repo, name, relative_path)
+
         package_paths.append(zip_path)
 
     bundle_path = out_dir / "daily-lesson-pack-component-skills.zip"
