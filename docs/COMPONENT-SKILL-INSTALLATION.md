@@ -8,6 +8,16 @@ The parent `daily-lesson-pack` remains the user-facing entrypoint for a normal D
 
 Registered components are listed in `skills/registry.json`.
 
+## Complete ChatGPT package
+
+Run:
+
+```bash
+python scripts/build_chatgpt_package.py
+```
+
+This creates `dist/chatgpt/daily-lesson-pack.zip`, containing the parent orchestrator, all eight component contracts, registration metadata, shared presentation standards, the approved regression benchmark, both runtime QA scripts and a SHA-256 package manifest. The build is deterministic: unchanged source produces the same ZIP hash.
+
 ## Preferred registration
 
 Where the host supports separately registered custom/local skills, register each of these folders as an independent skill:
@@ -51,7 +61,7 @@ Each individual ZIP is self-contained. It includes:
 - `PACKAGE.json`;
 - the shared projected-readability, semantic-colour and panel-containment references used by the modular system.
 
-`dlp-pack-qa.zip` also includes the approved T3W6 Monday regression benchmark because its QA contract references that fixture directly.
+`dlp-pack-qa.zip` also includes the approved T3W6 Monday regression benchmark and both runtime QA scripts because its QA contract references them directly.
 
 The combined ZIP contains all eight installable packages plus the component registry.
 
