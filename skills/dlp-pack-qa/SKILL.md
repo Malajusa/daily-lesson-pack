@@ -17,16 +17,21 @@ Return:
 
 ### Sequence and scope
 - Slide 1 is Morning Work when required.
+- Every Morning Work instruction is executable in students' books from the projected slide; no task asks students to mark projected-only content.
 - Timetable order is coherent.
 - Specialist subjects are timetable labels only.
 - No specialist printables or generated lessons exist.
-- Morning Work, Shared Reading and Guided Reading use different texts.
+- Morning Work and Shared Reading use different texts.
 - Mathematics warm-up remains separate from the main Mathematics lesson.
 
 ### Literacy warm-up
-- 10 question/answer pairs unless explicitly overridden.
+- 10 `Reminder -> Question -> Answer` sequences unless explicitly overridden.
+- Every question contains all information needed to answer it and does not depend on another slide.
+- Every reminder teaches the method with a different example and does not reveal the next answer.
 - No spelling/Sound Waves replacement content.
 - Every answer follows its question and the primary answer is visually dominant.
+- Inserted punctuation or changed wording is immediately locatable through green, bold, enlarged treatment plus a textual cue; meaning does not rely on colour alone.
+- Explanations teach the relevant rule and do not use generic statements such as `the answer matches the prompt`.
 - Student language is immediate and age-appropriate.
 
 ### Shared Reading
@@ -40,14 +45,18 @@ Return:
 - Text is projected at sensible size; split/shorten rather than shrink.
 
 ### Guided Reading
-- Correct day/group level.
-- Student text and teacher guide match.
-- Different from Shared Reading.
+- Guided Reading appears only as a timetable block.
+- No Guided Reading text, teacher guide, prompts, transition task or instructional slide is generated.
+- Any displayed group is taken from an authoritative schedule and is exactly `Alpha`, `Beta`, `Gamma`, `Delta` or `Epsilon`.
+- No ability descriptor, country label or inferred group name appears.
 
 ### Writing
 - Current toolkit feature is explicitly taught/applied.
 - A model/joint construction is present where needed.
 - Students produce writing demonstrating the feature.
+- Student-facing wording uses familiar, actionable language; necessary technical terms are defined before use.
+- Technical-word substitutions preserve meaning and the explanation states the exact information added.
+- Comparison tables are split before their content becomes undersized.
 
 ### Numeracy warm-up
 - 10 prompt/answer pairs unless explicitly overridden.
@@ -73,13 +82,13 @@ Where scripts are available, run:
 - `python scripts/audit_slide_typography.py --deck <deck> --out <report.json>`
 - `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`
 
-Automated checks are screening tools. Render and inspect the final deck at full size. A high-confidence overflow/containment failure blocks release.
+Automated checks are screening tools. Render and inspect the final deck at full size. Any text that crosses or visually escapes its intended coloured, shaded or bordered panel blocks release. A filled instructional text panel with less than the required internal margin also blocks release.
 
-## Approved regression benchmark
+## Classroom-feedback regression record
 
-Use `examples/benchmarks/t3w6-monday-modular-regression.md` as the current representative quality floor whenever a change affects the orchestrator, component skills, warm-up architecture, Shared Reading structure, Mathematics instructional language, projected typography, semantic colour, panel containment or release QA.
+Use `examples/benchmarks/t3w6-monday-modular-regression.md` as a diagnostic record whenever a change affects the orchestrator, component skills, warm-up architecture, Guided Reading scope, Shared Reading structure, student-facing language, Mathematics instructional language, projected typography, semantic colour, panel containment or release QA.
 
-Compare quality and instructional function rather than copying the benchmark's exact wording. A future pack must preserve or improve its approved characteristics unless a later explicit teacher instruction deliberately changes them.
+The referenced PPTX is not an approved quality floor. Reject its documented failures and require the current acceptance characteristics unless a later explicit teacher instruction deliberately changes them.
 
 ## Regression rule
 

@@ -2,6 +2,21 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.1.0 — 24 August 2026
+
+### Changed
+- Literacy warm-ups now use 10 self-contained `Reminder -> Question -> Answer` sequences (30 slides by default).
+- Every warm-up question includes all required context, and answer slides make inserted punctuation or changed wording visually obvious.
+- Morning Work now assumes a projected slide with all student responses completed in books.
+- Guided Reading is timetable-only and permits only authoritative `Alpha`, `Beta`, `Gamma`, `Delta` or `Epsilon` group names.
+- Student-facing writing language now prefers familiar actions and defines necessary technical terminology.
+- Technical-vocabulary comparisons must preserve meaning, explain the exact information added and split dense tables across slides.
+
+### Reliability
+- Filled instructional text panels with inadequate internal margins now fail containment QA.
+- Typography screening ignores bottom-of-slide numeric page markers and no longer mistakes incidental uses of `all`, `some` and `why` for a warm-up layout.
+- The former T3W6 Monday artefact is retained as a diagnostic regression source but is no longer an approved classroom-quality floor.
+
 ## 3.0.3 — 24 August 2026
 
 ### Changed

@@ -46,7 +46,7 @@ Use sources in this order:
 
 Assume the previous scheduled lesson was covered sufficiently to advance unless an authoritative source explicitly records partial completion, cancellation or reteaching. Missing status is not evidence that a lesson was missed.
 
-For the established Term 3 four-day overview, Monday, Tuesday, Thursday and Friday use the current overview's day-level Mathematics focus, Information Report toolkit stage, Shared Reading country, Guided Reading country and guided-reading group as mandatory inputs when that overview is available. Wednesday remains outside that four-day overview unless explicitly requested, while still remaining a valid timetable day.
+For the established Term 3 four-day overview, Monday, Tuesday, Thursday and Friday use the current overview's day-level Mathematics focus, Information Report toolkit stage and Shared Reading country as mandatory inputs when that overview is available. Resolve the Guided Reading timetable block and, where recorded, its authorised group name separately. Wednesday remains outside that four-day overview unless explicitly requested, while still remaining a valid timetable day.
 
 Do not browse the public web to infer school dates or timetable events unless the user asks for verification.
 
@@ -78,9 +78,9 @@ If direct cross-skill invocation is unavailable, read and execute the correspond
 1. Resolve exact date, term, week, day, timetable and interruptions.
 2. Resolve active sequence and explicit status exceptions.
 3. For an overview-controlled Term 3 day, resolve the current overview fields before component generation.
-4. Build one shared context object containing only information the components need: lesson focus, curriculum boundary, group/day allocation, current writing-toolkit stage, approved country contexts, time available and output constraints.
+4. Build one shared context object containing only information the components need: lesson focus, curriculum boundary, authorised group/day allocation, current writing-toolkit stage, approved country contexts, time available and output constraints.
 5. Route each required component to its specialised skill.
-6. Keep Morning Work, Literacy warm-up, Shared Reading and Guided Reading as genuinely distinct tasks and texts.
+6. Keep Morning Work, Literacy warm-up and Shared Reading as genuinely distinct tasks and texts. Represent Guided Reading only in the timetable while its timetable-only setting remains active.
 7. Keep the Mathematics warm-up separate from prerequisite checking and the main Mathematics lesson.
 8. Assemble components in timetable order. Slide 1 is always Morning Work when Morning Work is required.
 9. Create only useful printables. Prefer books, mini-whiteboards, oral work and manipulatives when a worksheet adds no value.
@@ -93,11 +93,14 @@ If actual printing is requested and copy quantity cannot be resolved from an aut
 
 ## Cross-component invariants
 
-- Morning Work, Shared Reading and Guided Reading must not reuse the same passage.
-- Shared Reading and Guided Reading must use different country texts on overview-controlled days.
+- Morning Work and Shared Reading must not reuse the same passage.
+- Literacy warm-up uses 10 self-contained `Reminder -> Question -> Answer` sequences unless the user changes the count. A question must not depend on remembered content from another slide.
+- Guided Reading is timetable-only for now: do not generate Guided Reading texts, prompts, teacher guides, transition tasks or instructional slides.
+- A Guided Reading timetable label may use only `Alpha`, `Beta`, `Gamma`, `Delta` or `Epsilon`, and only when that label comes from an authoritative current schedule. Never infer a group or display ability labels such as `very low`, `low`, `at level` or `above level`.
 - Shared Reading must alternate each paragraph-and-question slide with its immediately following matched answer slide; answers are not revealed early on question slides.
 - The writing lesson teaches the writing toolkit; country facts may provide context but cannot replace writing instruction.
 - Student-facing instructions must state the action, mathematical/literacy focus, any required representation or resource, and the expected student output where applicable.
+- Student-facing task language must use words students can act on immediately. Replace or explain teacher terminology such as `classification opening`; prefer concrete wording such as `topic sentence that tells the reader what the report is about`.
 - Teacher preparation, timing, misconceptions and answers belong in the briefing or notes, not as clutter on student task slides.
 - Warm-up slides use the established projected-readability and semantic-colour standards.
 - No generic whiteboard footer is required on warm-up slides. The Mathematics green `Why` panel is instructional content, not a generic footer instruction.

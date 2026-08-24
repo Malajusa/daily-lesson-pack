@@ -1,6 +1,6 @@
 ---
 name: dlp-morning-work
-description: Generate the independent Morning Work opening slide for a Daily Lesson Pack.
+description: Generate independent, book-executable Morning Work for projection as the opening slide of a Daily Lesson Pack.
 ---
 
 # DLP Morning Work
@@ -13,13 +13,31 @@ Own only Morning Work. Do not generate the Literacy warm-up, Shared Reading, Gui
 
 - Slide 1 titled `Morning Work`.
 - Student task only: no decorative cover, timetable, date banner, `Get ready`, `Get out`, `You need`, routine reminder or generic materials list.
-- Design an accessible 8–10 minute core task. Add meaningful extensions that can carry independent work longer when arrival time allows, up to roughly 20–30 minutes.
-- Include retrieval plus at least one substantive application/explanation/improvement task. Do not fill the slide with trivial busywork.
+- Design an accessible 8-10 minute core task. Add meaningful extensions that can carry independent work longer when arrival time allows, up to roughly 20-30 minutes.
+- Include retrieval plus at least one substantive application, explanation or improvement task. Do not fill the slide with trivial busywork.
 - Students should be able to begin without teacher explanation.
+
+## Projected-slide and book contract
+
+Assume the slide remains on the screen and students complete every response in their books.
+
+- Every instruction must be possible with only the displayed slide and a book.
+- Do not tell students to circle, highlight, underline, cross out, label or draw on wording or images that exist only on the projected slide.
+- When students choose from projected content, tell them to write the selected word, phrase, letter, number or corrected sentence in their book.
+- If underlining or annotation is important, instruct students to copy the required text into their book first or use another book-executable response.
+- Do not assume students have a printed copy unless the task explicitly supplies one.
+
+## Precision of models and clues
+
+A model described as precise must contain details specific to its topic.
+
+- A habitat example should name the habitat and include a feature particular to it, such as rainforest rainfall, canopy layers, humidity or dense vegetation.
+- A sentence is not precise merely because it names a broad habitat and says it provides food, water or shelter.
+- The supporting clue must help students produce a more informative sentence, not repeat a vague success statement.
 
 ## Text independence
 
-Morning Work must not reuse or pre-teach the day's Shared Reading or Guided Reading passage. If a short reading context is used, it must be independent.
+Morning Work must not reuse or pre-teach the day's Shared Reading passage. If a short reading context is used, it must be independent.
 
 ## Presentation
 
@@ -28,8 +46,11 @@ Use projected classroom readability. Important student-facing content should use
 ## QA
 
 Fail the component if:
+
 - Slide 1 is not the Morning Work task;
+- any instruction requires students to mark the projected slide or an unavailable worksheet;
 - the task depends on teacher explanation to begin;
-- the content duplicates Shared/Guided Reading;
-- the slide is mostly routine/setup instructions;
-- text is unnecessarily small or crowded.
+- a model labelled precise remains generic or topic-free;
+- the content duplicates Shared Reading;
+- the slide is mostly routine or setup instructions;
+- text is unnecessarily small, crowded or outside its intended panel.

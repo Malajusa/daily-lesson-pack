@@ -4,8 +4,8 @@
 The audit is intentionally conservative:
 - hard failures are reported when a plausible panel/text pairing is strong and
   the text box crosses the panel boundary;
-- padding problems are warnings unless explicit ownership naming makes the
-  pairing deterministic;
+- inadequate margins on filled instructional text panels are hard failures;
+- padding problems on explicitly owned panel/text pairs are hard failures;
 - ambiguous spatial pairings are reported for human review.
 
 Render-level inspection remains mandatory because PowerPoint line wrapping and
@@ -249,11 +249,11 @@ def audit_slide(slide, slide_no, slide_width, slide_height, padding_in):
             }
             if any(value < padding for value in margins.values()):
                 issues.append({
-                    "severity": "warning",
+                    "severity": "fail",
                     "code": "internal_panel_margin_small",
                     "shape": name_of(text_shape),
                     "text": text_of(text_shape)[:160],
-                    "message": f"Filled text panel has internal margins below {padding_in:.2f} in.",
+                    "message": f"Filled instructional text panel has internal margins below {padding_in:.2f} in.",
                     "margins_in": {
                         key: round(value / EMU_PER_INCH, 3)
                         for key, value in margins.items()

@@ -71,6 +71,15 @@ Do not:
 
 ## Repeated panel systems
 
+### Filled text panels
+
+A shape that contains both its own fill and its own text is simultaneously the panel and the text container. It must preserve the same `0.15–0.25 in` internal padding required for paired panel/text shapes.
+
+- Internal text-frame margins below `0.15 in` are a release-blocking failure for substantive instructional text.
+- Do not use near-zero margins to make oversized text appear to fit.
+- If the last rendered line touches or crosses the fill boundary, enlarge or split the panel even when the text box nominally remains on the slide.
+- Small structural labels may use tighter margins only when they remain visually centred, readable and clearly separate from substantive content.
+
 Repeated layouts must be responsive rather than merely duplicated.
 
 ### Mathematics warm-up `Why` footer

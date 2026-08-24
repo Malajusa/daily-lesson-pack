@@ -4,7 +4,7 @@ Version-controlled development repository for the **Daily Lesson Pack** skill.
 
 ## Purpose
 
-Daily Lesson Pack 3.0 uses a small orchestrator plus independently owned teaching components. The architecture is designed to prevent a change to one component from silently changing another.
+Daily Lesson Pack 3.1 uses a small orchestrator plus independently owned teaching components. The architecture is designed to prevent a change to one component from silently changing another.
 
 ## Modular architecture
 
@@ -36,9 +36,9 @@ The root skill owns context, routing, assembly and release decisions. Each child
 
 A complete Term/Week Mathematics pack remains the responsibility of the standalone **Weekly Maths Pack** skill rather than being duplicated inside Daily Lesson Pack.
 
-## Approved regression benchmark
+## Classroom-feedback regression record
 
-`examples/benchmarks/t3w6-monday-modular-regression.md` records the first approved modular Daily Lesson Pack quality benchmark. Relevant architecture or presentation changes must preserve or improve its approved characteristics unless a later explicit teacher instruction deliberately changes them.
+`examples/benchmarks/t3w6-monday-modular-regression.md` records the first modular Daily Lesson Pack artefact and the classroom failures identified after use. Treat it as a diagnostic regression source, not as an approved layout or quality floor.
 
 ## Skill routing and installation
 
@@ -84,4 +84,4 @@ Do not assume that placing several `SKILL.md` files in one repository automatica
 
 ## Current version
 
-**3.0.0 — modular architecture.**
+**3.1.0 — classroom-feedback update with self-contained literacy warm-ups and timetable-only Guided Reading.**

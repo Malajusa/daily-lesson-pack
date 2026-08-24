@@ -64,11 +64,17 @@ def is_title_shape(shape, slide_height: int) -> bool:
     return bool(getattr(shape, "has_text_frame", False) and shape.top < slide_height * 0.16 and shape.height < slide_height * 0.18)
 
 
+def is_page_marker(shape, slide_height: int) -> bool:
+    text = " ".join(text_of(shape).split())
+    return bool(text.isdigit() and shape.top > slide_height * 0.82)
+
+
 def warmup_detected(texts: list[str]) -> bool:
     joined = "\n".join(texts).lower()
     if "warm-up" in joined or "warm up" in joined:
         return True
-    markers = sum(1 for token in ("all", "most", "some", "why") if token in joined)
+    normalised = {" ".join(text.lower().split()).rstrip(":") for text in texts}
+    markers = sum(1 for token in ("all", "most", "some", "why") if token in normalised)
     return markers >= 3
 
 
@@ -96,7 +102,10 @@ def audit_slide(slide, slide_index: int, slide_width: int, slide_height: int, fo
             })
 
     warmup = forced_warmup or warmup_detected(texts)
-    body_text = [x for x in text_shapes if not x["title_like"]]
+    body_text = [
+        x for x in text_shapes
+        if not x["title_like"] and not is_page_marker(x["shape"], slide_height)
+    ]
     known_body_sizes = [s for x in body_text for s in x["sizes"]]
     body_max = max(known_body_sizes) if known_body_sizes else None
 
@@ -141,7 +150,7 @@ def audit_slide(slide, slide_index: int, slide_width: int, slide_height: int, fo
     useful_area = float(slide_width * slide_height)
     occupied = 0
     for shape in shapes:
-        if is_title_shape(shape, slide_height):
+        if is_title_shape(shape, slide_height) or is_page_marker(shape, slide_height):
             continue
         if getattr(shape, "has_text_frame", False) and text_of(shape):
             occupied += area(shape)

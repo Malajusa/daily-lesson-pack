@@ -32,12 +32,16 @@ PASS when:
 - the answer slide gives three matched answers;
 - `Why` remains reasoning in the green bottom panel.
 
-## 4. Literacy warm-up length
+## 4. Literacy warm-up architecture
 
 Generate the Literacy warm-up with no explicit count override.
 
 PASS when:
-- there are 10 prompt slides and 10 immediately following answer slides;
+- there are 10 `Reminder -> Question -> Answer` sequences (30 slides);
+- each question includes all required context and can be answered without remembering another slide;
+- each reminder uses a different example and does not reveal the next answer;
+- inserted punctuation or changed wording is green, bold, enlarged and also identified with a textual cue;
+- answer explanations state the relevant rule rather than using generic matching language;
 - spelling/Sound Waves replacement content is absent;
 - no generic whiteboard-use footer is added.
 
@@ -83,3 +87,32 @@ PASS when:
 Run in a host where child skills cannot be invoked directly.
 
 PASS when the root reads the bundled `skills/<skill-name>/SKILL.md` contract and follows it, rather than falling back to generic unscoped generation.
+
+## 11. Projected Morning Work
+
+Generate Morning Work containing a displayed clue and book responses.
+
+PASS when:
+- every action can be completed in a book from the projected slide;
+- students are told to write a selected word rather than circle projected text;
+- any model described as precise includes details specific to its topic.
+
+## 12. Guided Reading timetable-only boundary
+
+Use a day containing Guided Reading.
+
+PASS when:
+- the timetable names the block;
+- no Guided Reading text, prompts, teacher guide, country slide or transition task is generated;
+- an authoritative `Alpha`, `Beta`, `Gamma`, `Delta` or `Epsilon` label is used when available;
+- no group is guessed and no ability descriptor appears.
+
+## 13. Technical-vocabulary precision
+
+Generate a writing model comparing everyday and technical wording.
+
+PASS when:
+- each replacement preserves the intended meaning and scope;
+- no broader word is presented as automatically more precise;
+- each explanation says exactly what information the term adds;
+- no more than two substantial comparison rows appear on one projected slide.

@@ -1,4 +1,4 @@
 interface:
   display_name: "DLP Literacy Warm-up"
-  short_description: "Create rapid literacy retrieval warm-ups"
-  default_prompt: "Use $dlp-literacy-warmup to create the Daily Lesson Pack literacy retrieval sequence."
+  short_description: "Create reminder-question-answer literacy warm-ups"
+  default_prompt: "Use $dlp-literacy-warmup to create 10 self-contained reminder, question and answer sequences."

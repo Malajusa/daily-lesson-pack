@@ -93,6 +93,17 @@ Appropriate uses include:
 
 Do not automatically colour vocabulary words merely because they are interesting or unfamiliar. Do not highlight so many words that the paragraph loses a clear visual hierarchy.
 
+### Answer correction highlights
+
+On Literacy warm-up answer slides, green may mark a character, punctuation mark, word or phrase that has been inserted or changed. This is a text-level correction signal, not decorative green and not the Mathematics `Why` panel role.
+
+- Keep unchanged sentence text neutral.
+- Make inserted punctuation green, bold and at least 125% of the surrounding sentence size.
+- Make a replaced word or phrase green and bold when that helps students locate the change.
+- Add a textual cue such as `Added commas:` or `Changed word:` so the correction remains clear in greyscale and for students with colour-vision differences.
+- Do not colour the entire corrected sentence green; colour only the instructional change.
+- Use the same correction treatment throughout the warm-up.
+
 On Shared Reading slides, the paragraph and the question must remain visually distinct through spacing, panel structure or typography first. Colour may reinforce that separation but must not be the only separator.
 
 ## I do / We do / You do fading

@@ -1,96 +1,109 @@
-# T3W6 Monday Modular Regression Benchmark
+# T3W6 Monday Modular Regression Record
 
 ## Status
 
-**Approved classroom-quality benchmark** for the modular Daily Lesson Pack architecture.
+**Superseded diagnostic benchmark.**
 
-The benchmark was generated from the modular branch on 23 August 2026 and reviewed positively by the teacher before merge.
+The 23 August 2026 artefact established the modular routing architecture, but classroom feedback on 24 August identified instructional-language, warm-up independence, group-labelling and panel-containment failures. It must not be used as an approved classroom-quality floor without applying the corrections in this record.
 
 Reference artefact:
+
 - file name: `T3W6_Monday_Daily_Lesson_Pack_Modular_Regression.pptx`
 - slide count: **72**
 - SHA-256: `46477f17937b55db6dc31a8c70558df0af0b56dd647d21fb84a72ef1d73dccce`
 
-The PPTX itself is not duplicated in the source tree. This fixture records the approved structural and instructional characteristics that future builds must preserve or improve.
+The PPTX is retained as a source of regression cases, not as a layout to reproduce.
 
-## Purpose
-
-Use this benchmark when changing the orchestrator, any Daily Lesson Pack component skill, slide-quality rules, colour rules, containment rules or cross-component QA.
-
-Do not require future packs to reproduce the benchmark's exact wording or content. Compare **quality, clarity, architecture and instructional function**.
-
-## Approved characteristics
-
-### Morning Work
-- Slide 1 is immediately usable Morning Work rather than a cover or set-up slide.
-- The task combines retrieval, application/improvement and extension.
-- Students can begin independently.
+## Known failures that must not recur
 
 ### Literacy warm-up
-- Exactly 10 prompt/answer pairs in this benchmark.
-- Every answer immediately follows its prompt.
-- Questions are short, student-friendly and high leverage.
-- Primary answers are visually dominant.
-- No generic whiteboard footer is used.
 
-### Shared Reading
-- Each question slide displays one short paragraph and one question about that paragraph.
-- Every question slide is immediately followed by its matched answer slide, creating a strict question/answer sequence.
-- The complete model answer is visually dominant and does not introduce a new paragraph or question.
-- Question slides do not reveal the answer or teaching-only evidence cues when students are meant to locate evidence independently.
-- Paragraph and question are visually distinct.
-- Text remains suitable for whole-class projection rather than being compressed to preserve a long passage.
-- Questions vary in comprehension purpose and remain student-friendly.
+- Question slides did not have a preceding reminder slide.
+- Some questions depended on unstated or earlier context, including a linking-phrase question without the preceding idea.
+- `classification opening` was not student-facing language.
+- Corrected punctuation was not visually isolated on answer slides.
+- Generic answer explanations such as `the answer matches the meaning and grammar in the prompt` did not teach the relevant rule.
 
 ### Guided Reading
-- Uses a separate text from Shared Reading.
-- The Monday text is pitched to the very-low group.
-- Teacher prompts and expected responses match the student text.
+
+- The deck displayed `Very low group`.
+- Guided Reading text, prompts and transition tasks were generated despite the later timetable-only decision.
 
 ### Writing
-- The lesson explicitly teaches/applies the scheduled Information Report toolkit feature: subject-specific vocabulary.
-- The writing task requires a student product that demonstrates the feature rather than substituting country research for writing instruction.
 
-### Mathematics warm-up
-- Uses 10 prompt/answer pairs in the current architecture.
-- Every prompt has three **separate** questions labelled All, Most and Some.
-- All is genuinely accessible, Most is secure expected performance, and Some is a modest appropriate extension.
-- The three tiers are not partial/complete/explain versions of one question.
-- The green Why panel is used for mathematical reasoning, not a generic checking instruction.
-- Question and answer slides match.
+- Text escaped shaded or coloured panels on multiple writing slides.
+- Some technical-vocabulary explanations were too vague to show what precision was added.
 
-### Mathematics lesson
-- Topic integrity is maintained: equivalent fractions are the concept; representations support rather than replace the concept.
-- The sequence includes readiness, complete modelling, connection between representations, We Do, guided practice, misconception discussion, independent practice and exit evidence.
-- Student tasks explicitly state the action and required output.
-- Mathematical language is literal and student-friendly rather than vague or conversational shorthand.
+## Current acceptance characteristics
+
+### Morning Work
+
+- Slide 1 is immediately usable Morning Work rather than a cover or setup slide.
+- Every response can be completed in a book while the slide remains projected.
+- No instruction asks students to circle, highlight or underline projected-only content.
+- A model described as precise contains details specific to its topic.
+
+### Literacy warm-up
+
+- The default sequence contains 10 `Reminder -> Question -> Answer` triads.
+- Each question contains all information required to answer it.
+- The reminder teaches the method with a different example and does not reveal the next answer.
+- Student language is familiar, direct and immediately actionable.
+- Answer slides make inserted punctuation or changed wording green, bold and enlarged, with a textual cue.
+- Answer explanations state the relevant rule or meaning.
+
+### Shared Reading
+
+- Each question slide displays one short paragraph and one question about that paragraph.
+- Every question slide is immediately followed by its matched answer slide.
+- The complete model answer is visually dominant and does not introduce a new paragraph or question.
+- Question slides do not reveal the answer or teaching-only evidence cues.
+- Text remains suitable for whole-class projection.
+
+### Guided Reading
+
+- Guided Reading appears only in the timetable.
+- No Guided Reading instructional slide, passage, prompt, teacher guide or transition task is generated.
+- Any displayed group comes from an authoritative schedule and is exactly `Alpha`, `Beta`, `Gamma`, `Delta` or `Epsilon`.
+- No ability descriptor or inferred group appears.
+
+### Writing
+
+- The lesson explicitly teaches and applies the scheduled Information Report feature.
+- Student-facing language uses familiar actions and defines necessary technical terminology.
+- Technical-word substitutions preserve meaning and scope.
+- Each precision explanation states the exact information added.
+- Comparison tables use no more than two substantial rows per projected slide.
 
 ### Visual quality
-- Projected readability takes priority over preserving fixed card layouts.
+
+- Projected readability takes priority over fixed layouts.
 - Important content uses available slide space.
 - Colour is restrained and instructional.
-- Panels contain their text with deliberate padding.
-- The deck is visually consistent without making every slide mechanically identical.
+- Inserted corrections remain understandable without colour alone.
+- Every coloured, shaded or bordered panel contains its text with deliberate padding.
+- Internal margins below `0.15 in` on substantive filled text panels block release.
 
 ## Regression pass criteria
 
-A future representative Daily Lesson Pack passes this benchmark when:
+A future representative Daily Lesson Pack passes when:
 
 1. all component-specific QA checks pass;
-2. none of the approved characteristics above regress;
-3. the pack remains at least as clear and classroom-usable as this benchmark when inspected slide-by-slide at full size;
-4. a fix in one component does not degrade an unrelated component;
-5. any deliberate departure is supported by a later explicit teacher instruction.
+2. none of the known failures above recurs;
+3. the pack satisfies the current acceptance characteristics;
+4. the pack is inspected slide-by-slide at full projected size;
+5. a fix in one component does not degrade an unrelated component;
+6. any deliberate departure is supported by a later explicit teacher instruction.
 
 ## Required use
 
-Run this benchmark after changes to:
+Use these regression cases after changes to:
+
 - `SKILL.md` orchestrator routing;
 - any `skills/dlp-*/SKILL.md` component;
 - warm-up architecture or calibration;
-- Shared Reading structure;
-- Mathematics instructional language;
+- Guided Reading scope or group labels;
+- student-facing instructional language;
+- technical-vocabulary modelling;
 - projected typography, semantic colour or panel containment;
 - release QA.
-
-The benchmark is a **quality floor, not a frozen template**. Future outputs may improve on it.
