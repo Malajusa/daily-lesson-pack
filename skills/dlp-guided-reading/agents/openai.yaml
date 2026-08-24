@@ -1,0 +1,4 @@
+interface:
+  display_name: "DLP Guided Reading"
+  short_description: "Create differentiated guided reading materials"
+  default_prompt: "Use $dlp-guided-reading to create the scheduled group text and matching teacher guide."
