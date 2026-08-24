@@ -2,6 +2,15 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.0.3 — 24 August 2026
+
+### Changed
+- Shared Reading now uses a strict alternating question/answer slide sequence.
+- Every paragraph-and-question slide is immediately followed by one matched model-answer slide.
+- Answer slides keep the complete answer visually dominant and may add only concise supporting evidence.
+- Question slides must not reveal answers or teaching-only evidence cues intended for independent retrieval.
+- Independent pack QA and the approved regression benchmark now enforce the paired-slide architecture.
+
 ## 3.0.2 — 24 August 2026
 
 ### Fixed
