@@ -34,7 +34,10 @@ Do not require future packs to reproduce the benchmark's exact wording or conten
 - No generic whiteboard footer is used.
 
 ### Shared Reading
-- Each substantive slide displays one short paragraph and one question about that paragraph.
+- Each question slide displays one short paragraph and one question about that paragraph.
+- Every question slide is immediately followed by its matched answer slide, creating a strict question/answer sequence.
+- The complete model answer is visually dominant and does not introduce a new paragraph or question.
+- Question slides do not reveal the answer or teaching-only evidence cues when students are meant to locate evidence independently.
 - Paragraph and question are visually distinct.
 - Text remains suitable for whole-class projection rather than being compressed to preserve a long passage.
 - Questions vary in comprehension purpose and remain student-friendly.
