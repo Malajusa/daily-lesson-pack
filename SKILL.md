@@ -95,6 +95,7 @@ If actual printing is requested and copy quantity cannot be resolved from an aut
 
 - Morning Work, Shared Reading and Guided Reading must not reuse the same passage.
 - Shared Reading and Guided Reading must use different country texts on overview-controlled days.
+- Shared Reading must alternate each paragraph-and-question slide with its immediately following matched answer slide; answers are not revealed early on question slides.
 - The writing lesson teaches the writing toolkit; country facts may provide context but cannot replace writing instruction.
 - Student-facing instructions must state the action, mathematical/literacy focus, any required representation or resource, and the expected student output where applicable.
 - Teacher preparation, timing, misconceptions and answers belong in the briefing or notes, not as clutter on student task slides.
