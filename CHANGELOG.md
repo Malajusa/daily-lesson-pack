@@ -2,6 +2,15 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.0.2 — 24 August 2026
+
+### Fixed
+- Synchronised the installed package metadata and canonical component registry with the repository.
+- Added the two runtime QA scripts to the complete ChatGPT package and the independent `dlp-pack-qa` component package.
+- Regenerated component registration metadata with stable human-facing names and invocation prompts.
+- Removed unreferenced icon and slide-image deployment leftovers from the active installation.
+- Added deterministic complete-package and component-package builders with integrity manifests.
+
 ## 3.0.1 — 24 August 2026
 
 ### Fixed
