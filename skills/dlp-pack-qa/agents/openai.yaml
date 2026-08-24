@@ -1,0 +1,4 @@
+interface:
+  display_name: "DLP Pack QA"
+  short_description: "Quality-assure complete Daily Lesson Packs"
+  default_prompt: "Use $dlp-pack-qa to independently audit a complete Daily Lesson Pack and return PASS or FAIL."
