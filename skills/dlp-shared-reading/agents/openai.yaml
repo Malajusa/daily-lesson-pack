@@ -1,0 +1,4 @@
+interface:
+  display_name: "DLP Shared Reading"
+  short_description: "Create readable whole-class shared reading"
+  default_prompt: "Use $dlp-shared-reading to create projected shared-reading slides with one question per paragraph."
