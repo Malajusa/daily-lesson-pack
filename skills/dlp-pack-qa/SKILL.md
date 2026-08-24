@@ -30,9 +30,13 @@ Return:
 - Student language is immediate and age-appropriate.
 
 ### Shared Reading
-- Exactly one short paragraph and one question per substantive slide.
-- The question refers to that displayed paragraph.
-- Paragraph/question separation is visually obvious.
+- Uses a strict alternating question/answer sequence.
+- Every question slide contains exactly one short paragraph and one question about that paragraph.
+- Every answer slide immediately follows and matches only the preceding question slide.
+- The complete model answer is visually dominant; any supporting evidence is concise and relevant.
+- The question slide does not reveal the answer or teaching-only evidence cue when students are meant to locate it independently.
+- Answer slides do not introduce a new paragraph, new question or unrelated content.
+- Paragraph/question separation on question slides is visually obvious.
 - Text is projected at sensible size; split/shorten rather than shrink.
 
 ### Guided Reading
