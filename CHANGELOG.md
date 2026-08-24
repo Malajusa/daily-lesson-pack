@@ -2,6 +2,13 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.0.1 — 24 August 2026
+
+### Fixed
+- Restored the ChatGPT-facing registration metadata so the skill displays as **Daily Lesson Pack** rather than being inferred as **Daily Lesson Packs**.
+- Removed stale `assets/icon.svg` references from `agents/openai.yaml` because the referenced icon file was not present in the repository.
+- ChatGPT installation packages must include `agents/openai.yaml`; omitting it allows the host to infer a display name and can change the invocation label.
+
 ## 3.0.0 — 23 August 2026
 
 ### Added
