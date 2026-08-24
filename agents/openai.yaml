@@ -1,12 +1,7 @@
 interface:
   display_name: Daily Lesson Pack
   short_description: Build and verify daily classroom lesson packs
-  default_prompt: Use $daily-lesson-pack to build and quality-assure the next timetable-aligned
-    teaching pack, with clear student instructions, bold answer reveals and validated
-    mathematical visuals.
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
-  brand_color: '#2E75B6'
+  default_prompt: Use $daily-lesson-pack to build and quality-assure the next timetable-aligned teaching pack, with clear student instructions, bold answer reveals and validated mathematical visuals.
 policy:
   allow_implicit_invocation: true
   products:
