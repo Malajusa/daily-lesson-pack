@@ -3,7 +3,7 @@
 
 The repository remains the source of truth. The generated package contains the
 orchestrator, all component contracts, registration metadata, shared standards,
-the regression benchmark, runtime QA scripts and a verifiable package manifest.
+regression benchmarks, runtime QA scripts and a verifiable package manifest.
 """
 
 from __future__ import annotations
@@ -19,6 +19,7 @@ SHARED_REFERENCES = (
     "references/slide-deck-quality-standards.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
+    "references/universal-maths-instruction-canon.md",
 )
 
 ROOT_RUNTIME_FILES = (
@@ -28,6 +29,7 @@ ROOT_RUNTIME_FILES = (
     "skills/registry.json",
     *SHARED_REFERENCES,
     "examples/benchmarks/t3w6-monday-modular-regression.md",
+    "examples/benchmarks/universal-maths-canon-regression.md",
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
 )
@@ -93,8 +95,11 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
             files[f"{component_root}/{reference}"] = read_required(repo, reference)
 
         if name == "dlp-pack-qa":
-            benchmark = "examples/benchmarks/t3w6-monday-modular-regression.md"
-            files[f"{component_root}/{benchmark}"] = read_required(repo, benchmark)
+            for benchmark in (
+                "examples/benchmarks/t3w6-monday-modular-regression.md",
+                "examples/benchmarks/universal-maths-canon-regression.md",
+            ):
+                files[f"{component_root}/{benchmark}"] = read_required(repo, benchmark)
             for script in (
                 "scripts/audit_slide_typography.py",
                 "scripts/audit_panel_containment.py",
