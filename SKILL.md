@@ -50,6 +50,20 @@ For the established Term 3 four-day overview, Monday, Tuesday, Thursday and Frid
 
 Do not browse the public web to infer school dates or timetable events unless the user asks for verification.
 
+## Mandatory visual exemplar
+
+For every teaching deck, read `references/visual-exemplar-standard.md` and use
+`assets/visual-exemplars/t3w6-tuesday-edited-visual-exemplar.pptx` as the
+approved **visual-only** design source. Verify its SHA-256 before use. Preserve
+its role-colour grammar, full-height left rail, compact eyebrow/title hierarchy,
+primary/secondary panel structure, Trebuchet MS typography and efficient use of
+the 16:9 canvas.
+
+Do not inherit the exemplar's lesson wording, sequencing errors or superseded
+pedagogy. The current orchestrator and component contracts remain authoritative
+for content. If the exemplar conflicts with a current content rule, retain the
+visual grammar and rebuild the content correctly.
+
 ## Scope boundary
 
 Art, Japanese, Science, Music and Physical Education are specialist-led. Name their timetable block only. Do not generate lessons, slides, printables, answers, contingencies, preparation tasks or status capture for them.
@@ -78,16 +92,18 @@ If direct cross-skill invocation is unavailable, read and execute the correspond
 1. Resolve exact date, term, week, day, timetable and interruptions.
 2. Resolve active sequence and explicit status exceptions.
 3. For an overview-controlled Term 3 day, resolve the current overview fields before component generation.
-4. Build one shared context object containing only information the components need: lesson focus, curriculum boundary, authorised group/day allocation, current writing-toolkit stage, approved country contexts, time available and output constraints.
-5. Route each required component to its specialised skill.
-6. Keep Morning Work, Literacy warm-up and Shared Reading as genuinely distinct tasks and texts. Represent Guided Reading only in the timetable while its timetable-only setting remains active.
-7. Keep the Mathematics warm-up separate from prerequisite checking and the main Mathematics lesson.
-8. Assemble components in timetable order. Slide 1 is always Morning Work when Morning Work is required.
-9. Create only useful printables. Prefer books, mini-whiteboards, oral work and manipulatives when a worksheet adds no value.
-10. Create the teacher briefing and Monday weekly printing plan from the actual generated resources, not from assumptions.
-11. Send the complete assembled pack to `dlp-pack-qa`.
-12. If QA returns FAIL, route each defect back only to the owning component skill, revise, and re-run the full applicable QA suite. Do not patch unrelated components.
-13. Release only after critical QA checks pass.
+4. Verify and load the approved visual-only exemplar, then build one shared context object containing only information the components need: lesson focus, curriculum boundary, authorised group/day allocation, current writing-toolkit stage, approved country contexts, time available and output constraints.
+5. Route each required component to its specialised skill and require a component acceptance result before assembly.
+6. Record the scheduled components and each component's `PASS` or `FAIL`, checks completed and artefact/slide range in a temporary component-acceptance record. Treat a missing record, missing scheduled component or unsubstantiated `PASS` as `FAIL`.
+7. Block assembly until every scheduled content component records `PASS`. This gate does not replace independent final QA.
+8. Keep Morning Work, Literacy warm-up and Shared Reading as genuinely distinct tasks and texts. Represent Guided Reading only in the timetable while its timetable-only setting remains active.
+9. Keep the Mathematics warm-up separate from prerequisite checking and the main Mathematics lesson.
+10. Assemble components in timetable order. Slide 1 is always Morning Work when Morning Work is required.
+11. Create only useful printables. Prefer books, mini-whiteboards, oral work and manipulatives when a worksheet adds no value.
+12. Create the teacher briefing and Monday weekly printing plan from the actual generated resources, not from assumptions.
+13. Run the visual-exemplar audit, then send the complete assembled pack, visual audit and component-acceptance record to `dlp-pack-qa`.
+14. If QA returns FAIL, route each defect back only to the owning component skill, revise, and re-run the full applicable QA suite. Do not patch unrelated components.
+15. Release only after critical QA checks pass.
 
 If actual printing is requested and copy quantity cannot be resolved from an authoritative source, treat quantity as unresolved rather than inventing it.
 
@@ -100,7 +116,9 @@ If actual printing is requested and copy quantity cannot be resolved from an aut
 - Shared Reading must alternate each paragraph-and-question slide with its immediately following matched answer slide; answers are not revealed early on question slides.
 - The writing lesson teaches the writing toolkit; country facts may provide context but cannot replace writing instruction.
 - Student-facing instructions must state the action, mathematical/literacy focus, any required representation or resource, and the expected student output where applicable.
+- When a task transforms supplied language, name the exact operation. For example, say `Combine the two sentences using the conjunction “because”`, not merely `Write a sentence`.
 - Student-facing task language must use words students can act on immediately. Replace or explain teacher terminology such as `classification opening`; prefer concrete wording such as `topic sentence that tells the reader what the report is about`.
+- Use accurate curriculum terminology and explain it in student-friendly language; do not replace a known grammatical term such as `conjunction` with a vague substitute such as `linking word`.
 - Teacher preparation, timing, misconceptions and answers belong in the briefing or notes, not as clutter on student task slides.
 - Warm-up slides use the established projected-readability and semantic-colour standards.
 - No generic whiteboard footer is required on warm-up slides. The Mathematics green `Why` panel is instructional content, not a generic footer instruction.
@@ -119,3 +137,15 @@ For a relief day, keep the timetable but make teacher-led sequences self-contain
 ## Release rule
 
 The orchestrator never self-certifies quality. `dlp-pack-qa` is the release authority.
+
+Run the deterministic contract audit during final QA:
+
+`python scripts/audit_pack_contract.py --deck <deck> --component-record <record.json> --out <report.json>`
+
+If the user explicitly changes the default Literacy warm-up count, also pass `--literacy-count <n>` with the authorised count.
+
+Run the mandatory visual-exemplar audit:
+
+`python scripts/audit_visual_exemplar.py --deck <deck> --out <report.json>`
+
+Any audit failure blocks release.
