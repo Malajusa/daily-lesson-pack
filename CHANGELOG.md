@@ -2,6 +2,27 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.2.0 — 26 August 2026
+
+### Added
+- Mandatory `references/universal-maths-instruction-canon.md` covering all Mathematics concept families.
+- Internal Mathematics planning contract: lesson mode, central idea, prerequisites, invariants, vocabulary, representation purpose, misconception, independent demand and exit evidence.
+- Cross-topic Mathematics regression benchmark spanning number, operations, algebra, measurement, geometry, statistics and probability.
+- Release checks for representation/language/notation correspondence, mathematically exact visuals, genuine guided practice and complete task answers.
+
+### Changed
+- Main Mathematics lessons now establish meaning before procedural shorthand and introduce one central new idea unless explicitly reviewing or consolidating.
+- `We do` slides must remain unresolved until students respond.
+- Independent Mathematics tasks must have a modelled precursor at the same conceptual, representational and reasoning demand.
+- Mathematical terminology must remain technically correct while being explained in student-friendly language.
+- Mathematics warm-ups and Morning Work retain retrieval scope while adopting the canon's accuracy, terminology, representation and answer-integrity rules.
+- Complete and component skill packages now include the universal Mathematics canon; the QA package also includes its regression benchmark.
+
+### Reliability
+- Mathematics component acceptance now requires substantiated canon checks rather than a generic `PASS`.
+- Independent pack QA blocks release for misleading models, decorative images used as evidence, answer-revealing question slides, unmodelled independent demands and incomplete answer slides.
+- Mathematics changes must be tested against at least two different concept families to prevent a fix for one topic from degrading another.
+
 ## 3.1.0 — 24 August 2026
 
 ### Changed
@@ -56,7 +77,7 @@ All significant changes to the Daily Lesson Pack skill should be recorded here.
 
 ### Changed
 - Root `SKILL.md` now owns context, routing, assembly and release decisions rather than detailed component pedagogy.
-- Complete weekly Mathematics requests are delegated to the standalone Weekly Maths Pack skill instead of being duplicated in Daily Lesson Pack.
+- Complete weekly Mathematics requests are delegated to the standalone Weekly Maths Pack skill instead of being duplicated inside Daily Lesson Pack.
 - Existing-pack audit/revision requests route through the independent QA skill.
 - Literacy warm-up default is 10 prompt/answer pairs.
 - Mathematics All / Most / Some prompts are explicitly three separate questions/tasks of increasing complexity.
