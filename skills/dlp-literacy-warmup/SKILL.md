@@ -21,6 +21,8 @@ For every sequence:
 
 The reminder should usually take about 15-30 seconds. The question should usually take about 20-45 seconds and produce visible student thinking, speaking or writing.
 
+Require one direct response only. Do not add a second demand to explain why, explain how the student knows or justify the response unless the user explicitly requests reasoning in the warm-up. Put the concise teaching explanation on the answer slide instead.
+
 ## Self-contained questions
 
 Every question must be achievable without remembering another warm-up slide.
@@ -36,11 +38,33 @@ Every question must be achievable without remembering another warm-up slide.
 
 Use direct, student-facing language. State the useful rule, not a broad teacher definition.
 
-For example, a comma reminder could say:
+For example, when teaching a simple list without an Oxford comma, a reminder could say:
 
-`Commas separate items in a list. Read the sentence and place a comma after each item except the last one.`
+`Remember: Commas separate items in a list.`
 
-Keep reminders concise enough for projection. Include one short model only when it makes the rule easier to apply.
+Place the concise applicable `Remember:` rule inside the yellow reminder panel. Put a separate short example beneath it when a model helps. Prefer showing the relevant punctuation clearly in the example over adding a long sentence that explains each insertion position.
+
+When the reminder teaches punctuation, format the target punctuation in its example in green, bold text at least 125% of the surrounding text size. Keep the punctuation in its normal sentence position.
+
+## Task-operation fidelity
+
+Name the exact operation students must perform. Match the question title, instruction and expected answer.
+
+- Say `Combine the two sentences using the conjunction “because”`, not `Write a sentence`.
+- Say `Add the missing commas and write the complete sentence` when students must add commas.
+- Say `Replace “went” with a more precise verb` when students must replace a word.
+- Do not use `write`, `fix` or `improve` alone when the intended transformation is more specific.
+
+The answer must perform exactly the named operation without silently adding another demand.
+
+## Rule and answer consistency
+
+Keep the reminder, model, question and answer within one consistent rule or convention.
+
+- Do not state a rule that contradicts the displayed example or corrected answer.
+- For list commas, do not say `place a comma after each item except the last` when the model omits the optional comma before `and` or `or`.
+- If deliberately teaching an Oxford comma or another accepted convention, name that choice and use it consistently in the model, question and answer.
+- Check that the answer performs exactly the operation requested and that its explanation describes the punctuation or language actually shown.
 
 ## Content
 
@@ -66,6 +90,16 @@ Questions must be immediately understandable to an average Year 4/5 student.
 - If a technical term is the learning target, explain it on the reminder slide and restate enough meaning on the question slide for the task to stand alone.
 - Increase thinking demand without increasing ambiguity or adult-sounding language.
 
+## Technical terminology and inverted commas
+
+Use the accurate grammatical or literacy term, then explain it plainly. Do not replace a known term with a vague substitute.
+
+- Use `conjunction`, not `linking word`, when naming words such as `and`, `but` or `because` by grammatical function.
+- Use `subordinating conjunction` when that distinction is the learning focus; otherwise `conjunction` is sufficient for a Year 4/5 warm-up.
+- Retain accurate terms such as `pronoun`, `clause`, `preposition`, `prefix`, `suffix` and `topic sentence` when they apply.
+
+Put typographic inverted commas around a literal word or phrase when discussing it as language: `Use the conjunction “because”` and `Which noun does “its” refer to?` Do not add inverted commas when the word is simply operating inside an example sentence: `The soil stays damp because the forest is humid.`
+
 ## Answer slides
 
 - Put the complete primary answer in bold, visually dominant text.
@@ -75,6 +109,7 @@ Questions must be immediately understandable to an average Year 4/5 student.
 - Add a plain-language cue such as `Added commas:` or `Changed word:` so the correction does not rely on colour alone.
 - Explain the relevant rule or meaning specifically. Do not use generic text such as `the answer matches the prompt`.
 - Do not shrink meaningful explanations into fine print.
+- Treat the exported render as the evidence of emphasis. Source code that requests green, bold or enlarged punctuation does not pass when the rendered punctuation is flattened or visually indistinguishable.
 
 ## Presentation
 
@@ -91,9 +126,18 @@ Fail if:
 - the sequence is not `Reminder -> Question -> Answer`;
 - a question depends on remembered or unavailable content;
 - a reminder reveals the exact answer rather than teaching the method;
+- a reminder lacks a concise applicable `Remember:` rule inside its yellow panel;
+- a punctuation reminder fails to highlight the target punctuation in its separate example;
 - student language is ambiguous, adult-facing or unexplained;
+- a question adds an `explain why`, `explain how you know` or `justify` demand to the direct response;
+- a question title or instruction does not name the exact operation required by the answer;
+- a sentence-combination task merely says `write a sentence`;
+- an accurate technical term is replaced by a vague label such as `linking word` for `conjunction`;
+- a word or phrase discussed as language lacks inverted commas;
 - spelling instruction has crept in;
 - an answer does not immediately follow its question;
+- a reminder, model, question and answer use conflicting rules or conventions;
 - a correction is difficult to locate;
+- inserted punctuation is not visibly green, bold and at least 125% of the surrounding size in the exported render;
 - an explanation is generic rather than teaching the relevant rule;
 - content is undersized or escapes its intended panel.
