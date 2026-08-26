@@ -22,6 +22,8 @@ SHARED_REFERENCES = (
     "references/universal-maths-instruction-canon.md",
 )
 
+UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
+
 ROOT_RUNTIME_FILES = (
     "SKILL.md",
     "VERSION",
@@ -29,7 +31,7 @@ ROOT_RUNTIME_FILES = (
     "skills/registry.json",
     *SHARED_REFERENCES,
     "examples/benchmarks/t3w6-monday-modular-regression.md",
-    "examples/benchmarks/universal-maths-canon-regression.md",
+    UNIVERSAL_MATHS_BENCHMARK,
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
 )
@@ -94,12 +96,14 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
         for reference in SHARED_REFERENCES:
             files[f"{component_root}/{reference}"] = read_required(repo, reference)
 
+        if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
+            files[f"{component_root}/{UNIVERSAL_MATHS_BENCHMARK}"] = read_required(
+                repo, UNIVERSAL_MATHS_BENCHMARK
+            )
+
         if name == "dlp-pack-qa":
-            for benchmark in (
-                "examples/benchmarks/t3w6-monday-modular-regression.md",
-                "examples/benchmarks/universal-maths-canon-regression.md",
-            ):
-                files[f"{component_root}/{benchmark}"] = read_required(repo, benchmark)
+            benchmark = "examples/benchmarks/t3w6-monday-modular-regression.md"
+            files[f"{component_root}/{benchmark}"] = read_required(repo, benchmark)
             for script in (
                 "scripts/audit_slide_typography.py",
                 "scripts/audit_panel_containment.py",
