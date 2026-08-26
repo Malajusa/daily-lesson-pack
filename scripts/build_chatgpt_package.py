@@ -3,7 +3,7 @@
 
 The repository remains the source of truth. The generated package contains the
 orchestrator, all component contracts, registration metadata, shared standards,
-the regression benchmark, runtime QA scripts and a verifiable package manifest.
+regression benchmarks, runtime QA scripts and a verifiable package manifest.
 """
 
 from __future__ import annotations
@@ -19,7 +19,10 @@ SHARED_REFERENCES = (
     "references/slide-deck-quality-standards.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
+    "references/universal-maths-instruction-canon.md",
 )
+
+UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
 
 ROOT_RUNTIME_FILES = (
     "SKILL.md",
@@ -28,6 +31,7 @@ ROOT_RUNTIME_FILES = (
     "skills/registry.json",
     *SHARED_REFERENCES,
     "examples/benchmarks/t3w6-monday-modular-regression.md",
+    UNIVERSAL_MATHS_BENCHMARK,
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
 )
@@ -91,6 +95,11 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
 
         for reference in SHARED_REFERENCES:
             files[f"{component_root}/{reference}"] = read_required(repo, reference)
+
+        if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
+            files[f"{component_root}/{UNIVERSAL_MATHS_BENCHMARK}"] = read_required(
+                repo, UNIVERSAL_MATHS_BENCHMARK
+            )
 
         if name == "dlp-pack-qa":
             benchmark = "examples/benchmarks/t3w6-monday-modular-regression.md"

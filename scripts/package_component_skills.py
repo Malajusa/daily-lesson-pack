@@ -13,7 +13,10 @@ SHARED_REFERENCES = (
     "references/slide-deck-quality-standards.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
+    "references/universal-maths-instruction-canon.md",
 )
+
+UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
 
 QA_ONLY_FILES = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
@@ -87,6 +90,11 @@ def main() -> int:
 
         for relative_path in SHARED_REFERENCES:
             package_files[relative_path] = read_required(repo, relative_path)
+
+        if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
+            package_files[UNIVERSAL_MATHS_BENCHMARK] = read_required(
+                repo, UNIVERSAL_MATHS_BENCHMARK
+            )
 
         if name == "dlp-pack-qa":
             for relative_path in QA_ONLY_FILES:

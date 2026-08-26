@@ -64,6 +64,14 @@ pedagogy. The current orchestrator and component contracts remain authoritative
 for content. If the exemplar conflicts with a current content rule, retain the
 visual grammar and rebuild the content correctly.
 
+## Mandatory Mathematics canon
+
+For every main Mathematics lesson, `dlp-maths-lesson` must read and apply `references/universal-maths-instruction-canon.md` before generation. The component must complete the canon's internal planning contract and substantiate its Mathematics acceptance checks before assembly.
+
+Mathematics warm-ups and Morning Work apply the canon's mathematical-accuracy, terminology, representation, question/answer and answer-integrity rules while remaining retrieval tasks rather than new teaching.
+
+The universal Mathematics canon does not replace the visual standards. Mathematics content must pass both the mathematical-instruction canon and the shared projected-readability, semantic-colour and panel-containment standards.
+
 ## Scope boundary
 
 Art, Japanese, Science, Music and Physical Education are specialist-led. Name their timetable block only. Do not generate lessons, slides, printables, answers, contingencies, preparation tasks or status capture for them.
@@ -93,7 +101,7 @@ If direct cross-skill invocation is unavailable, read and execute the correspond
 2. Resolve active sequence and explicit status exceptions.
 3. For an overview-controlled Term 3 day, resolve the current overview fields before component generation.
 4. Verify and load the approved visual-only exemplar, then build one shared context object containing only information the components need: lesson focus, curriculum boundary, authorised group/day allocation, current writing-toolkit stage, approved country contexts, time available and output constraints.
-5. Route each required component to its specialised skill and require a component acceptance result before assembly.
+5. Route each required component to its specialised skill and require a component acceptance result before assembly. For `dlp-maths-lesson`, require the universal Mathematics planning contract and canon checks in the acceptance evidence.
 6. Record the scheduled components and each component's `PASS` or `FAIL`, checks completed and artefact/slide range in a temporary component-acceptance record. Treat a missing record, missing scheduled component or unsubstantiated `PASS` as `FAIL`.
 7. Block assembly until every scheduled content component records `PASS`. This gate does not replace independent final QA.
 8. Keep Morning Work, Literacy warm-up and Shared Reading as genuinely distinct tasks and texts. Represent Guided Reading only in the timetable while its timetable-only setting remains active.
@@ -122,6 +130,9 @@ If actual printing is requested and copy quantity cannot be resolved from an aut
 - Teacher preparation, timing, misconceptions and answers belong in the briefing or notes, not as clutter on student task slides.
 - Warm-up slides use the established projected-readability and semantic-colour standards.
 - No generic whiteboard footer is required on warm-up slides. The Mathematics green `Why` panel is instructional content, not a generic footer instruction.
+- The main Mathematics lesson must apply the complete universal Mathematics canon, including meaning before procedure, purposeful representation, genuine guided practice, model-to-practice alignment and complete answer modelling.
+- Mathematics warm-ups and Morning Work must remain retrieval while still using exact mathematics, precise terminology and non-revealing question slides.
+- A Mathematics question requiring a model, explanation, comparison, justification, proof, label or equation must have an answer slide that demonstrates every requested element.
 
 ## Assembly outputs
 
@@ -148,4 +159,6 @@ Run the mandatory visual-exemplar audit:
 
 `python scripts/audit_visual_exemplar.py --deck <deck> --out <report.json>`
 
-Any audit failure blocks release.
+For any change affecting Mathematics pedagogy, representations, task architecture or QA, also apply `examples/benchmarks/universal-maths-canon-regression.md` to at least two different concept families before release.
+
+Any audit or applicable regression failure blocks release.
