@@ -13,10 +13,12 @@ SHARED_REFERENCES = (
     "references/slide-deck-quality-standards.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
+    "references/universal-maths-instruction-canon.md",
 )
 
 QA_ONLY_FILES = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
+    "examples/benchmarks/universal-maths-canon-regression.md",
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
 )
