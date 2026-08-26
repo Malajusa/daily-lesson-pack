@@ -82,67 +82,114 @@ Return:
 - Green `Why` panel contains reasoning, not generic checking instructions.
 - Question and answer slides match.
 - No mathematical word is split inside the word across lines. Intentional line breaks may separate an equation from a complete word, but must not produce fragments such as `quarte` / `rs`.
+- The warm-up retrieves already taught knowledge rather than introducing a new procedure.
+- Mathematical terminology, notation, diagrams, scales and representations are accurate.
+- A prompt slide does not reveal its answer through completed working, colour or an already completed model.
 
 ### Main Mathematics lesson
-- Every task states action, mathematical focus, representation/resource where required, and expected output.
-- No vague or figurative instructional shorthand.
-- Worked examples and diagrams are mathematically correct.
-- Primary answers are visually dominant.
-- Exit evidence measures the intended concept.
+
+Apply `references/universal-maths-instruction-canon.md` in full.
+
+#### Planning and scope
+- The Mathematics component acceptance record substantiates every required planning-contract check rather than recording a generic `PASS`.
+- The curriculum concept and lesson boundary are explicit.
+- The lesson is classified as concept introduction, procedure development, fluency development, reasoning, problem solving or review/assessment.
+- Unless explicitly review, consolidation or extension, the lesson introduces one central new mathematical idea rather than several substantial new concepts.
+- Focused prerequisite retrieval is distinct from the cumulative Mathematics warm-up.
+
+#### Mathematical meaning and language
+- A newly introduced procedure is grounded in quantities, units, properties or relationships before procedural shorthand is used.
+- The explanation identifies what changes and what remains invariant where relevant.
+- Accurate technical vocabulary is introduced with a plain-language explanation and is not replaced by vague labels such as `top number`, `bottom number`, `answer number` or `times number`.
+- Notation is conventional, readable and internally consistent. Question numbering cannot be misread as part of a decimal, fraction, coefficient or mixed number.
+
+#### Representations
+- Every representation has a stated mathematical purpose and reveals the intended structure.
+- Visuals, verbal explanations and equations represent the same quantities, units and relationships.
+- The correspondence between representations is made explicit.
+- Quantities, labels, scales, equal intervals, partitions, coordinates, dimensions, geometric properties, graph values and sample-space outcomes are verified as applicable.
+- Decorative mathematical imagery does not substitute for a model.
+- A photograph is not used as mathematical evidence unless its quantity, partition, scale and perspective are exact.
+- Semantic colour is consistent across corresponding quantities and is not the only cue.
+
+#### Teaching sequence and gradual release
+- For a new or fragile concept, meaning and a complete model precede guided and independent work.
+- During concept introduction or procedure development, students normally make an observable response after no more than two consecutive explanation/model slides unless an explicit instruction requires another structure.
+- A `We do` slide genuinely requires student participation and does not already display the completed answer, final landing point, completed model or all working.
+- Scaffolds fade deliberately rather than disappearing between a fully completed model and unsupported independent work.
+
+#### Model-to-practice alignment
+- The hardest independent task has a clear modelled precursor.
+- Independent demand aligns in concept, operation or relationship, representation, number type, number of steps, strategy selection, language demand, reasoning demand and expected output.
+- An unmodelled operation, representation, complexity or reasoning demand is either removed or explicitly identified as extension.
+
+#### Task and answer integrity
+- Every task states the action, mathematical focus, representation/resource where required and expected output.
+- No vague or figurative instructional shorthand is used.
+- A question slide does not reveal the answer through completed working, answer-coloured objects, final landing points, completed models or teaching-only cues.
+- The answer addresses every command in the prompt, including any requirement to explain, compare, justify, label, prove, draw or write an equation.
+- The requested strategy or representation is modelled on the answer slide.
+- Valid alternative methods or answers are acknowledged where relevant.
+- The primary answer and meaningful mathematical change are visually dominant.
+
+#### Variation, misconceptions and demand
+- Practice uses purposeful variation rather than random surface changes.
+- Examples and non-examples differ in a mathematically meaningful way.
+- Any misconception uses plausible student reasoning and the correction identifies the mistaken assumption, violated property/relationship and correct reasoning.
+- A calculation, reasoning task and problem-solving task are labelled according to their actual demand.
+- A routine worded calculation is not presented as problem solving solely because it has a context.
+
+#### Exit evidence
+- Exit evidence measures the intended mathematical concept rather than only the ability to copy a representation or follow a displayed procedure.
+- The exit task does not introduce a new conceptual demand.
+
+Any failure in this section blocks release and is routed to `dlp-maths-lesson`.
 
 ## Visual QA
 
 Apply the repository standards:
-- `references/slide-deck-quality-standards.md`
-- `references/semantic-colour-standard.md`
-- `references/panel-containment-standard.md`
-- `../../references/visual-exemplar-standard.md`
+- `references/universal-maths-instruction-canon.md` for Mathematics content;
+- `references/slide-deck-quality-standards.md`;
+- `references/semantic-colour-standard.md`;
+- `references/panel-containment-standard.md`;
+- `../../references/visual-exemplar-standard.md` where that approved exemplar is available.
 
 ### Visual-exemplar fidelity gate
 
-Treat the approved edited Tuesday deck as a visual-only benchmark. Require the
-assembled deck to retain:
+Treat the approved edited Tuesday deck as a visual-only benchmark. Require the assembled deck to retain:
 
 - the full-height 16 px left rail on every projected slide;
-- amber reminder/model slides, blue question/task slides and green
-  answer/model slides;
+- amber reminder/model slides, blue question/task slides and green answer/model slides;
 - compact uppercase eyebrows plus a clear, larger slide title;
-- a dominant main panel and deliberately subordinate cue, explanation or
-  reasoning areas rather than a generic repeated navy frame;
+- a dominant main panel and deliberately subordinate cue, explanation or reasoning areas rather than a generic repeated navy frame;
 - Trebuchet MS as the dominant teaching-deck typeface;
 - comparable canvas use, padding, hierarchy and projected legibility.
 
-Content and pedagogy must come from the current component contracts, not from
-the exemplar. A deck that copies a documented exemplar content error fails even
-when it looks faithful.
+Content and pedagogy must come from the current component contracts, not from the exemplar. A deck that copies a documented exemplar content error fails even when it looks faithful.
 
 Where scripts are available, run:
-- `python scripts/audit_pack_contract.py --deck <deck> --component-record <record.json> --out <report.json>`
-- If the user explicitly changed the default Literacy warm-up count, add `--literacy-count <n>` with the authorised count.
-- `python scripts/audit_slide_typography.py --deck <deck> --out <report.json>`
-- `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`
-- `python scripts/audit_visual_exemplar.py --deck <deck> --out <report.json>`
+- `python scripts/audit_pack_contract.py --deck <deck> --component-record <record.json> --out <report.json>`;
+- if the user explicitly changed the default Literacy warm-up count, add `--literacy-count <n>` with the authorised count;
+- `python scripts/audit_slide_typography.py --deck <deck> --out <report.json>`;
+- `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`;
+- `python scripts/audit_visual_exemplar.py --deck <deck> --out <report.json>` where available.
 
 Automated checks are screening tools. Render and inspect the final deck at full size. Any text that crosses or visually escapes its intended coloured, shaded or bordered panel blocks release. A filled instructional text panel with less than the required internal margin also blocks release. A panel-heavy deck receiving zero meaningful panel/text pair coverage fails the automated audit; do not treat that result as a clean geometry pass.
 
-For Morning Work, also fail a slide that technically contains all text but is
-visually crowded, repeats low-value chrome, or divides a short independent task
-into too many competing cards. For warm-ups, inspect automatic wrapping at the
-character level; a broken mathematical word is a release-blocking defect even
-when the geometry scripts report no overflow.
+For Morning Work, also fail a slide that technically contains all text but is visually crowded, repeats low-value chrome, or divides a short independent task into too many competing cards. For warm-ups, inspect automatic wrapping at the character level; a broken mathematical word is a release-blocking defect even when the geometry scripts report no overflow.
 
 ## Classroom-feedback regression record
 
-Use all regression records whenever a change affects the orchestrator, component skills, warm-up architecture, Guided Reading scope, Shared Reading structure, student-facing language, Mathematics instructional language, projected typography, semantic colour, panel containment or release QA:
+Use all relevant regression records whenever a change affects the orchestrator, component skills, warm-up architecture, Guided Reading scope, Shared Reading structure, student-facing language, Mathematics instructional language, mathematical representations, projected typography, semantic colour, panel containment or release QA:
 
-- `examples/benchmarks/t3w6-monday-modular-regression.md`
-- `examples/benchmarks/t3w6-tuesday-release-regression.md`
-- `examples/benchmarks/t3w6-thursday-literacy-regression.md`
+- `examples/benchmarks/t3w6-monday-modular-regression.md`;
+- `examples/benchmarks/t3w6-tuesday-release-regression.md` where available;
+- `examples/benchmarks/t3w6-thursday-literacy-regression.md`;
+- `examples/benchmarks/universal-maths-canon-regression.md`.
 
-The PPTX referenced by `t3w6-tuesday-release-regression.md` remains rejected.
-It is a different file from the later edited Tuesday visual exemplar. Reject
-the old deck's documented failures while using the exact edited exemplar hash
-listed in `../../references/visual-exemplar-standard.md` for visual fidelity.
+For a change affecting Mathematics pedagogy, representations, task architecture or QA, test at least two representative prompts from different concept families in `universal-maths-canon-regression.md`. A change fails if it improves one concept family while breaking the universal requirements in another.
+
+The PPTX referenced by `t3w6-tuesday-release-regression.md` remains rejected where that benchmark is available. It is a different file from the later edited Tuesday visual exemplar. Reject the old deck's documented failures while using the exact edited exemplar hash listed in `../../references/visual-exemplar-standard.md` for visual fidelity where those assets are present.
 
 ## Regression rule
 
