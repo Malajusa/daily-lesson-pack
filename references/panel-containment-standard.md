@@ -140,7 +140,7 @@ The script is a screening and blocking geometry check. It should:
 - report suspected panel/text pairs for full-size review;
 - distinguish hard geometric failures from ambiguous heuristic matches.
 
-A hard geometric failure blocks release.
+A hard geometric failure blocks release. Audit coverage is also a release condition: when a deck contains panels across at least three slides and at least five candidate panels overall, a result of zero paired text boxes is an ineffective audit, not a pass. Repair the panel/text ownership or pairing logic and rerun the audit.
 
 ## Render-level inspection
 

@@ -1,0 +1,24 @@
+{
+  "version": "3.4.0",
+  "created": "2026-08-27",
+  "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
+  "base_commit": "59a2516ec7f97d931c72c85f8825792781b6fc3c",
+  "reconciled_sources": [
+    {
+      "line": "git-3.2.0",
+      "commits": [
+        "0a04c8d",
+        "59a2516"
+      ],
+      "contribution": "Literacy task precision, deterministic contract audit and universal Mathematics canon"
+    },
+    {
+      "line": "validated-supplied-3.3.0",
+      "archive_sha256": "7483F37D41FFE605FE79855491F07A71022E173D0382BDF5F3EF00EC256FFA3A",
+      "contribution": "Classroom-feedback contracts, Tuesday regression record, presentation audits and UI metadata"
+    }
+  ],
+  "intentional_removals": [
+    "Mandatory visual-exemplar contract whose standard, audit script and PPTX were absent from every available source"
+  ]
+}

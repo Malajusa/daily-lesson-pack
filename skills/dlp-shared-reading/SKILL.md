@@ -34,6 +34,15 @@ Use student-friendly questions appropriate to the class. Across the sequence, va
 
 Do not make every question an inference. Do not use unnecessarily formal wording. The student should know exactly which paragraph provides the evidence.
 
+## Evidence boundary
+
+Keep every question, slide title and model answer within the information supported by the displayed paragraph.
+
+- A literal answer must be stated or directly paraphrasable from that paragraph.
+- An inference must follow reasonably from explicit clues in that paragraph; the model answer should identify the clue-to-conclusion connection.
+- Do not add an unstated cause, number, geographic relationship or historical claim merely because it may be true elsewhere.
+- Use precise relationships. For example, waterways may define boundaries or influence settlement and transport; do not say they influenced a country's location unless the paragraph actually establishes that claim.
+
 ## Colour
 
 Colour may connect a question to a relevant word, phrase or textual feature, but layout separation remains primary. Do not highlight so much text that the cue loses meaning. Remove teaching-only evidence cues when students are meant to locate evidence independently.
@@ -43,6 +52,8 @@ Colour may connect a question to a relevant word, phrase or textual feature, but
 Fail if:
 - a slide has more than one question;
 - a question is not about the displayed paragraph;
+- a title, question or answer asserts information not supported by the displayed paragraph;
+- an inference is not reasonably supported by explicit clues in the paragraph;
 - a question slide is not immediately followed by its matched answer slide;
 - an answer is missing, incomplete or mismatched to the immediately preceding question;
 - an answer slide introduces a new paragraph, new question or unrelated content;

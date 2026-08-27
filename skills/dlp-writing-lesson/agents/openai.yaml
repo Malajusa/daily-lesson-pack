@@ -2,3 +2,10 @@ interface:
   display_name: "DLP Writing Lesson"
   short_description: "Create explicit information-report lessons"
   default_prompt: "Use $dlp-writing-lesson to create the scheduled Information Report writing lesson."
+policy:
+  products:
+  - "chatgpt"
+  - "codex"
+  - "api"
+  - "atlas"
+  allow_implicit_invocation: true

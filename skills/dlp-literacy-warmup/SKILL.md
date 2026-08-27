@@ -21,7 +21,14 @@ For every sequence:
 
 The reminder should usually take about 15-30 seconds. The question should usually take about 20-45 seconds and produce visible student thinking, speaking or writing.
 
-Require one direct response only. Do not add a second demand to explain why, explain how the student knows or justify the response unless the user explicitly requests reasoning in the warm-up. Put the concise teaching explanation on the answer slide instead.
+## Response load
+
+Require exactly **one student action and one response** on each question slide unless the user explicitly requests reasoning in the warm-up.
+
+- Do not ask students to answer and then explain, justify, give a reason, name supporting evidence or complete another action.
+- For a choice question, ask students only to select or write the option. Put any concise rationale on the following answer slide.
+- Keep the response brief enough for rapid retrieval. Move sustained reasoning or discussion to the main lesson.
+- Do not treat an instruction such as `Write A or B and explain why` as one task. It contains two student actions and must be simplified.
 
 ## Self-contained questions
 
@@ -81,6 +88,26 @@ Use high-leverage literacy retrieval and language work such as:
 
 Do not turn morphology into a Sound Waves-style spelling drill. Exclude spelling lists, phonics, grapheme/sound drills, dictated words and Sound Waves replacement content.
 
+## Multiple-choice quality
+
+Use multiple choice only when every distractor is credible enough to test the target distinction.
+
+- Keep options grammatically parallel and reasonably similar in length, detail and tone.
+- Base distractors on a plausible Year 4/5 misconception or incomplete understanding.
+- Do not pair the correct answer with a joke, vague throwaway, subjective claim or option that can be rejected without applying the reminder.
+- If a credible distractor cannot be written, replace the item with a direct production, correction, matching or selection task.
+- Ask only for the selected option. Explain the distinction on the answer slide rather than requiring students to justify their selection.
+
+## Precision and teacher explainability
+
+Do not label a replacement `more precise` merely because it is more formal, technical or less familiar.
+
+Use a precision comparison only when the original wording is genuinely broad in context, the replacement adds one defensible semantic feature while preserving the core meaning, and the distinction can be explained accurately in one short prepared sentence.
+
+Reject comparisons that create a reasonable synonym debate. In particular, do not present `rotate` as automatically more precise than `turn`; both can accurately describe a propeller's movement. Teach a technical term through a clear definition when appropriate without manufacturing a precision hierarchy.
+
+Supply the defensible explanation on the answer slide or in teacher notes. Do not require the teacher to invent a semantic defence during the lesson.
+
 ## Student-facing language
 
 Questions must be immediately understandable to an average Year 4/5 student.
@@ -108,6 +135,7 @@ Put typographic inverted commas around a literal word or phrase when discussing 
 - For word or phrase replacements, show the changed wording in green and bold where that makes the correction easier to locate.
 - Add a plain-language cue such as `Added commas:` or `Changed word:` so the correction does not rely on colour alone.
 - Explain the relevant rule or meaning specifically. Do not use generic text such as `the answer matches the prompt`.
+- Keep this explanation teacher/class-facing; do not turn it into a second student response requirement on the preceding question slide.
 - Do not shrink meaningful explanations into fine print.
 - Treat the exported render as the evidence of emphasis. Source code that requests green, bold or enlarged punctuation does not pass when the rendered punctuation is flattened or visually indistinguishable.
 
@@ -130,11 +158,14 @@ Fail if:
 - a punctuation reminder fails to highlight the target punctuation in its separate example;
 - student language is ambiguous, adult-facing or unexplained;
 - a question adds an `explain why`, `explain how you know` or `justify` demand to the direct response;
+- a question requires more than one student action or response;
 - a question title or instruction does not name the exact operation required by the answer;
 - a sentence-combination task merely says `write a sentence`;
 - an accurate technical term is replaced by a vague label such as `linking word` for `conjunction`;
 - a word or phrase discussed as language lacks inverted commas;
 - spelling instruction has crept in;
+- a multiple-choice distractor is implausible, structurally unmatched or obviously wrong without applying the target rule;
+- a claimed precision distinction changes meaning, is reasonably debatable or lacks a prepared defensible explanation;
 - an answer does not immediately follow its question;
 - a reminder, model, question and answer use conflicting rules or conventions;
 - a correction is difficult to locate;

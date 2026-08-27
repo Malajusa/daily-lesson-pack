@@ -49,6 +49,8 @@ Do not replace an everyday word with a more technical word merely because the re
 - Avoid generic explanations such as `names the living place`, `sounds scientific` or `is more precise`.
 - A useful explanation identifies the distinction, such as: `Habitat names the place where an organism lives and gets what it needs.`
 - Model the technical word in a complete factual sentence so students can see its accurate use.
+- When presenting a controlled vocabulary improvement, preserve the sentence's core proposition and change only the intended precision. If the revision adds several new facts, label and teach it as elaboration rather than as a simple word replacement.
+- Keep definitions and model sentences natural and non-redundant; the technical term must improve accuracy rather than merely repeat the same idea in more formal words.
 
 When comparing everyday and technical wording, use no more than two substantial comparison rows on one projected slide. Split longer comparisons across slides so the term, meaning, example and explanation remain readable.
 
@@ -66,6 +68,7 @@ Fail if:
 - factual research has replaced writing instruction;
 - task-critical terminology is unexplained or teacher-facing;
 - a technical-word substitution changes or broadens the original meaning;
+- a model presented as a vocabulary substitution actually changes the core proposition or adds several unacknowledged facts;
 - a `why it is more precise` explanation does not state the specific information added;
 - a comparison table is too dense for projection;
 - text crosses or visually escapes its intended panel.

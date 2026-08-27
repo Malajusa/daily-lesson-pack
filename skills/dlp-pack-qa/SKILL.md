@@ -35,6 +35,7 @@ Return:
 - 10 `Reminder -> Question -> Answer` sequences unless explicitly overridden.
 - Every question contains all information needed to answer it and does not depend on another slide.
 - Every question requires one direct response only; the answer slide supplies the concise teaching explanation. Fail an added `explain why`, `explain how you know` or `justify` demand unless the user explicitly requested reasoning.
+- In a choice task, students select only the option; any concise rationale belongs on the answer slide.
 - Every reminder teaches the method with a different example and does not reveal the next answer.
 - Every reminder places a concise applicable `Remember:` rule inside its yellow panel. A punctuation reminder uses a separate example with the target punctuation green, bold and at least 125% of the surrounding size.
 - No spelling/Sound Waves replacement content.
@@ -46,6 +47,9 @@ Return:
 - The question title and instruction name the exact operation demonstrated by the answer. A sentence-combination task must say `combine` or `join`; `write a sentence` is insufficient.
 - Use accurate curriculum terminology with a plain-language explanation. Fail vague substitutions such as `linking word` when `conjunction` is the correct grammatical term.
 - Put inverted commas around a literal word or phrase when it is being discussed as language, while leaving the same word unquoted when it operates normally inside an example sentence.
+- Multiple-choice options are grammatically parallel and similar enough in length, detail and tone that every distractor is plausible until the target rule is applied. Replace the item if a credible distractor cannot be written.
+- A word described as `more precise` adds a clear, defensible semantic feature while preserving the original meaning. Formality, technicality or unfamiliarity alone is not precision.
+- Reject debatable synonym rankings, including presenting `rotate` as automatically more precise than `turn` for a propeller. The supplied answer explanation must be sufficient; the teacher must not need to invent a semantic defence.
 - Each reminder, model, question, answer and explanation uses the same rule or convention.
 - A list-comma reminder must not require a comma after every non-final item while its model or answer omits the optional comma before `and` or `or`.
 
@@ -151,28 +155,13 @@ Apply the repository standards:
 - `references/universal-maths-instruction-canon.md` for Mathematics content;
 - `references/slide-deck-quality-standards.md`;
 - `references/semantic-colour-standard.md`;
-- `references/panel-containment-standard.md`;
-- `../../references/visual-exemplar-standard.md` where that approved exemplar is available.
-
-### Visual-exemplar fidelity gate
-
-Treat the approved edited Tuesday deck as a visual-only benchmark. Require the assembled deck to retain:
-
-- the full-height 16 px left rail on every projected slide;
-- amber reminder/model slides, blue question/task slides and green answer/model slides;
-- compact uppercase eyebrows plus a clear, larger slide title;
-- a dominant main panel and deliberately subordinate cue, explanation or reasoning areas rather than a generic repeated navy frame;
-- Trebuchet MS as the dominant teaching-deck typeface;
-- comparable canvas use, padding, hierarchy and projected legibility.
-
-Content and pedagogy must come from the current component contracts, not from the exemplar. A deck that copies a documented exemplar content error fails even when it looks faithful.
+- `references/panel-containment-standard.md`.
 
 Where scripts are available, run:
 - `python scripts/audit_pack_contract.py --deck <deck> --component-record <record.json> --out <report.json>`;
 - if the user explicitly changed the default Literacy warm-up count, add `--literacy-count <n>` with the authorised count;
 - `python scripts/audit_slide_typography.py --deck <deck> --out <report.json>`;
-- `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`;
-- `python scripts/audit_visual_exemplar.py --deck <deck> --out <report.json>` where available.
+- `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`.
 
 Automated checks are screening tools. Render and inspect the final deck at full size. Any text that crosses or visually escapes its intended coloured, shaded or bordered panel blocks release. A filled instructional text panel with less than the required internal margin also blocks release. A panel-heavy deck receiving zero meaningful panel/text pair coverage fails the automated audit; do not treat that result as a clean geometry pass.
 
@@ -183,13 +172,13 @@ For Morning Work, also fail a slide that technically contains all text but is vi
 Use all relevant regression records whenever a change affects the orchestrator, component skills, warm-up architecture, Guided Reading scope, Shared Reading structure, student-facing language, Mathematics instructional language, mathematical representations, projected typography, semantic colour, panel containment or release QA:
 
 - `examples/benchmarks/t3w6-monday-modular-regression.md`;
-- `examples/benchmarks/t3w6-tuesday-release-regression.md` where available;
+- `examples/benchmarks/t3w6-tuesday-release-regression.md`;
 - `examples/benchmarks/t3w6-thursday-literacy-regression.md`;
 - `examples/benchmarks/universal-maths-canon-regression.md`.
 
 For a change affecting Mathematics pedagogy, representations, task architecture or QA, test at least two representative prompts from different concept families in `universal-maths-canon-regression.md`. A change fails if it improves one concept family while breaking the universal requirements in another.
 
-The PPTX referenced by `t3w6-tuesday-release-regression.md` remains rejected where that benchmark is available. It is a different file from the later edited Tuesday visual exemplar. Reject the old deck's documented failures while using the exact edited exemplar hash listed in `../../references/visual-exemplar-standard.md` for visual fidelity where those assets are present.
+The Tuesday record is an approved minimum standard for Morning Work, Literacy warm-up and Shared Reading architecture, with explicit Literacy exclusions. Retain its approved characteristics while rejecting the unclear combine instruction, multiple-response prompts, weak distractors and contestable precision claim documented in that record.
 
 ## Regression rule
 

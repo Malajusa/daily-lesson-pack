@@ -2,3 +2,10 @@ interface:
   display_name: "DLP Mathematics Lesson"
   short_description: "Create explicit verified mathematics lessons"
   default_prompt: "Use $dlp-maths-lesson to create the main verified Mathematics teaching sequence."
+policy:
+  products:
+  - "chatgpt"
+  - "codex"
+  - "api"
+  - "atlas"
+  allow_implicit_invocation: true

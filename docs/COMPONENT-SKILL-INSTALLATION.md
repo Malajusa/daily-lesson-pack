@@ -16,7 +16,7 @@ Run:
 python scripts/build_chatgpt_package.py
 ```
 
-This creates `dist/chatgpt/daily-lesson-pack.zip`, containing the parent orchestrator, all eight component contracts, registration metadata, shared presentation standards, the approved regression benchmark, both runtime QA scripts and a SHA-256 package manifest. The build is deterministic: unchanged source produces the same ZIP hash.
+This creates `dist/chatgpt/daily-lesson-pack.zip`, containing the parent orchestrator, all eight component contracts, registration metadata, UI icon, shared presentation and Mathematics standards, all four regression records, three runtime deck-audit scripts, a package-dependency audit and a SHA-256 package manifest. The build is deterministic: unchanged source produces the same ZIP hash.
 
 ## Preferred registration
 
@@ -61,7 +61,7 @@ Each individual ZIP is self-contained. It includes:
 - `PACKAGE.json`;
 - the shared projected-readability, semantic-colour and panel-containment references used by the modular system.
 
-`dlp-pack-qa.zip` also includes the approved T3W6 Monday regression benchmark and both runtime QA scripts because its QA contract references them directly.
+`dlp-pack-qa.zip` also includes the superseded Monday diagnostic record, the approved-with-exclusions Tuesday component record, the Thursday Literacy record, the universal Mathematics benchmark and all three runtime deck-audit scripts because its QA contract references them directly.
 
 The combined ZIP contains all eight installable packages plus the component registry.
 
@@ -78,7 +78,7 @@ When changing one component:
 1. edit only that component unless a cross-component invariant genuinely changed;
 2. run its local checks;
 3. run `dlp-pack-qa` across the assembled pack;
-4. compare against `examples/benchmarks/t3w6-monday-modular-regression.md` when applicable;
+4. compare against every applicable record in `examples/benchmarks/`, treating the Monday record as diagnostic and the Tuesday record as approved only within its explicit exclusions;
 5. rebuild the component packages;
 6. update the registered copy of only the changed skill where the host supports separate registration.
 

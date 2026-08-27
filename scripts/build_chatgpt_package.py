@@ -15,23 +15,33 @@ import zipfile
 from pathlib import Path
 
 
-SHARED_REFERENCES = (
+COMMON_REFERENCES = (
     "references/slide-deck-quality-standards.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
-    "references/universal-maths-instruction-canon.md",
 )
 
+MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
 UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
+REGRESSION_BENCHMARKS = (
+    "examples/benchmarks/t3w6-monday-modular-regression.md",
+    "examples/benchmarks/t3w6-tuesday-release-regression.md",
+    "examples/benchmarks/t3w6-thursday-literacy-regression.md",
+    UNIVERSAL_MATHS_BENCHMARK,
+)
 
 ROOT_RUNTIME_FILES = (
     "SKILL.md",
     "VERSION",
+    "RELEASE-PROVENANCE.json",
     "agents/openai.yaml",
+    "assets/icon.svg",
     "skills/registry.json",
-    *SHARED_REFERENCES,
-    "examples/benchmarks/t3w6-monday-modular-regression.md",
-    UNIVERSAL_MATHS_BENCHMARK,
+    *COMMON_REFERENCES,
+    MATH_REFERENCE,
+    *REGRESSION_BENCHMARKS,
+    "scripts/audit_package_dependencies.py",
+    "scripts/audit_pack_contract.py",
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
 )
@@ -61,13 +71,15 @@ def read_required(repo: Path, relative_path: str) -> bytes:
     return source.read_bytes()
 
 
-def package_json(component: dict[str, str], version: str) -> bytes:
+def package_json(
+    component: dict[str, str], version: str, references: tuple[str, ...]
+) -> bytes:
     payload = {
         "name": component["name"],
         "entrypoint": "SKILL.md",
         "source": component["entrypoint"],
         "owner": component["owner"],
-        "shared_references": list(SHARED_REFERENCES),
+        "shared_references": list(references),
         "daily_lesson_pack_version": version,
     }
     return (json.dumps(payload, indent=2) + "\n").encode("utf-8")
@@ -87,13 +99,19 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
             raise ValueError(f"Skill name mismatch in {entrypoint}: expected {name}")
 
         component_root = f"skills/{name}"
+        component_references = COMMON_REFERENCES
+        if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
+            component_references = (*COMMON_REFERENCES, MATH_REFERENCE)
+
         files[f"{component_root}/SKILL.md"] = skill_text
-        files[f"{component_root}/PACKAGE.json"] = package_json(component, version)
+        files[f"{component_root}/PACKAGE.json"] = package_json(
+            component, version, component_references
+        )
         files[f"{component_root}/agents/openai.yaml"] = read_required(
             repo, f"{component_root}/agents/openai.yaml"
         )
 
-        for reference in SHARED_REFERENCES:
+        for reference in component_references:
             files[f"{component_root}/{reference}"] = read_required(repo, reference)
 
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
@@ -102,9 +120,10 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
             )
 
         if name == "dlp-pack-qa":
-            benchmark = "examples/benchmarks/t3w6-monday-modular-regression.md"
-            files[f"{component_root}/{benchmark}"] = read_required(repo, benchmark)
+            for benchmark in REGRESSION_BENCHMARKS:
+                files[f"{component_root}/{benchmark}"] = read_required(repo, benchmark)
             for script in (
+                "scripts/audit_pack_contract.py",
                 "scripts/audit_slide_typography.py",
                 "scripts/audit_panel_containment.py",
             ):

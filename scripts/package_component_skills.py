@@ -9,17 +9,21 @@ import zipfile
 from pathlib import Path
 
 
-SHARED_REFERENCES = (
+COMMON_REFERENCES = (
     "references/slide-deck-quality-standards.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
-    "references/universal-maths-instruction-canon.md",
 )
 
+MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
 UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
 
 QA_ONLY_FILES = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
+    "examples/benchmarks/t3w6-tuesday-release-regression.md",
+    "examples/benchmarks/t3w6-thursday-literacy-regression.md",
+    UNIVERSAL_MATHS_BENCHMARK,
+    "scripts/audit_pack_contract.py",
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
 )
@@ -69,6 +73,10 @@ def main() -> int:
         if f"name: {name}".encode("utf-8") not in skill_text:
             raise ValueError(f"Skill name mismatch in {entrypoint}: expected {name}")
 
+        component_references = COMMON_REFERENCES
+        if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
+            component_references = (*COMMON_REFERENCES, MATH_REFERENCE)
+
         package_files: dict[str, bytes] = {
             "SKILL.md": skill_text,
             "agents/openai.yaml": read_required(repo, f"skills/{name}/agents/openai.yaml"),
@@ -79,7 +87,7 @@ def main() -> int:
                         "entrypoint": "SKILL.md",
                         "source": entrypoint,
                         "owner": component["owner"],
-                        "shared_references": list(SHARED_REFERENCES),
+                        "shared_references": list(component_references),
                         "daily_lesson_pack_version": version,
                     },
                     indent=2,
@@ -88,7 +96,7 @@ def main() -> int:
             ).encode("utf-8"),
         }
 
-        for relative_path in SHARED_REFERENCES:
+        for relative_path in component_references:
             package_files[relative_path] = read_required(repo, relative_path)
 
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:

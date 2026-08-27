@@ -2,3 +2,10 @@ interface:
   display_name: "DLP Morning Work"
   short_description: "Create independent classroom morning work"
   default_prompt: "Use $dlp-morning-work to create the independent opening task for a Daily Lesson Pack."
+policy:
+  products:
+  - "chatgpt"
+  - "codex"
+  - "api"
+  - "atlas"
+  allow_implicit_invocation: true

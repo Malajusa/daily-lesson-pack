@@ -5,6 +5,7 @@ The audit is intentionally conservative:
 - hard failures are reported when a plausible panel/text pairing is strong and
   the text box crosses the panel boundary;
 - inadequate margins on filled instructional text panels are hard failures;
+- severe estimated text-fit overflow inside filled instructional panels is a hard failure;
 - padding problems on explicitly owned panel/text pairs are hard failures;
 - ambiguous spatial pairings are reported for human review.
 
@@ -16,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Optional
@@ -29,6 +31,8 @@ DEFAULT_PADDING_IN = 0.15
 MAX_PANEL_SLIDE_AREA = 0.92
 MIN_PAIR_OVERLAP = 0.45
 STRONG_PAIR_OVERLAP = 0.75
+MIN_PANEL_HEAVY_SLIDES = 3
+MIN_PANEL_HEAVY_COUNT = 5
 PANEL_NAME_TOKENS = (
     "panel", "card", "footer", "box", "callout", "banner",
     "all_", "most_", "some_", "why_", "question_", "answer_",
@@ -184,6 +188,43 @@ def containment_metrics(text_box, panel_box, padding):
     }
 
 
+def estimate_filled_panel_text_fit(shape):
+    """Return a conservative rendered-height estimate for a filled text panel."""
+    text_frame = shape.text_frame
+    inner_width = shape.width - text_frame.margin_left - text_frame.margin_right
+    inner_height = shape.height - text_frame.margin_top - text_frame.margin_bottom
+    if inner_width <= 0 or inner_height <= 0:
+        return None
+
+    inner_width_pt = inner_width / 12700
+    inner_height_pt = inner_height / 12700
+    estimated_height_pt = 0.0
+    measured_paragraphs = 0
+
+    for paragraph in text_frame.paragraphs:
+        text = paragraph.text.strip()
+        if not text:
+            continue
+        runs = [run for run in paragraph.runs if run.text]
+        explicit_sizes = [run.font.size.pt for run in runs if run.font.size is not None]
+        if not explicit_sizes:
+            continue
+        measured_paragraphs += 1
+        default_size = max(explicit_sizes)
+        estimated_width_pt = sum(
+            len(run.text) * (run.font.size.pt if run.font.size is not None else default_size) * 0.5
+            for run in runs
+        )
+        wrapped_lines = max(1, math.ceil(estimated_width_pt / inner_width_pt))
+        estimated_height_pt += wrapped_lines * default_size * 1.2
+
+    if measured_paragraphs == 0:
+        return None
+    return {
+        "estimated_height_pt": round(estimated_height_pt, 1),
+        "available_height_pt": round(inner_height_pt, 1),
+        "estimated_fill_ratio": round(estimated_height_pt / inner_height_pt, 3),
+    }
 def choose_panel(text_shape, panels, text_index, indices):
     text_box = bbox(text_shape)
     text_name = name_of(text_shape)
@@ -259,6 +300,17 @@ def audit_slide(slide, slide_no, slide_width, slide_height, padding_in):
                         for key, value in margins.items()
                     },
                 })
+            text_fit = estimate_filled_panel_text_fit(text_shape)
+            if text_fit and text_fit["estimated_fill_ratio"] > 1.70:
+                issues.append({
+                    "severity": "fail",
+                    "code": "internal_panel_text_fit_risk",
+                    "slide": slide_no,
+                    "shape": name_of(text_shape),
+                    "text": text_of(text_shape)[:160],
+                    "message": "Estimated wrapped text height substantially exceeds the filled panel's usable height.",
+                    **text_fit,
+                })
 
         panel, metadata = choose_panel(text_shape, panels, indices[id(text_shape)], indices)
         if panel is None:
@@ -324,20 +376,49 @@ def main():
         audit_slide(slide, index, presentation.slide_width, presentation.slide_height, args.padding_in)
         for index, slide in enumerate(presentation.slides, 1)
     ]
+    candidate_panels = sum(result["candidate_panels"] for result in results)
+    panel_slides = sum(result["candidate_panels"] > 0 for result in results)
+    paired_text_boxes = sum(result["paired_text_boxes"] for result in results)
+    coverage_issues = []
+    if (
+        candidate_panels >= MIN_PANEL_HEAVY_COUNT
+        and panel_slides >= MIN_PANEL_HEAVY_SLIDES
+        and paired_text_boxes == 0
+    ):
+        coverage_issues.append({
+            "severity": "fail",
+            "code": "ineffective_panel_audit_coverage",
+            "message": (
+                "The deck is panel-heavy but the audit paired zero text boxes "
+                "with containing panels; containment was not meaningfully tested."
+            ),
+            "candidate_panels": candidate_panels,
+            "panel_slides": panel_slides,
+            "paired_text_boxes": paired_text_boxes,
+        })
+
     summary = {
         "slides": len(results),
         "fail": sum(result["status"] == "fail" for result in results),
         "warning": sum(result["status"] == "warning" for result in results),
         "pass": sum(result["status"] == "pass" for result in results),
-        "paired_text_boxes": sum(result["paired_text_boxes"] for result in results),
+        "candidate_panels": candidate_panels,
+        "panel_slides": panel_slides,
+        "paired_text_boxes": paired_text_boxes,
+        "coverage_failures": len(coverage_issues),
     }
-    overall = "fail" if summary["fail"] else "warning" if summary["warning"] else "pass"
+    overall = (
+        "fail" if summary["fail"] or coverage_issues
+        else "warning" if summary["warning"]
+        else "pass"
+    )
     report = {
         "deck": args.deck,
         "overall_status": overall,
         "padding_in": args.padding_in,
         "summary": summary,
         "results": results,
+        "coverage_issues": coverage_issues,
         "note": "Geometry screening only. Spatial pairings without explicit ownership are heuristic. Render-level inspection is mandatory.",
     }
 

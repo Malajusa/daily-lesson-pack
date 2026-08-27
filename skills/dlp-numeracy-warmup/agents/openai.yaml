@@ -2,3 +2,10 @@ interface:
   display_name: "DLP Numeracy Warm-up"
   short_description: "Create tiered cumulative numeracy warm-ups"
   default_prompt: "Use $dlp-numeracy-warmup to create ten All, Most and Some numeracy retrieval rounds."
+policy:
+  products:
+  - "chatgpt"
+  - "codex"
+  - "api"
+  - "atlas"
+  allow_implicit_invocation: true

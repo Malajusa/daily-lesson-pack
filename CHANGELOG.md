@@ -2,6 +2,24 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.4.0 — 27 August 2026
+
+### Reconciled
+- Merged the validated 3.3 classroom-feedback line with the Git 3.2 Literacy and universal Mathematics line.
+- Preserved self-contained Literacy triads, exact task-operation wording, accurate grammatical terminology, credible distractors and meaning-preserving vocabulary comparisons.
+- Preserved Shared Reading evidence boundaries, controlled writing-vocabulary changes, the Tuesday component-standard regression and the Thursday Literacy regression.
+- Retained the complete universal Mathematics instruction canon and cross-topic Mathematics benchmark.
+
+### Fixed
+- Removed mandatory visual-exemplar instructions whose standard, audit script and PPTX were never present in the repository or package.
+- Corrected the ChatGPT builder so every referenced runtime audit and regression file is packaged at the root and inside the independent QA component where required.
+- Restored validated UI icon metadata and its declared asset.
+- Added a deterministic packaged-reference audit covering manifests, Markdown file references, component registration and UI icon paths.
+
+### Reliability
+- A semver release must be a content superset or explicitly document intentional removals; independently numbered chat-thread packages are not accepted as release ancestry.
+- Manifest integrity alone is insufficient. Release now also requires reference closure and candidate/install tree parity.
+
 ## 3.2.0 — 26 August 2026
 
 ### Added

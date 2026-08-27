@@ -107,4 +107,4 @@ Do not assume that placing several `SKILL.md` files in one repository automatica
 
 ## Current version
 
-**3.2.0 — universal Mathematics instruction canon with cross-topic regression and independent QA enforcement.**
+**3.4.0 — reconciled classroom-feedback, Literacy precision and universal Mathematics release with closed package dependencies.**
