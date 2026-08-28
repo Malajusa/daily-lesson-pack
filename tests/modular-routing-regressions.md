@@ -116,3 +116,16 @@ PASS when:
 - no broader word is presented as automatically more precise;
 - each explanation says exactly what information the term adds;
 - no more than two substantial comparison rows appear on one projected slide.
+
+## 14. Memory-independent shared-class Wednesday
+
+Run the skill in a clean account with the installed release, shared overviews,
+Wednesday timetable and explicit Wednesday Maths/English focus only.
+
+PASS when:
+- Wednesday is accepted as a valid shared-class day;
+- the supplied timetable and focus are authoritative;
+- no fact is sourced from chat memory or an unstated standing preference;
+- missing essential context triggers one concise question rather than a guess;
+- the pack retains the complete educational canon and visual-only exemplar;
+- the briefing records completion/exit evidence for Thursday's teacher.

@@ -1,8 +1,8 @@
 {
-  "version": "3.4.0",
-  "created": "2026-08-27",
+  "version": "3.5.0",
+  "created": "2026-08-28",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
-  "base_commit": "59a2516ec7f97d931c72c85f8825792781b6fc3c",
+  "base_commit": "3a84e4ff1665521f627b243ef4e20b4008f1cf67",
   "reconciled_sources": [
     {
       "line": "git-3.2.0",
@@ -16,9 +16,12 @@
       "line": "validated-supplied-3.3.0",
       "archive_sha256": "7483F37D41FFE605FE79855491F07A71022E173D0382BDF5F3EF00EC256FFA3A",
       "contribution": "Classroom-feedback contracts, Tuesday regression record, presentation audits and UI metadata"
+    },
+    {
+      "line": "recovered-visual-exemplar-and-portability-contract",
+      "artefact_sha256": "069EC730EF879BAFD25F5AAE3E8D3E9CA6378ACE76A46DFE0FEA4897C857E880",
+      "contribution": "Checksum-verified edited Tuesday visual exemplar, deterministic visual audit, explicit shared-class context and memory-independent Wednesday routing"
     }
   ],
-  "intentional_removals": [
-    "Mandatory visual-exemplar contract whose standard, audit script and PPTX were absent from every available source"
-  ]
+  "intentional_removals": []
 }

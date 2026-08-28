@@ -22,12 +22,21 @@ COMMON_REFERENCES = (
 )
 
 MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
+SHARED_CONTEXT_REFERENCE = "references/shared-class-context-contract.md"
+VISUAL_EXEMPLAR_REFERENCE = "references/visual-exemplar-standard.md"
+VISUAL_EXEMPLAR_ASSET = (
+    "assets/visual-exemplars/t3w6-tuesday-edited-visual-exemplar.pptx"
+)
 UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
+MEMORY_INDEPENDENT_BENCHMARK = (
+    "examples/benchmarks/memory-independent-wednesday-regression.md"
+)
 REGRESSION_BENCHMARKS = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
     "examples/benchmarks/t3w6-tuesday-release-regression.md",
     "examples/benchmarks/t3w6-thursday-literacy-regression.md",
     UNIVERSAL_MATHS_BENCHMARK,
+    MEMORY_INDEPENDENT_BENCHMARK,
 )
 
 ROOT_RUNTIME_FILES = (
@@ -36,14 +45,19 @@ ROOT_RUNTIME_FILES = (
     "RELEASE-PROVENANCE.json",
     "agents/openai.yaml",
     "assets/icon.svg",
+    VISUAL_EXEMPLAR_ASSET,
     "skills/registry.json",
     *COMMON_REFERENCES,
     MATH_REFERENCE,
+    SHARED_CONTEXT_REFERENCE,
+    VISUAL_EXEMPLAR_REFERENCE,
     *REGRESSION_BENCHMARKS,
+    "examples/context-record-wednesday.json",
     "scripts/audit_package_dependencies.py",
     "scripts/audit_pack_contract.py",
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
+    "scripts/audit_visual_exemplar.py",
 )
 
 
@@ -102,6 +116,12 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
         component_references = COMMON_REFERENCES
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             component_references = (*COMMON_REFERENCES, MATH_REFERENCE)
+        if name == "dlp-pack-qa":
+            component_references = (
+                *component_references,
+                SHARED_CONTEXT_REFERENCE,
+                VISUAL_EXEMPLAR_REFERENCE,
+            )
 
         files[f"{component_root}/SKILL.md"] = skill_text
         files[f"{component_root}/PACKAGE.json"] = package_json(
@@ -126,8 +146,15 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
                 "scripts/audit_pack_contract.py",
                 "scripts/audit_slide_typography.py",
                 "scripts/audit_panel_containment.py",
+                "scripts/audit_visual_exemplar.py",
             ):
                 files[f"{component_root}/{script}"] = read_required(repo, script)
+            files[f"{component_root}/{VISUAL_EXEMPLAR_ASSET}"] = read_required(
+                repo, VISUAL_EXEMPLAR_ASSET
+            )
+            files[f"{component_root}/examples/context-record-wednesday.json"] = read_required(
+                repo, "examples/context-record-wednesday.json"
+            )
 
     return version, files
 

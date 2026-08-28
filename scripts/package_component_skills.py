@@ -16,16 +16,27 @@ COMMON_REFERENCES = (
 )
 
 MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
+SHARED_CONTEXT_REFERENCE = "references/shared-class-context-contract.md"
+VISUAL_EXEMPLAR_REFERENCE = "references/visual-exemplar-standard.md"
+VISUAL_EXEMPLAR_ASSET = (
+    "assets/visual-exemplars/t3w6-tuesday-edited-visual-exemplar.pptx"
+)
 UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
+MEMORY_INDEPENDENT_BENCHMARK = (
+    "examples/benchmarks/memory-independent-wednesday-regression.md"
+)
 
 QA_ONLY_FILES = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
     "examples/benchmarks/t3w6-tuesday-release-regression.md",
     "examples/benchmarks/t3w6-thursday-literacy-regression.md",
     UNIVERSAL_MATHS_BENCHMARK,
+    MEMORY_INDEPENDENT_BENCHMARK,
     "scripts/audit_pack_contract.py",
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
+    "scripts/audit_visual_exemplar.py",
+    "examples/context-record-wednesday.json",
 )
 
 
@@ -76,6 +87,12 @@ def main() -> int:
         component_references = COMMON_REFERENCES
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             component_references = (*COMMON_REFERENCES, MATH_REFERENCE)
+        if name == "dlp-pack-qa":
+            component_references = (
+                *component_references,
+                SHARED_CONTEXT_REFERENCE,
+                VISUAL_EXEMPLAR_REFERENCE,
+            )
 
         package_files: dict[str, bytes] = {
             "SKILL.md": skill_text,
@@ -107,6 +124,9 @@ def main() -> int:
         if name == "dlp-pack-qa":
             for relative_path in QA_ONLY_FILES:
                 package_files[relative_path] = read_required(repo, relative_path)
+            package_files[VISUAL_EXEMPLAR_ASSET] = read_required(
+                repo, VISUAL_EXEMPLAR_ASSET
+            )
 
         zip_path = out_dir / f"{name}.zip"
         with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:

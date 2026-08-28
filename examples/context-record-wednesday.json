@@ -1,0 +1,43 @@
+{
+  "date": {
+    "value": "YYYY-MM-DD",
+    "source": "current request",
+    "resolved": true
+  },
+  "term_week": {
+    "value": "Term N Week N",
+    "source": "shared overview",
+    "resolved": true
+  },
+  "day": {
+    "value": "Wednesday",
+    "source": "current request",
+    "resolved": true
+  },
+  "timetable": {
+    "value": "Supplied Wednesday timetable",
+    "source": "teacher-supplied timetable",
+    "resolved": true
+  },
+  "mathematics_focus": {
+    "value": "Teacher-supplied Wednesday Mathematics focus",
+    "source": "shared Maths overview plus current Wednesday instruction",
+    "resolved": true
+  },
+  "english_focus": {
+    "value": "Teacher-supplied Wednesday English focus",
+    "source": "shared English overview plus current Wednesday instruction",
+    "resolved": true
+  },
+  "lesson_status": {
+    "value": "No Tuesday exception supplied; advance normally",
+    "source": "shared-class context contract default",
+    "resolved": true
+  },
+  "printing_requested": true,
+  "printing_quantity": {
+    "value": 29,
+    "source": "shared-class context contract default",
+    "resolved": true
+  }
+}

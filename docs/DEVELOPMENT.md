@@ -2,11 +2,14 @@
 
 ## Source of truth
 
-Until the current installed skill is synchronised into this repository, the authoritative source remains:
+This repository is the authoritative source. Develop from the current accepted
+branch, validate the complete repository tree, then build installation packages
+from a tagged commit. Installed copies and conversation attachments are outputs,
+not sources of truth.
 
-`C:\Users\mitch\.codex\skills\daily-lesson-pack\SKILL.md`
-
-After synchronisation, `main` should represent the accepted skill version, with local installation updated from accepted repository changes.
+Stable shared-class context belongs in
+`references/shared-class-context-contract.md`. Do not depend on a developer's or
+teacher's chat memory for behaviour that another account must reproduce.
 
 ## Rule precedence
 
@@ -61,6 +64,16 @@ Test at least one normal day and, where the change affects them, relevant varian
 ### 7. Record and merge
 
 Describe the accepted behaviour change in `CHANGELOG.md`, review the diff, then merge to `main`.
+
+### 8. Package and clean-context test
+
+When context routing, source precedence or packaging changes:
+
+1. run `examples/benchmarks/memory-independent-wednesday-regression.md`;
+2. validate the complete package dependency closure;
+3. build the installation ZIP from the accepted repository state;
+4. install or unpack it into a clean location and validate it again;
+5. tag the accepted commit only after these checks pass.
 
 ## Commit guidance
 

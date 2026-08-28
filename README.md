@@ -4,7 +4,24 @@ Version-controlled development repository for the **Daily Lesson Pack** skill.
 
 ## Purpose
 
-Daily Lesson Pack 3.2 uses a small orchestrator plus independently owned teaching components. The architecture is designed to prevent a change to one component from silently changing another.
+Daily Lesson Pack 3.5 uses a small orchestrator plus independently owned teaching components. The architecture is designed to prevent a change to one component from silently changing another and to produce the same-quality pack in a clean account without relying on chat memory.
+
+## Source of truth and distribution
+
+This repository is the authoritative source. Stable versions are tagged and the
+complete ChatGPT installation ZIP is built from that exact repository state:
+
+```bash
+python scripts/build_chatgpt_package.py
+```
+
+Do not treat an installed copy, conversation attachment or manually named ZIP
+as newer merely because its filename or displayed version matches. Compare the
+Git commit and package manifest.
+
+The skill does not read lesson facts from chat memory. Stable shared-class
+routines live in `references/shared-class-context-contract.md`; each run supplies
+the requested day's timetable, focus and any lesson-status exception.
 
 ## Modular architecture
 
@@ -22,6 +39,7 @@ Daily Lesson Pack 3.2 uses a small orchestrator plus independently owned teachin
 │   ├── dlp-maths-lesson/SKILL.md
 │   └── dlp-pack-qa/SKILL.md
 ├── references/                           # Shared visual, QA and Mathematics standards
+├── assets/visual-exemplars/              # Checksum-verified visual-only benchmark
 ├── scripts/                              # QA + component packaging
 ├── docs/
 │   ├── DEVELOPMENT.md
@@ -107,4 +125,4 @@ Do not assume that placing several `SKILL.md` files in one repository automatica
 
 ## Current version
 
-**3.4.0 — reconciled classroom-feedback, Literacy precision and universal Mathematics release with closed package dependencies.**
+**3.5.0 — memory-independent shared-class release combining the complete educational canon with the approved visual exemplar.**

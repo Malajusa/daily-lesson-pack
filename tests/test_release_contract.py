@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import unittest
 import json
+import importlib.util
+import tempfile
 from pathlib import Path
 
 
@@ -12,24 +14,62 @@ def read(relative: str) -> str:
     return (ROOT / relative).read_text(encoding="utf-8")
 
 
+def load_contract_audit():
+    path = ROOT / "scripts" / "audit_pack_contract.py"
+    spec = importlib.util.spec_from_file_location("audit_pack_contract", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
+
+
 class ReleaseContractTests(unittest.TestCase):
     def test_version_is_reconciled_release(self) -> None:
-        self.assertEqual(read("VERSION").strip(), "3.4.0")
+        self.assertEqual(read("VERSION").strip(), "3.5.0")
 
     def test_release_provenance_records_both_source_lines(self) -> None:
         provenance = json.loads(read("RELEASE-PROVENANCE.json"))
-        self.assertEqual(provenance["version"], "3.4.0")
+        self.assertEqual(provenance["version"], "3.5.0")
         self.assertEqual(
             provenance["base_commit"],
-            "59a2516ec7f97d931c72c85f8825792781b6fc3c",
+            "3a84e4ff1665521f627b243ef4e20b4008f1cf67",
         )
-        self.assertEqual(len(provenance["reconciled_sources"]), 2)
+        self.assertGreaterEqual(len(provenance["reconciled_sources"]), 3)
 
-    def test_unsupported_visual_exemplar_contract_is_absent(self) -> None:
-        checked = [ROOT / "SKILL.md", *sorted((ROOT / "skills").glob("*/SKILL.md"))]
-        combined = "\n".join(path.read_text(encoding="utf-8") for path in checked)
-        self.assertNotIn("visual-exemplar", combined)
-        self.assertNotIn("audit_visual_exemplar.py", combined)
+    def test_visual_exemplar_contract_is_complete(self) -> None:
+        self.assertTrue(
+            (ROOT / "assets/visual-exemplars/t3w6-tuesday-edited-visual-exemplar.pptx").is_file()
+        )
+        self.assertTrue((ROOT / "references/visual-exemplar-standard.md").is_file())
+        self.assertTrue((ROOT / "scripts/audit_visual_exemplar.py").is_file())
+        self.assertIn("visual-exemplar-standard.md", read("SKILL.md"))
+
+    def test_release_is_memory_independent(self) -> None:
+        orchestrator = read("SKILL.md")
+        contract = read("references/shared-class-context-contract.md")
+        qa = read("skills/dlp-pack-qa/SKILL.md")
+        self.assertNotIn("standing teaching preferences", orchestrator)
+        self.assertIn("Do not use chat memory", orchestrator)
+        self.assertIn("Wednesday co-teacher mode", contract)
+        self.assertIn("Context provenance gate", qa)
+
+    def test_example_context_record_passes(self) -> None:
+        audit = load_contract_audit()
+        issues, summary = audit.audit_context_record(
+            str(ROOT / "examples" / "context-record-wednesday.json")
+        )
+        self.assertEqual(issues, [])
+        self.assertEqual(summary["resolved"], summary["required"])
+
+    def test_memory_context_source_is_rejected(self) -> None:
+        audit = load_contract_audit()
+        data = json.loads(read("examples/context-record-wednesday.json"))
+        data["mathematics_focus"]["source"] = "chat memory"
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "context.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            issues, _ = audit.audit_context_record(str(path))
+        self.assertIn("prohibited_memory_source", {item["code"] for item in issues})
 
     def test_literacy_contract_preserves_both_release_lines(self) -> None:
         text = read("skills/dlp-literacy-warmup/SKILL.md")
@@ -67,6 +107,7 @@ class ReleaseContractTests(unittest.TestCase):
             "t3w6-tuesday-release-regression.md",
             "t3w6-thursday-literacy-regression.md",
             "universal-maths-canon-regression.md",
+            "memory-independent-wednesday-regression.md",
         ):
             self.assertIn(benchmark, qa)
             self.assertTrue((ROOT / "examples" / "benchmarks" / benchmark).is_file())

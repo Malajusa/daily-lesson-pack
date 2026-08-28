@@ -15,6 +15,19 @@ Return:
 
 ## Cross-pack checks
 
+### Context provenance gate
+- Apply `references/shared-class-context-contract.md`.
+- A context-source record identifies the current source for date/term/week/day,
+  timetable, Mathematics focus, English focus, lesson-status exception and
+  printing quantity when printing is requested.
+- The record must not cite chat memory, saved personal context, another
+  account's Project context or an unstated standing preference as authority.
+- Missing required context blocks classroom-ready release; it is queried rather
+  than guessed.
+- For Wednesday co-teacher mode, the supplied Wednesday timetable and explicit
+  day-level Mathematics and English focus are present. Wednesday is not rejected
+  merely because it sits outside the four-day overview.
+
 ### Component acceptance gate
 - A component-acceptance record lists every scheduled content component.
 - Every scheduled component records `PASS`, the checks completed and its artefact or slide range before assembly.
@@ -155,13 +168,32 @@ Apply the repository standards:
 - `references/universal-maths-instruction-canon.md` for Mathematics content;
 - `references/slide-deck-quality-standards.md`;
 - `references/semantic-colour-standard.md`;
-- `references/panel-containment-standard.md`.
+- `references/panel-containment-standard.md`;
+- `references/visual-exemplar-standard.md`.
+
+### Visual-exemplar fidelity gate
+
+Treat the checksum-verified edited Tuesday deck as a visual-only benchmark.
+Require the assembled deck to retain:
+
+- the full-height role-coloured left rail on every projected slide;
+- amber reminder/model slides, blue question/task slides and green
+  answer/successful-model slides;
+- compact uppercase eyebrows plus a clear, larger slide title;
+- a dominant main panel with deliberately subordinate cues or explanations;
+- Trebuchet MS as the dominant teaching-deck typeface;
+- comparable canvas use, padding, hierarchy and projected legibility.
+
+Content and pedagogy must come from the current component contracts,
+Mathematics canon and regression records. Copying a documented exemplar content
+error fails even when the deck looks faithful.
 
 Where scripts are available, run:
-- `python scripts/audit_pack_contract.py --deck <deck> --component-record <record.json> --out <report.json>`;
+- `python scripts/audit_pack_contract.py --deck <deck> --context-record <context.json> --component-record <record.json> --out <report.json>`;
 - if the user explicitly changed the default Literacy warm-up count, add `--literacy-count <n>` with the authorised count;
 - `python scripts/audit_slide_typography.py --deck <deck> --out <report.json>`;
-- `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`.
+- `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`;
+- `python scripts/audit_visual_exemplar.py --deck <deck> --out <report.json>`.
 
 Automated checks are screening tools. Render and inspect the final deck at full size. Any text that crosses or visually escapes its intended coloured, shaded or bordered panel blocks release. A filled instructional text panel with less than the required internal margin also blocks release. A panel-heavy deck receiving zero meaningful panel/text pair coverage fails the automated audit; do not treat that result as a clean geometry pass.
 
@@ -174,7 +206,8 @@ Use all relevant regression records whenever a change affects the orchestrator, 
 - `examples/benchmarks/t3w6-monday-modular-regression.md`;
 - `examples/benchmarks/t3w6-tuesday-release-regression.md`;
 - `examples/benchmarks/t3w6-thursday-literacy-regression.md`;
-- `examples/benchmarks/universal-maths-canon-regression.md`.
+- `examples/benchmarks/universal-maths-canon-regression.md`;
+- `examples/benchmarks/memory-independent-wednesday-regression.md`.
 
 For a change affecting Mathematics pedagogy, representations, task architecture or QA, test at least two representative prompts from different concept families in `universal-maths-canon-regression.md`. A change fails if it improves one concept family while breaking the universal requirements in another.
 

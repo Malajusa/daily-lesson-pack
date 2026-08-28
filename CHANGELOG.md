@@ -2,6 +2,34 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.5.0 — 28 August 2026
+
+### Added
+- A shared-class context contract that makes stable classroom routines explicit
+  and prohibits chat memory or unstated standing preferences as lesson sources.
+- Wednesday co-teacher routing requiring the supplied Wednesday timetable and
+  day-level Mathematics and English focus when the four-day overview has no
+  Wednesday row.
+- A clean-account Wednesday regression proving that the installed release and
+  supplied teaching records are sufficient without prior conversation history.
+- The checksum-verified teacher-edited Tuesday visual-only exemplar and its
+  deterministic fidelity audit.
+
+### Changed
+- The repository is the authoritative source for released packages; installed
+  skills are built from tagged repository states rather than reconciled from
+  account memory or manually named ZIPs.
+- Source precedence now uses the supplied shared-class/day context and bundled
+  component defaults instead of unspecified standing teaching preferences.
+- Final QA now requires context provenance and visual-exemplar fidelity in
+  addition to the universal Mathematics, Literacy and presentation gates.
+
+### Reliability
+- Missing day-level inputs trigger one concise question and block classroom-ready
+  release instead of being guessed from memory.
+- The v3.5.0 package combines the later Mathematics/Literacy canon with the
+  recovered approved visual system rather than choosing one release line.
+
 ## 3.4.0 — 27 August 2026
 
 ### Reconciled

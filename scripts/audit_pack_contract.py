@@ -70,6 +70,20 @@ SHARED_HEADER = re.compile(
     re.I | re.S,
 )
 WARMUP_HEADER = re.compile(r"\b(?:LITERACY|NUMERACY|MATHEMATICS|MATHS)\s+WARM[- ]?UP\b", re.I)
+PROHIBITED_CONTEXT_SOURCE = re.compile(
+    r"\b(?:chat memory|saved (?:personal )?context|project memory|"
+    r"another account(?:'s)? project|standing (?:teaching )?preference)\b",
+    re.I,
+)
+REQUIRED_CONTEXT_FIELDS = (
+    "date",
+    "term_week",
+    "day",
+    "timetable",
+    "mathematics_focus",
+    "english_focus",
+    "lesson_status",
+)
 
 
 def normalise(text: str) -> str:
@@ -189,6 +203,108 @@ def has_highlighted_punctuation(slide, expected: set[str] | None = None) -> bool
 
 def issue(code: str, message: str, **details) -> dict:
     return {"severity": "fail", "code": code, "message": message, **details}
+
+
+def audit_context_record(path: str | None) -> tuple[list[dict], dict]:
+    issues: list[dict] = []
+    summary = {"provided": bool(path), "resolved": 0, "required": len(REQUIRED_CONTEXT_FIELDS)}
+
+    if not path:
+        issues.append(issue(
+            "context_record_missing",
+            "No current-run context source record was supplied.",
+        ))
+        return issues, summary
+
+    record_path = Path(path)
+    if not record_path.is_file():
+        issues.append(issue(
+            "context_record_missing",
+            "The supplied context source record does not exist.",
+            path=str(record_path),
+        ))
+        return issues, summary
+
+    try:
+        data = json.loads(record_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        issues.append(issue(
+            "context_record_invalid",
+            "The context source record is not valid readable JSON.",
+            path=str(record_path),
+            detail=str(exc),
+        ))
+        return issues, summary
+
+    if not isinstance(data, dict):
+        issues.append(issue(
+            "context_record_invalid",
+            "The context source record must be a JSON object.",
+        ))
+        return issues, summary
+
+    for field in REQUIRED_CONTEXT_FIELDS:
+        entry = data.get(field)
+        if not isinstance(entry, dict):
+            issues.append(issue(
+                "context_field_missing",
+                "A required current-run context field is missing.",
+                field=field,
+            ))
+            continue
+        source = str(entry.get("source", "")).strip()
+        resolved = entry.get("resolved") is True
+        value = entry.get("value")
+        if not resolved or value in (None, "", [], {}):
+            issues.append(issue(
+                "context_field_unresolved",
+                "A required current-run context field is unresolved.",
+                field=field,
+            ))
+        else:
+            summary["resolved"] += 1
+        if not source:
+            issues.append(issue(
+                "context_source_missing",
+                "A required context field does not identify its current source.",
+                field=field,
+            ))
+        elif PROHIBITED_CONTEXT_SOURCE.search(source):
+            issues.append(issue(
+                "prohibited_memory_source",
+                "Chat memory or an unstated standing preference cannot authorise a pack field.",
+                field=field,
+                source=source,
+            ))
+
+    printing_requested = data.get("printing_requested") is True
+    if printing_requested:
+        printing = data.get("printing_quantity")
+        if not isinstance(printing, dict) or printing.get("resolved") is not True:
+            issues.append(issue(
+                "printing_quantity_unresolved",
+                "Printing was requested but the quantity is unresolved.",
+            ))
+        elif PROHIBITED_CONTEXT_SOURCE.search(str(printing.get("source", ""))):
+            issues.append(issue(
+                "prohibited_memory_source",
+                "Chat memory cannot supply the printing quantity.",
+                field="printing_quantity",
+                source=str(printing.get("source", "")),
+            ))
+
+    day_entry = data.get("day")
+    if isinstance(day_entry, dict) and "wednesday" in str(day_entry.get("value", "")).lower():
+        for field in ("timetable", "mathematics_focus", "english_focus"):
+            entry = data.get(field, {})
+            if not isinstance(entry, dict) or entry.get("resolved") is not True:
+                issues.append(issue(
+                    "wednesday_bridge_unresolved",
+                    "Wednesday requires a supplied timetable and day-level Mathematics and English focus.",
+                    field=field,
+                ))
+
+    return issues, summary
 
 
 def audit_component_record(path: str | None) -> tuple[list[dict], dict]:
@@ -584,6 +700,10 @@ def main() -> int:
         "--component-record",
         help="JSON pre-assembly component acceptance record; absence is a failure",
     )
+    parser.add_argument(
+        "--context-record",
+        help="JSON current-run context source record; absence is a failure",
+    )
     parser.add_argument("--out", required=True, help="JSON report path")
     parser.add_argument(
         "--literacy-count",
@@ -596,17 +716,20 @@ def main() -> int:
     if args.literacy_count < 1:
         parser.error("--literacy-count must be at least 1")
 
+    context_issues, context_summary = audit_context_record(args.context_record)
     component_issues, component_summary = audit_component_record(args.component_record)
     deck_issues, deck_summary = audit_deck(args.deck, literacy_count=args.literacy_count)
-    issues = component_issues + deck_issues
+    issues = context_issues + component_issues + deck_issues
     counts = Counter(item["code"] for item in issues)
     overall = "fail" if issues else "pass"
     report = {
         "deck": args.deck,
+        "context_record": args.context_record,
         "component_record": args.component_record,
         "overall_status": overall,
         "summary": {
             **deck_summary,
+            "context_sources": context_summary,
             "component_acceptance": component_summary,
             "failures": len(issues),
             "failure_codes": dict(sorted(counts.items())),
