@@ -11,7 +11,7 @@ Own the Literacy warm-up only. Keep it separate from Morning Work, Shared Readin
 
 ## Mandatory year-level context
 
-Before generation, read `../../references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
+Before generation, read `references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
 
 The active profile controls language load, expected prior knowledge, misconception plausibility, terminology support and appropriate response demand. Do not use Year 4/5-specific calibration for a Year 6 run, or vice versa, unless an explicit shared rule is identified as universal.
 
