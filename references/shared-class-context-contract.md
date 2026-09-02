@@ -1,87 +1,89 @@
-# Shared-class context and memory-independence contract
+# User/school runtime context and memory-independence contract
 
 ## Purpose
 
-This contract lets either teacher generate the same-quality Daily Lesson Pack
-for the shared classroom without relying on either account's chat memory.
+This contract defines the **runtime context** a teacher supplies so the Daily Lesson Pack can adapt to that teacher's timetable, current overviews and school sequence without relying on hidden chat memory.
 
-The repository package plus the sources supplied for the current run are the
-complete authority. Chat memory, saved personal context and another account's
-Project files are not lesson sources.
+It is deliberately separate from `year-level-context-contract.md`.
 
-## Stable shared-class defaults
+- Runtime context answers: **What is this class teaching now, when, and under what local constraints?**
+- The active year-level profile answers: **What is an appropriate developmental and curriculum-facing pitch for this year level?**
 
-- Mixed Year 4/5 classroom using the Western Australian curriculum.
-- Morning Work is projected while students record every response in books.
-- Morning Work is independent retrieval and application, not new teaching.
-- The normal warm-up response routine uses mini-whiteboards; do not add a
-  generic whiteboard footer to slides.
-- Student-facing materials use Australian English.
-- Art, Japanese, Science, Music and Physical Education are specialist-led and
-  appear as timetable labels only.
-- Guided Reading is timetable-only under the current component contract.
-- HASS content requires an authoritative HASS plan or an explicit current
-  instruction.
-- When a printing plan is requested, the current shared-class default is 29
-  student sets: 27 students plus 2 spares. A current explicit quantity
-  overrides this default.
+A teacher's timetable or overview must never become the definition of a year-level profile.
 
-Do not include student names, diagnoses, assessment records or other personal
-student information in this repository contract.
+## Runtime context fields
 
-## Required inputs for each daily run
+Resolve these from the current request, current-run files, connected authoritative sources or an explicitly selected reusable user/school context file:
 
-Resolve these from the current request or files available to the current run:
+1. active year level or explicitly authored combined year band;
+2. exact date, term, week and day;
+3. that teacher's timetable for the requested day, including interruptions;
+4. current Mathematics overview/topic and day-level focus;
+5. current English/literacy overview/toolkit stage and day-level focus where applicable;
+6. any explicit lesson-status exception from the preceding scheduled lesson;
+7. current class size or printing quantity when printing is requested;
+8. any local scope changes, specialist blocks or school-specific routines that materially affect the pack.
 
-1. exact date, term, week and day;
-2. that teacher's timetable for the requested day, including interruptions;
-3. current Mathematics overview/topic and day-level focus;
-4. current English overview/toolkit stage and day-level focus;
-5. any explicit lesson-status exception from the preceding scheduled day;
-6. any current change to class size, output scope or printing quantity.
+Do not require the same timetable, overview format, term sequence or class size from different users.
 
-Assume the preceding scheduled lesson was completed sufficiently to advance
-unless an explicit status exception says it was partial, cancelled or requires
-reteaching.
+## No bundled class defaults as year-level assumptions
 
-## Wednesday co-teacher mode
+Do not treat any of the following as universal or year-level defaults:
 
-Wednesday is a valid Daily Lesson Pack day for the teacher who shares this
-classroom.
+- mixed Year 4/5 enrolment;
+- a fixed class size or `29 copies` rule;
+- one school's timetable;
+- a four-day Monday/Tuesday/Thursday/Friday overview;
+- a fixed Information Report unit;
+- a particular Shared Reading country sequence;
+- one teacher's Wednesday arrangement;
+- a school-specific assembly or specialist schedule.
 
-- Use the supplied Wednesday timetable as authoritative.
-- Use the supplied Wednesday Mathematics and English focus. If the shared
-  overview has no Wednesday row, the teacher's explicit Wednesday focus is the
-  required bridge between Tuesday and Thursday.
-- Do not duplicate Tuesday or consume Thursday's planned focus unless the
-  supplied Wednesday focus explicitly requires it.
-- Apply the same class, pedagogy, visual, component and QA standards used on
-  other days.
-- Include a concise completion/exit-evidence handover for Thursday's teacher.
+These may be used only when they are supplied or explicitly selected as current runtime context for that user/class.
+
+## Source hierarchy for runtime facts
+
+Use runtime facts in this order:
+
+1. the user's current explicit instruction;
+2. current-run timetable/overview/unit files;
+3. explicitly selected maintained user/school context;
+4. connected calendar or authoritative school source;
+5. older local planning only when it is clearly still current.
+
+Chat memory, saved personal context and another account's Project context may help identify what to look for, but must not silently supply timetable facts, lesson focus, class size, copy quantity or local routines.
+
+## Progression rule
+
+Assume the preceding scheduled lesson was completed sufficiently to advance unless an authoritative runtime source records partial completion, cancellation or required reteaching.
+
+If an overview defines a day-level sequence, follow that sequence. If it does not define a requested day, use the teacher's supplied current focus rather than inventing a bridge from another day.
 
 ## Missing-input behaviour
 
-If a required input is unavailable or contradictory:
+If a required runtime field is unavailable or contradictory:
 
-1. ask one concise question that resolves the highest-impact ambiguity;
-2. do not guess from chat memory or an older generated deck;
-3. do not release the pack as classroom-ready until the ambiguity is resolved;
-4. record the source used for each resolved field in the temporary context
-   source record supplied to final QA.
+1. resolve it from another authoritative current-run source where possible;
+2. otherwise ask one concise question that resolves the highest-impact ambiguity;
+3. do not guess from chat memory or an older generated deck;
+4. do not release the pack as classroom-ready until the ambiguity is resolved;
+5. record the source used for each resolved field in the temporary context-source record supplied to final QA.
 
-Use `../examples/context-record-wednesday.json` as the field structure for the
-temporary record. Replace its example values and source labels with the actual
-current-run sources.
+When printing is requested and quantity is not supplied or otherwise authoritative, treat it as unresolved rather than inheriting another user's class size.
 
 ## Clean-account acceptance condition
 
-The skill is portable only when a fresh account with no relevant memory can
-produce the intended pack using:
+The skill is portable only when a fresh account with no relevant memory can produce the intended pack using:
 
 - the installed repository release;
-- the shared Maths and English overviews;
-- the requested day's timetable and focus;
-- any explicit lesson-status exception.
+- an active year-level profile;
+- that user's current timetable;
+- that user's Maths and English/literacy overviews or explicit day-level focus;
+- any required lesson-status exception;
+- any local class/output constraints needed for the requested artefacts.
 
-If the same inputs produce materially weaker pedagogy, visual design or QA in a
-clean account, treat that as a skill defect rather than a missing-memory issue.
+If the same supplied inputs produce materially weaker pedagogy, visual design or QA in a clean account, treat that as a skill defect rather than a missing-memory issue.
+
+## Privacy boundary
+
+Do not store student names, diagnoses, assessment records or other personal student information in the portable runtime-context contract or year-level profiles.
