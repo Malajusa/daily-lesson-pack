@@ -9,6 +9,12 @@ description: Generate self-contained reminder, question and answer sequences for
 
 Own the Literacy warm-up only. Keep it separate from Morning Work, Shared Reading, Guided Reading, spelling instruction and the main writing lesson.
 
+## Mandatory year-level context
+
+Before generation, read `../../references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
+
+The active profile controls language load, expected prior knowledge, misconception plausibility, terminology support and appropriate response demand. Do not use Year 4/5-specific calibration for a Year 6 run, or vice versa, unless an explicit shared rule is identified as universal.
+
 ## Length and sequence
 
 Create exactly **10 `Reminder -> Question -> Answer` sequences** (30 slides) unless the user explicitly changes the count.
@@ -23,7 +29,7 @@ The reminder should usually take about 15-30 seconds. The question should usuall
 
 ## Response load
 
-Require exactly **one student action and one response** on each question slide unless the user explicitly requests reasoning in the warm-up.
+Require exactly **one student action and one response** on each question slide unless the user explicitly requests reasoning in the warm-up or the active year-level profile explicitly defines another warm-up response contract.
 
 - Do not ask students to answer and then explain, justify, give a reason, name supporting evidence or complete another action.
 - For a choice question, ask students only to select or write the option. Put any concise rationale on the following answer slide.
@@ -84,16 +90,16 @@ Use high-leverage literacy retrieval and language work such as:
 - cohesion and reference;
 - fact, opinion and evidence;
 - text-feature recognition;
-- information-report language and structure.
+- current writing-genre language and structure where supported by the user's overview.
 
-Do not turn morphology into a Sound Waves-style spelling drill. Exclude spelling lists, phonics, grapheme/sound drills, dictated words and Sound Waves replacement content.
+Do not turn morphology into a Sound Waves-style spelling drill. Exclude spelling lists, phonics, grapheme/sound drills, dictated words and Sound Waves replacement content unless a future active profile explicitly owns a different early-years literacy contract.
 
 ## Multiple-choice quality
 
 Use multiple choice only when every distractor is credible enough to test the target distinction.
 
 - Keep options grammatically parallel and reasonably similar in length, detail and tone.
-- Base distractors on a plausible Year 4/5 misconception or incomplete understanding.
+- Base distractors on a plausible misconception or incomplete understanding for the **active year-level profile**.
 - Do not pair the correct answer with a joke, vague throwaway, subjective claim or option that can be rejected without applying the reminder.
 - If a credible distractor cannot be written, replace the item with a direct production, correction, matching or selection task.
 - Ask only for the selected option. Explain the distinction on the answer slide rather than requiring students to justify their selection.
@@ -110,7 +116,7 @@ Supply the defensible explanation on the answer slide or in teacher notes. Do no
 
 ## Student-facing language
 
-Questions must be immediately understandable to an average Year 4/5 student.
+Questions must be immediately understandable to an average student within the active year-level profile.
 
 - Use a concrete classroom action such as `add`, `choose`, `write`, `replace`, `join`, `explain` or `find`.
 - Prefer familiar terms such as `topic sentence` over unexplained teacher terminology such as `classification opening`.
@@ -122,7 +128,7 @@ Questions must be immediately understandable to an average Year 4/5 student.
 Use the accurate grammatical or literacy term, then explain it plainly. Do not replace a known term with a vague substitute.
 
 - Use `conjunction`, not `linking word`, when naming words such as `and`, `but` or `because` by grammatical function.
-- Use `subordinating conjunction` when that distinction is the learning focus; otherwise `conjunction` is sufficient for a Year 4/5 warm-up.
+- Use `subordinating conjunction` when that distinction is the learning focus; otherwise use the level of grammatical precision required by the active profile without replacing an accurate term with a vague substitute.
 - Retain accurate terms such as `pronoun`, `clause`, `preposition`, `prefix`, `suffix` and `topic sentence` when they apply.
 
 Put typographic inverted commas around a literal word or phrase when discussing it as language: `Use the conjunction “because”` and `Which noun does “its” refer to?` Do not add inverted commas when the word is simply operating inside an example sentence: `The soil stays damp because the forest is humid.`
@@ -145,25 +151,27 @@ Put typographic inverted commas around a literal word or phrase when discussing 
 - Main reminder, question and answer content is normally at least 36 pt and should grow when space allows.
 - Use the largest sensible type rather than preserving empty decorative space.
 - Keep all text fully within its coloured, shaded or bordered container with deliberate internal padding.
-- No generic footer telling students to use whiteboards; that routine is already known.
+- No generic footer telling students to use whiteboards; that routine is supplied by runtime classroom context when relevant.
 
 ## QA
 
 Fail if:
 
+- the active year-level profile is missing, unresolved or inconsistent with the orchestrator;
+- a question uses another year profile's assumptions without explicit authorisation;
 - the sequence is not `Reminder -> Question -> Answer`;
 - a question depends on remembered or unavailable content;
 - a reminder reveals the exact answer rather than teaching the method;
 - a reminder lacks a concise applicable `Remember:` rule inside its yellow panel;
 - a punctuation reminder fails to highlight the target punctuation in its separate example;
-- student language is ambiguous, adult-facing or unexplained;
-- a question adds an `explain why`, `explain how you know` or `justify` demand to the direct response;
-- a question requires more than one student action or response;
+- student language is ambiguous, adult-facing or inappropriate for the active profile;
+- a question adds an `explain why`, `explain how you know` or `justify` demand to the direct response contrary to the active warm-up contract;
+- a question requires more than one student action or response contrary to the active warm-up contract;
 - a question title or instruction does not name the exact operation required by the answer;
 - a sentence-combination task merely says `write a sentence`;
 - an accurate technical term is replaced by a vague label such as `linking word` for `conjunction`;
 - a word or phrase discussed as language lacks inverted commas;
-- spelling instruction has crept in;
+- spelling instruction has crept in without an authorised profile contract;
 - a multiple-choice distractor is implausible, structurally unmatched or obviously wrong without applying the target rule;
 - a claimed precision distinction changes meaning, is reasonably debatable or lacks a prepared defensible explanation;
 - an answer does not immediately follow its question;
