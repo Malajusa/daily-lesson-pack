@@ -40,6 +40,7 @@ MEMORY_INDEPENDENT_BENCHMARK = (
 YEAR_PROFILE_ISOLATION_BENCHMARK = (
     "examples/benchmarks/year-profile-isolation-regression.md"
 )
+YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
 REGRESSION_BENCHMARKS = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
     "examples/benchmarks/t3w6-tuesday-release-regression.md",
@@ -67,6 +68,7 @@ ROOT_RUNTIME_FILES = (
     "examples/context-record-wednesday.json",
     "scripts/audit_package_dependencies.py",
     "scripts/audit_pack_contract.py",
+    YEAR_PROFILE_AUDIT,
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
     "scripts/audit_visual_exemplar.py",
@@ -163,6 +165,7 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
                 files[f"{component_root}/{benchmark}"] = read_required(repo, benchmark)
             for script in (
                 "scripts/audit_pack_contract.py",
+                YEAR_PROFILE_AUDIT,
                 "scripts/audit_slide_typography.py",
                 "scripts/audit_panel_containment.py",
                 "scripts/audit_visual_exemplar.py",
