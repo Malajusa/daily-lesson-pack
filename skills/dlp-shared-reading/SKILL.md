@@ -11,7 +11,7 @@ Own Shared Reading only. Do not reuse the Morning Work or Guided Reading text.
 
 ## Mandatory year-level context
 
-Before generation, read `../../references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
+Before generation, read `references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
 
 The active profile controls passage density, syntax, vocabulary support, expected background knowledge, comprehension demand and reasonable inference complexity. Do not increase year level by simply making paragraphs longer or wording more obscure.
 
