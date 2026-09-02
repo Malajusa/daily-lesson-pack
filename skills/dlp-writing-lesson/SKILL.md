@@ -11,7 +11,7 @@ Own the writing lesson only. Topic or research contexts may support knowledge, b
 
 ## Mandatory year-level context
 
-Before generation, read `../../references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
+Before generation, read `references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
 
 The active profile controls expected independence, language complexity, appropriate writing load and scaffolding. The user's current English/writing overview controls the genre, toolkit feature and current sequence.
 
