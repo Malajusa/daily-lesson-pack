@@ -15,28 +15,35 @@ The Mathematics warm-up is retrieval. The main lesson owns prerequisite checking
 
 Before planning or generating the lesson, read and apply:
 
-- `references/universal-maths-instruction-canon.md`;
-- `references/slide-deck-quality-standards.md`;
-- `references/semantic-colour-standard.md`;
-- `references/panel-containment-standard.md`.
+- `../../references/year-level-context-contract.md`;
+- the active year-level profile supplied by the orchestrator;
+- `../../references/universal-maths-instruction-canon.md`;
+- `../../references/slide-deck-quality-standards.md`;
+- `../../references/semantic-colour-standard.md`;
+- `../../references/panel-containment-standard.md`.
 
-The universal Mathematics canon is the authoritative pedagogical and mathematical-communication standard for this component. A current explicit user instruction may alter the lesson mode, slide count, context or representation, but it does not override mathematical accuracy, truthful representation or answer integrity.
+The universal Mathematics canon is the authoritative pedagogical and mathematical-communication standard for this component. The active year-level profile controls developmental pitch, expected prior knowledge, reasonable number types/magnitudes, scaffolding and demand. The user's current overview controls what is being taught now.
+
+A current explicit user instruction may alter the lesson mode, slide count, context or representation, but it does not override mathematical accuracy, truthful representation or answer integrity.
+
+Do not use another year profile's calibration merely because its examples are available. In particular, do not create Year 6 difficulty by mechanically enlarging Year 4/5 numbers, text length or step count.
 
 ## Internal planning contract
 
 Before creating student-facing content, complete the planning contract required by the universal Mathematics canon:
 
-1. curriculum concept and boundary;
-2. lesson mode;
-3. one central new idea, or `none` for review/assessment;
-4. prerequisite knowledge to retrieve;
-5. quantities, units, properties, structures or relationships students must notice;
-6. what changes and what remains invariant;
-7. technical vocabulary and notation;
-8. selected representation or representations and why each is useful;
-9. principal anticipated misconception;
-10. highest independent demand;
-11. aligned exit evidence.
+1. active year-level profile and profile version/status;
+2. curriculum concept and boundary;
+3. lesson mode;
+4. one central new idea, or `none` for review/assessment;
+5. prerequisite knowledge to retrieve;
+6. quantities, units, properties, structures or relationships students must notice;
+7. what changes and what remains invariant;
+8. technical vocabulary and notation;
+9. selected representation or representations and why each is useful;
+10. principal anticipated misconception;
+11. highest independent demand;
+12. aligned exit evidence.
 
 Keep this planning record internal or teacher-facing. Do not place planning metadata on student slides.
 
@@ -44,7 +51,7 @@ Keep this planning record internal or teacher-facing. Do not place planning meta
 
 Identify the actual mathematical concept before choosing a representation. A number line, fraction wall, array, graph or diagram may support the topic but must not silently become the lesson topic.
 
-For overview-controlled days, the weekly Mathematics topic/code and the day-level focus must agree with the authoritative Year 4/5 overview.
+For overview-controlled days, the weekly Mathematics topic/code and day-level focus must agree with the authoritative current user/school overview for the active class/year level.
 
 Unless the lesson is explicitly review, consolidation or extension, introduce one central new mathematical idea. Do not combine several substantial new concepts merely because they share a broad topic label.
 
@@ -68,7 +75,7 @@ Every student-facing Mathematics task must communicate:
 - any required **representation/resource**;
 - the expected **student output**.
 
-Each slide must stand alone well enough that a relief teacher and an average student can determine what is required.
+Each slide must stand alone well enough that a relief teacher and a student operating at the intended profile can determine what is required.
 
 Avoid vague conversational shorthand. Do not use phrases such as `Does it settle it?`, `useful form`, `efficient proof` or similar wording that requires students to infer the mathematical decision. State the decision literally.
 
@@ -97,9 +104,11 @@ For a new or fragile concept, use this default sequence:
 7. independent application at a modelled demand;
 8. reasoning, application or exit evidence measuring the intended concept.
 
+Calibrate the amount of scaffolding, independent load and reasoning demand to the active year-level profile rather than to historical examples from another class.
+
 Do not treat a token warm-up as prerequisite teaching.
 
-During concept introduction or procedure development, students should make an observable response after no more than two consecutive explanation/model slides unless an explicit current instruction requires another structure.
+During concept introduction or procedure development, students should make an observable response after no more than two consecutive explanation/model slides unless an explicit current instruction or active profile requires another structure.
 
 A `We do` slide must require student participation. It must not already show the completed answer, final landing point, completed model or all working.
 
@@ -151,13 +160,15 @@ Independent work must not introduce an unmodelled conceptual demand. Check align
 
 When independent work includes more than one operation or method at a given level of complexity, model each at that complexity first unless one is explicitly labelled as extension.
 
+The active year-level profile sets the reasonable ceiling for independent demand; an extension should not automatically become next-year content.
+
 ## Variation, misconceptions and task types
 
 Sequence examples using purposeful variation. Change one mathematically important feature at a time unless deliberately testing transfer.
 
 Where a concept is defined by properties or boundaries, use a carefully selected example and non-example when this will clarify the distinction.
 
-When including a misconception, use plausible student reasoning. The answer should identify the mistaken assumption, the mathematical property or relationship it violates, the correct reasoning and a supporting representation where useful.
+When including a misconception, use plausible student reasoning for the active year-level profile. The answer should identify the mistaken assumption, the mathematical property or relationship it violates, the correct reasoning and a supporting representation where useful.
 
 Distinguish task type accurately:
 
@@ -173,6 +184,8 @@ For fraction comparison, explicitly teach strategy selection where relevant: sam
 
 When teaching fraction operations, identify the fractional unit and explain how the numerator counts units. Do not make `add/subtract the top numbers and keep the bottom number` the primary explanation.
 
+Apply only those fraction demands that are appropriate to the current lesson focus and active year-level profile.
+
 ## Differentiation
 
 Differentiate through representation, scaffold, reasoning, abstraction, strategy selection and context—not only by assigning more questions.
@@ -183,6 +196,8 @@ Do not define higher attainment as completing the same task with more working or
 
 Before returning the component for assembly, record `PASS` or `FAIL` and substantiate these checks:
 
+- active year profile resolved and matched to the orchestrator;
+- no cross-year calibration leakage;
 - planning contract completed;
 - lesson mode and central idea controlled;
 - prerequisite retrieval distinct from the warm-up;
@@ -192,7 +207,7 @@ Before returning the component for assembly, record `PASS` or `FAIL` and substan
 - representation/language/notation correspondence verified;
 - technical vocabulary verified;
 - guided-practice answer withheld;
-- hardest independent demand matched to a modelled precursor;
+- hardest independent demand matched to a modelled precursor and active profile;
 - answer slides fulfil every task requirement;
 - exit evidence measures the intended concept;
 - rendered readability, semantic colour and panel containment passed.
@@ -203,6 +218,8 @@ A missing check, unsupported `PASS` or unresolved defect is a component failure.
 
 Fail the component if:
 
+- the active year-level profile is missing, unresolved or inconsistent with the orchestrator;
+- content relies on another year profile's calibration without explicit authorisation;
 - instructions are ambiguous;
 - lesson scope combines several unplanned new concepts;
 - a procedure is taught without mathematical meaning;
@@ -213,11 +230,14 @@ Fail the component if:
 - a `We do` or task slide reveals the answer;
 - an answer does not model the requested method or representation;
 - independent work introduces an unmodelled demand;
+- independent demand is inappropriate for the active year profile;
 - technical vocabulary is vague or inaccurate;
-- a misconception is implausible or diagnostically useless;
+- a misconception is implausible or diagnostically useless for the active profile;
 - a task labelled reasoning/problem solving is only routine calculation;
 - the exit check measures only the representation rather than the concept;
 - a valid alternative answer is rejected without a stated restriction;
 - the rendered slide is unreadable, visually misleading or poorly contained.
 
-Use `examples/benchmarks/universal-maths-canon-regression.md` whenever a change affects Mathematics pedagogy, representations, task architecture or QA. Test at least two different concept families and fail the change if improvement in one area breaks another.
+Use `../../examples/benchmarks/universal-maths-canon-regression.md` whenever a change affects Mathematics pedagogy, representations, task architecture or QA. Test at least two different concept families and fail the change if improvement in one area breaks another.
+
+Use `../../examples/benchmarks/year-profile-isolation-regression.md` whenever a shared Mathematics rule or a year profile changes in a way that can alter mathematical pitch.
