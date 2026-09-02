@@ -11,7 +11,7 @@ Own only Morning Work. Do not generate the Literacy warm-up, Shared Reading, Gui
 
 ## Mandatory year-level context
 
-Before generation, read `../../references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
+Before generation, read `references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
 
 The active profile controls retrieval pitch, reasonable prior knowledge, language load, expected independence and response complexity. Do not inherit another year level's examples or difficulty assumptions.
 
