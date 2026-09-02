@@ -11,7 +11,7 @@ Own the Mathematics warm-up only. It is cumulative retrieval and does not replac
 
 ## Mandatory year-level context
 
-Before generation, read `../../references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
+Before generation, read `references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
 
 The active profile controls expected prior knowledge, number types and magnitudes, appropriate retrieval floor, reasoning demand and the ceiling for `Some`. Do not use another year level's calibration merely because its examples are available.
 
@@ -60,8 +60,8 @@ Apply the active year-level profile rather than hard-coding one class or year ba
 - Do not force the warm-up to preview the day's lesson or next-year content merely to manufacture challenge.
 - Difficulty should come from mathematically meaningful variation, not arbitrary larger numbers or extra steps.
 
-For `year-4-5`, apply the specific calibration in `../../references/year-level-profiles/year-4-5.md`.
-For `year-6`, apply `../../references/year-level-profiles/year-6.md` and treat the profile's current release status honestly.
+For `year-4-5`, apply the specific calibration in `references/year-level-profiles/year-4-5.md`.
+For `year-6`, apply `references/year-level-profiles/year-6.md` and treat the profile's current release status honestly.
 
 Use proper fraction formatting with a vinculum/stacked fraction on student-facing slides.
 
