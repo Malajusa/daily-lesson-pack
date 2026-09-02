@@ -15,6 +15,11 @@ COMMON_REFERENCES = (
     "references/panel-containment-standard.md",
 )
 
+YEAR_LEVEL_CONTEXT_REFERENCE = "references/year-level-context-contract.md"
+YEAR_LEVEL_PROFILE_REFERENCES = (
+    "references/year-level-profiles/year-4-5.md",
+    "references/year-level-profiles/year-6.md",
+)
 MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
 SHARED_CONTEXT_REFERENCE = "references/shared-class-context-contract.md"
 VISUAL_EXEMPLAR_REFERENCE = "references/visual-exemplar-standard.md"
@@ -25,6 +30,9 @@ UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regressio
 MEMORY_INDEPENDENT_BENCHMARK = (
     "examples/benchmarks/memory-independent-wednesday-regression.md"
 )
+YEAR_PROFILE_ISOLATION_BENCHMARK = (
+    "examples/benchmarks/year-profile-isolation-regression.md"
+)
 
 QA_ONLY_FILES = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
@@ -32,6 +40,7 @@ QA_ONLY_FILES = (
     "examples/benchmarks/t3w6-thursday-literacy-regression.md",
     UNIVERSAL_MATHS_BENCHMARK,
     MEMORY_INDEPENDENT_BENCHMARK,
+    YEAR_PROFILE_ISOLATION_BENCHMARK,
     "scripts/audit_pack_contract.py",
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
@@ -84,9 +93,13 @@ def main() -> int:
         if f"name: {name}".encode("utf-8") not in skill_text:
             raise ValueError(f"Skill name mismatch in {entrypoint}: expected {name}")
 
-        component_references = COMMON_REFERENCES
+        component_references = (
+            *COMMON_REFERENCES,
+            YEAR_LEVEL_CONTEXT_REFERENCE,
+            *YEAR_LEVEL_PROFILE_REFERENCES,
+        )
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
-            component_references = (*COMMON_REFERENCES, MATH_REFERENCE)
+            component_references = (*component_references, MATH_REFERENCE)
         if name == "dlp-pack-qa":
             component_references = (
                 *component_references,
@@ -119,6 +132,9 @@ def main() -> int:
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             package_files[UNIVERSAL_MATHS_BENCHMARK] = read_required(
                 repo, UNIVERSAL_MATHS_BENCHMARK
+            )
+            package_files[YEAR_PROFILE_ISOLATION_BENCHMARK] = read_required(
+                repo, YEAR_PROFILE_ISOLATION_BENCHMARK
             )
 
         if name == "dlp-pack-qa":
