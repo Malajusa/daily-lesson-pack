@@ -33,6 +33,7 @@ MEMORY_INDEPENDENT_BENCHMARK = (
 YEAR_PROFILE_ISOLATION_BENCHMARK = (
     "examples/benchmarks/year-profile-isolation-regression.md"
 )
+YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
 
 QA_ONLY_FILES = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
@@ -42,6 +43,7 @@ QA_ONLY_FILES = (
     MEMORY_INDEPENDENT_BENCHMARK,
     YEAR_PROFILE_ISOLATION_BENCHMARK,
     "scripts/audit_pack_contract.py",
+    YEAR_PROFILE_AUDIT,
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
     "scripts/audit_visual_exemplar.py",
