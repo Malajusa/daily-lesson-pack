@@ -2,6 +2,35 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.6.0 — 2 September 2026
+
+### Added
+- A year-level contextual-base contract that separates developmental/curriculum
+  calibration from each teacher's timetable, overviews and local school context.
+- A protected but deliberately editable `year-4-5` calibration profile and an
+  isolated `year-6` calibration scaffold.
+- Cross-year profile-isolation regression checks and a deterministic
+  year-profile context audit.
+
+### Changed
+- Timetables, current Maths/English overviews, class size, printing quantity and
+  local routines are runtime user/school inputs rather than year-level defaults.
+- Morning Work, Literacy warm-up, Mathematics warm-up, Shared Reading, Writing
+  and main Mathematics now calibrate demand through the active year profile.
+- Writing no longer assumes the historical Term 3 Information Report weekday
+  spine; the current user's English/writing overview controls genre and sequence.
+- Complete and standalone component packages now include the year-level context
+  contract, Year 4/5 and Year 6 profiles, and applicable isolation QA assets.
+
+### Reliability
+- Year 6 development cannot silently alter Year 4/5 pitch; shared changes that
+  can affect demand, language, prior-knowledge assumptions or scaffolding require
+  cross-profile regression coverage.
+- Unsupported or unresolved year profiles block classroom-ready release rather
+  than silently borrowing another year level's calibration.
+- Year 6 remains explicitly candidate/calibration output until its contextual
+  profile is supported by sufficient Year 6 evidence and regression examples.
+
 ## 3.5.0 — 28 August 2026
 
 ### Added
@@ -40,7 +69,7 @@ All significant changes to the Daily Lesson Pack skill should be recorded here.
 
 ### Fixed
 - Removed mandatory visual-exemplar instructions whose standard, audit script and PPTX were never present in the repository or package.
-- Corrected the ChatGPT builder so every referenced runtime audit and regression file is packaged at the root and inside the independent QA component where required.
+- Corrected the ChatGPT builder so every referenced runtime audit and regression file is packaged at the root and inside the independent `dlp-pack-qa` component package.
 - Restored validated UI icon metadata and its declared asset.
 - Added a deterministic packaged-reference audit covering manifests, Markdown file references, component registration and UI icon paths.
 
