@@ -1,35 +1,38 @@
 ---
 name: dlp-writing-lesson
-description: Generate explicit, student-facing Information Report writing lessons with accurate models and classroom-readable slides.
+description: Generate explicit, student-facing writing lessons with accurate models and classroom-readable slides.
 ---
 
 # DLP Writing Lesson
 
 ## Ownership
 
-Own the writing lesson only. Country contexts may support knowledge, but writing instruction must remain the purpose.
+Own the writing lesson only. Topic or research contexts may support knowledge, but writing instruction must remain the purpose.
 
-## Current Term 3 spine
+## Mandatory year-level context
 
-Use the current Information Report toolkit progression supplied by the active overview. On overview-controlled days, follow the daily stage:
+Before generation, read `references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
 
-- Monday: analyse or introduce;
-- Tuesday: explicitly teach;
-- Thursday: apply through drafting or revision;
-- Friday: edit, consolidate or publish.
+The active profile controls expected independence, language complexity, appropriate writing load and scaffolding. The user's current English/writing overview controls the genre, toolkit feature and current sequence.
 
-The lesson must name the current toolkit component and require a student product that demonstrates it.
+## Current writing progression
+
+Use the current writing progression supplied by the active user/school overview. Do not assume a fixed genre, weekday spine or Term 3 sequence merely because an earlier class used one.
+
+When the overview defines a day-level progression, follow it. When it supplies only a broader current focus, resolve a coherent lesson from that focus without importing another user's sequence.
+
+The lesson must name the current writing/toolkit component and require a student product that demonstrates it.
 
 ## Explicit instruction
 
-When a feature is new:
+When a feature is new or fragile:
 
 1. show a clear model;
 2. identify or annotate the feature;
 3. jointly construct or practise it;
-4. protect substantial independent writing or application time.
+4. protect substantial independent writing or application time appropriate to the active year profile.
 
-Avoid reducing a writing lesson to collecting country facts or answering comprehension questions.
+Avoid reducing a writing lesson to collecting topic facts or answering comprehension questions.
 
 ## Student-facing clarity
 
@@ -38,6 +41,7 @@ Every task must make clear what students are writing or revising, how much they 
 - Prefer familiar classroom wording such as `topic sentence` over unexplained teacher terminology such as `classification opening`.
 - If a technical writing term is necessary, define it before asking students to use it.
 - Use direct actions and concrete expected outputs rather than abstract labels.
+- Calibrate expected response length and independence to the active year profile rather than another class's historical examples.
 
 ## Technical vocabulary and precision
 
@@ -62,11 +66,14 @@ All model text, prompts, explanations, word banks and success criteria must rema
 
 Fail if:
 
+- the active year-level profile is missing, unresolved or inconsistent with the orchestrator;
+- the lesson imports a fixed genre/day sequence from another user instead of the current overview;
 - the named writing feature is not actually taught or applied;
 - the model does not demonstrate the target feature;
 - the student product is vague;
 - factual research has replaced writing instruction;
 - task-critical terminology is unexplained or teacher-facing;
+- writing load or scaffolding is inappropriate for the active year profile;
 - a technical-word substitution changes or broadens the original meaning;
 - a model presented as a vocabulary substitution actually changes the core proposition or adds several unacknowledged facts;
 - a `why it is more precise` explanation does not state the specific information added;

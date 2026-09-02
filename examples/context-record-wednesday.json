@@ -1,4 +1,10 @@
 {
+  "active_year_profile": {
+    "value": "year-4-5",
+    "source": "references/year-level-profiles/year-4-5.md",
+    "status": "calibrated",
+    "resolved": true
+  },
   "date": {
     "value": "YYYY-MM-DD",
     "source": "current request",
@@ -6,7 +12,7 @@
   },
   "term_week": {
     "value": "Term N Week N",
-    "source": "shared overview",
+    "source": "current user/school overview",
     "resolved": true
   },
   "day": {
@@ -21,23 +27,23 @@
   },
   "mathematics_focus": {
     "value": "Teacher-supplied Wednesday Mathematics focus",
-    "source": "shared Maths overview plus current Wednesday instruction",
+    "source": "current Maths overview plus current Wednesday instruction",
     "resolved": true
   },
   "english_focus": {
     "value": "Teacher-supplied Wednesday English focus",
-    "source": "shared English overview plus current Wednesday instruction",
+    "source": "current English overview plus current Wednesday instruction",
     "resolved": true
   },
   "lesson_status": {
-    "value": "No Tuesday exception supplied; advance normally",
-    "source": "shared-class context contract default",
+    "value": "No preceding-day exception supplied; advance normally",
+    "source": "runtime context progression rule",
     "resolved": true
   },
-  "printing_requested": true,
+  "printing_requested": false,
   "printing_quantity": {
-    "value": 29,
-    "source": "shared-class context contract default",
-    "resolved": true
+    "value": null,
+    "source": "not requested",
+    "resolved": false
   }
 }

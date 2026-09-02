@@ -3,7 +3,8 @@
 
 The repository remains the source of truth. The generated package contains the
 orchestrator, all component contracts, registration metadata, shared standards,
-regression benchmarks, runtime QA scripts and a verifiable package manifest.
+year-level contextual profiles, regression benchmarks, runtime QA scripts and a
+verifiable package manifest.
 """
 
 from __future__ import annotations
@@ -21,6 +22,11 @@ COMMON_REFERENCES = (
     "references/panel-containment-standard.md",
 )
 
+YEAR_LEVEL_CONTEXT_REFERENCE = "references/year-level-context-contract.md"
+YEAR_LEVEL_PROFILE_REFERENCES = (
+    "references/year-level-profiles/year-4-5.md",
+    "references/year-level-profiles/year-6.md",
+)
 MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
 SHARED_CONTEXT_REFERENCE = "references/shared-class-context-contract.md"
 VISUAL_EXEMPLAR_REFERENCE = "references/visual-exemplar-standard.md"
@@ -31,12 +37,17 @@ UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regressio
 MEMORY_INDEPENDENT_BENCHMARK = (
     "examples/benchmarks/memory-independent-wednesday-regression.md"
 )
+YEAR_PROFILE_ISOLATION_BENCHMARK = (
+    "examples/benchmarks/year-profile-isolation-regression.md"
+)
+YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
 REGRESSION_BENCHMARKS = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
     "examples/benchmarks/t3w6-tuesday-release-regression.md",
     "examples/benchmarks/t3w6-thursday-literacy-regression.md",
     UNIVERSAL_MATHS_BENCHMARK,
     MEMORY_INDEPENDENT_BENCHMARK,
+    YEAR_PROFILE_ISOLATION_BENCHMARK,
 )
 
 ROOT_RUNTIME_FILES = (
@@ -48,6 +59,8 @@ ROOT_RUNTIME_FILES = (
     VISUAL_EXEMPLAR_ASSET,
     "skills/registry.json",
     *COMMON_REFERENCES,
+    YEAR_LEVEL_CONTEXT_REFERENCE,
+    *YEAR_LEVEL_PROFILE_REFERENCES,
     MATH_REFERENCE,
     SHARED_CONTEXT_REFERENCE,
     VISUAL_EXEMPLAR_REFERENCE,
@@ -55,6 +68,7 @@ ROOT_RUNTIME_FILES = (
     "examples/context-record-wednesday.json",
     "scripts/audit_package_dependencies.py",
     "scripts/audit_pack_contract.py",
+    YEAR_PROFILE_AUDIT,
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
     "scripts/audit_visual_exemplar.py",
@@ -113,9 +127,13 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
             raise ValueError(f"Skill name mismatch in {entrypoint}: expected {name}")
 
         component_root = f"skills/{name}"
-        component_references = COMMON_REFERENCES
+        component_references = (
+            *COMMON_REFERENCES,
+            YEAR_LEVEL_CONTEXT_REFERENCE,
+            *YEAR_LEVEL_PROFILE_REFERENCES,
+        )
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
-            component_references = (*COMMON_REFERENCES, MATH_REFERENCE)
+            component_references = (*component_references, MATH_REFERENCE)
         if name == "dlp-pack-qa":
             component_references = (
                 *component_references,
@@ -138,12 +156,16 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
             files[f"{component_root}/{UNIVERSAL_MATHS_BENCHMARK}"] = read_required(
                 repo, UNIVERSAL_MATHS_BENCHMARK
             )
+            files[f"{component_root}/{YEAR_PROFILE_ISOLATION_BENCHMARK}"] = read_required(
+                repo, YEAR_PROFILE_ISOLATION_BENCHMARK
+            )
 
         if name == "dlp-pack-qa":
             for benchmark in REGRESSION_BENCHMARKS:
                 files[f"{component_root}/{benchmark}"] = read_required(repo, benchmark)
             for script in (
                 "scripts/audit_pack_contract.py",
+                YEAR_PROFILE_AUDIT,
                 "scripts/audit_slide_typography.py",
                 "scripts/audit_panel_containment.py",
                 "scripts/audit_visual_exemplar.py",

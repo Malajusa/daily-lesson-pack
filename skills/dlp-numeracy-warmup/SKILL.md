@@ -9,6 +9,12 @@ description: Generate the Daily Lesson Pack Mathematics warm-up as cumulative re
 
 Own the Mathematics warm-up only. It is cumulative retrieval and does not replace the main lesson's prerequisite check, modelling, guided practice or exit assessment.
 
+## Mandatory year-level context
+
+Before generation, read `references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
+
+The active profile controls expected prior knowledge, number types and magnitudes, appropriate retrieval floor, reasoning demand and the ceiling for `Some`. Do not use another year level's calibration merely because its examples are available.
+
 ## Sequence
 
 Create exactly **10 prompt-and-answer pairs** (20 slides) unless the user explicitly changes the count, in this order:
@@ -29,9 +35,9 @@ Every prompt is followed immediately by its matched answer slide.
 
 On **prompt slides**, `All`, `Most` and `Some` must be **three separate questions/tasks of increasing complexity**. Never use one question where `All` is a partial answer, `Most` is the complete answer and `Some` is checking/explaining the same work.
 
-- **All:** a genuinely accessible question essentially all students can attempt successfully.
-- **Most:** a moderately more demanding independent question representing secure expected performance.
-- **Some:** a further extension that remains appropriate to the class; it should not leap automatically into the next year level.
+- **All:** a genuinely accessible question essentially all students can attempt successfully within the active year profile.
+- **Most:** a moderately more demanding independent question representing secure expected performance for the active profile.
+- **Some:** a further extension that remains appropriate to the active profile; it should not leap automatically into the next year level.
 
 On **answer slides**, show the answer corresponding to each of the three questions.
 
@@ -47,10 +53,15 @@ On **answer slides**, show the answer corresponding to each of the three questio
 
 ## Content calibration
 
-For the mixed Year 4/5 class:
-- Questions 1–4 should remain accessible to Year 4 while worthwhile for Year 5.
-- Questions 5–10 should mainly retrieve Year 4/5 and earlier knowledge.
-- Do not force the warm-up to preview the day's lesson or later-year content just to manufacture challenge.
+Apply the active year-level profile rather than hard-coding one class or year band.
+
+- Questions 1-4 should sit near the accessible retrieval floor defined by the active profile while remaining worthwhile.
+- Questions 5-10 should mainly retrieve the active profile's expected current/prior knowledge and earlier prerequisite knowledge.
+- Do not force the warm-up to preview the day's lesson or next-year content merely to manufacture challenge.
+- Difficulty should come from mathematically meaningful variation, not arbitrary larger numbers or extra steps.
+
+For `year-4-5`, apply the specific calibration in `references/year-level-profiles/year-4-5.md`.
+For `year-6`, apply `references/year-level-profiles/year-6.md` and treat the profile's current release status honestly.
 
 Use proper fraction formatting with a vinculum/stacked fraction on student-facing slides.
 
@@ -61,6 +72,8 @@ Use Trebuchet MS and the shared projected-readability hierarchy. Main instructio
 ## QA
 
 Fail if:
+- the active year-level profile is missing, unresolved or inconsistent with the orchestrator;
+- content relies on another year profile's pitch without explicit authorisation;
 - any prompt uses one question split into quality tiers rather than three questions;
 - `Some` is an unreasonable leap;
 - answer slides do not match the three prompts;

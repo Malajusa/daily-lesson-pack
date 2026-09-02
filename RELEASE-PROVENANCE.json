@@ -1,8 +1,8 @@
 {
-  "version": "3.5.0",
-  "created": "2026-08-28",
+  "version": "3.6.0",
+  "created": "2026-09-02",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
-  "base_commit": "3a84e4ff1665521f627b243ef4e20b4008f1cf67",
+  "base_commit": "f403da22eda106f3508f8d7affb9b61c372f7862",
   "reconciled_sources": [
     {
       "line": "git-3.2.0",
@@ -20,8 +20,16 @@
     {
       "line": "recovered-visual-exemplar-and-portability-contract",
       "artefact_sha256": "069EC730EF879BAFD25F5AAE3E8D3E9CA6378ACE76A46DFE0FEA4897C857E880",
-      "contribution": "Checksum-verified edited Tuesday visual exemplar, deterministic visual audit, explicit shared-class context and memory-independent Wednesday routing"
+      "contribution": "Checksum-verified edited Tuesday visual exemplar, deterministic visual audit, explicit runtime context and memory-independent routing"
+    },
+    {
+      "line": "year-level-context-profiles",
+      "base_commit": "f403da22eda106f3508f8d7affb9b61c372f7862",
+      "contribution": "Separated teacher/school runtime inputs from protected year-level calibration, added the established Year 4/5 profile, an isolated Year 6 calibration scaffold, cross-year regression protection and package-level profile dependencies"
     }
   ],
-  "intentional_removals": []
+  "intentional_removals": [
+    "Removed the fixed 29-copy runtime default from the portable context contract; printing quantity must now come from the current user's authoritative context.",
+    "Removed the hard-coded Term 3 Information Report weekday spine from the universal writing component; the current user's English/writing overview now controls genre and sequence."
+  ]
 }
