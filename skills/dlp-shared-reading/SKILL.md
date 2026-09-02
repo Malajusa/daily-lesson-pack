@@ -9,6 +9,12 @@ description: Generate whole-class Shared Reading as alternating paragraph-and-qu
 
 Own Shared Reading only. Do not reuse the Morning Work or Guided Reading text.
 
+## Mandatory year-level context
+
+Before generation, read `../../references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
+
+The active profile controls passage density, syntax, vocabulary support, expected background knowledge, comprehension demand and reasonable inference complexity. Do not increase year level by simply making paragraphs longer or wording more obscure.
+
 ## Core slide architecture
 
 Build Shared Reading as alternating matched pairs:
@@ -28,11 +34,15 @@ Shared Reading is projected whole-class reading. On question slides, paragraphs 
 
 If the full shared text needs to be approximately 250 words or more, distribute it across more slides. Never preserve total word count by cramming long paragraphs onto one slide or shrinking the text.
 
+The active year-level profile may alter the appropriate amount or complexity of text, but it does not override projected readability.
+
 ## Question design
 
-Use student-friendly questions appropriate to the class. Across the sequence, vary comprehension purpose where useful: main idea, literal detail, vocabulary in context, inference, evidence, cohesion or an information-text feature.
+Use student-friendly questions appropriate to the active year-level profile. Across the sequence, vary comprehension purpose where useful: main idea, literal detail, vocabulary in context, inference, evidence, cohesion or an information-text feature.
 
 Do not make every question an inference. Do not use unnecessarily formal wording. The student should know exactly which paragraph provides the evidence.
+
+A higher-year profile should increase legitimate comprehension demand through richer ideas, relationships and evidence requirements where appropriate—not merely through longer passages or more difficult-looking words.
 
 ## Evidence boundary
 
@@ -50,6 +60,8 @@ Colour may connect a question to a relevant word, phrase or textual feature, but
 ## QA
 
 Fail if:
+- the active year-level profile is missing, unresolved or inconsistent with the orchestrator;
+- passage or question demand uses another year profile's assumptions without explicit authorisation;
 - a slide has more than one question;
 - a question is not about the displayed paragraph;
 - a title, question or answer asserts information not supported by the displayed paragraph;
@@ -61,5 +73,5 @@ Fail if:
 - the primary answer is not visually dominant;
 - paragraph text is compressed to preserve layout;
 - paragraph and question visually merge;
-- wording is not student-friendly;
+- wording is not student-friendly for the active profile;
 - Shared Reading duplicates Morning Work or Guided Reading text.
