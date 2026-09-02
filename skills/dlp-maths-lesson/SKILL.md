@@ -15,12 +15,12 @@ The Mathematics warm-up is retrieval. The main lesson owns prerequisite checking
 
 Before planning or generating the lesson, read and apply:
 
-- `../../references/year-level-context-contract.md`;
+- `references/year-level-context-contract.md`;
 - the active year-level profile supplied by the orchestrator;
-- `../../references/universal-maths-instruction-canon.md`;
-- `../../references/slide-deck-quality-standards.md`;
-- `../../references/semantic-colour-standard.md`;
-- `../../references/panel-containment-standard.md`.
+- `references/universal-maths-instruction-canon.md`;
+- `references/slide-deck-quality-standards.md`;
+- `references/semantic-colour-standard.md`;
+- `references/panel-containment-standard.md`.
 
 The universal Mathematics canon is the authoritative pedagogical and mathematical-communication standard for this component. The active year-level profile controls developmental pitch, expected prior knowledge, reasonable number types/magnitudes, scaffolding and demand. The user's current overview controls what is being taught now.
 
@@ -238,6 +238,6 @@ Fail the component if:
 - a valid alternative answer is rejected without a stated restriction;
 - the rendered slide is unreadable, visually misleading or poorly contained.
 
-Use `../../examples/benchmarks/universal-maths-canon-regression.md` whenever a change affects Mathematics pedagogy, representations, task architecture or QA. Test at least two different concept families and fail the change if improvement in one area breaks another.
+Use `examples/benchmarks/universal-maths-canon-regression.md` whenever a change affects Mathematics pedagogy, representations, task architecture or QA. Test at least two different concept families and fail the change if improvement in one area breaks another.
 
-Use `../../examples/benchmarks/year-profile-isolation-regression.md` whenever a shared Mathematics rule or a year profile changes in a way that can alter mathematical pitch.
+Use `examples/benchmarks/year-profile-isolation-regression.md` whenever a shared Mathematics rule or a year profile changes in a way that can alter mathematical pitch.
