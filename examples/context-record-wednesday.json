@@ -1,8 +1,14 @@
 {
+  "schema_version": 2,
   "active_year_profile": {
     "value": "year-4-5",
     "source": "references/year-level-profiles/year-4-5.md",
     "status": "calibrated",
+    "resolved": true
+  },
+  "pack_profile": {
+    "value": "default-daily-pack-architecture",
+    "source": "references/default-pack-profile.json",
     "resolved": true
   },
   "date": {
@@ -40,6 +46,29 @@
     "source": "runtime context progression rule",
     "resolved": true
   },
+  "timetable_instances": [
+    {
+      "id": "morning-work-1",
+      "owner": "dlp-morning-work",
+      "start": "08:30",
+      "duration_minutes": 10,
+      "purpose": "independent retrieval"
+    },
+    {
+      "id": "maths-1",
+      "owner": "dlp-maths-lesson",
+      "start": "09:00",
+      "duration_minutes": 60,
+      "purpose": "explicit teaching, guided practice and exit evidence"
+    },
+    {
+      "id": "literacy-1",
+      "owner": "dlp-literacy-warmup",
+      "start": "11:00",
+      "duration_minutes": 20,
+      "purpose": "literacy retrieval"
+    }
+  ],
   "printing_requested": false,
   "printing_quantity": {
     "value": null,

@@ -140,9 +140,9 @@ Never solve a layout problem by shrinking the main warm-up question/answer below
 
 For every Literacy and Mathematics warm-up slide:
 
-1. Identify the main student-facing element.
-2. Confirm it is at least 36 pt and visually dominant.
-3. Identify secondary task/explanation text and confirm it is deliberately subordinate but still comfortably projected.
+1. Identify every meaningful student-facing prompt or answer element.
+2. Confirm each is at least 36 pt and visually dominant; checking only the largest run on the slide is invalid.
+3. Confirm substantive `Why` text is at least 28 pt. Identify other secondary explanation text and confirm it is deliberately subordinate but still comfortably projected.
 4. Confirm labels are smaller only because their role is navigational.
 5. Check whether any short answer, key word or expression should be enlarged beyond 36 pt.
 6. Inspect the slide for unused space that could support larger content.
@@ -176,11 +176,11 @@ A `no` to any one question requires revision.
 
 ## Automated typography audit
 
-Run `python scripts/audit_slide_typography.py --deck <deck> --out <report.json>` on final PPTX builds when the script is available.
+Run `python scripts/audit_slide_typography.py --deck <deck> --dispositions <warning-ledger.json> --out <report.json>` on final PPTX builds when the script is available.
 
-The automated typography audit is a screening tool, not a substitute for full-size human inspection. It should flag:
+The automated typography audit is a screening tool, not a substitute for full-size human inspection. It applies role floors to each meaningful text element; one large heading cannot hide smaller task text. It should flag:
 
-- warm-up slides whose largest instructional text is below 36 pt;
+- meaningful warm-up prompts or answers below 36 pt;
 - student-facing text below the projected readability floor;
 - unusually small secondary text on otherwise spacious slides;
 - slides with low body-content occupancy combined with relatively small text;
@@ -197,4 +197,10 @@ The containment audit should flag likely panel/text pairs where:
 - a filled text panel has insufficient internal margins;
 - the pairing is ambiguous and therefore needs full-size inspection.
 
-A high-confidence geometric containment failure blocks release. Automated warnings must be inspected rather than dismissed. Even a geometry pass does not replace final rendered inspection because wrapping and font metrics can create visible overflow inside nominally valid bounds.
+A high-confidence geometric containment failure blocks release. Automated
+warnings must be inspected individually rather than dismissed in a batch. An
+unresolved warning blocks release. A disposition is valid only when it records
+the slide, warning code, decision, concrete evidence, reviewer and run ID and
+matches the audited deck hash. Even a geometry pass does not replace final
+rendered inspection because wrapping and font metrics can create visible
+overflow inside nominally valid bounds.

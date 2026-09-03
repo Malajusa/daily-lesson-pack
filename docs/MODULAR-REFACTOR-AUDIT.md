@@ -50,9 +50,13 @@ This refactor explicitly captures later classroom requirements that are not full
 - Shared Reading uses one short paragraph plus one clearly separated question per slide.
 - The current role-based Trebuchet MS projected-readability standard is preserved rather than forcing every element to exactly the same size.
 
-## Deliberate non-change
+## Subsequent correction in 3.7.0
 
-The current repository specifies 10 Mathematics prompt/answer pairs (20 slides). This refactor preserves that current behaviour. Earlier versions used fewer pairs, so changing the count should be treated as a separate explicit decision rather than smuggled into an architectural refactor.
+The original refactor preserved 10 Mathematics prompt/answer pairs (20 slides)
+without validating that inherited value against the classroom standard. The
+T3W7 Thursday regression exposed this as a requirements failure. Version 3.7.0
+restores five prompt/answer pairs (10 slides total), stores the value in the
+machine-readable pack profile and tests it deterministically.
 
 ## Failure isolation
 

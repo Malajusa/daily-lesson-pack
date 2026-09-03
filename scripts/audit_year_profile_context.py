@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -21,8 +22,17 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--context-record", type=Path, required=True)
     parser.add_argument("--component-record", type=Path, required=True)
+    parser.add_argument("--deck", type=Path, required=True)
     parser.add_argument("--out", type=Path)
     return parser.parse_args()
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def load_object(path: Path, label: str, failures: list[str]) -> dict:
@@ -45,6 +55,12 @@ def main() -> int:
     failures: list[str] = []
     context = load_object(args.context_record, "context record", failures)
     components = load_object(args.component_record, "component record", failures)
+    deck_hash = sha256(args.deck) if args.deck.is_file() else ""
+    if not deck_hash:
+        failures.append(f"Missing deck: {args.deck}")
+    recorded_hash = str(components.get("artifact_sha256", "")).strip().lower()
+    if deck_hash and recorded_hash != deck_hash:
+        failures.append("Component record is not bound to the audited deck")
 
     active = context.get("active_year_profile")
     profile = ""
@@ -73,33 +89,41 @@ def main() -> int:
                 f"Runtime field {field} incorrectly cites a year-level profile as its source"
             )
 
-    scheduled = components.get("scheduled_components", [])
+    scheduled = components.get("scheduled_instances", [])
     records = components.get("components", [])
     if not isinstance(scheduled, list):
-        failures.append("component record scheduled_components must be a list")
+        failures.append("component record scheduled_instances must be a list")
         scheduled = []
     if not isinstance(records, list):
         failures.append("component record components must be a list")
         records = []
 
-    by_name: dict[str, dict] = {}
+    by_instance: dict[str, dict] = {}
     for record in records:
         if not isinstance(record, dict):
             continue
-        name = str(record.get("name", "")).strip()
-        if name:
-            by_name[name] = record
+        instance_id = str(record.get("instance_id", "")).strip()
+        if instance_id:
+            by_instance[instance_id] = record
 
-    for name in [str(item) for item in scheduled]:
-        record = by_name.get(name)
+    for item in scheduled:
+        if not isinstance(item, dict):
+            continue
+        instance_id = str(item.get("id", "")).strip()
+        owner = str(item.get("owner", "")).strip()
+        record = by_instance.get(instance_id)
         if record is None:
             continue
         component_profile = str(record.get("active_year_profile", "")).strip()
         if not component_profile:
-            failures.append(f"Component {name} does not record active_year_profile")
+            failures.append(
+                f"Component instance {instance_id or 'MISSING'} ({owner or 'unknown owner'}) "
+                "does not record active_year_profile"
+            )
         elif profile and component_profile != profile:
             failures.append(
-                f"Component {name} profile mismatch: {component_profile} != {profile}"
+                f"Component instance {instance_id or 'MISSING'} profile mismatch: "
+                f"{component_profile} != {profile}"
             )
 
     release_mode = "candidate" if profile_status in {"candidate", "calibration", "scaffold"} else "normal"
@@ -113,6 +137,7 @@ def main() -> int:
         "active_year_profile": profile or None,
         "profile_status": profile_status or None,
         "release_mode": release_mode,
+        "artifact_sha256": deck_hash or None,
         "failure_count": len(failures),
         "failures": failures,
     }

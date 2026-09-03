@@ -64,6 +64,12 @@ A user's timetable, class size or overview must never be copied into a year-leve
 
 ## Source hierarchy
 
+Read `references/shared-class-context-contract.md`,
+`references/default-pack-profile.json` and
+`references/component-instance-contract.md` before resolving a daily pack.
+They define the reproducible pack defaults, required day inputs,
+instance-level timetable model and memory-independence boundary.
+
 Use sources in this order:
 
 1. the user's current explicit instruction;
@@ -110,7 +116,7 @@ Do not inherit the exemplar's lesson wording, year-level pitch, sequencing error
 
 ## Mandatory Mathematics canon
 
-For every main Mathematics lesson, `dlp-maths-lesson` must read and apply `references/universal-maths-instruction-canon.md` before generation. The component must complete the canon's internal planning contract and substantiate its Mathematics acceptance checks before assembly.
+For every main Mathematics lesson, `dlp-maths-lesson` must read and apply `references/universal-maths-instruction-canon.md` before generation. For fraction equivalence or fraction-decimal conversion, it must also apply `references/fraction-equivalence-standard.md`. The component must complete the canon's internal planning contract and substantiate its Mathematics acceptance checks before assembly.
 
 Mathematics warm-ups and Morning Work apply the canon's mathematical-accuracy, terminology, representation, question/answer and answer-integrity rules while remaining retrieval tasks rather than new teaching.
 
@@ -156,18 +162,19 @@ Every content-component handoff must include:
 3. Resolve exact date, term, week, day, timetable and interruptions from the current run's supplied sources.
 4. Resolve current Maths and English/literacy sequence, day-level focus and explicit status exceptions from the user's current sources.
 5. Verify and load the approved visual-only exemplar.
-6. Build one shared context object containing only information the components need: active year profile/path/status, runtime source provenance, lesson focus, curriculum boundary, authorised local allocation, time available and output constraints.
-7. Route each required component to its specialised skill and require a component acceptance result before assembly. For `dlp-maths-lesson`, require the universal Mathematics planning contract and canon checks in the acceptance evidence.
-8. Record the scheduled components and each component's `PASS` or `FAIL`, checks completed and artefact/slide range in a temporary component-acceptance record. Treat a missing record, missing scheduled component or unsubstantiated `PASS` as `FAIL`.
-9. Block assembly until every scheduled content component records `PASS`. This gate does not replace independent final QA.
-10. Keep Morning Work, Literacy warm-up and Shared Reading as genuinely distinct tasks and texts. Represent Guided Reading only according to the current Guided Reading component contract.
-11. Keep the Mathematics warm-up separate from prerequisite checking and the main Mathematics lesson.
-12. Assemble components in timetable order. Slide 1 is always Morning Work when Morning Work is required.
-13. Create only useful printables. Prefer books, mini-whiteboards, oral work and manipulatives when a worksheet adds no value and when those response modes are authorised by runtime context.
-14. Create the teacher briefing and any weekly printing plan from the actual generated resources and current-run quantities, not from another user's standing assumptions.
-15. Send the complete assembled pack, context-source record, active year-profile record, presentation-audit evidence and component-acceptance record to `dlp-pack-qa`.
-16. If QA returns FAIL, route each defect back only to the owning component skill, revise, and re-run the full applicable QA suite. Do not patch unrelated components.
-17. Release only after critical QA checks pass and the active year profile's own release-status requirements are satisfied.
+6. Build one shared context object containing only information the components need: active year profile/path/status, pack profile, runtime source provenance, lesson focus, curriculum boundary, authorised local allocation, time available and output constraints. Record each scheduled block as a unique instance under `references/component-instance-contract.md`.
+7. Prepare an instance-level time and slide budget before generation. Include response, discussion, transition and resource-handling time. If the estimate exceeds the timetable allocation, reduce scope or ask for a decision; do not build an overfull deck.
+8. Route each required instance to its specialised skill and require an evidence-bearing component acceptance result before assembly. Repeated owners are valid when instance IDs differ. For `dlp-maths-lesson`, require the universal Mathematics planning contract, active profile and canon checks in the evidence.
+9. Record schema-v2 scheduled instances, a generation run ID and each instance's `PASS` or `FAIL`, active year profile, estimated minutes, stable check IDs, concrete evidence and artefact/slide range. After assembly, bind the unchanged evidence record to the assembled deck SHA-256. A freeform assertion is not evidence.
+10. Block assembly until every scheduled content instance records `PASS`. This gate does not replace independent final QA.
+11. Keep Morning Work, Literacy warm-up and Shared Reading distinct. Represent Guided Reading only according to its current component contract.
+12. Keep the Mathematics warm-up separate from prerequisite checking and the main Mathematics lesson.
+13. Assemble components in timetable order. Slide 1 is Morning Work when required. Mark resumptions after timetable breaks visibly.
+14. Create only useful printables. Prefer books, mini-whiteboards, oral work and manipulatives when a worksheet adds no value and those modes are authorised by runtime context.
+15. Create the teacher briefing and any weekly printing plan from the actual generated resources and current-run quantities.
+16. Send the complete assembled pack, context-source record, active year-profile record, presentation-audit evidence and component-acceptance record to `dlp-pack-qa`.
+17. If QA returns FAIL, route each defect only to its owning component, revise, and rerun the full applicable suite.
+18. Release only after repository-owned contract and year-profile audits, warning dispositions, independent semantic review and independent rendered visual review pass for the same deck hash and the active year profile's release requirements are satisfied.
 
 If actual printing is requested and copy quantity cannot be resolved from an authoritative runtime source, treat quantity as unresolved rather than inventing it.
 
@@ -181,6 +188,7 @@ If the active year-level profile itself is marked calibration/candidate-only, ge
 - Morning Work and Shared Reading must not reuse the same passage.
 - Literacy warm-up uses 10 self-contained `Reminder -> Question -> Answer` sequences unless the user changes the count. A question must not depend on remembered content from another slide.
 - Guided Reading follows its own current component contract and authorised schedule; never infer ability labels from the year profile.
+- Numeracy warm-up uses 5 `Question -> Answer` pairs (10 slides total) under the default pack profile. Each question slide contains separate All, Most and Some tasks.
 - Shared Reading must alternate each paragraph-and-question slide with its immediately following matched answer slide; answers are not revealed early on question slides.
 - The writing lesson teaches the current writing focus supplied by the user's overview; a historical class genre or weekday progression is not a universal default.
 - Student-facing instructions must state the action, mathematical/literacy focus, any required representation or resource, and the expected student output where applicable.
@@ -188,8 +196,11 @@ If the active year-level profile itself is marked calibration/candidate-only, ge
 - Student-facing task language must be understandable within the active year profile. Accurate technical terminology is retained and explained rather than replaced by vague substitutes.
 - Teacher preparation, timing, misconceptions and answers belong in the briefing or notes, not as clutter on student task slides.
 - Warm-up slides use the established projected-readability and semantic-colour standards.
+- Every meaningful Numeracy warm-up task/answer is at least 36 pt; substantive `Why` text is at least 28 pt. Compliance is assessed per text element, not by the largest text on the slide.
 - No generic whiteboard footer is required unless the user explicitly requests one. The Mathematics green `Why` panel is instructional content, not a generic footer instruction.
 - The main Mathematics lesson must apply the complete universal Mathematics canon, including meaning before procedure, purposeful representation, genuine guided practice, model-to-practice alignment and complete answer modelling.
+- Mixed Year 4/5 Mathematics includes explicit pathways for both year levels. When only one year has an active curriculum code, the other pathway uses an authorised prerequisite or consolidation bridge.
+- Two Mathematics timetable blocks require two unique instances and a visible breakpoint. A final hundred grid alone cannot explain fraction equivalence; show repartitioning and the invariant amount.
 - Mathematics warm-ups and Morning Work must remain retrieval while still using exact mathematics, precise terminology and non-revealing question slides.
 - A Mathematics question requiring a model, explanation, comparison, justification, proof, label or equation must have an answer slide that demonstrates every requested element.
 
@@ -212,13 +223,23 @@ Run the deterministic contract audit during final QA:
 
 `python scripts/audit_pack_contract.py --deck <deck> --context-record <context.json> --component-record <record.json> --out <report.json>`
 
-If the user explicitly changes the default Literacy warm-up count, also pass `--literacy-count <n>` with the authorised count.
+Run the profile-isolation audit against the same inputs and deck:
+
+`python scripts/audit_year_profile_context.py --deck <deck> --context-record <context.json> --component-record <record.json> --out <year-profile-report.json>`
+
+If the user explicitly changes a warm-up count, also pass `--literacy-count <n>` or `--numeracy-count <n>` with the authorised count.
 
 Run the projected-readability and panel-containment audits on the final deck:
 
-- `python scripts/audit_slide_typography.py --deck <deck> --out <report.json>`
+- `python scripts/audit_slide_typography.py --deck <deck> --dispositions <warning-ledger.json> --out <report.json>`
 - `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`
-- `python scripts/audit_visual_exemplar.py --deck <deck> --out <report.json>`
+- `python scripts/audit_visual_exemplar.py --deck <deck> --review-record <visual-review.json> --out <report.json>`
+
+Aggregate both contract reports and all presentation/review reports with
+`scripts/audit_release_bundle.py`. Do not create a
+deck-specific release script containing expected slide counts or exact answer
+strings. Any automated warning without a slide-specific, evidence-bearing
+disposition remains a release failure.
 
 Apply the existing classroom-feedback regression records whenever the affected components change. Treat those records as approved Year 4/5 benchmarks where their content is Year 4/5-specific; do not use them as Year 6 pitch sources.
 
@@ -227,5 +248,9 @@ Apply `examples/benchmarks/memory-independent-wednesday-regression.md` whenever 
 Apply `examples/benchmarks/year-profile-isolation-regression.md` whenever year-profile routing, a year profile, or a shared rule that can affect pitch changes.
 
 For any change affecting Mathematics pedagogy, representations, task architecture or QA, also apply `examples/benchmarks/universal-maths-canon-regression.md` to at least two different concept families before release.
+
+Apply `examples/benchmarks/t3w7-thursday-known-failure.md` whenever scheduling,
+Numeracy count, mixed-year Mathematics, fraction equivalence, typography,
+warning handling or release certification changes.
 
 Any audit or applicable regression failure blocks release.

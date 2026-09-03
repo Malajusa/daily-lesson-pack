@@ -8,6 +8,11 @@ It is deliberately separate from `year-level-context-contract.md`.
 
 - Runtime context answers: **What is this class teaching now, when, and under what local constraints?**
 - The active year-level profile answers: **What is an appropriate developmental and curriculum-facing pitch for this year level?**
+- The pack profile answers: **What stable slide counts and release behaviours apply across supported profiles?**
+
+Load `default-pack-profile.json` as the bundled architecture profile. A current
+user instruction may override a profile field for that run, but the resolved
+value and source must be written to the context record.
 
 A teacher's timetable or overview must never become the definition of a year-level profile.
 
@@ -27,6 +32,14 @@ Resolve these from the current request, current-run files, connected authoritati
 Do not require the same timetable, overview format, term sequence or class size from different users.
 
 ## No bundled class defaults as year-level assumptions
+
+Represent each teaching block using `component-instance-contract.md`. Repeated
+subject owners are not merged. Every instance has a unique ID, start time,
+duration and purpose before component generation begins.
+
+Assume the preceding scheduled lesson was completed sufficiently to advance
+unless an explicit status exception says it was partial, cancelled or requires
+reteaching.
 
 Do not treat any of the following as universal or year-level defaults:
 

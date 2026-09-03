@@ -64,3 +64,9 @@ Before release, render the complete deck and compare it with the exemplar at
 full size. Pass only when the deck retains the same role-colour grammar, left
 rail, title hierarchy, panel relationships, typeface and efficient canvas use
 while satisfying all current educational contracts.
+
+`scripts/audit_visual_exemplar.py` is a structural screening check. Its colour,
+rail, panel and font metrics cannot certify hierarchy, readability,
+representation quality or purposeful space use. Final PASS therefore requires
+a separate rendered-review record, bound to the deck SHA-256, containing an
+independent reviewer, run ID and evidence for every required visual check.

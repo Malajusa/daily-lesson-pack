@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -20,6 +21,14 @@ ROLE_COLOURS = {
     "blue": {"EAF2F8", "005A9C"},
     "green": {"EAF7EE", "1B7F3A"},
 }
+REQUIRED_REVIEW_CHECKS = {
+    "VISUAL.HIERARCHY",
+    "VISUAL.PROJECTION_READABILITY",
+    "VISUAL.SPACE_USE",
+    "VISUAL.REPRESENTATION_CLARITY",
+    "VISUAL.CROSS_SLIDE_CONSISTENCY",
+}
+GENERIC_EVIDENCE = re.compile(r"^(?:checked|reviewed|intentional|looks good|acceptable|pass)$", re.I)
 
 
 def sha256(path: Path) -> str:
@@ -102,6 +111,11 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--deck", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument(
+        "--review-record",
+        type=Path,
+        help="Independent rendered-review JSON bound to this deck SHA-256",
+    )
     args = parser.parse_args()
 
     failures = []
@@ -126,19 +140,56 @@ def main() -> int:
         if count < 4:
             failures.append(f"The {role} role-colour family is not used often enough to establish the exemplar grammar.")
 
+    deck_hash = sha256(args.deck)
+    review_summary = {"provided": bool(args.review_record), "valid": False, "reviewer": None, "run_id": None, "generator_run_id": None}
+    if not args.review_record or not args.review_record.is_file():
+        failures.append("Independent rendered visual-review record is missing.")
+    else:
+        try:
+            review = json.loads(args.review_record.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            review = {}
+            failures.append(f"Independent visual-review record is unreadable: {exc}")
+        reviewer = str(review.get("reviewer", "")).strip()
+        run_id = str(review.get("run_id", "")).strip()
+        generator_run_id = str(review.get("generator_run_id", "")).strip()
+        review_summary["reviewer"] = reviewer or None
+        review_summary["run_id"] = run_id or None
+        review_summary["generator_run_id"] = generator_run_id or None
+        if str(review.get("artifact_sha256", "")).lower() != deck_hash:
+            failures.append("Independent visual review is not bound to this deck SHA-256.")
+        if not reviewer or not run_id or not generator_run_id:
+            failures.append("Independent visual review needs a reviewer, run_id and generator_run_id.")
+        elif run_id == generator_run_id:
+            failures.append("Independent visual review must use a different run_id from generation.")
+        checks = review.get("checks")
+        found: set[str] = set()
+        if not isinstance(checks, list):
+            failures.append("Independent visual review needs evidence-bearing check objects.")
+            checks = []
+        for check in checks:
+            if not isinstance(check, dict):
+                continue
+            check_id = str(check.get("id", "")).strip()
+            found.add(check_id)
+            evidence = str(check.get("evidence", "")).strip()
+            if str(check.get("result", "")).upper() != "PASS" or len(evidence) < 20 or GENERIC_EVIDENCE.fullmatch(evidence):
+                failures.append(f"Visual review check {check_id or 'MISSING'} is not substantiated.")
+        for missing in sorted(REQUIRED_REVIEW_CHECKS - found):
+            failures.append(f"Independent visual review is missing {missing}.")
+        review_summary["valid"] = not any("Independent visual review" in item or "visual-review record" in item or "Visual review check" in item for item in failures)
+
     report = {
         "status": "PASS" if not failures else "FAIL",
         "deck": str(args.deck.resolve()),
+        "artifact_sha256": deck_hash,
         "exemplar": str(EXEMPLAR),
         "exemplar_sha256": exemplar_hash,
         "expected_exemplar_sha256": EXEMPLAR_SHA256,
         "metrics": metrics,
+        "independent_review": review_summary,
         "failures": failures,
-        "manual_review_required": [
-            "Compare all rendered slides at full size with the exemplar.",
-            "Confirm compact eyebrow/title hierarchy and dominant main panel.",
-            "Confirm current content rules override exemplar wording.",
-        ],
+        "note": "Automated exemplar metrics are screening only. PASS requires a separate evidence-bearing rendered review.",
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

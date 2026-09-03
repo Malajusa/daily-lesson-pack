@@ -33,9 +33,12 @@ Return:
 - Do not inherit another user's fixed class size, four-day overview, Wednesday arrangement, genre sequence or local timetable as a default.
 
 ### Component acceptance gate
-- A component-acceptance record lists every scheduled content component.
-- Every scheduled component records `PASS`, the checks completed, the active year profile and its artefact or slide range before assembly.
-- A missing component, missing evidence, duplicate component record, profile mismatch or component `FAIL` blocks assembly and release.
+- Apply `references/component-instance-contract.md` and require schema version 2.
+- The context and acceptance records list every scheduled content instance with a unique ID, owner, start, duration and purpose.
+- Repeated component owners are valid when instance IDs differ; repeated IDs are not.
+- Every instance records `PASS`, the active year profile, estimated minutes, stable check IDs, concrete evidence and its artefact or slide range.
+- The evidence record identifies the generation run and is bound to the audited deck SHA-256. Independent semantic and rendered-review records cite that generation run and use different review run IDs. Freeform strings such as `checked` are not evidence.
+- A missing instance, time-budget overrun, missing evidence, duplicate instance result, profile mismatch or component `FAIL` blocks assembly and release.
 - Component acceptance does not replace this independent whole-pack review.
 
 ### Sequence and scope
@@ -43,6 +46,7 @@ Return:
 - Every Morning Work instruction is executable from the projected slide using the response mode authorised by runtime classroom context; no task asks students to mark projected-only content.
 - Morning Work is scannable at projection size: related tasks are grouped, the core is not padded with an unnecessary extension, and comfortable internal spacing remains after all content is placed.
 - Timetable order is coherent.
+- Distinct timetable blocks remain distinct component instances. A lesson resumed after a break has a visible breakpoint.
 - Specialist subjects are timetable labels only under the current core contract unless an explicit authorised component says otherwise.
 - No unauthorised specialist printables or generated lessons exist.
 - Morning Work and Shared Reading use different texts.
@@ -101,7 +105,7 @@ Return:
 - Comparison tables are split before their content becomes undersized.
 
 ### Numeracy warm-up
-- 10 prompt/answer pairs unless explicitly overridden.
+- 5 prompt/answer pairs (10 slides total) unless the validated profile or current request explicitly overrides the count.
 - Prompt slides contain three separate All / Most / Some questions, not three answer-quality expectations for one question.
 - The active year profile determines reasonable retrieval floor, number types/magnitudes and the ceiling for `Some`.
 - `Some` does not automatically jump into the next year level.
@@ -111,10 +115,12 @@ Return:
 - The warm-up retrieves already taught knowledge rather than introducing a new procedure.
 - Mathematical terminology, notation, diagrams, scales and representations are accurate.
 - A prompt slide does not reveal its answer through completed working, colour or an already completed model.
+- Every meaningful tier task or answer is at least 36 pt; substantive `Why` text is at least 28 pt. Inspect each element rather than the slide maximum.
 
 ### Main Mathematics lesson
 
 Apply `references/universal-maths-instruction-canon.md` in full and verify consistency with the active year-level profile.
+Apply `references/fraction-equivalence-standard.md` when equivalence or fraction-decimal conversion is taught.
 
 #### Planning and scope
 - The Mathematics component acceptance record substantiates every required planning-contract check rather than recording a generic `PASS`.
@@ -124,6 +130,8 @@ Apply `references/universal-maths-instruction-canon.md` in full and verify consi
 - Unless explicitly review, consolidation or extension, the lesson introduces one central new mathematical idea rather than several substantial new concepts.
 - Focused prerequisite retrieval is distinct from the cumulative Mathematics warm-up.
 - Year 6 demand is not produced by mechanically enlarging Year 4/5 numbers, text length or step count.
+- Each Mathematics timetable block has its own instance ID, purpose and feasible time estimate.
+- Mixed Year 4/5 instruction states a common central idea and provides substantive Year 4 and Year 5 pathways. An inactive year level receives an authorised prerequisite/consolidation bridge, not the other year's outcome by implication.
 
 #### Mathematical meaning and language
 - A newly introduced procedure is grounded in quantities, units, properties or relationships before procedural shorthand is used.
@@ -139,6 +147,7 @@ Apply `references/universal-maths-instruction-canon.md` in full and verify consi
 - Decorative mathematical imagery does not substitute for a model.
 - A photograph is not used as mathematical evidence unless its quantity, partition, scale and perspective are exact.
 - Semantic colour is consistent across corresponding quantities and is not the only cue.
+- Fraction equivalence is shown through the original partition, repartitioning of every part, the invariant amount and the multiplicative relationship. A finished hundred grid alone fails.
 
 #### Teaching sequence and gradual release
 - For a new or fragile concept, meaning and a complete model precede guided and independent work.
@@ -182,6 +191,8 @@ Apply the repository standards:
 - `references/semantic-colour-standard.md`;
 - `references/panel-containment-standard.md`;
 - `references/visual-exemplar-standard.md`.
+- `references/component-instance-contract.md`.
+- `references/fraction-equivalence-standard.md` where applicable.
 
 ### Visual-exemplar fidelity gate
 
@@ -199,12 +210,20 @@ Content and pedagogy must come from the current active year profile, component c
 
 Where scripts are available, run:
 - `python scripts/audit_pack_contract.py --deck <deck> --context-record <context.json> --component-record <record.json> --out <report.json>`;
+- `python scripts/audit_year_profile_context.py --deck <deck> --context-record <context.json> --component-record <record.json> --out <year-profile-report.json>`;
 - if the user explicitly changed the default Literacy warm-up count, add `--literacy-count <n>` with the authorised count;
-- `python scripts/audit_slide_typography.py --deck <deck> --out <report.json>`;
+- `python scripts/audit_slide_typography.py --deck <deck> --dispositions <warning-ledger.json> --out <report.json>`;
 - `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`;
-- `python scripts/audit_visual_exemplar.py --deck <deck> --out <report.json>`.
+- `python scripts/audit_visual_exemplar.py --deck <deck> --review-record <visual-review.json> --out <report.json>`;
+- `python scripts/audit_release_bundle.py --deck <deck> --contract <contract.json> --year-profile <year-profile-report.json> --typography <typography.json> --containment <containment.json> --visual <visual.json> --semantic-review <semantic-review.json> --out <release.json>`.
 
-Automated checks are screening tools. Render and inspect the final deck at full size. Any text that crosses or visually escapes its intended coloured, shaded or bordered panel blocks release. A filled instructional text panel with less than the required internal margin also blocks release. A panel-heavy deck receiving zero meaningful panel/text pair coverage fails the automated audit; do not treat that result as a clean geometry pass.
+Automated checks are screening tools. Render and inspect the final deck at full size. The visual screening audit cannot certify its own manual checks: it requires a separate evidence-bearing review record from an independent reviewer. Any text that crosses or visually escapes its intended coloured, shaded or bordered panel blocks release. A filled instructional text panel with less than the required internal margin also blocks release. A panel-heavy deck receiving zero meaningful panel/text pair coverage fails the automated audit; do not treat that result as a clean geometry pass.
+
+Every automated warning is unresolved until a ledger entry identifies its slide,
+code, decision, evidence, reviewer and run ID and is bound to the deck hash.
+Batch statements such as `all unused-space notices are intentional` fail.
+Repository-owned generic audits are the only automated release gates; reject
+generated one-off scripts with hard-coded slide totals or exact answer strings.
 
 For Morning Work, also fail a slide that technically contains all text but is visually crowded, repeats low-value chrome, or divides a short independent task into too many competing cards. For warm-ups, inspect automatic wrapping at the character level; a broken mathematical word is a release-blocking defect even when the geometry scripts report no overflow.
 
@@ -217,7 +236,8 @@ Use all relevant regression records whenever a change affects the orchestrator, 
 - `examples/benchmarks/t3w6-thursday-literacy-regression.md`;
 - `examples/benchmarks/universal-maths-canon-regression.md`;
 - `examples/benchmarks/memory-independent-wednesday-regression.md`;
-- `examples/benchmarks/year-profile-isolation-regression.md`.
+- `examples/benchmarks/year-profile-isolation-regression.md`;
+- `examples/benchmarks/t3w7-thursday-known-failure.md`.
 
 Treat Year 4/5 classroom-feedback records as Year 4/5 calibration evidence where their content is year-specific. Their visual and universal architecture lessons may apply more broadly only when the relevant shared rule says so.
 

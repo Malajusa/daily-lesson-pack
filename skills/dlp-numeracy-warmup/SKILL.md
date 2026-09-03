@@ -17,19 +17,19 @@ The active profile controls expected prior knowledge, number types and magnitude
 
 ## Sequence
 
-Create exactly **10 prompt-and-answer pairs** (20 slides) unless the user explicitly changes the count, in this order:
+Create exactly **5 prompt-and-answer pairs** (**10 slides total**) unless the current request or validated classroom profile explicitly changes the count. Every prompt is followed immediately by its matched answer slide.
+
+Use this default daily mix:
+
 1. Addition
 2. Subtraction
 3. Multiplication
 4. Division
-5. State it
-6. Recognise it
-7. Complete it
-8. Apply it
-9. Distinguish it
-10. Cumulative retrieval
+5. one rotating retrieval focus selected from `State it`, `Recognise it`,
+   `Complete it`, `Apply it`, `Distinguish it` or cumulative retrieval.
 
-Every prompt is followed immediately by its matched answer slide.
+Rotate the fifth focus across the week rather than expanding the daily deck to
+include every category.
 
 ## All / Most / Some principle
 
@@ -56,7 +56,7 @@ On **answer slides**, show the answer corresponding to each of the three questio
 Apply the active year-level profile rather than hard-coding one class or year band.
 
 - Questions 1-4 should sit near the accessible retrieval floor defined by the active profile while remaining worthwhile.
-- Questions 5-10 should mainly retrieve the active profile's expected current/prior knowledge and earlier prerequisite knowledge.
+- Question 5 should retrieve the active profile's expected current/prior knowledge or earlier prerequisite knowledge.
 - Do not force the warm-up to preview the day's lesson or next-year content merely to manufacture challenge.
 - Difficulty should come from mathematically meaningful variation, not arbitrary larger numbers or extra steps.
 
@@ -67,7 +67,12 @@ Use proper fraction formatting with a vinculum/stacked fraction on student-facin
 
 ## Presentation
 
-Use Trebuchet MS and the shared projected-readability hierarchy. Main instructional content is normally at least 36 pt; use larger type when space allows. Keep colour restrained and semantic. Do not use red/amber/green traffic-light coding for tiers. The green `Why` panel is reserved for reasoning.
+Use Trebuchet MS and the shared projected-readability hierarchy. Every meaningful
+student-facing prompt and answer in the three tier cards is at least **36 pt**.
+The substantive `Why` prompt/answer is at least **28 pt**. Structural labels may
+use the shared structural floor. A 36 pt heading does not compensate for a
+smaller task. Keep colour restrained and semantic. Do not use red/amber/green
+traffic-light coding for tiers. The green `Why` panel is reserved for reasoning.
 
 ## QA
 
@@ -77,6 +82,7 @@ Fail if:
 - any prompt uses one question split into quality tiers rather than three questions;
 - `Some` is an unreasonable leap;
 - answer slides do not match the three prompts;
+- there are not exactly five prompt/answer pairs under the default profile;
 - the green `Why` panel contains generic checking instructions instead of reasoning;
 - text overflows a tier or `Why` panel;
 - fractions use a forward slash where stacked notation is practical.

@@ -9,8 +9,10 @@ measure pedagogical quality or exact visual occupancy.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import statistics
+import re
 from pathlib import Path
 from typing import Iterable
 
@@ -20,11 +22,11 @@ from pptx.enum.shapes import MSO_SHAPE_TYPE
 
 WARMUP_MAIN_MIN_PT = 36.0
 MEANINGFUL_HARD_FLOOR_PT = 24.0
-MEANINGFUL_SOFT_FLOOR_PT = 28.0
 STRUCTURAL_FLOOR_PT = 22.0
 WHY_TARGET_FLOOR_PT = 28.0
 LOW_OCCUPANCY = 0.35
 VERY_LOW_OCCUPANCY = 0.25
+GENERIC_EVIDENCE = re.compile(r"^(?:checked|reviewed|intentional|looks good|acceptable|pass)$", re.I)
 
 
 def iter_shapes(shapes) -> Iterable:
@@ -44,6 +46,14 @@ def font_sizes(shape) -> list[float]:
             if run.font.size is not None:
                 sizes.append(float(run.font.size.pt))
     return sizes
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def text_of(shape) -> str:
@@ -111,39 +121,29 @@ def audit_slide(slide, slide_index: int, slide_width: int, slide_height: int, fo
 
     issues = []
 
-    if warmup:
-        if body_max is None:
-            issues.append({"severity": "warning", "code": "warmup_font_size_unknown", "message": "Warm-up detected but no explicit body run font sizes were available to audit."})
-        elif body_max < WARMUP_MAIN_MIN_PT:
-            issues.append({"severity": "fail", "code": "warmup_main_below_36", "message": f"Largest explicit warm-up body text is {body_max:.1f} pt; main instructional content should reach at least 36 pt."})
-
     for item in body_text:
         text = " ".join(item["text"].split())
-        median_pt = item["median_pt"]
-        if not text or median_pt is None:
+        if not text:
             continue
 
         structural = is_incidental_label(text)
-        floor = STRUCTURAL_FLOOR_PT if structural else MEANINGFUL_HARD_FLOOR_PT
-
-        if median_pt < floor:
+        why_text = warmup and text.lower().startswith("why") and len(text.split()) > 3
+        floor = STRUCTURAL_FLOOR_PT if structural else (
+            WHY_TARGET_FLOOR_PT if why_text else (WARMUP_MAIN_MIN_PT if warmup else MEANINGFUL_HARD_FLOOR_PT)
+        )
+        if not item["sizes"]:
             issues.append({
-                "severity": "fail" if not structural else "warning",
+                "severity": "fail",
+                "code": "meaningful_font_size_unknown",
+                "message": f"No explicit font size is available for a projected text box with a {floor:.0f} pt role floor: {text[:120]}",
+            })
+            continue
+        smallest_pt = min(item["sizes"])
+        if smallest_pt < floor:
+            issues.append({
+                "severity": "fail",
                 "code": "undersized_body_text",
-                "message": f"Text box is {median_pt:.1f} pt (role floor {floor:.0f} pt): {text[:120]}",
-            })
-        elif warmup and not structural and median_pt < MEANINGFUL_SOFT_FLOOR_PT:
-            issues.append({
-                "severity": "warning",
-                "code": "warmup_secondary_small",
-                "message": f"Meaningful warm-up text is {median_pt:.1f} pt; supporting student-facing text should normally remain at or above 28 pt: {text[:120]}",
-            })
-
-        if warmup and text.lower().startswith("why") and len(text.split()) > 3 and median_pt < WHY_TARGET_FLOOR_PT:
-            issues.append({
-                "severity": "warning",
-                "code": "why_text_small",
-                "message": f"Why/reasoning text is {median_pt:.1f} pt; it should be treated as substantive student-facing content rather than fine print.",
+                "message": f"Smallest explicit run is {smallest_pt:.1f} pt (role floor {floor:.0f} pt): {text[:120]}",
             })
 
     # Rough occupancy: count visible non-title text, pictures, charts and tables.
@@ -204,6 +204,10 @@ def main() -> int:
     parser.add_argument("--deck", required=True, help="PPTX file to audit")
     parser.add_argument("--out", required=True, help="JSON report path")
     parser.add_argument(
+        "--dispositions",
+        help="Optional JSON ledger for individually reviewed warnings; it must match the deck SHA-256",
+    )
+    parser.add_argument(
         "--warmup-slides",
         action="append",
         default=[],
@@ -227,7 +231,49 @@ def main() -> int:
         "warning": sum(r["status"] == "warning" for r in results),
         "pass": sum(r["status"] == "pass" for r in results),
     }
-    overall = "fail" if summary["fail"] else ("warning" if summary["warning"] else "pass")
+    deck_hash = sha256(deck_path)
+    dispositions: dict[tuple[int, str], dict] = {}
+    invalid_dispositions: list[str] = []
+    if args.dispositions:
+        try:
+            ledger = json.loads(Path(args.dispositions).read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            ledger = {}
+            invalid_dispositions.append(f"Disposition ledger is unreadable: {exc}")
+        if str(ledger.get("artifact_sha256", "")).lower() != deck_hash:
+            invalid_dispositions.append("Disposition ledger is not bound to this deck SHA-256.")
+        for item in ledger.get("dispositions", []):
+            if not isinstance(item, dict):
+                invalid_dispositions.append("Every disposition must be an object.")
+                continue
+            evidence = str(item.get("evidence", "")).strip()
+            required = all(str(item.get(field, "")).strip() for field in ("code", "decision", "reviewer", "run_id")) and len(evidence) >= 20 and not GENERIC_EVIDENCE.fullmatch(evidence)
+            if not required or item.get("decision") != "accepted" or not isinstance(item.get("slide"), int):
+                invalid_dispositions.append("A disposition needs slide, code, accepted decision, evidence, reviewer and run_id.")
+                continue
+            dispositions[(item["slide"], item["code"])] = item
+
+    unresolved_warnings = 0
+    resolved_warnings = 0
+    for result in results:
+        for item in result["issues"]:
+            if item["severity"] != "warning":
+                continue
+            disposition = dispositions.get((result["slide"], item["code"]))
+            if disposition:
+                item["severity"] = "resolved_warning"
+                item["disposition"] = disposition
+                resolved_warnings += 1
+            else:
+                unresolved_warnings += 1
+
+    hard_failures = sum(any(i["severity"] == "fail" for i in r["issues"]) for r in results)
+    overall = "fail" if hard_failures or unresolved_warnings or invalid_dispositions else "pass"
+    summary.update({
+        "hard_failure_slides": hard_failures,
+        "unresolved_warnings": unresolved_warnings,
+        "resolved_warnings": resolved_warnings,
+    })
 
     report = {
         "deck": str(deck_path),
@@ -235,14 +281,19 @@ def main() -> int:
         "thresholds": {
             "warmup_main_min_pt": WARMUP_MAIN_MIN_PT,
             "meaningful_hard_floor_pt": MEANINGFUL_HARD_FLOOR_PT,
-            "meaningful_soft_floor_pt": MEANINGFUL_SOFT_FLOOR_PT,
             "structural_floor_pt": STRUCTURAL_FLOOR_PT,
             "why_target_floor_pt": WHY_TARGET_FLOOR_PT,
             "low_occupancy": LOW_OCCUPANCY,
         },
         "summary": summary,
+        "artifact_sha256": deck_hash,
+        "dispositions": {
+            "resolved_warnings": resolved_warnings,
+            "unresolved_warnings": unresolved_warnings,
+            "invalid": invalid_dispositions,
+        },
         "results": results,
-        "note": "Heuristic screening only. Every warning/failure requires full-size visual inspection.",
+        "note": "Role-based screening. Every warning must be specifically dispositioned; full-size rendered inspection remains mandatory.",
     }
 
     out_path.parent.mkdir(parents=True, exist_ok=True)

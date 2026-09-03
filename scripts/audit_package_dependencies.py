@@ -92,9 +92,12 @@ def validate_markdown_references(root: Path, failures: list[str]) -> None:
                     f"Reference escapes package root: {skill_file.relative_to(root)} -> {token}"
                 )
                 continue
-            if not target.is_file():
+            expects_directory = token.endswith("/")
+            exists_as_expected = target.is_dir() if expects_directory else target.is_file()
+            if not exists_as_expected:
                 failures.append(
-                    f"Missing referenced file: {skill_file.relative_to(root)} -> {token}"
+                    f"Missing referenced {'directory' if expects_directory else 'file'}: "
+                    f"{skill_file.relative_to(root)} -> {token}"
                 )
 
 

@@ -3,7 +3,10 @@ from __future__ import annotations
 import unittest
 import json
 import importlib.util
+import subprocess
+import sys
 import tempfile
+import zipfile
 from pathlib import Path
 
 
@@ -25,14 +28,14 @@ def load_contract_audit():
 
 class ReleaseContractTests(unittest.TestCase):
     def test_version_is_reconciled_release(self) -> None:
-        self.assertEqual(read("VERSION").strip(), "3.5.0")
+        self.assertEqual(read("VERSION").strip(), "3.7.0")
 
     def test_release_provenance_records_both_source_lines(self) -> None:
         provenance = json.loads(read("RELEASE-PROVENANCE.json"))
-        self.assertEqual(provenance["version"], "3.5.0")
+        self.assertEqual(provenance["version"], "3.7.0")
         self.assertEqual(
             provenance["base_commit"],
-            "3a84e4ff1665521f627b243ef4e20b4008f1cf67",
+            "916910f0a94781cd4a31a538a0db4e70ac4b242f",
         )
         self.assertGreaterEqual(len(provenance["reconciled_sources"]), 3)
 
@@ -50,7 +53,7 @@ class ReleaseContractTests(unittest.TestCase):
         qa = read("skills/dlp-pack-qa/SKILL.md")
         self.assertNotIn("standing teaching preferences", orchestrator)
         self.assertIn("Do not use chat memory", orchestrator)
-        self.assertIn("Wednesday co-teacher mode", contract)
+        self.assertIn("one teacher's Wednesday arrangement", contract)
         self.assertIn("Context provenance gate", qa)
 
     def test_example_context_record_passes(self) -> None:
@@ -108,9 +111,28 @@ class ReleaseContractTests(unittest.TestCase):
             "t3w6-thursday-literacy-regression.md",
             "universal-maths-canon-regression.md",
             "memory-independent-wednesday-regression.md",
+            "t3w7-thursday-known-failure.md",
         ):
             self.assertIn(benchmark, qa)
             self.assertTrue((ROOT / "examples" / "benchmarks" / benchmark).is_file())
+
+    def test_packaged_profile_directory_reference_is_valid(self) -> None:
+        archive = ROOT / "dist" / "chatgpt" / "daily-lesson-pack.zip"
+        with tempfile.TemporaryDirectory() as folder:
+            with zipfile.ZipFile(archive) as package:
+                package.extractall(folder)
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "scripts" / "audit_package_dependencies.py"),
+                    "--skill-root",
+                    str(Path(folder) / "daily-lesson-pack"),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
 
 if __name__ == "__main__":

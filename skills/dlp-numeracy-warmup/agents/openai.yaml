@@ -1,7 +1,7 @@
 interface:
   display_name: "DLP Numeracy Warm-up"
   short_description: "Create tiered cumulative numeracy warm-ups"
-  default_prompt: "Use $dlp-numeracy-warmup to create ten All, Most and Some numeracy retrieval rounds."
+  default_prompt: "Use $dlp-numeracy-warmup to create five All, Most and Some numeracy prompt/answer pairs (10 slides total)."
 policy:
   products:
   - "chatgpt"

@@ -20,6 +20,8 @@ COMMON_REFERENCES = (
     "references/slide-deck-quality-standards.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
+    "references/default-pack-profile.json",
+    "references/component-instance-contract.md",
 )
 
 YEAR_LEVEL_CONTEXT_REFERENCE = "references/year-level-context-contract.md"
@@ -28,6 +30,7 @@ YEAR_LEVEL_PROFILE_REFERENCES = (
     "references/year-level-profiles/year-6.md",
 )
 MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
+FRACTION_REFERENCE = "references/fraction-equivalence-standard.md"
 SHARED_CONTEXT_REFERENCE = "references/shared-class-context-contract.md"
 VISUAL_EXEMPLAR_REFERENCE = "references/visual-exemplar-standard.md"
 VISUAL_EXEMPLAR_ASSET = (
@@ -48,6 +51,7 @@ REGRESSION_BENCHMARKS = (
     UNIVERSAL_MATHS_BENCHMARK,
     MEMORY_INDEPENDENT_BENCHMARK,
     YEAR_PROFILE_ISOLATION_BENCHMARK,
+    "examples/benchmarks/t3w7-thursday-known-failure.md",
 )
 
 ROOT_RUNTIME_FILES = (
@@ -62,6 +66,7 @@ ROOT_RUNTIME_FILES = (
     YEAR_LEVEL_CONTEXT_REFERENCE,
     *YEAR_LEVEL_PROFILE_REFERENCES,
     MATH_REFERENCE,
+    FRACTION_REFERENCE,
     SHARED_CONTEXT_REFERENCE,
     VISUAL_EXEMPLAR_REFERENCE,
     *REGRESSION_BENCHMARKS,
@@ -72,6 +77,7 @@ ROOT_RUNTIME_FILES = (
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
     "scripts/audit_visual_exemplar.py",
+    "scripts/audit_release_bundle.py",
 )
 
 
@@ -133,7 +139,7 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
             *YEAR_LEVEL_PROFILE_REFERENCES,
         )
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
-            component_references = (*component_references, MATH_REFERENCE)
+            component_references = (*component_references, MATH_REFERENCE, FRACTION_REFERENCE)
         if name == "dlp-pack-qa":
             component_references = (
                 *component_references,
@@ -169,6 +175,7 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
                 "scripts/audit_slide_typography.py",
                 "scripts/audit_panel_containment.py",
                 "scripts/audit_visual_exemplar.py",
+                "scripts/audit_release_bundle.py",
             ):
                 files[f"{component_root}/{script}"] = read_required(repo, script)
             files[f"{component_root}/{VISUAL_EXEMPLAR_ASSET}"] = read_required(

@@ -28,7 +28,7 @@ The component contracts, visual standards, Mathematics canon and approved regres
 For the mixed Year 4/5 profile:
 
 - Questions 1-4 should remain accessible to Year 4 while still worthwhile for Year 5.
-- Questions 5-10 should mainly retrieve Year 4/5 and earlier knowledge.
+- Question 5 should retrieve Year 4/5 or earlier knowledge.
 - `All`, `Most` and `Some` remain three complete questions of increasing complexity.
 - `Some` may extend reasoning or abstraction but must not automatically leap into Year 6 content.
 - The warm-up retrieves taught knowledge rather than previewing a new procedure merely to create challenge.

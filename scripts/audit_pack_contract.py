@@ -9,6 +9,7 @@ rendered visual review.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from collections import Counter, defaultdict
@@ -17,6 +18,8 @@ from pathlib import Path
 from pptx import Presentation
 
 
+SKILL_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_PROFILE = SKILL_ROOT / "references" / "default-pack-profile.json"
 CONTENT_COMPONENTS = {
     "dlp-morning-work",
     "dlp-literacy-warmup",
@@ -69,13 +72,21 @@ SHARED_HEADER = re.compile(
     r"SHARED\s+READING\s+(\d+)\s+OF\s+(\d+).*?\b(QUESTION|ANSWER)\b",
     re.I | re.S,
 )
+NUMERACY_HEADER = re.compile(
+    r"NUMERACY\s+WARM[- ]?UP\s+(\d+)\s+OF\s+(\d+).*?\b(QUESTION|ANSWER)\b",
+    re.I | re.S,
+)
 WARMUP_HEADER = re.compile(r"\b(?:LITERACY|NUMERACY|MATHEMATICS|MATHS)\s+WARM[- ]?UP\b", re.I)
+MATHS_HEADER = re.compile(r"\b(?:NUMERACY|MATHEMATICS|MATHS)\b", re.I)
+SLASH_FRACTION = re.compile(r"(?<![\w/])(\d{1,3})\s*/\s*(\d{1,3})(?![\w/])")
 PROHIBITED_CONTEXT_SOURCE = re.compile(
     r"\b(?:chat memory|saved (?:personal )?context|project memory|"
     r"another account(?:'s)? project|standing (?:teaching )?preference)\b",
     re.I,
 )
 REQUIRED_CONTEXT_FIELDS = (
+    "active_year_profile",
+    "pack_profile",
     "date",
     "term_week",
     "day",
@@ -84,6 +95,49 @@ REQUIRED_CONTEXT_FIELDS = (
     "english_focus",
     "lesson_status",
 )
+REQUIRED_CHECKS = {
+    "dlp-maths-lesson": {
+        "MATHS.PLANNING",
+        "MATHS.REPRESENTATION.PURPOSE",
+        "MATHS.REPRESENTATION.EXACTNESS",
+        "MATHS.DIFFERENTIATION",
+        "MATHS.MODEL_PRACTICE",
+        "MATHS.EXIT",
+        "VISUAL.READABILITY",
+    },
+    "dlp-numeracy-warmup": {
+        "NUMERACY.SEQUENCE",
+        "NUMERACY.THREE_TASKS",
+        "NUMERACY.ANSWERS",
+        "VISUAL.READABILITY",
+    },
+}
+GENERIC_REQUIRED_CHECKS = {"COMPONENT.CONTENT", "COMPONENT.ANSWERS", "VISUAL.READABILITY"}
+GENERIC_EVIDENCE = re.compile(r"^(?:checked|reviewed|intentional|looks good|all passed|pass)$", re.I)
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def load_profile(path: Path) -> dict:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("schema_version") != 1:
+        raise ValueError("classroom profile schema_version must be 1")
+    pairs = data.get("numeracy_warmup", {}).get("prompt_answer_pairs")
+    sequences = data.get("literacy_warmup", {}).get("sequence_count")
+    if not isinstance(pairs, int) or pairs < 1 or not isinstance(sequences, int) or sequences < 1:
+        raise ValueError("classroom profile must define positive warm-up counts")
+    return data
+
+
+def valid_evidence(value) -> bool:
+    text = str(value or "").strip()
+    return len(text) >= 12 and not GENERIC_EVIDENCE.fullmatch(text)
 
 
 def normalise(text: str) -> str:
@@ -243,6 +297,9 @@ def audit_context_record(path: str | None) -> tuple[list[dict], dict]:
         ))
         return issues, summary
 
+    if data.get("schema_version") != 2:
+        issues.append(issue("context_record_schema_outdated", "Context record must use schema version 2."))
+
     for field in REQUIRED_CONTEXT_FIELDS:
         entry = data.get(field)
         if not isinstance(entry, dict):
@@ -304,10 +361,40 @@ def audit_context_record(path: str | None) -> tuple[list[dict], dict]:
                     field=field,
                 ))
 
+    instances = data.get("timetable_instances")
+    if not isinstance(instances, list) or not instances:
+        issues.append(issue(
+            "timetable_instances_missing",
+            "Schema v2 requires concrete timetable instances with unique IDs and durations.",
+        ))
+    else:
+        seen_ids: set[str] = set()
+        for index, instance in enumerate(instances):
+            if not isinstance(instance, dict):
+                issues.append(issue("timetable_instance_invalid", "Each timetable instance must be an object.", instance_index=index))
+                continue
+            instance_id = str(instance.get("id", "")).strip()
+            owner = str(instance.get("owner", "")).strip()
+            if not instance_id or instance_id in seen_ids:
+                issues.append(issue("timetable_instance_id_invalid", "Every timetable instance needs a unique non-empty ID.", instance_id=instance_id or "MISSING"))
+            seen_ids.add(instance_id)
+            if owner not in CONTENT_COMPONENTS:
+                issues.append(issue("timetable_instance_owner_invalid", "A timetable instance names an unknown content owner.", instance_id=instance_id, owner=owner))
+            duration = instance.get("duration_minutes")
+            if not isinstance(duration, (int, float)) or duration <= 0:
+                issues.append(issue("timetable_duration_invalid", "Every timetable instance needs a positive duration_minutes budget.", instance_id=instance_id))
+            if not str(instance.get("start", "")).strip() or not str(instance.get("purpose", "")).strip():
+                issues.append(issue("timetable_instance_incomplete", "Every timetable instance needs a start time and instructional purpose.", instance_id=instance_id))
+        summary["timetable_instances"] = len(instances)
+
     return issues, summary
 
 
-def audit_component_record(path: str | None) -> tuple[list[dict], dict]:
+def audit_component_record(
+    path: str | None,
+    context_path: str | None = None,
+    deck_path: str | None = None,
+) -> tuple[list[dict], dict]:
     issues: list[dict] = []
     summary = {"provided": bool(path), "scheduled": 0, "recorded": 0, "passed": 0}
 
@@ -346,12 +433,22 @@ def audit_component_record(path: str | None) -> tuple[list[dict], dict]:
         ))
         return issues, summary
 
-    scheduled = data.get("scheduled_components")
+    if data.get("schema_version") != 2:
+        issues.append(issue(
+            "component_record_schema_outdated",
+            "Component acceptance must use schema version 2 with instance IDs and evidence-bearing checks.",
+        ))
+    generation_run_id = str(data.get("generation_run_id", "")).strip()
+    summary["generation_run_id"] = generation_run_id or None
+    if not generation_run_id:
+        issues.append(issue("generation_run_id_missing", "Component evidence must identify the generation run."))
+
+    scheduled = data.get("scheduled_instances")
     records = data.get("components")
     if not isinstance(scheduled, list) or not scheduled:
         issues.append(issue(
-            "scheduled_components_missing",
-            "The acceptance record must list all scheduled content components.",
+            "scheduled_instances_missing",
+            "The acceptance record must list all scheduled component instances.",
         ))
         scheduled = []
     if not isinstance(records, list):
@@ -361,25 +458,46 @@ def audit_component_record(path: str | None) -> tuple[list[dict], dict]:
         ))
         records = []
 
-    scheduled = [str(name) for name in scheduled]
+    scheduled_objects = [item for item in scheduled if isinstance(item, dict)]
+    if len(scheduled_objects) != len(scheduled):
+        issues.append(issue("scheduled_instance_invalid", "Every scheduled instance must be a JSON object."))
+    scheduled = scheduled_objects
     summary["scheduled"] = len(scheduled)
     summary["recorded"] = len(records)
 
-    for name, count in Counter(scheduled).items():
-        if count > 1:
+    scheduled_ids = [str(item.get("id", "")).strip() for item in scheduled]
+    for instance_id, count in Counter(scheduled_ids).items():
+        if not instance_id or count > 1:
             issues.append(issue(
-                "duplicate_scheduled_component",
-                "A scheduled component appears more than once.",
-                component=name,
+                "duplicate_scheduled_instance",
+                "Scheduled instance IDs must be unique and non-empty.",
+                instance_id=instance_id or "MISSING",
             ))
-        if name not in CONTENT_COMPONENTS:
+    scheduled_by_id = {str(item.get("id", "")).strip(): item for item in scheduled if str(item.get("id", "")).strip()}
+    maths_instance_count = sum(str(item.get("owner", "")).strip() == "dlp-maths-lesson" for item in scheduled)
+    fraction_focus = False
+    active_year_profile = ""
+    if context_path and Path(context_path).is_file():
+        try:
+            context_preview = json.loads(Path(context_path).read_text(encoding="utf-8"))
+            focus = str(context_preview.get("mathematics_focus", {}).get("value", "")).lower()
+            fraction_focus = "fraction" in focus and any(token in focus for token in ("decimal", "equivalent", "tenths", "hundredths"))
+            active_year_profile = str(
+                context_preview.get("active_year_profile", {}).get("value", "")
+            ).strip()
+        except (OSError, json.JSONDecodeError):
+            pass
+    for instance_id, item in scheduled_by_id.items():
+        owner = str(item.get("owner", "")).strip()
+        if owner not in CONTENT_COMPONENTS:
             issues.append(issue(
-                "unknown_scheduled_component",
-                "The acceptance record names an unknown content component.",
-                component=name,
+                "unknown_scheduled_component_owner",
+                "The acceptance record names an unknown component owner.",
+                instance_id=instance_id,
+                owner=owner,
             ))
 
-    by_name: dict[str, list[dict]] = defaultdict(list)
+    by_id: dict[str, list[dict]] = defaultdict(list)
     for index, record in enumerate(records):
         if not isinstance(record, dict):
             issues.append(issue(
@@ -388,41 +506,45 @@ def audit_component_record(path: str | None) -> tuple[list[dict], dict]:
                 record_index=index,
             ))
             continue
-        name = str(record.get("name", "")).strip()
-        by_name[name].append(record)
+        instance_id = str(record.get("instance_id", "")).strip()
+        by_id[instance_id].append(record)
 
-    for name, matching in by_name.items():
-        if not name or name not in CONTENT_COMPONENTS:
+    for instance_id, matching in by_id.items():
+        if not instance_id or instance_id not in scheduled_by_id:
             issues.append(issue(
                 "unknown_component_result",
-                "The acceptance record contains a result for an unknown component.",
-                component=name or "MISSING",
+                "The acceptance record contains a result for an unknown instance.",
+                instance_id=instance_id or "MISSING",
             ))
-        if name not in scheduled and len(matching) > 1:
+        if len(matching) > 1:
             issues.append(issue(
                 "duplicate_component_result",
-                "An unscheduled component has multiple acceptance results.",
-                component=name or "MISSING",
+                "A component instance has multiple acceptance results.",
+                instance_id=instance_id or "MISSING",
             ))
 
-    for name in scheduled:
-        matching = by_name.get(name, [])
+    for instance_id, scheduled_item in scheduled_by_id.items():
+        owner = str(scheduled_item.get("owner", "")).strip()
+        matching = by_id.get(instance_id, [])
         if not matching:
             issues.append(issue(
                 "scheduled_component_result_missing",
                 "A scheduled component has no acceptance result.",
-                component=name,
+                instance_id=instance_id,
             ))
             continue
         if len(matching) > 1:
             issues.append(issue(
                 "duplicate_component_result",
                 "A scheduled component has multiple acceptance results.",
-                component=name,
+                instance_id=instance_id,
             ))
             continue
 
         record = matching[0]
+        record_owner = str(record.get("owner", "")).strip()
+        if record_owner != owner:
+            issues.append(issue("component_owner_mismatch", "The result owner does not match its scheduled instance.", instance_id=instance_id, expected=owner, actual=record_owner))
         status = str(record.get("status", "")).upper()
         checks = record.get("checks")
         artefact = record.get("artefact") or record.get("artifact") or record.get("slide_range")
@@ -430,25 +552,66 @@ def audit_component_record(path: str | None) -> tuple[list[dict], dict]:
             issues.append(issue(
                 "component_not_passed",
                 "Every scheduled component must record PASS before assembly.",
-                component=name,
+                instance_id=instance_id,
                 status=status or "MISSING",
             ))
         else:
             summary["passed"] += 1
-        if not isinstance(checks, list) or not any(
-            isinstance(item, str) and item.strip() for item in checks
-        ):
+        if not isinstance(checks, list) or not checks:
             issues.append(issue(
                 "component_checks_missing",
-                "A component PASS must identify the checks completed.",
-                component=name,
+                "A component PASS must include evidence-bearing check objects.",
+                instance_id=instance_id,
             ))
+            checks = []
+        check_ids: set[str] = set()
+        for check in checks:
+            if not isinstance(check, dict):
+                issues.append(issue("component_check_invalid", "Checks must be objects, not freeform assertions.", instance_id=instance_id))
+                continue
+            check_id = str(check.get("id", "")).strip()
+            check_ids.add(check_id)
+            if str(check.get("result", "")).upper() != "PASS" or not valid_evidence(check.get("evidence")):
+                issues.append(issue("component_check_unsubstantiated", "Every check needs a stable ID, PASS result and concrete evidence.", instance_id=instance_id, check_id=check_id or "MISSING"))
+        required = set(REQUIRED_CHECKS.get(owner, GENERIC_REQUIRED_CHECKS))
+        if owner == "dlp-maths-lesson" and active_year_profile == "year-4-5":
+            required.update({"MATHS.YEAR4.PATHWAY", "MATHS.YEAR5.PATHWAY"})
+        if owner == "dlp-maths-lesson" and maths_instance_count > 1:
+            required.add("MATHS.BLOCK.BREAKPOINT")
+        if owner == "dlp-maths-lesson" and fraction_focus:
+            required.add("MATHS.FRACTION.REPARTITIONING")
+        for missing in sorted(required - check_ids):
+            issues.append(issue("component_required_check_missing", "A required component check is missing.", instance_id=instance_id, check_id=missing))
         if not artefact:
             issues.append(issue(
                 "component_artefact_missing",
                 "A component PASS must identify its artefact or slide range.",
-                component=name,
+                instance_id=instance_id,
             ))
+
+        estimate = record.get("estimated_minutes")
+        available = scheduled_item.get("duration_minutes")
+        if not isinstance(estimate, (int, float)) or estimate <= 0:
+            issues.append(issue("component_time_estimate_missing", "Every instance needs a positive estimated_minutes value.", instance_id=instance_id))
+        elif isinstance(available, (int, float)) and estimate > available:
+            issues.append(issue("component_time_budget_exceeded", "Estimated teaching time exceeds the scheduled duration.", instance_id=instance_id, estimated_minutes=estimate, available_minutes=available))
+
+    if context_path and Path(context_path).is_file():
+        try:
+            context = json.loads(Path(context_path).read_text(encoding="utf-8"))
+            context_instances = context.get("timetable_instances", [])
+            expected = {(str(i.get("id", "")), str(i.get("owner", "")), i.get("duration_minutes")) for i in context_instances if isinstance(i, dict)}
+            actual = {(str(i.get("id", "")), str(i.get("owner", "")), i.get("duration_minutes")) for i in scheduled if isinstance(i, dict)}
+            if expected != actual:
+                issues.append(issue("scheduled_instances_context_mismatch", "Scheduled instances do not exactly match the current context record.", expected=sorted(map(str, expected)), actual=sorted(map(str, actual))))
+        except (OSError, json.JSONDecodeError):
+            pass
+
+    recorded_hash = str(data.get("artifact_sha256", "")).lower()
+    if not recorded_hash:
+        issues.append(issue("artifact_hash_missing", "The acceptance record must bind evidence to the assembled deck SHA-256."))
+    elif deck_path and Path(deck_path).is_file() and recorded_hash != file_sha256(Path(deck_path)):
+        issues.append(issue("artifact_hash_mismatch", "The acceptance evidence does not belong to the audited deck."))
 
     return issues, summary
 
@@ -536,7 +699,7 @@ def validate_sequence(
     return issues
 
 
-def audit_deck(path: str, literacy_count: int = 10) -> tuple[list[dict], dict]:
+def audit_deck(path: str, literacy_count: int = 10, numeracy_count: int = 5) -> tuple[list[dict], dict]:
     try:
         presentation = Presentation(path)
     except Exception as exc:
@@ -548,15 +711,35 @@ def audit_deck(path: str, literacy_count: int = 10) -> tuple[list[dict], dict]:
         )], {
             "slides": 0,
             "literacy_sequence_slides": 0,
+            "numeracy_sequence_slides": 0,
             "shared_reading_sequence_slides": 0,
         }
     issues: list[dict] = []
     literacy_entries: list[dict] = []
+    numeracy_entries: list[dict] = []
     shared_entries: list[dict] = []
 
     for slide_number, slide in enumerate(presentation.slides, 1):
         full_text = slide_text(slide)
         is_warmup_slide = bool(WARMUP_HEADER.search(full_text))
+        numeracy_match = NUMERACY_HEADER.search(full_text)
+        if numeracy_match:
+            numeracy_entries.append({
+                "slide": slide_number,
+                "number": int(numeracy_match.group(1)),
+                "total": int(numeracy_match.group(2)),
+                "role": numeracy_match.group(3).upper(),
+            })
+        if MATHS_HEADER.search(full_text):
+            for match in SLASH_FRACTION.finditer(full_text):
+                numerator, denominator = int(match.group(1)), int(match.group(2))
+                if denominator and numerator <= denominator * 20:
+                    issues.append(issue(
+                        "projected_fraction_slash_notation",
+                        "Projected Mathematics fractions must use stacked notation where practical.",
+                        slide=slide_number,
+                        text=match.group(0),
+                    ))
         literacy_match = LITERACY_HEADER.search(full_text)
         if literacy_match:
             literacy_role = literacy_match.group(3).upper()
@@ -681,6 +864,12 @@ def audit_deck(path: str, literacy_count: int = 10) -> tuple[list[dict], dict]:
         required_total=literacy_count,
     ))
     issues.extend(validate_sequence(
+        numeracy_entries,
+        ["QUESTION", "ANSWER"],
+        "numeracy_warmup",
+        required_total=numeracy_count,
+    ))
+    issues.extend(validate_sequence(
         shared_entries,
         ["QUESTION", "ANSWER"],
         "shared_reading",
@@ -689,6 +878,7 @@ def audit_deck(path: str, literacy_count: int = 10) -> tuple[list[dict], dict]:
     return issues, {
         "slides": len(presentation.slides),
         "literacy_sequence_slides": len(literacy_entries),
+        "numeracy_sequence_slides": len(numeracy_entries),
         "shared_reading_sequence_slides": len(shared_entries),
     }
 
@@ -706,26 +896,54 @@ def main() -> int:
     )
     parser.add_argument("--out", required=True, help="JSON report path")
     parser.add_argument(
+        "--profile",
+        type=Path,
+        default=DEFAULT_PROFILE,
+        help="Validated classroom profile JSON",
+    )
+    parser.add_argument(
+        "--numeracy-count",
+        type=int,
+        default=None,
+        help="Authorised Numeracy pair override; otherwise use the profile",
+    )
+    parser.add_argument(
         "--literacy-count",
         type=int,
-        default=10,
-        help="Expected number of Literacy Reminder-Question-Answer sequences (default 10)",
+        default=None,
+        help="Authorised Literacy sequence override; otherwise use the profile",
     )
     args = parser.parse_args()
 
-    if args.literacy_count < 1:
-        parser.error("--literacy-count must be at least 1")
+    try:
+        profile = load_profile(args.profile)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        parser.error(f"invalid classroom profile: {exc}")
+    literacy_count = args.literacy_count or profile["literacy_warmup"]["sequence_count"]
+    numeracy_count = args.numeracy_count or profile["numeracy_warmup"]["prompt_answer_pairs"]
+    if literacy_count < 1 or numeracy_count < 1:
+        parser.error("sequence counts must be at least 1")
 
     context_issues, context_summary = audit_context_record(args.context_record)
-    component_issues, component_summary = audit_component_record(args.component_record)
-    deck_issues, deck_summary = audit_deck(args.deck, literacy_count=args.literacy_count)
+    component_issues, component_summary = audit_component_record(
+        args.component_record,
+        context_path=args.context_record,
+        deck_path=args.deck,
+    )
+    deck_issues, deck_summary = audit_deck(
+        args.deck,
+        literacy_count=literacy_count,
+        numeracy_count=numeracy_count,
+    )
     issues = context_issues + component_issues + deck_issues
     counts = Counter(item["code"] for item in issues)
     overall = "fail" if issues else "pass"
     report = {
         "deck": args.deck,
+        "artifact_sha256": file_sha256(Path(args.deck)) if Path(args.deck).is_file() else None,
         "context_record": args.context_record,
         "component_record": args.component_record,
+        "classroom_profile": str(args.profile),
         "overall_status": overall,
         "summary": {
             **deck_summary,

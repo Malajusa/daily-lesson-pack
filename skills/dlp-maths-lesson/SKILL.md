@@ -18,6 +18,7 @@ Before planning or generating the lesson, read and apply:
 - `references/year-level-context-contract.md`;
 - the active year-level profile supplied by the orchestrator;
 - `references/universal-maths-instruction-canon.md`;
+- `references/fraction-equivalence-standard.md` when equivalence or fraction-decimal conversion is taught;
 - `references/slide-deck-quality-standards.md`;
 - `references/semantic-colour-standard.md`;
 - `references/panel-containment-standard.md`.
@@ -46,6 +47,11 @@ Before creating student-facing content, complete the planning contract required 
 12. aligned exit evidence.
 
 Keep this planning record internal or teacher-facing. Do not place planning metadata on student slides.
+
+Also receive one unique timetable `instance_id`, available minutes and purpose.
+When the same day has two Mathematics blocks, plan and report both instances
+separately. Use a visible resume/breakpoint slide or heading so the second block
+does not disappear inside one undifferentiated sequence.
 
 ## Topic integrity and scope
 
@@ -186,9 +192,21 @@ When teaching fraction operations, identify the fractional unit and explain how 
 
 Apply only those fraction demands that are appropriate to the current lesson focus and active year-level profile.
 
+When converting equivalent fractions to tenths or hundredths, apply
+`references/fraction-equivalence-standard.md`. Show the original partition, the
+repartitioning of every part, the same invariant amount and the multiplicative
+change to numerator and denominator. A finished hundred grid alone is not an
+explanation of equivalence.
+
 ## Differentiation
 
 Differentiate through representation, scaffold, reasoning, abstraction, strategy selection and context—not only by assigning more questions.
+
+For a mixed Year 4/5 class, state the common central idea and provide an explicit
+Year 4 pathway and Year 5 pathway in modelling, guided practice and independent
+evidence. If the active curriculum code belongs to only one year level, bridge
+the other year from its authorised prerequisite or consolidation boundary;
+never silently assign the active-year outcome to both cohorts.
 
 Do not define higher attainment as completing the same task with more working or checking. Where students choose between levels, each task must be a complete mathematical task at a different level of complexity rather than a different completeness standard for one question.
 
@@ -199,18 +217,29 @@ Before returning the component for assembly, record `PASS` or `FAIL` and substan
 - active year profile resolved and matched to the orchestrator;
 - no cross-year calibration leakage;
 - planning contract completed;
+- timetable instance and time budget verified;
 - lesson mode and central idea controlled;
 - prerequisite retrieval distinct from the warm-up;
 - meaning established before procedure;
 - representation selected for a stated mathematical purpose;
 - representation exactness verified;
 - representation/language/notation correspondence verified;
+- Year 4 and Year 5 pathways verified, including any inactive-year bridge;
 - technical vocabulary verified;
 - guided-practice answer withheld;
 - hardest independent demand matched to a modelled precursor and active profile;
 - answer slides fulfil every task requirement;
 - exit evidence measures the intended concept;
 - rendered readability, semantic colour and panel containment passed.
+
+Use the stable audit IDs required by `component-instance-contract.md`:
+`MATHS.PLANNING`, `MATHS.REPRESENTATION.PURPOSE`,
+`MATHS.REPRESENTATION.EXACTNESS`, `MATHS.DIFFERENTIATION`,
+`MATHS.YEAR4.PATHWAY`, `MATHS.YEAR5.PATHWAY`,
+`MATHS.MODEL_PRACTICE`, `MATHS.EXIT` and `VISUAL.READABILITY`.
+Add `MATHS.BLOCK.BREAKPOINT` when the day contains multiple Mathematics
+instances and `MATHS.FRACTION.REPARTITIONING` when the fraction-equivalence
+standard applies. Every check cites specific planning evidence, slides or notes.
 
 A missing check, unsupported `PASS` or unresolved defect is a component failure.
 
@@ -222,9 +251,13 @@ Fail the component if:
 - content relies on another year profile's calibration without explicit authorisation;
 - instructions are ambiguous;
 - lesson scope combines several unplanned new concepts;
+- two scheduled Mathematics blocks are collapsed into one unmarked instance;
+- estimated teaching time exceeds the timetable block;
 - a procedure is taught without mathematical meaning;
 - the representation changes the mathematical focus;
 - a diagram or model is mathematically inaccurate;
+- an equivalence lesson shows only a final decimal grid without the repartitioning relationship;
+- a mixed-year lesson provides no substantive pathway for one year level;
 - a decorative image is used as mathematical evidence;
 - a visual, explanation and equation do not correspond;
 - a `We do` or task slide reveals the answer;

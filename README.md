@@ -4,7 +4,7 @@ Version-controlled development repository for the **Daily Lesson Pack** skill.
 
 ## Purpose
 
-Daily Lesson Pack 3.5 uses a small orchestrator plus independently owned teaching components. The architecture is designed to prevent a change to one component from silently changing another and to produce the same-quality pack in a clean account without relying on chat memory.
+Daily Lesson Pack 3.7 uses a small orchestrator plus independently owned teaching components. The architecture is designed to prevent a change to one component from silently changing another and to produce the same-quality pack in a clean account without relying on chat memory.
 
 ## Source of truth and distribution
 
@@ -22,6 +22,16 @@ Git commit and package manifest.
 The skill does not read lesson facts from chat memory. Stable shared-class
 routines live in `references/shared-class-context-contract.md`; each run supplies
 the requested day's timetable, focus and any lesson-status exception.
+
+The validated default pack profile fixes Numeracy at five prompt/answer pairs (10
+slides total). Timetable blocks are unique instances, so repeated Mathematics
+blocks retain separate purposes and time budgets. Release evidence and manual
+review records are bound to the final deck hash.
+
+Year-level calibration is selected separately through an active year profile.
+The protected Year 4/5 profile is production-ready; the Year 6 profile remains
+an explicitly labelled calibration scaffold and cannot silently inherit Year 4/5
+requirements.
 
 ## Modular architecture
 
@@ -113,16 +123,18 @@ Do not assume that placing several `SKILL.md` files in one repository automatica
 ## Update workflow
 
 1. Develop or revise the owning component skill only.
-2. Run its component checks.
-3. For Mathematics changes, apply the universal Mathematics regression benchmark to at least two concept families.
-4. Assemble a representative Daily Lesson Pack.
-5. Run `dlp-pack-qa` over the entire assembled pack.
-6. Compare against the relevant classroom-feedback benchmarks.
-7. Rebuild the affected component package.
-8. Review the diff for unintended rule loss or contradiction.
-9. Merge only after representative classroom regression passes.
-10. Synchronise/register the accepted component skill in the production host where supported.
+2. Create unique timetable instances and feasible time/slide budgets.
+3. Run its evidence-bearing component checks.
+4. For Mathematics changes, apply the universal Mathematics regression benchmark to at least two concept families.
+5. Assemble a representative Daily Lesson Pack.
+6. Run the generic repository audits, resolve every warning individually and complete independent semantic and rendered visual reviews.
+7. Aggregate all same-hash evidence with `scripts/audit_release_bundle.py`.
+8. Compare against the relevant classroom-feedback benchmarks.
+9. Rebuild the affected component package.
+10. Review the diff for unintended rule loss or contradiction.
+11. Merge only after representative classroom regression passes.
+12. Synchronise/register the accepted component skill in the production host where supported.
 
 ## Current version
 
-**3.5.0 — memory-independent shared-class release combining the complete educational canon with the approved visual exemplar.**
+**3.7.0 — reconciles year-profile isolation with fail-closed instance, Mathematics and evidence-contract hardening following the T3W7 Thursday regression.**

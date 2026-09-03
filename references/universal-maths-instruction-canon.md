@@ -32,6 +32,11 @@ Before generating the main Mathematics lesson, record an internal planning contr
 
 The planning contract is teacher-facing or internal. Do not place it on student slides.
 
+For mixed-year classes, also record the common central idea, each year-level
+pathway and the authorised bridge used when only one year level has the active
+curriculum code. For split lessons, record each timetable instance, its purpose,
+available minutes and visible resumption point.
+
 The main Mathematics component acceptance record MUST state that each item has been checked. A missing planning contract or unsubstantiated acceptance result is a component failure.
 
 ## 2. Classify the lesson before designing it
@@ -77,6 +82,12 @@ Do not use the following as primary explanations:
 Use accurate mathematical vocabulary while making its meaning explicit in student-friendly language.
 
 ## 4. Select representations for mathematical purpose
+
+When the topic is fraction equivalence or fraction-decimal conversion, apply
+`fraction-equivalence-standard.md`: show the original partition, repartition
+every part by the same factor, preserve the represented amount and connect the
+visual transformation to numerator, denominator and decimal notation. A final
+hundred grid alone is insufficient.
 
 Every representation MUST be selected because it reveals a relevant structure, relationship, quantity or property. Decorative mathematical imagery MUST NOT substitute for a representation.
 

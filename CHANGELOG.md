@@ -2,6 +2,24 @@
 
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
+## 3.7.0 — 3 September 2026
+
+### Fixed
+- Restored the validated Numeracy default to five prompt/answer pairs (10 slides total) and moved the remaining retrieval categories into a weekly rotation.
+- Replaced component-name scheduling with unique timetable instances, allowing two Mathematics blocks without collapsing them.
+- Added instance-level duration and slide/time budgeting; overfull lessons now fail before release.
+- Required explicit Year 4 and Year 5 Mathematics pathways for the calibrated mixed profile, including an authorised bridge when only one year level has the active code.
+- Added a fraction-equivalence standard requiring visible repartitioning and an invariant amount rather than a finished hundred grid alone.
+- Made projected warm-up typography role-based: every meaningful task/answer is checked, so one 36 pt element cannot mask smaller content.
+
+### Reliability
+- Replaced freeform component self-attestation with stable check IDs, evidence, instance IDs, time estimates and deck-hash binding.
+- Made unresolved typography/space warnings release-blocking and added an evidence-bearing, per-slide disposition ledger.
+- Made visual-exemplar metrics a screening gate only; final visual PASS now requires an independent rendered-review record.
+- Added a repository-owned release aggregator and prohibited one-off deck-specific release scripts with hard-coded slide totals or expected strings.
+- Added the T3W7 Thursday known-failure regression and removed a stale duplicate audit implementation.
+- Reconciled this hardening with the existing protected Year 4/5 baseline and isolated Year 6 calibration scaffold.
+
 ## 3.6.0 — 2 September 2026
 
 ### Added

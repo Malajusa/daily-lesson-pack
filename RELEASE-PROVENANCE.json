@@ -1,8 +1,8 @@
 {
-  "version": "3.6.0",
-  "created": "2026-09-02",
+  "version": "3.7.0",
+  "created": "2026-09-03",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
-  "base_commit": "f403da22eda106f3508f8d7affb9b61c372f7862",
+  "base_commit": "916910f0a94781cd4a31a538a0db4e70ac4b242f",
   "reconciled_sources": [
     {
       "line": "git-3.2.0",
@@ -26,6 +26,10 @@
       "line": "year-level-context-profiles",
       "base_commit": "f403da22eda106f3508f8d7affb9b61c372f7862",
       "contribution": "Separated teacher/school runtime inputs from protected year-level calibration, added the established Year 4/5 profile, an isolated Year 6 calibration scaffold, cross-year regression protection and package-level profile dependencies"
+    },
+    {
+      "line": "t3w7-thursday-failure-analysis",
+      "contribution": "Instance-level scheduling, five-pair Numeracy default, mixed-year and fraction-equivalence contracts, role-based typography, evidence-bound warnings and independent release review"
     }
   ],
   "intentional_removals": [

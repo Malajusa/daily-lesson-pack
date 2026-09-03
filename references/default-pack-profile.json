@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "profile_id": "default-daily-pack-architecture",
+  "numeracy_warmup": {
+    "prompt_answer_pairs": 5,
+    "questions_per_prompt": 3,
+    "main_task_font_min_pt": 36,
+    "why_font_min_pt": 28
+  },
+  "literacy_warmup": {
+    "sequence_count": 10
+  },
+  "morning_work": {
+    "target_minutes": 10
+  },
+  "mathematics": {
+    "fraction_notation": "stacked",
+    "require_active_year_profile": true,
+    "require_block_instance_ids": true
+  },
+  "presentation": {
+    "generic_whiteboard_footer": false,
+    "unresolved_warning_blocks_release": true,
+    "independent_visual_review_required": true
+  }
+}

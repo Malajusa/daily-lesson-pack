@@ -16,6 +16,7 @@ font metrics can create visible overflow even when nominal text-box bounds fit.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from dataclasses import dataclass
@@ -23,6 +24,14 @@ from pathlib import Path
 from typing import Iterable, Optional
 
 from pptx import Presentation
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 from pptx.enum.dml import MSO_FILL
 from pptx.enum.shapes import MSO_SHAPE_TYPE
 
@@ -414,6 +423,7 @@ def main():
     )
     report = {
         "deck": args.deck,
+        "artifact_sha256": file_sha256(Path(args.deck)),
         "overall_status": overall,
         "padding_in": args.padding_in,
         "summary": summary,
