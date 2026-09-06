@@ -5,6 +5,16 @@ description: Generate independent, book-executable Morning Work for projection a
 
 # DLP Morning Work
 
+## Mandatory evidence workflow (v3)
+
+Read `references/qa-workflow-v3.md` and the applicable entries in
+`references/qa-requirements.json` before generation or review. This workflow
+governs release evidence and supersedes older run-ID-only independence checks
+and report-only release commands below. Use `scripts/content_source.py` for
+canonical task text and complete review coverage. Required checks cannot be
+replaced by a broad component PASS. Only the complete-pack release command may
+authorise classroom-ready output.
+
 ## Ownership
 
 Own only Morning Work. Do not generate the Literacy warm-up, Shared Reading, Guided Reading or lesson instruction.

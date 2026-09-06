@@ -1,8 +1,8 @@
 {
-  "version": "3.7.0",
-  "created": "2026-09-03",
+  "version": "3.8.0",
+  "created": "2026-09-06",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
-  "base_commit": "916910f0a94781cd4a31a538a0db4e70ac4b242f",
+  "base_commit": "afad46a80417bb3cdabaaf16a55c426d392f671a",
   "reconciled_sources": [
     {
       "line": "git-3.2.0",
@@ -30,6 +30,10 @@
     {
       "line": "t3w7-thursday-failure-analysis",
       "contribution": "Instance-level scheduling, five-pair Numeracy default, mixed-year and fraction-equivalence contracts, role-based typography, evidence-bound warnings and independent release review"
+    },
+    {
+      "line": "pack-evidence-v3",
+      "contribution": "Requirement coverage, shared task source, final-file bindings, reviewer receipts, timetable applicability and regression cases"
     }
   ],
   "intentional_removals": [

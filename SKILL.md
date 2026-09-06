@@ -5,6 +5,16 @@ description: Orchestrate timetable-aligned, year-profile-aware Daily Lesson Pack
 
 # Daily Lesson Pack — Orchestrator
 
+## Mandatory evidence workflow (v3)
+
+Read `references/qa-workflow-v3.md` and the applicable entries in
+`references/qa-requirements.json` before generation or review. This workflow
+governs release evidence and supersedes older run-ID-only independence checks
+and report-only release commands below. Use `scripts/content_source.py` for
+canonical task text and complete review coverage. Required checks cannot be
+replaced by a broad component PASS. Only the complete-pack release command may
+authorise classroom-ready output.
+
 ## Purpose
 
 Coordinate a classroom-ready daily pack. Do not generate detailed subject content in this skill when a specialised component skill owns it.
@@ -218,6 +228,8 @@ For a relief day, keep the timetable but make teacher-led sequences self-contain
 ## Release rule
 
 The orchestrator never self-certifies quality. `dlp-pack-qa` is the release authority.
+Execute it in a fresh reviewer agent/process under the v3 workflow; reading its
+instructions in the generator thread is not independent QA.
 
 Run the deterministic contract audit during final QA:
 

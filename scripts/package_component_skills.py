@@ -10,6 +10,8 @@ from pathlib import Path
 
 
 COMMON_REFERENCES = (
+    "references/qa-workflow-v3.md",
+    "references/qa-requirements.json",
     "references/slide-deck-quality-standards.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
@@ -133,6 +135,8 @@ def main() -> int:
             ).encode("utf-8"),
         }
 
+        for helper in ("scripts/pack_evidence.py", "scripts/content_source.py"):
+            package_files[helper] = read_required(repo, helper)
         for relative_path in component_references:
             package_files[relative_path] = read_required(repo, relative_path)
 

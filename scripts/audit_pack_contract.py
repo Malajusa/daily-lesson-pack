@@ -624,7 +624,7 @@ def validate_sequence(
 ) -> list[dict]:
     issues: list[dict] = []
     if not entries:
-        if required_total is not None:
+        if required_total is not None and required_total > 0:
             issues.append(issue(
                 f"{label}_missing",
                 f"{label.replace('_', ' ').title()} headers are missing.",
@@ -699,7 +699,7 @@ def validate_sequence(
     return issues
 
 
-def audit_deck(path: str, literacy_count: int = 10, numeracy_count: int = 5) -> tuple[list[dict], dict]:
+def audit_deck(path: str, literacy_count: int = 10, numeracy_count: int = 5, response_override_slides: set[int] | None = None) -> tuple[list[dict], dict]:
     try:
         presentation = Presentation(path)
     except Exception as exc:
@@ -769,7 +769,7 @@ def audit_deck(path: str, literacy_count: int = 10, numeracy_count: int = 5) -> 
                         "A punctuation reminder must visibly enlarge, bold and colour the target mark in its example.",
                         slide=slide_number,
                     ))
-            if literacy_role == "QUESTION" and "because" in full_text.lower():
+            if literacy_role == "QUESTION" and re.search(r"\b(?:because|but|and|although|so|or|yet)\b", full_text, re.I):
                 has_two_sentence_source = any(
                     TWO_SENTENCE_TEXT.search(shape_text(shape)) for shape in slide.shapes
                 )
@@ -780,10 +780,10 @@ def audit_deck(path: str, literacy_count: int = 10, numeracy_count: int = 5) -> 
                 ):
                     issues.append(issue(
                         "literacy_combination_action_ambiguous",
-                        "A two-sentence because task must explicitly say combine or join, not merely write a sentence.",
+                        "A sentence-combination task must explicitly say combine or join, not merely write a sentence.",
                         slide=slide_number,
                     ))
-            if literacy_role == "QUESTION" and PROHIBITED_LITERACY_REASONING.search(full_text):
+            if literacy_role == "QUESTION" and slide_number not in (response_override_slides or set()) and (PROHIBITED_LITERACY_REASONING.search(full_text) or re.search(r"\band\s+(?:name|write|give|complete)\b", full_text, re.I)):
                 issues.append(issue(
                     "literacy_extra_reasoning_demand",
                     "A Literacy warm-up question must require one direct response without an added explain or justify demand.",
@@ -913,16 +913,23 @@ def main() -> int:
         default=None,
         help="Authorised Literacy sequence override; otherwise use the profile",
     )
+    parser.add_argument("--response-override-slides", type=int, nargs="*", default=[])
     args = parser.parse_args()
 
     try:
         profile = load_profile(args.profile)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         parser.error(f"invalid classroom profile: {exc}")
-    literacy_count = args.literacy_count or profile["literacy_warmup"]["sequence_count"]
-    numeracy_count = args.numeracy_count or profile["numeracy_warmup"]["prompt_answer_pairs"]
-    if literacy_count < 1 or numeracy_count < 1:
-        parser.error("sequence counts must be at least 1")
+    # Required counts follow resolved scheduled instances, never weekday guesses.
+    try:
+        runtime = json.loads(Path(args.context_record).read_text())
+        owners = {i["owner"] for i in runtime["timetable_instances"]}
+    except (OSError, TypeError, KeyError, ValueError):
+        owners = {"dlp-literacy-warmup", "dlp-numeracy-warmup"}
+    literacy_count = (args.literacy_count if args.literacy_count is not None else profile["literacy_warmup"]["sequence_count"]) if "dlp-literacy-warmup" in owners else 0
+    numeracy_count = (args.numeracy_count if args.numeracy_count is not None else profile["numeracy_warmup"]["prompt_answer_pairs"]) if "dlp-numeracy-warmup" in owners else 0
+    if ("dlp-literacy-warmup" in owners and literacy_count < 1) or ("dlp-numeracy-warmup" in owners and numeracy_count < 1):
+        parser.error("scheduled sequence counts must be positive")
 
     context_issues, context_summary = audit_context_record(args.context_record)
     component_issues, component_summary = audit_component_record(
@@ -934,6 +941,7 @@ def main() -> int:
         args.deck,
         literacy_count=literacy_count,
         numeracy_count=numeracy_count,
+        response_override_slides=set(args.response_override_slides),
     )
     issues = context_issues + component_issues + deck_issues
     counts = Counter(item["code"] for item in issues)

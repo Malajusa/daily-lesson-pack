@@ -5,6 +5,16 @@ description: Independently quality-assure a complete Daily Lesson Pack and retur
 
 # DLP Pack QA
 
+## Mandatory evidence workflow (v3)
+
+Read `references/qa-workflow-v3.md` and the applicable entries in
+`references/qa-requirements.json` before generation or review. This workflow
+governs release evidence and supersedes older run-ID-only independence checks
+and report-only release commands below. Use `scripts/content_source.py` for
+canonical task text and complete review coverage. Required checks cannot be
+replaced by a broad component PASS. Only the complete-pack release command may
+authorise classroom-ready output.
+
 ## Role
 
 This skill is independent from generation. It is the release authority. Do not silently repair content while reviewing; identify the owner and send the defect back to that component.

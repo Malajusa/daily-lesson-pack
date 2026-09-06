@@ -5,6 +5,16 @@ description: Generate explicit, student-facing writing lessons with accurate mod
 
 # DLP Writing Lesson
 
+## Mandatory evidence workflow (v3)
+
+Read `references/qa-workflow-v3.md` and the applicable entries in
+`references/qa-requirements.json` before generation or review. This workflow
+governs release evidence and supersedes older run-ID-only independence checks
+and report-only release commands below. Use `scripts/content_source.py` for
+canonical task text and complete review coverage. Required checks cannot be
+replaced by a broad component PASS. Only the complete-pack release command may
+authorise classroom-ready output.
+
 ## Ownership
 
 Own the writing lesson only. Topic or research contexts may support knowledge, but writing instruction must remain the purpose.
@@ -79,3 +89,13 @@ Fail if:
 - a `why it is more precise` explanation does not state the specific information added;
 - a comparison table is too dense for projection;
 - text crosses or visually escapes its intended panel.
+
+## Preservation of meaning in every revision
+
+For cohesion, reference, punctuation and vocabulary edits, enumerate every
+original proposition and qualification in the canonical task's proposition map.
+Cite where each survives in the final revision. Adding a bridge never licenses
+deleting a fact. Preserve “valuable habitats”, not merely “habitats”. Label any
+authorised addition or deletion explicitly; do not claim all facts are preserved.
+The independent reviewer must check the map against the complete original text,
+not simply accept the generator's selected list.

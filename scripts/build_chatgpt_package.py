@@ -17,6 +17,8 @@ from pathlib import Path
 
 
 COMMON_REFERENCES = (
+    "references/qa-workflow-v3.md",
+    "references/qa-requirements.json",
     "references/slide-deck-quality-standards.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
@@ -55,6 +57,9 @@ REGRESSION_BENCHMARKS = (
 )
 
 ROOT_RUNTIME_FILES = (
+    "scripts/pack_evidence.py",
+    "scripts/content_source.py",
+    "tests/test_pack_evidence.py",
     "SKILL.md",
     "VERSION",
     "RELEASE-PROVENANCE.json",
@@ -147,6 +152,8 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
                 VISUAL_EXEMPLAR_REFERENCE,
             )
 
+        for helper in ("scripts/pack_evidence.py", "scripts/content_source.py"):
+            files[f"{component_root}/{helper}"] = read_required(repo, helper)
         files[f"{component_root}/SKILL.md"] = skill_text
         files[f"{component_root}/PACKAGE.json"] = package_json(
             component, version, component_references

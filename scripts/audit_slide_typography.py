@@ -38,13 +38,39 @@ def iter_shapes(shapes) -> Iterable:
 
 
 def font_sizes(shape) -> list[float]:
-    sizes: list[float] = []
+    """Resolve run/paragraph/list/placeholder/master sizes; reject partial unknowns."""
+    sizes = []
     if not getattr(shape, "has_text_frame", False):
         return sizes
     for paragraph in shape.text_frame.paragraphs:
         for run in paragraph.runs:
-            if run.font.size is not None:
-                sizes.append(float(run.font.size.pt))
+            if not run.text.strip():
+                continue
+            size = run.font.size or paragraph.font.size
+            if size is None:
+                level = paragraph.level + 1
+                candidates = [shape._element]
+                if shape.is_placeholder:
+                    slide = shape.part.slide
+                    idx = shape.placeholder_format.idx
+                    for parent in (slide.slide_layout, slide.slide_layout.slide_master):
+                        candidates.extend(ph._element for ph in parent.placeholders if ph.placeholder_format.idx == idx)
+                for element in candidates:
+                    nodes = element.xpath(f'.//a:lvl{level}pPr/a:defRPr[@sz]')
+                    if nodes:
+                        sizes.append(float(nodes[0].get('sz')) / 100)
+                        break
+                else:
+                    # Body/title master defaults apply only to actual placeholders.
+                    if shape.is_placeholder:
+                        kind = 'titleStyle' if 'TITLE' in str(shape.placeholder_format.type) else 'bodyStyle'
+                        nodes = shape.part.slide.slide_layout.slide_master._element.xpath(f'.//p:{kind}/a:lvl{level}pPr/a:defRPr[@sz]')
+                        if nodes:
+                            sizes.append(float(nodes[0].get('sz')) / 100)
+                            continue
+                    return []
+            else:
+                sizes.append(float(size.pt))
     return sizes
 
 
@@ -66,7 +92,7 @@ def is_incidental_label(text: str) -> bool:
     t = " ".join(text.lower().split())
     if t in {"all", "most", "some", "why", "answer", "model", "we do", "retrieval", "review"}:
         return True
-    return len(t) <= 14 and len(t.split()) <= 2 and not any(ch in t for ch in "?=+−-×÷")
+    return False
 
 
 def is_title_shape(shape, slide_height: int) -> bool:
@@ -108,13 +134,13 @@ def audit_slide(slide, slide_index: int, slide_width: int, slide_height: int, fo
                 "sizes": sizes,
                 "median_pt": statistics.median(sizes) if sizes else None,
                 "max_pt": max(sizes) if sizes else None,
-                "title_like": is_title_shape(shape, slide_height),
+                "title_like": is_title_shape(shape, slide_height) and not shape.name.lower().startswith("dlp:"),
             })
 
     warmup = forced_warmup or warmup_detected(texts)
     body_text = [
         x for x in text_shapes
-        if not x["title_like"] and not is_page_marker(x["shape"], slide_height)
+        if not x["title_like"] and (x["shape"].name.lower().startswith("dlp:") or not is_page_marker(x["shape"], slide_height))
     ]
     known_body_sizes = [s for x in body_text for s in x["sizes"]]
     body_max = max(known_body_sizes) if known_body_sizes else None
@@ -126,16 +152,19 @@ def audit_slide(slide, slide_index: int, slide_width: int, slide_height: int, fo
         if not text:
             continue
 
+        # Named roles are assigned by the shared-content compiler and visually reviewed.
+        role = item["shape"].name.lower()
         structural = is_incidental_label(text)
+        support = role in {"dlp:instruction", "dlp:explanation", "dlp:cue", "dlp:why"}
         why_text = warmup and text.lower().startswith("why") and len(text.split()) > 3
         floor = STRUCTURAL_FLOOR_PT if structural else (
-            WHY_TARGET_FLOOR_PT if why_text else (WARMUP_MAIN_MIN_PT if warmup else MEANINGFUL_HARD_FLOOR_PT)
+            WHY_TARGET_FLOOR_PT if (why_text or support) else (WARMUP_MAIN_MIN_PT if warmup else MEANINGFUL_HARD_FLOOR_PT)
         )
         if not item["sizes"]:
             issues.append({
                 "severity": "fail",
                 "code": "meaningful_font_size_unknown",
-                "message": f"No explicit font size is available for a projected text box with a {floor:.0f} pt role floor: {text[:120]}",
+                "message": f"No effective font size can be resolved for every run for a projected text box with a {floor:.0f} pt role floor: {text[:120]}",
             })
             continue
         smallest_pt = min(item["sizes"])
@@ -143,7 +172,7 @@ def audit_slide(slide, slide_index: int, slide_width: int, slide_height: int, fo
             issues.append({
                 "severity": "fail",
                 "code": "undersized_body_text",
-                "message": f"Smallest explicit run is {smallest_pt:.1f} pt (role floor {floor:.0f} pt): {text[:120]}",
+                "message": f"Smallest effective run is {smallest_pt:.1f} pt (role floor {floor:.0f} pt): {text[:120]}",
             })
 
     # Rough occupancy: count visible non-title text, pictures, charts and tables.

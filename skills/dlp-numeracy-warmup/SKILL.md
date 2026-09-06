@@ -5,6 +5,16 @@ description: Generate the Daily Lesson Pack Mathematics warm-up as cumulative re
 
 # DLP Numeracy Warm-up
 
+## Mandatory evidence workflow (v3)
+
+Read `references/qa-workflow-v3.md` and the applicable entries in
+`references/qa-requirements.json` before generation or review. This workflow
+governs release evidence and supersedes older run-ID-only independence checks
+and report-only release commands below. Use `scripts/content_source.py` for
+canonical task text and complete review coverage. Required checks cannot be
+replaced by a broad component PASS. Only the complete-pack release command may
+authorise classroom-ready output.
+
 ## Ownership
 
 Own the Mathematics warm-up only. It is cumulative retrieval and does not replace the main lesson's prerequisite check, modelling, guided practice or exit assessment.

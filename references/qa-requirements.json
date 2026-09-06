@@ -1,0 +1,1424 @@
+{
+  "schema_version": 3,
+  "requirements": [
+    {
+      "id": "QA.DDB74AA62B",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "The context record identifies one active supported year-level profile and its path/version/status.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.91F9313140",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Every content-component acceptance record uses the same active year profile as the orchestrator.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.06279813A5",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "The user's timetable, class size, current Maths/English overview and local weekly sequence remain runtime context; they are not treated as year-level calibration evidence merely because they were used for this pack.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.7451DA836A",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Fail cross-year leakage: a Year 6 component must not rely on Year 4/5-specific pitch rules or examples as authority, and a Year 4/5 component must not inherit Year 6-only assumptions unless an explicitly universal rule has been validated.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.A84BF05193",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "A year-profile-specific change that could affect another year level must satisfy `examples/benchmarks/year-profile-isolation-regression.md`.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.324DA5FA57",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "If the active year profile is marked candidate/calibration-only, do not label the output an established classroom-ready baseline unless that profile's release conditions have been met for the pack.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.0699C52ADE",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "A context-source record identifies the current source for year level, date/term/week/day, timetable, Mathematics focus, English/literacy focus, lesson-status exception and printing quantity when printing is requested.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.210C6AB1EC",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "The record distinguishes runtime user/school sources from the active year-level profile source.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.F2B6AEBA4C",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "The record must not cite chat memory, saved personal context, another account's Project context or an unstated standing preference as authority for runtime facts.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.C0F9F4359F",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Missing required context blocks classroom-ready release; it is queried rather than guessed.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.B31E2A3C72",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Do not inherit another user's fixed class size, four-day overview, Wednesday arrangement, genre sequence or local timetable as a default.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.3A8AE39590",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "The context and acceptance records list every scheduled content instance with a unique ID, owner, start, duration and purpose.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.98D96947EA",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Repeated component owners are valid when instance IDs differ; repeated IDs are not.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.804DC9C06D",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Every instance records `PASS`, the active year profile, estimated minutes, stable check IDs, concrete evidence and its artefact or slide range.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.5EDC8D9316",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "The evidence record identifies the generation run and is bound to the audited deck SHA-256. Independent semantic and rendered-review records cite that generation run and use different review run IDs. Freeform strings such as `checked` are not evidence.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.F14ED815AC",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "A missing instance, time-budget overrun, missing evidence, duplicate instance result, profile mismatch or component `FAIL` blocks assembly and release.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.24E51D957F",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Component acceptance does not replace this independent whole-pack review.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.14A2F945DD",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Slide 1 is Morning Work when required.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.D21B60F421",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Every Morning Work instruction is executable from the projected slide using the response mode authorised by runtime classroom context; no task asks students to mark projected-only content.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.70A95FC5EC",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Morning Work is scannable at projection size: related tasks are grouped, the core is not padded with an unnecessary extension, and comfortable internal spacing remains after all content is placed.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.19C49C8436",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Timetable order is coherent.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.0EAEC1290F",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Distinct timetable blocks remain distinct component instances. A lesson resumed after a break has a visible breakpoint.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.A4455BC807",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Specialist subjects are timetable labels only under the current core contract unless an explicit authorised component says otherwise.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.A845CC5934",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "No unauthorised specialist printables or generated lessons exist.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.3AB3BE3719",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Morning Work and Shared Reading use different texts.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.CC9C6DC7CC",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Mathematics warm-up remains separate from the main Mathematics lesson.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.FB7A8041EC",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "10 `Reminder -> Question -> Answer` sequences unless explicitly overridden.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.B19850B039",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Every question contains all information needed to answer it and does not depend on another slide.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.6E6A0B9850",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Every question follows the active year-profile warm-up response contract; by default it requires one direct response only and the answer slide supplies the concise teaching explanation.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.07BF3A7B07",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "In a choice task, students select only the option unless another response demand is explicitly authorised; any concise rationale normally belongs on the answer slide.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.929F2B057F",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Every reminder teaches the method with a different example and does not reveal the next answer.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.47811E80D0",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Every reminder places a concise applicable `Remember:` rule inside its yellow panel. A punctuation reminder uses a separate example with the target punctuation green, bold and at least 125% of the surrounding size.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.F96B8BE1FD",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "No spelling/Sound Waves replacement content unless explicitly authorised by an active profile contract.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.0856B63FD6",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Every answer follows its question and the primary answer is visually dominant.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.17115BE5D9",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Inserted punctuation or changed wording is immediately locatable through green, bold, enlarged treatment plus a textual cue; meaning does not rely on colour alone.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.91F8455D1C",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Judge punctuation emphasis from the exported render as well as the PPTX text runs; intended styling that renders flat fails.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.B363686D1C",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Explanations teach the relevant rule and do not use generic statements such as `the answer matches the prompt`.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.8C61C1F499",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Student language is immediate and appropriate to the active year profile.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.1B379F6B56",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "The question title and instruction name the exact operation demonstrated by the answer. A sentence-combination task must say `combine` or `join`; `write a sentence` is insufficient.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.8B78B8AEBC",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Use accurate curriculum terminology with a plain-language explanation. Fail vague substitutions such as `linking word` when `conjunction` is the correct grammatical term.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.FBB6211439",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Put inverted commas around a literal word or phrase when it is being discussed as language, while leaving the same word unquoted when it operates normally inside an example sentence.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.3BBE79A2AD",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Multiple-choice options are grammatically parallel and similar enough in length, detail and tone that every distractor is plausible for the active year profile until the target rule is applied. Replace the item if a credible distractor cannot be written.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.FDDDB14C97",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "A word described as `more precise` adds a clear, defensible semantic feature while preserving the original meaning. Formality, technicality or unfamiliarity alone is not precision.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.E58E8A6304",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Reject debatable synonym rankings, including presenting `rotate` as automatically more precise than `turn` for a propeller. The supplied answer explanation must be sufficient; the teacher must not need to invent a semantic defence.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.187EC010D6",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Each reminder, model, question, answer and explanation uses the same rule or convention.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.AAE600ABDE",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "A list-comma reminder must not require a comma after every non-final item while its model or answer omits the optional comma before `and` or `or`.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.3EE117A487",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Uses a strict alternating question/answer sequence.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.B458198D1A",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Every question slide contains exactly one short paragraph and one question about that paragraph.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.A0D7C9E461",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Passage density, syntax, vocabulary support and comprehension demand are appropriate to the active year profile; a higher year is not created merely by lengthening text or making words obscure.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.C6D7FB40F1",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Every answer slide immediately follows and matches only the preceding question slide.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.A43C9AEC26",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "The complete model answer is visually dominant; any supporting evidence is concise and relevant.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.94E1308DA3",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "The question slide does not reveal the answer or teaching-only evidence cue when students are meant to locate it independently.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.2C49D2E4B3",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Answer slides do not introduce a new paragraph, new question or unrelated content.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.3E7E5F3C48",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Paragraph/question separation on question slides is visually obvious.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.0926DA3F02",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Text is projected at sensible size; split/shorten rather than shrink.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.4E4FC82990",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Every title, question and answer is supported by the displayed paragraph.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.1A4EC82438",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Any inference follows from explicit clues in the paragraph and the model answer makes that connection clear.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.A70083BBF0",
+      "owner": "dlp-guided-reading",
+      "scope": "instance",
+      "statement": "Guided Reading follows the current Guided Reading component contract.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.349ADFCFE3",
+      "owner": "dlp-guided-reading",
+      "scope": "instance",
+      "statement": "Under the current timetable-only setting, no Guided Reading text, teacher guide, prompts, transition task or instructional slide is generated.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.E73F60EC76",
+      "owner": "dlp-guided-reading",
+      "scope": "instance",
+      "statement": "Any displayed group is taken from an authoritative current schedule and is exactly `Alpha`, `Beta`, `Gamma`, `Delta` or `Epsilon` where that naming system is active.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.79BC4E0B34",
+      "owner": "dlp-guided-reading",
+      "scope": "instance",
+      "statement": "No ability descriptor, inferred group name or year-profile-derived ability label appears.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.EBD79EFF67",
+      "owner": "dlp-writing-lesson",
+      "scope": "instance",
+      "statement": "Current writing/English overview, not a historical hard-coded weekday spine, supplies the current genre/toolkit feature and sequence.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.9F19DC7D61",
+      "owner": "dlp-writing-lesson",
+      "scope": "instance",
+      "statement": "Current toolkit feature is explicitly taught/applied.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.DBCD207379",
+      "owner": "dlp-writing-lesson",
+      "scope": "instance",
+      "statement": "A model/joint construction is present where needed.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.EA45C09104",
+      "owner": "dlp-writing-lesson",
+      "scope": "instance",
+      "statement": "Students produce writing demonstrating the feature.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.566367B11C",
+      "owner": "dlp-writing-lesson",
+      "scope": "instance",
+      "statement": "Writing load, independence and scaffolding are appropriate to the active year profile.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.131C0C645A",
+      "owner": "dlp-writing-lesson",
+      "scope": "instance",
+      "statement": "Student-facing wording uses familiar, actionable language; necessary technical terms are defined before use.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.8827C4E317",
+      "owner": "dlp-writing-lesson",
+      "scope": "instance",
+      "statement": "Technical-word substitutions preserve meaning and the explanation states the exact information added.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.BD1C1355C3",
+      "owner": "dlp-writing-lesson",
+      "scope": "instance",
+      "statement": "A controlled vocabulary model preserves the sentence's core proposition; a revision that adds several facts is labelled as elaboration.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.9929DC3287",
+      "owner": "dlp-writing-lesson",
+      "scope": "instance",
+      "statement": "Comparison tables are split before their content becomes undersized.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.370F953DB2",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "5 prompt/answer pairs (10 slides total) unless the validated profile or current request explicitly overrides the count.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.2190897B4D",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "Prompt slides contain three separate All / Most / Some questions, not three answer-quality expectations for one question.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.CEAC12C2EB",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "The active year profile determines reasonable retrieval floor, number types/magnitudes and the ceiling for `Some`.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.0D21BFA37F",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "`Some` does not automatically jump into the next year level.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.B6E4C6941A",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "Green `Why` panel contains reasoning, not generic checking instructions.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.824D274712",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "Question and answer slides match.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.4C4962B213",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "No mathematical word is split inside the word across lines. Intentional line breaks may separate an equation from a complete word, but must not produce fragments such as `quarte` / `rs`.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.F087EDD53F",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "The warm-up retrieves already taught knowledge rather than introducing a new procedure.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.70D59E7751",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "Mathematical terminology, notation, diagrams, scales and representations are accurate.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.1F5F3789B4",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "A prompt slide does not reveal its answer through completed working, colour or an already completed model.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.3B25FCCFAD",
+      "owner": "dlp-numeracy-warmup",
+      "scope": "instance",
+      "statement": "Every meaningful tier task or answer is at least 36 pt; substantive `Why` text is at least 28 pt. Inspect each element rather than the slide maximum.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.5D75C82106",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The Mathematics component acceptance record substantiates every required planning-contract check rather than recording a generic `PASS`.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.360D285B74",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The active year profile is recorded before the curriculum concept and lesson boundary.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.9853F6A4DC",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The curriculum concept and lesson boundary agree with the current user/school Maths source.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.1C9FAC3E19",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The lesson is classified as concept introduction, procedure development, fluency development, reasoning, problem solving or review/assessment.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.156B6924A5",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Unless explicitly review, consolidation or extension, the lesson introduces one central new mathematical idea rather than several substantial new concepts.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.533912288D",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Focused prerequisite retrieval is distinct from the cumulative Mathematics warm-up.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.766D5A1EBB",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Year 6 demand is not produced by mechanically enlarging Year 4/5 numbers, text length or step count.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.7738F9714C",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Each Mathematics timetable block has its own instance ID, purpose and feasible time estimate.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.B4081F2450",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Mixed Year 4/5 instruction states a common central idea and provides substantive Year 4 and Year 5 pathways. An inactive year level receives an authorised prerequisite/consolidation bridge, not the other year's outcome by implication.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.DBC0C9F934",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "A newly introduced procedure is grounded in quantities, units, properties or relationships before procedural shorthand is used.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.889F059B95",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The explanation identifies what changes and what remains invariant where relevant.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.7F2155DCF6",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Accurate technical vocabulary is introduced with a plain-language explanation and is not replaced by vague labels such as `top number`, `bottom number`, `answer number` or `times number`.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.0779D64077",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Notation is conventional, readable and internally consistent. Question numbering cannot be misread as part of a decimal, fraction, coefficient or mixed number.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.CAF616BF3E",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Every representation has a stated mathematical purpose and reveals the intended structure.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.B4752F23D7",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Visuals, verbal explanations and equations represent the same quantities, units and relationships.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.05EB3AAE7E",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The correspondence between representations is made explicit.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.0C87D3A508",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Quantities, labels, scales, equal intervals, partitions, coordinates, dimensions, geometric properties, graph values and sample-space outcomes are verified as applicable.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.BEBB4F24EC",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Decorative mathematical imagery does not substitute for a model.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.1EF53ACFC7",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "A photograph is not used as mathematical evidence unless its quantity, partition, scale and perspective are exact.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.F4B34F93E2",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Semantic colour is consistent across corresponding quantities and is not the only cue.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.12683F47A9",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Fraction equivalence is shown through the original partition, repartitioning of every part, the invariant amount and the multiplicative relationship. A finished hundred grid alone fails.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.208B47BC4F",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "For a new or fragile concept, meaning and a complete model precede guided and independent work.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.443728DA8E",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "During concept introduction or procedure development, students normally make an observable response after no more than two consecutive explanation/model slides unless an explicit instruction or active profile requires another structure.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.E1DCD85037",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "A `We do` slide genuinely requires student participation and does not already display the completed answer, final landing point, completed model or all working.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.8FA31001E1",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Scaffolds fade deliberately rather than disappearing between a fully completed model and unsupported independent work.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.AA559A5167",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The hardest independent task has a clear modelled precursor.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.AD34E8EF29",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Independent demand aligns in concept, operation or relationship, representation, number type, number of steps, strategy selection, language demand, reasoning demand and expected output.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.C7F3819366",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Independent demand remains appropriate to the active year profile.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.DCE8CBBEB9",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "An unmodelled operation, representation, complexity or reasoning demand is either removed or explicitly identified as extension.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.FDCEC53BBF",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Every task states the action, mathematical focus, representation/resource where required and expected output.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.8851233A17",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "No vague or figurative instructional shorthand is used.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.F95A0EBE24",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "A question slide does not reveal the answer through completed working, answer-coloured objects, final landing points, completed models or teaching-only cues.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.8FB6169895",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The answer addresses every command in the prompt, including any requirement to explain, compare, justify, label, prove, draw or write an equation.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.3811A3A36D",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The requested strategy or representation is modelled on the answer slide.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.4D20864E08",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Valid alternative methods or answers are acknowledged where relevant.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.1FD1338990",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The primary answer and meaningful mathematical change are visually dominant.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.7678FBD64E",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Practice uses purposeful variation rather than random surface changes.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.FF45632182",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Examples and non-examples differ in a mathematically meaningful way.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.80FE2B7D9E",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Any misconception uses plausible student reasoning for the active year profile and the correction identifies the mistaken assumption, violated property/relationship and correct reasoning.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.2E6C55A713",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "A calculation, reasoning task and problem-solving task are labelled according to their actual demand.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.2E569CDD1C",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "A routine worded calculation is not presented as problem solving solely because it has a context.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.DDBCE4D39C",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "Exit evidence measures the intended mathematical concept rather than only the ability to copy a representation or follow a displayed procedure.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.44B74F8ED2",
+      "owner": "dlp-maths-lesson",
+      "scope": "instance",
+      "statement": "The exit task does not introduce a new conceptual demand.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "TASK.RESPONSE",
+      "owner": "*",
+      "scope": "task",
+      "statement": "All requested actions have a complete matched answer; retrieval response load follows the active component contract.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "TASK.MEANING",
+      "owner": "*",
+      "scope": "task",
+      "statement": "Models are natural, accurate and preserve all required meaning; enumerate before/after propositions for revisions.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "TASK.DISTRACTORS",
+      "owner": "*",
+      "scope": "task",
+      "statement": "Every distractor tests a plausible misconception; identify that misconception and why the option fails.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "TASK.OPERATION",
+      "owner": "*",
+      "scope": "task",
+      "statement": "The instruction names the precise transformation or action demonstrated by the answer.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "VISUAL.PAGE",
+      "owner": "*",
+      "scope": "page",
+      "statement": "Inspect this complete final rendered slide/page for readability, containment, hierarchy, answer leakage and meaningful emphasis.",
+      "method": "visual",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    }
+  ]
+}
