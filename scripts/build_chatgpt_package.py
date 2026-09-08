@@ -3,8 +3,8 @@
 
 The repository remains the source of truth. The generated package contains the
 orchestrator, all component contracts, registration metadata, shared standards,
-year-level contextual profiles, regression benchmarks, runtime QA scripts and a
-verifiable package manifest.
+year-level contextual profiles, regression benchmarks, the supported build
+runtime, runtime QA scripts and a verifiable package manifest.
 """
 
 from __future__ import annotations
@@ -59,7 +59,12 @@ REGRESSION_BENCHMARKS = (
 ROOT_RUNTIME_FILES = (
     "scripts/pack_evidence.py",
     "scripts/content_source.py",
+    "scripts/dlp_build_runtime.py",
+    "scripts/build_daily_pack.py",
     "tests/test_pack_evidence.py",
+    "tests/test_build_runtime.py",
+    "tests/test_semantic_relationships.py",
+    "tests/test_panel_ownership.py",
     "SKILL.md",
     "VERSION",
     "RELEASE-PROVENANCE.json",
