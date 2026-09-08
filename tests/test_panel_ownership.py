@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import sys
 import unittest
 from pathlib import Path
 
@@ -13,10 +14,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def load_audit():
+    name = "panel_audit_explicit"
     path = ROOT / "scripts/audit_panel_containment.py"
-    spec = importlib.util.spec_from_file_location("panel_audit_explicit", path)
+    spec = importlib.util.spec_from_file_location(name, path)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
+    sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
 
@@ -49,10 +52,6 @@ def add_text(slide, text: str, owner: str | None, left=1.3, top=1.3, width=4.3, 
 class ExplicitPanelOwnershipTests(unittest.TestCase):
     def setUp(self) -> None:
         self.audit = load_audit()
-
-    def audit_slide(self, slide):
-        prs = slide.part.package.presentation_part.presentation
-        return self.audit.audit_slide(slide, 1, prs.slide_width, prs.slide_height, 0.15)
 
     def test_explicit_owned_text_inside_panel_passes(self) -> None:
         prs = Presentation()
