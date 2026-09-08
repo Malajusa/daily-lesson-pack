@@ -163,7 +163,9 @@ class ReleaseContractTests(unittest.TestCase):
         text = read("scripts/audit_package_dependencies.py")
         self.assertIn("scripts/build_daily_pack.py", text)
         self.assertIn("scripts/dlp_build_runtime.py", text)
-        self.assertIn("importlib", text)
+        self.assertIn("subprocess.run", text)
+        self.assertIn('"-I"', text)
+        self.assertIn("AgentRegistry.load()", text)
 
     def test_ci_builds_and_audits_release_packages(self) -> None:
         workflow = read(".github/workflows/dlp-tests.yml")

@@ -1,0 +1,493 @@
+{
+  "$schema": "../schemas/registry-v2.schema.json",
+  "schema_version": 2,
+  "registry_id": "daily-lesson-pack",
+  "orchestrator": {
+    "id": "daily-lesson-pack",
+    "kind": "orchestrator",
+    "entrypoint": "SKILL.md",
+    "runtime_entrypoint": "scripts/agent_orchestrator.py"
+  },
+  "protocol": {
+    "version": 1,
+    "request_schema": "schemas/agent-request.schema.json",
+    "result_schema": "schemas/agent-result.schema.json",
+    "defect_schema": "schemas/defect.schema.json"
+  },
+  "execution_defaults": {
+    "fail_closed": true,
+    "parallel_generation": true,
+    "max_parallelism": 7,
+    "default_max_attempts": 2,
+    "require_schema_validation": true,
+    "immutable_resolved_context": true
+  },
+  "agents": [
+    {
+      "id": "context-resolver",
+      "kind": "runtime",
+      "role": "context_resolver",
+      "entrypoint": "scripts/build_execution_plan.py",
+      "invocation": {
+        "implicit": false,
+        "parallelizable": false
+      },
+      "reads": [
+        "request",
+        "runtime_sources",
+        "references/year-level-context-contract.md",
+        "references/shared-class-context-contract.md",
+        "references/default-pack-profile.json",
+        "references/component-instance-contract.md"
+      ],
+      "writes": [
+        "context/context.json",
+        "plan/execution-plan.json"
+      ],
+      "mutation_scope": [
+        "context/**",
+        "plan/**"
+      ],
+      "output_schemas": {
+        "context": "schemas/run-context.schema.json",
+        "plan": "schemas/execution-plan.schema.json"
+      },
+      "terminal_on_failure": true
+    },
+    {
+      "id": "dlp-morning-work",
+      "kind": "skill",
+      "role": "generator",
+      "entrypoint": "skills/dlp-morning-work/SKILL.md",
+      "owner": "Morning Work",
+      "invocation": {
+        "implicit": true,
+        "parallelizable": true,
+        "fresh_context": true,
+        "max_attempts": 2
+      },
+      "accepts_instances": true,
+      "input": {
+        "schema": "schemas/agent-request.schema.json",
+        "context_projection": [
+          "active_year_profile",
+          "pack_profile",
+          "date",
+          "term_week",
+          "day",
+          "lesson_status",
+          "output_constraints",
+          "source_provenance"
+        ],
+        "required_context": [
+          "active_year_profile",
+          "pack_profile",
+          "date",
+          "term_week",
+          "day",
+          "lesson_status",
+          "source_provenance"
+        ],
+        "mandatory_references": [
+          "references/component-instance-contract.md",
+          "references/qa-workflow-v3.md",
+          "references/slide-deck-quality-standards.md"
+        ]
+      },
+      "output": {
+        "schema": "schemas/component-result.schema.json"
+      },
+      "mutation_scope": [
+        "components/{instance_id}/**"
+      ],
+      "repair_owner": true
+    },
+    {
+      "id": "dlp-literacy-warmup",
+      "kind": "skill",
+      "role": "generator",
+      "entrypoint": "skills/dlp-literacy-warmup/SKILL.md",
+      "owner": "Literacy warm-up",
+      "invocation": {
+        "implicit": true,
+        "parallelizable": true,
+        "fresh_context": true,
+        "max_attempts": 2
+      },
+      "accepts_instances": true,
+      "input": {
+        "schema": "schemas/agent-request.schema.json",
+        "context_projection": [
+          "active_year_profile",
+          "english_focus",
+          "pack_profile",
+          "output_constraints",
+          "source_provenance"
+        ],
+        "required_context": [
+          "active_year_profile",
+          "english_focus",
+          "pack_profile",
+          "source_provenance"
+        ],
+        "mandatory_references": [
+          "references/component-instance-contract.md",
+          "references/qa-workflow-v3.md",
+          "references/slide-deck-quality-standards.md"
+        ]
+      },
+      "output": {
+        "schema": "schemas/component-result.schema.json"
+      },
+      "mutation_scope": [
+        "components/{instance_id}/**"
+      ],
+      "repair_owner": true
+    },
+    {
+      "id": "dlp-shared-reading",
+      "kind": "skill",
+      "role": "generator",
+      "entrypoint": "skills/dlp-shared-reading/SKILL.md",
+      "owner": "Shared Reading",
+      "invocation": {
+        "implicit": true,
+        "parallelizable": true,
+        "fresh_context": true,
+        "max_attempts": 2
+      },
+      "accepts_instances": true,
+      "input": {
+        "schema": "schemas/agent-request.schema.json",
+        "context_projection": [
+          "active_year_profile",
+          "english_focus",
+          "output_constraints",
+          "source_provenance"
+        ],
+        "required_context": [
+          "active_year_profile",
+          "english_focus",
+          "source_provenance"
+        ],
+        "mandatory_references": [
+          "references/component-instance-contract.md",
+          "references/qa-workflow-v3.md",
+          "references/slide-deck-quality-standards.md"
+        ]
+      },
+      "output": {
+        "schema": "schemas/component-result.schema.json"
+      },
+      "mutation_scope": [
+        "components/{instance_id}/**"
+      ],
+      "repair_owner": true
+    },
+    {
+      "id": "dlp-guided-reading",
+      "kind": "skill",
+      "role": "generator",
+      "entrypoint": "skills/dlp-guided-reading/SKILL.md",
+      "owner": "Guided Reading",
+      "invocation": {
+        "implicit": true,
+        "parallelizable": true,
+        "fresh_context": true,
+        "max_attempts": 2
+      },
+      "accepts_instances": true,
+      "input": {
+        "schema": "schemas/agent-request.schema.json",
+        "context_projection": [
+          "active_year_profile",
+          "timetable",
+          "lesson_status",
+          "source_provenance"
+        ],
+        "required_context": [
+          "active_year_profile",
+          "timetable",
+          "lesson_status",
+          "source_provenance"
+        ],
+        "mandatory_references": [
+          "references/component-instance-contract.md",
+          "references/qa-workflow-v3.md",
+          "references/slide-deck-quality-standards.md"
+        ]
+      },
+      "output": {
+        "schema": "schemas/component-result.schema.json"
+      },
+      "mutation_scope": [
+        "components/{instance_id}/**"
+      ],
+      "repair_owner": true
+    },
+    {
+      "id": "dlp-writing-lesson",
+      "kind": "skill",
+      "role": "generator",
+      "entrypoint": "skills/dlp-writing-lesson/SKILL.md",
+      "owner": "Writing lesson",
+      "invocation": {
+        "implicit": true,
+        "parallelizable": true,
+        "fresh_context": true,
+        "max_attempts": 2
+      },
+      "accepts_instances": true,
+      "input": {
+        "schema": "schemas/agent-request.schema.json",
+        "context_projection": [
+          "active_year_profile",
+          "english_focus",
+          "lesson_status",
+          "output_constraints",
+          "source_provenance"
+        ],
+        "required_context": [
+          "active_year_profile",
+          "english_focus",
+          "lesson_status",
+          "source_provenance"
+        ],
+        "mandatory_references": [
+          "references/component-instance-contract.md",
+          "references/qa-workflow-v3.md",
+          "references/slide-deck-quality-standards.md"
+        ]
+      },
+      "output": {
+        "schema": "schemas/component-result.schema.json"
+      },
+      "mutation_scope": [
+        "components/{instance_id}/**"
+      ],
+      "repair_owner": true
+    },
+    {
+      "id": "dlp-numeracy-warmup",
+      "kind": "skill",
+      "role": "generator",
+      "entrypoint": "skills/dlp-numeracy-warmup/SKILL.md",
+      "owner": "Mathematics warm-up",
+      "invocation": {
+        "implicit": true,
+        "parallelizable": true,
+        "fresh_context": true,
+        "max_attempts": 2
+      },
+      "accepts_instances": true,
+      "input": {
+        "schema": "schemas/agent-request.schema.json",
+        "context_projection": [
+          "active_year_profile",
+          "mathematics_focus",
+          "pack_profile",
+          "output_constraints",
+          "source_provenance"
+        ],
+        "required_context": [
+          "active_year_profile",
+          "mathematics_focus",
+          "pack_profile",
+          "source_provenance"
+        ],
+        "mandatory_references": [
+          "references/component-instance-contract.md",
+          "references/qa-workflow-v3.md",
+          "references/slide-deck-quality-standards.md"
+        ]
+      },
+      "output": {
+        "schema": "schemas/component-result.schema.json"
+      },
+      "mutation_scope": [
+        "components/{instance_id}/**"
+      ],
+      "repair_owner": true
+    },
+    {
+      "id": "dlp-maths-lesson",
+      "kind": "skill",
+      "role": "generator",
+      "entrypoint": "skills/dlp-maths-lesson/SKILL.md",
+      "owner": "Main Mathematics lesson",
+      "invocation": {
+        "implicit": true,
+        "parallelizable": true,
+        "fresh_context": true,
+        "max_attempts": 2
+      },
+      "accepts_instances": true,
+      "input": {
+        "schema": "schemas/agent-request.schema.json",
+        "context_projection": [
+          "active_year_profile",
+          "mathematics_focus",
+          "lesson_status",
+          "curriculum_boundary",
+          "output_constraints",
+          "source_provenance"
+        ],
+        "mandatory_references": [
+          "references/universal-maths-instruction-canon.md",
+          "references/component-instance-contract.md",
+          "references/qa-workflow-v3.md",
+          "references/slide-deck-quality-standards.md"
+        ],
+        "conditional_references": [
+          {
+            "when": {
+              "field": "mathematics_focus",
+              "contains_all": [
+                "fraction"
+              ],
+              "contains_any": [
+                "equivalent",
+                "equivalence",
+                "decimal",
+                "tenths",
+                "hundredths"
+              ]
+            },
+            "path": "references/fraction-equivalence-standard.md"
+          }
+        ],
+        "required_context": [
+          "active_year_profile",
+          "mathematics_focus",
+          "lesson_status",
+          "source_provenance"
+        ]
+      },
+      "output": {
+        "schema": "schemas/component-result.schema.json"
+      },
+      "mutation_scope": [
+        "components/{instance_id}/**"
+      ],
+      "post_generation_review": "maths-critic",
+      "repair_owner": true
+    },
+    {
+      "id": "maths-critic",
+      "kind": "reviewer",
+      "role": "component_critic",
+      "entrypoint": "agents/maths-critic.md",
+      "invocation": {
+        "implicit": false,
+        "parallelizable": true,
+        "fresh_context": true,
+        "max_attempts": 1
+      },
+      "reviews_owner": "dlp-maths-lesson",
+      "may_mutate": false,
+      "output": {
+        "schema": "schemas/review-result.schema.json"
+      },
+      "routes_defects_to": "dlp-maths-lesson"
+    },
+    {
+      "id": "pack-assembler",
+      "kind": "runtime",
+      "role": "assembler",
+      "entrypoint": "scripts/agent_pipeline.py",
+      "invocation": {
+        "implicit": false,
+        "parallelizable": false
+      },
+      "requires": [
+        "all_generation_instances_pass"
+      ],
+      "writes": [
+        "assembly/content.json",
+        "assembly/component-record.json",
+        "assembly/pack.pptx",
+        "assembly/manifest.json"
+      ],
+      "mutation_scope": [
+        "assembly/**"
+      ]
+    },
+    {
+      "id": "semantic-reviewer",
+      "kind": "reviewer",
+      "role": "pack_reviewer",
+      "invocation": {
+        "implicit": false,
+        "parallelizable": true,
+        "fresh_context": true
+      },
+      "methods": [
+        "semantic"
+      ],
+      "requirements_source": "references/qa-requirements.json",
+      "may_mutate": false,
+      "output": {
+        "schema": "schemas/review-result.schema.json"
+      },
+      "entrypoint": "skills/dlp-pack-qa/SKILL.md"
+    },
+    {
+      "id": "visual-reviewer",
+      "kind": "reviewer",
+      "role": "pack_reviewer",
+      "invocation": {
+        "implicit": false,
+        "parallelizable": true,
+        "fresh_context": true
+      },
+      "methods": [
+        "visual",
+        "rendered"
+      ],
+      "may_mutate": false,
+      "output": {
+        "schema": "schemas/review-result.schema.json"
+      },
+      "entrypoint": "skills/dlp-pack-qa/SKILL.md",
+      "requirements_source": "references/qa-requirements.json"
+    },
+    {
+      "id": "provenance-reviewer",
+      "kind": "runtime",
+      "role": "pack_reviewer",
+      "entrypoint": "scripts/agent_pipeline.py",
+      "invocation": {
+        "implicit": false,
+        "parallelizable": true
+      },
+      "methods": [
+        "provenance",
+        "contract",
+        "hash_binding"
+      ],
+      "may_mutate": false,
+      "output": {
+        "schema": "schemas/review-result.schema.json"
+      }
+    },
+    {
+      "id": "release-arbiter",
+      "kind": "runtime",
+      "role": "release_arbiter",
+      "entrypoint": "scripts/build_daily_pack.py",
+      "invocation": {
+        "implicit": false,
+        "parallelizable": false
+      },
+      "requires": [
+        "all_required_release_evidence",
+        "zero_unresolved_release_blocking_defects",
+        "same_hash_evidence"
+      ],
+      "may_mutate": true,
+      "mutation_scope": [
+        "released/**"
+      ]
+    }
+  ]
+}

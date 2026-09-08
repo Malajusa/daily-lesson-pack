@@ -18,15 +18,14 @@ from typing import Callable
 
 ROOT = Path(__file__).resolve().parent
 
-CONTENT_COMPONENTS = {
-    "dlp-morning-work",
-    "dlp-literacy-warmup",
-    "dlp-shared-reading",
-    "dlp-guided-reading",
-    "dlp-writing-lesson",
-    "dlp-numeracy-warmup",
-    "dlp-maths-lesson",
-}
+def load_content_components() -> set[str]:
+    # Registry validation is fail-closed; never fall back to a stale hardcoded list.
+    from agent_registry import AgentRegistry
+    registry = AgentRegistry.load(ROOT.parent / "skills" / "registry.v2.json")
+    return {agent.id for agent in registry.generators()}
+
+
+CONTENT_COMPONENTS = load_content_components()
 
 REQUIRED_CONTEXT_FIELDS = (
     "active_year_profile",
@@ -141,6 +140,10 @@ def validate_component_record(context: dict, component_record: dict) -> list[str
         errors.append("component record schema_version must be 2")
     if not str(component_record.get("generation_run_id", "")).strip():
         errors.append("component record generation_run_id is required")
+
+    context_run_id = str(context.get("generation_run_id", "")).strip()
+    if context_run_id and component_record.get("generation_run_id") != context_run_id:
+        errors.append("component record generation_run_id does not match resolved context")
 
     profile_entry = context.get("active_year_profile", {})
     active_profile = str(profile_entry.get("value", "")).strip() if isinstance(profile_entry, dict) else ""

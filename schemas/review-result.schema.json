@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily-lesson-pack.local/schemas/review-result.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "generation_run_id",
+    "invocation_id",
+    "agent_id",
+    "context_sha256",
+    "review_run_id",
+    "reviewer",
+    "result_type",
+    "artifact_sha256",
+    "manifest_sha256",
+    "content_sha256",
+    "requirements_sha256",
+    "status",
+    "checks",
+    "defects"
+  ],
+  "properties": {
+    "protocol_version": {
+      "const": 1
+    },
+    "generation_run_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "maxLength": 160
+    },
+    "invocation_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "maxLength": 160
+    },
+    "agent_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "maxLength": 160
+    },
+    "context_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "review_run_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "maxLength": 160
+    },
+    "reviewer": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "maxLength": 160
+    },
+    "result_type": {
+      "const": "REVIEW"
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "manifest_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "content_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "requirements_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "check_id",
+          "target",
+          "status",
+          "evidence"
+        ],
+        "properties": {
+          "check_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "NA"
+            ]
+          },
+          "evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "observation",
+              "citations"
+            ],
+            "properties": {
+              "observation": {
+                "type": "string",
+                "minLength": 12
+              },
+              "citations": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "$ref": "https://daily-lesson-pack.local/schemas/agent-request.schema.json#/$defs/citation"
+                    }
+                  ]
+                },
+                "minItems": 1
+              }
+            }
+          },
+          "applicability_reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "defects": {
+      "type": "array",
+      "items": {
+        "$ref": "https://daily-lesson-pack.local/schemas/defect.schema.json"
+      },
+      "minItems": 0
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "input_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "latency_ms": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

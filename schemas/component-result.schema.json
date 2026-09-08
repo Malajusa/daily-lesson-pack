@@ -1,0 +1,307 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily-lesson-pack.local/schemas/component-result.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "generation_run_id",
+    "invocation_id",
+    "agent_id",
+    "context_sha256",
+    "status",
+    "result_type",
+    "component"
+  ],
+  "properties": {
+    "protocol_version": {
+      "const": 1
+    },
+    "generation_run_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "maxLength": 160
+    },
+    "invocation_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "maxLength": 160
+    },
+    "agent_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "maxLength": 160
+    },
+    "context_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "result_type": {
+      "const": "COMPONENT"
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instance_id",
+        "owner",
+        "active_year_profile",
+        "status",
+        "estimated_minutes",
+        "artefact",
+        "checks",
+        "content"
+      ],
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+          "maxLength": 160
+        },
+        "owner": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+          "maxLength": 160
+        },
+        "active_year_profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "estimated_minutes": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "artefact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slide_range": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "status",
+              "evidence"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "enum": [
+                  "PASS",
+                  "FAIL"
+                ]
+              },
+              "evidence": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "observation",
+                  "citations"
+                ],
+                "properties": {
+                  "observation": {
+                    "type": "string",
+                    "minLength": 12
+                  },
+                  "citations": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "$ref": "https://daily-lesson-pack.local/schemas/agent-request.schema.json#/$defs/citation"
+                        }
+                      ]
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tasks"
+          ],
+          "properties": {
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "id",
+                  "instance_id",
+                  "operation",
+                  "fields",
+                  "demands"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+                    "maxLength": 160
+                  },
+                  "instance_id": {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+                    "maxLength": 160
+                  },
+                  "operation": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "fields": {
+                    "type": "object",
+                    "required": [
+                      "prompt",
+                      "answer"
+                    ],
+                    "additionalProperties": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "demands": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "id",
+                        "action",
+                        "answer_quote"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+                          "maxLength": 160
+                        },
+                        "action": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "answer_quote": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    "minItems": 1
+                  },
+                  "relationships": {
+                    "type": "object"
+                  },
+                  "options": {
+                    "type": "array"
+                  },
+                  "propositions": {
+                    "type": "array"
+                  },
+                  "response_override_source": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "minItems": 1
+            },
+            "documents": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "fields"
+                ],
+                "properties": {
+                  "fields": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "input_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "latency_ms": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

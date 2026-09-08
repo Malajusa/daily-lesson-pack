@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily-lesson-pack.local/schemas/review-request.schema.json",
+  "allOf": [
+    {
+      "$ref": "https://daily-lesson-pack.local/schemas/agent-request.schema.json"
+    },
+    {
+      "properties": {
+        "task_type": {
+          "enum": [
+            "REVIEW_COMPONENT",
+            "REVIEW_PACK"
+          ]
+        },
+        "review_run_id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+          "maxLength": 160
+        }
+      }
+    }
+  ]
+}

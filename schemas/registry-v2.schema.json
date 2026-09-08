@@ -1,0 +1,369 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily-lesson-pack.local/schemas/registry-v2.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "orchestrator",
+    "protocol",
+    "execution_defaults",
+    "agents"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "registry_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "orchestrator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "entrypoint",
+        "runtime_entrypoint"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+          "maxLength": 160
+        },
+        "kind": {
+          "const": "orchestrator"
+        },
+        "entrypoint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtime_entrypoint": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "request_schema",
+        "result_schema",
+        "defect_schema"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "request_schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result_schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "defect_schema": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "execution_defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fail_closed",
+        "parallel_generation",
+        "max_parallelism",
+        "default_max_attempts",
+        "require_schema_validation",
+        "immutable_resolved_context"
+      ],
+      "properties": {
+        "fail_closed": {
+          "const": true
+        },
+        "parallel_generation": {
+          "type": "boolean"
+        },
+        "max_parallelism": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "default_max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "require_schema_validation": {
+          "const": true
+        },
+        "immutable_resolved_context": {
+          "const": true
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "role",
+          "entrypoint",
+          "invocation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+            "maxLength": 160
+          },
+          "kind": {
+            "enum": [
+              "skill",
+              "runtime",
+              "reviewer"
+            ]
+          },
+          "role": {
+            "enum": [
+              "context_resolver",
+              "generator",
+              "component_critic",
+              "assembler",
+              "pack_reviewer",
+              "release_arbiter"
+            ]
+          },
+          "entrypoint": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "invocation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "implicit",
+              "parallelizable"
+            ],
+            "properties": {
+              "implicit": {
+                "type": "boolean"
+              },
+              "parallelizable": {
+                "type": "boolean"
+              },
+              "fresh_context": {
+                "type": "boolean"
+              },
+              "max_attempts": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              }
+            }
+          },
+          "reads": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "writes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "mutation_scope": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "output_schemas": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "terminal_on_failure": {
+            "type": "boolean"
+          },
+          "accepts_instances": {
+            "type": "boolean"
+          },
+          "input": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema",
+              "context_projection",
+              "required_context"
+            ],
+            "properties": {
+              "schema": {
+                "type": "string",
+                "minLength": 1
+              },
+              "context_projection": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "required_context": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "mandatory_references": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "conditional_references": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "when",
+                    "path"
+                  ],
+                  "properties": {
+                    "when": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "field",
+                        "contains_all",
+                        "contains_any"
+                      ],
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "contains_all": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 0
+                        },
+                        "contains_any": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 0
+                        }
+                      }
+                    },
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "minItems": 0
+              }
+            }
+          },
+          "output": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema"
+            ],
+            "properties": {
+              "schema": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "repair_owner": {
+            "type": "boolean"
+          },
+          "post_generation_review": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+            "maxLength": 160
+          },
+          "reviews_owner": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+            "maxLength": 160
+          },
+          "may_mutate": {
+            "type": "boolean"
+          },
+          "routes_defects_to": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+            "maxLength": 160
+          },
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "methods": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "requirements_source": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "$schema": {
+      "type": "string"
+    }
+  }
+}

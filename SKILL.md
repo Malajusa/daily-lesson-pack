@@ -39,6 +39,28 @@ and delegates release to the repository-owned final audit.
   hashes that are being delivered. A model assertion, a neighbouring PASS file
   or an earlier pack's release decision is not release evidence.
 
+## Executable agent orchestration (v2, opt-in host interface)
+
+For hosts providing structured agent executions, use `scripts/agent_orchestrator.py`
+and `skills/registry.v2.json` above the supported build/release pipeline. The
+operator guide is `docs/AGENT-ORCHESTRATION.md`. Keep `skills/registry.json` as the
+compatible skill-discovery interface; it does not control v2 execution.
+
+The host resolves timetable/curriculum facts before `scripts/build_execution_plan.py`
+freezes the source-hashed context. Python owns dependency barriers, ownership,
+required checks, cumulative attempt budgets, same-hash QA and release eligibility.
+Repeated timetable blocks remain separate instances. Mathematics needs an
+explicit independent critic before assembly. QA is explicitly invoked, never
+implicitly selected or replaced by a generator's PASS assertion.
+
+The host adapter supplies actual execution receipts, raw transcripts and a
+trusted ContentSource-based assembly command. No provider or general lesson
+renderer is auto-configured. `--stop-after components` returns validated canonical
+records only, never a released pack. Any content repair invalidates all applicable
+pack QA. Missing/malformed reviews, exhausted budgets or ambiguous defects leave
+an unreleased result. Existing context/component schema 2, content/manifest schema 3
+and the repository release authority remain unchanged.
+
 ## Purpose
 
 Coordinate a classroom-ready daily pack. Do not generate detailed subject content in this skill when a specialised component skill owns it.
