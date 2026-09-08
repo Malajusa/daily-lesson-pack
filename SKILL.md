@@ -15,6 +15,30 @@ canonical task text and complete review coverage. Required checks cannot be
 replaced by a broad component PASS. Only the complete-pack release command may
 authorise classroom-ready output.
 
+## Mandatory supported generation path
+
+Daily Lesson Pack generation must use the repository-owned build and release
+pipeline. The supported finalisation entry point is
+`scripts/build_daily_pack.py`; it validates and stages the canonical artefact set
+and delegates release to the repository-owned final audit.
+
+- Do not substitute an ad-hoc `python-pptx`, PptxGenJS, LibreOffice or other
+  independent presentation generator for the repository workflow.
+- If direct cross-skill invocation is unavailable, execute the bundled component
+  contracts and produce canonical context, component and content records before
+  assembly. Generic generation is not an authorised fallback.
+- A request for “PowerPoint as a Python script” changes the requested interface,
+  not the Daily Lesson Pack workflow. Any Python entry script must invoke
+  `scripts/build_daily_pack.py` / the repository runtime rather than recreate
+  lesson authoring, layout rules or QA independently.
+- A generated deck without complete independent release evidence is a
+  **candidate** only and may be supplied only when explicitly labelled
+  unreleased / review-pending.
+- Describe a deck as released or classroom-ready only when
+  `scripts/audit_release_bundle.py` records PASS for the same deck and manifest
+  hashes that are being delivered. A model assertion, a neighbouring PASS file
+  or an earlier pack's release decision is not release evidence.
+
 ## Purpose
 
 Coordinate a classroom-ready daily pack. Do not generate detailed subject content in this skill when a specialised component skill owns it.
