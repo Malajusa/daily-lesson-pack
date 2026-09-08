@@ -1,0 +1,394 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily-lesson-pack.local/schemas/run-context.schema.json",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "active_year_profile",
+    "pack_profile",
+    "date",
+    "term_week",
+    "day",
+    "timetable",
+    "mathematics_focus",
+    "english_focus",
+    "lesson_status",
+    "schema_version",
+    "generation_run_id",
+    "frozen",
+    "timetable_instances",
+    "source_provenance",
+    "unresolved_fields",
+    "required_artifacts"
+  ],
+  "properties": {
+    "active_year_profile": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "resolved",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "resolved": {
+          "const": true
+        },
+        "value": {
+          "not": {
+            "enum": [
+              null,
+              "",
+              [],
+              {}
+            ]
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "pack_profile": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "resolved",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "resolved": {
+          "const": true
+        },
+        "value": {
+          "not": {
+            "enum": [
+              null,
+              "",
+              [],
+              {}
+            ]
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "date": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "resolved",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "resolved": {
+          "const": true
+        },
+        "value": {
+          "not": {
+            "enum": [
+              null,
+              "",
+              [],
+              {}
+            ]
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "term_week": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "resolved",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "resolved": {
+          "const": true
+        },
+        "value": {
+          "not": {
+            "enum": [
+              null,
+              "",
+              [],
+              {}
+            ]
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "day": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "resolved",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "resolved": {
+          "const": true
+        },
+        "value": {
+          "not": {
+            "enum": [
+              null,
+              "",
+              [],
+              {}
+            ]
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "timetable": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "resolved",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "resolved": {
+          "const": true
+        },
+        "value": {
+          "not": {
+            "enum": [
+              null,
+              "",
+              [],
+              {}
+            ]
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "mathematics_focus": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "resolved",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "resolved": {
+          "const": true
+        },
+        "value": {
+          "not": {
+            "enum": [
+              null,
+              "",
+              [],
+              {}
+            ]
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "english_focus": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "resolved",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "resolved": {
+          "const": true
+        },
+        "value": {
+          "not": {
+            "enum": [
+              null,
+              "",
+              [],
+              {}
+            ]
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "lesson_status": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "resolved",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "resolved": {
+          "const": true
+        },
+        "value": {
+          "not": {
+            "enum": [
+              null,
+              "",
+              [],
+              {}
+            ]
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "schema_version": {
+      "const": 2
+    },
+    "generation_run_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "maxLength": 160
+    },
+    "frozen": {
+      "const": true
+    },
+    "timetable_instances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "owner",
+          "start",
+          "duration_minutes",
+          "purpose"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+            "maxLength": 160
+          },
+          "owner": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+            "maxLength": 160
+          },
+          "start": {
+            "type": "string",
+            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "duration_minutes": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "source_provenance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+            "maxLength": 160
+          },
+          "kind": {
+            "enum": [
+              "user_request",
+              "runtime_school_source",
+              "year_profile",
+              "repository_reference"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "unresolved_fields": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "required_artifacts": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "deck",
+          "briefing",
+          "student",
+          "answers",
+          "printing_plan"
+        ]
+      },
+      "uniqueItems": true,
+      "allOf": [
+        {
+          "contains": {
+            "const": "deck"
+          }
+        },
+        {
+          "contains": {
+            "const": "briefing"
+          }
+        }
+      ]
+    }
+  }
+}

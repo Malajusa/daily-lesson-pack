@@ -58,6 +58,28 @@ REGRESSION_BENCHMARKS = (
 )
 
 ROOT_RUNTIME_FILES = (
+    "requirements.txt",
+    "skills/registry.v2.json",
+    "agents/maths-critic.md",
+    "docs/AGENT-ORCHESTRATION.md",
+    "scripts/agent_orchestrator.py",
+    "scripts/agent_protocol.py",
+    "scripts/agent_registry.py",
+    "scripts/agent_state.py",
+    "scripts/agent_adapter.py",
+    "scripts/agent_pipeline.py",
+    "scripts/build_execution_plan.py",
+    "scripts/validate_agent_artifacts.py",
+    "schemas/agent-request.schema.json",
+    "schemas/agent-result.schema.json",
+    "schemas/component-result.schema.json",
+    "schemas/defect.schema.json",
+    "schemas/execution-plan.schema.json",
+    "schemas/registry-v2.schema.json",
+    "schemas/review-request.schema.json",
+    "schemas/review-result.schema.json",
+    "schemas/run-context.schema.json",
+
     "scripts/pack_evidence.py",
     "scripts/content_source.py",
     "scripts/dlp_build_runtime.py",

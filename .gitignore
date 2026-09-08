@@ -19,3 +19,6 @@ Desktop.ini
 __pycache__/
 *.py[cod]
 .pytest_cache/
+
+# Per-run lesson content, receipts and candidate artefacts are not source.
+/runs/

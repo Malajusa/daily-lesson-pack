@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily-lesson-pack.local/schemas/agent-result.schema.json",
+  "oneOf": [
+    {
+      "$ref": "https://daily-lesson-pack.local/schemas/component-result.schema.json"
+    },
+    {
+      "$ref": "https://daily-lesson-pack.local/schemas/review-result.schema.json"
+    }
+  ]
+}

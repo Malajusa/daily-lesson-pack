@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased — agent orchestration v2
+
+- Add a strict executable registry, nine offline JSON schemas, immutable resolved
+  context and deterministic per-instance dependency plans above the v3.9 pipeline.
+- Add bounded parallel host adapters, independent Mathematics critics, semantic/
+  visual QA fan-out, canonical owner-only repairs and cumulative attempt budgets.
+- Preserve immutable attempts, real host receipts/transcripts and current-hash
+  evidence; keep existing component/content schemas and final release authority.
+- Retain all manifest deliverables/renders through candidate staging; require a
+  trusted host assembler rather than inventing a pedagogical renderer.
+- Make release QA explicit-only; package the new runtime dependencies and test
+  malformed handoffs, stale evidence, repair invalidation and release refusal.
+- No live model provider or already-installed host is configured by this change.
+
+
 All significant changes to the Daily Lesson Pack skill should be recorded here.
 
 ## 3.9.0 — 8 September 2026

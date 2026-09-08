@@ -5,10 +5,10 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import importlib.util
 import json
 import re
 import sys
+import subprocess
 from pathlib import Path
 
 
@@ -23,6 +23,26 @@ FRONTMATTER_NAME_RE = re.compile(r"^name:\s*([^\n]+)$", re.MULTILINE)
 MANDATORY_RUNTIME_FILES = (
     "scripts/build_daily_pack.py",
     "scripts/dlp_build_runtime.py",
+    "requirements.txt",
+    "skills/registry.v2.json",
+    "agents/maths-critic.md",
+    "scripts/agent_orchestrator.py",
+    "scripts/agent_protocol.py",
+    "scripts/agent_registry.py",
+    "scripts/agent_state.py",
+    "scripts/agent_adapter.py",
+    "scripts/agent_pipeline.py",
+    "scripts/build_execution_plan.py",
+    "scripts/validate_agent_artifacts.py",
+    "schemas/agent-request.schema.json",
+    "schemas/agent-result.schema.json",
+    "schemas/component-result.schema.json",
+    "schemas/defect.schema.json",
+    "schemas/execution-plan.schema.json",
+    "schemas/registry-v2.schema.json",
+    "schemas/review-request.schema.json",
+    "schemas/review-result.schema.json",
+    "schemas/run-context.schema.json",
 )
 
 
@@ -189,21 +209,25 @@ def validate_runtime(root: Path, failures: list[str]) -> None:
     if not runtime_path.is_file():
         return
 
-    module_name = "_dlp_package_runtime_validation"
+    # Import in a clean interpreter rooted at the extracted package. Importing
+    # in this process can accidentally reuse modules from the source checkout.
+    code = """import sys
+sys.path.insert(0, sys.argv[1])
+import dlp_build_runtime as runtime
+from agent_registry import AgentRegistry
+from agent_orchestrator import DailyPackOrchestrator
+AgentRegistry.load()
+for name in ('stage_candidate','promote_release','validate_resolved_context'):
+    if not callable(getattr(runtime,name,None)):
+        raise ValueError('Missing mandatory runtime callable: '+name)
+"""
     try:
-        spec = importlib.util.spec_from_file_location(module_name, runtime_path)
-        if spec is None or spec.loader is None:
-            raise ImportError("could not create import specification")
-        module = importlib.util.module_from_spec(spec)
-        sys.modules[module_name] = module
-        spec.loader.exec_module(module)
-        for name in ("stage_candidate", "promote_release", "validate_resolved_context"):
-            if not callable(getattr(module, name, None)):
-                failures.append(f"Mandatory runtime is missing callable {name}")
-    except Exception as exc:
-        failures.append(f"Mandatory runtime is not importable: {exc}")
-    finally:
-        sys.modules.pop(module_name, None)
+        result = subprocess.run([sys.executable, "-I", "-B", "-c", code, str(root / "scripts")],
+                                cwd=str(root), capture_output=True, text=True, timeout=60)
+        if result.returncode:
+            failures.append("Mandatory runtime is not importable: " + result.stderr[-2000:])
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        failures.append("Mandatory runtime is not importable: " + str(exc))
 
 
 def main() -> int:
