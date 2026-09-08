@@ -54,6 +54,7 @@ REGRESSION_BENCHMARKS = (
     MEMORY_INDEPENDENT_BENCHMARK,
     YEAR_PROFILE_ISOLATION_BENCHMARK,
     "examples/benchmarks/t3w7-thursday-known-failure.md",
+    "examples/benchmarks/t3w8-tuesday-bypass-known-failure.md",
 )
 
 ROOT_RUNTIME_FILES = (
