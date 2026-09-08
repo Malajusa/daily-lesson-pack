@@ -28,16 +28,20 @@ def load_contract_audit():
 
 class ReleaseContractTests(unittest.TestCase):
     def test_version_is_reconciled_release(self) -> None:
-        self.assertEqual(read("VERSION").strip(), "3.8.0")
+        self.assertEqual(read("VERSION").strip(), "3.9.0")
 
     def test_release_provenance_records_both_source_lines(self) -> None:
         provenance = json.loads(read("RELEASE-PROVENANCE.json"))
-        self.assertEqual(provenance["version"], "3.8.0")
+        self.assertEqual(provenance["version"], "3.9.0")
         self.assertEqual(
             provenance["base_commit"],
-            "afad46a80417bb3cdabaaf16a55c426d392f671a",
+            "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
         )
         self.assertGreaterEqual(len(provenance["reconciled_sources"]), 3)
+        self.assertIn(
+            "release-pipeline-enforcement",
+            {source.get("line") for source in provenance["reconciled_sources"]},
+        )
 
     def test_visual_exemplar_contract_is_complete(self) -> None:
         self.assertTrue(
@@ -112,6 +116,7 @@ class ReleaseContractTests(unittest.TestCase):
             "universal-maths-canon-regression.md",
             "memory-independent-wednesday-regression.md",
             "t3w7-thursday-known-failure.md",
+            "t3w8-tuesday-bypass-known-failure.md",
         ):
             self.assertIn(benchmark, qa)
             self.assertTrue((ROOT / "examples" / "benchmarks" / benchmark).is_file())
