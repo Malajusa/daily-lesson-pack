@@ -137,6 +137,9 @@ class MassNarrativeKnownFailureFixtureTests(unittest.TestCase):
             self.assertEqual(visible_forbidden, [])
             self.assertFalse((workspace / CASE_REL).exists())
             self.assertFalse((workspace / ASSET_REL).exists())
+            self.assertFalse(
+                (workspace / "tests/test_t3w8_mass_narrative_qa_fixture.py").exists()
+            )
 
     def test_oracle_scorer_accepts_complete_blind_findings(self) -> None:
         module = load_harness_module()
