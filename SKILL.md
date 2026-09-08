@@ -289,4 +289,9 @@ Apply `examples/benchmarks/t3w7-thursday-known-failure.md` whenever scheduling,
 Numeracy count, mixed-year Mathematics, fraction equivalence, typography,
 warning handling or release certification changes.
 
+Apply `examples/benchmarks/t3w8-tuesday-bypass-known-failure.md` whenever routing,
+generation entry points, packaging, component acceptance, presentation QA or
+release certification changes. A request for a Python-generated PowerPoint does
+not waive the repository runtime, timetable/context provenance or release gates.
+
 Any audit or applicable regression failure blocks release.
