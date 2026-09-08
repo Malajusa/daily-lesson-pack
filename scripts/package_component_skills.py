@@ -48,6 +48,7 @@ QA_ONLY_FILES = (
     MEMORY_INDEPENDENT_BENCHMARK,
     YEAR_PROFILE_ISOLATION_BENCHMARK,
     "examples/benchmarks/t3w7-thursday-known-failure.md",
+    "examples/benchmarks/t3w8-tuesday-bypass-known-failure.md",
     "scripts/audit_pack_contract.py",
     YEAR_PROFILE_AUDIT,
     "scripts/audit_slide_typography.py",

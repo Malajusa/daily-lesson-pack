@@ -28,16 +28,20 @@ def load_contract_audit():
 
 class ReleaseContractTests(unittest.TestCase):
     def test_version_is_reconciled_release(self) -> None:
-        self.assertEqual(read("VERSION").strip(), "3.8.0")
+        self.assertEqual(read("VERSION").strip(), "3.9.0")
 
     def test_release_provenance_records_both_source_lines(self) -> None:
         provenance = json.loads(read("RELEASE-PROVENANCE.json"))
-        self.assertEqual(provenance["version"], "3.8.0")
+        self.assertEqual(provenance["version"], "3.9.0")
         self.assertEqual(
             provenance["base_commit"],
-            "afad46a80417bb3cdabaaf16a55c426d392f671a",
+            "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
         )
         self.assertGreaterEqual(len(provenance["reconciled_sources"]), 3)
+        self.assertIn(
+            "release-pipeline-enforcement",
+            {source.get("line") for source in provenance["reconciled_sources"]},
+        )
 
     def test_visual_exemplar_contract_is_complete(self) -> None:
         self.assertTrue(
@@ -112,12 +116,12 @@ class ReleaseContractTests(unittest.TestCase):
             "universal-maths-canon-regression.md",
             "memory-independent-wednesday-regression.md",
             "t3w7-thursday-known-failure.md",
+            "t3w8-tuesday-bypass-known-failure.md",
         ):
             self.assertIn(benchmark, qa)
             self.assertTrue((ROOT / "examples" / "benchmarks" / benchmark).is_file())
 
     def test_packaged_profile_directory_reference_is_valid(self) -> None:
-        # Inspect the generated file map without installing a scratch skill.
         sys.path.insert(0, str(ROOT / "scripts"))
         from build_chatgpt_package import build_file_map
         version, files = build_file_map(ROOT)
@@ -127,6 +131,47 @@ class ReleaseContractTests(unittest.TestCase):
             for required in ("references/year-level-profiles/year-4-5.md", "references/year-level-profiles/year-6.md", "references/qa-workflow-v3.md", "references/qa-requirements.json", "scripts/content_source.py", "scripts/pack_evidence.py"):
                 self.assertIn(prefix + required, files)
         self.assertIn("scripts/audit_release_bundle.py",files)
+
+    def test_complete_package_contains_supported_build_runtime(self) -> None:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from build_chatgpt_package import build_file_map
+        _, files = build_file_map(ROOT)
+        self.assertIn("scripts/build_daily_pack.py", files)
+        self.assertIn("scripts/dlp_build_runtime.py", files)
+
+    def test_orchestrator_prohibits_ad_hoc_deck_generation(self) -> None:
+        text = read("SKILL.md")
+        self.assertIn("Mandatory supported generation path", text)
+        self.assertIn("ad-hoc", text)
+        self.assertIn("python-pptx", text)
+        self.assertIn("PptxGenJS", text)
+        self.assertIn("LibreOffice", text)
+        self.assertIn("candidate", text.lower())
+        self.assertIn("same deck", text.lower())
+
+    def test_python_script_request_still_uses_repository_runtime(self) -> None:
+        text = read("SKILL.md")
+        self.assertIn("PowerPoint as a Python script", text)
+        self.assertIn("scripts/build_daily_pack.py", text)
+
+    def test_agent_default_prompt_requires_repository_pipeline(self) -> None:
+        text = read("agents/openai.yaml")
+        self.assertIn("repository-owned build and release pipeline", text)
+        self.assertIn("ad-hoc", text)
+
+    def test_package_validator_requires_runtime(self) -> None:
+        text = read("scripts/audit_package_dependencies.py")
+        self.assertIn("scripts/build_daily_pack.py", text)
+        self.assertIn("scripts/dlp_build_runtime.py", text)
+        self.assertIn("importlib", text)
+
+    def test_ci_builds_and_audits_release_packages(self) -> None:
+        workflow = read(".github/workflows/dlp-tests.yml")
+        self.assertIn("build_chatgpt_package.py", workflow)
+        self.assertIn("audit_package_dependencies.py", workflow)
+        self.assertIn("package_component_skills.py", workflow)
+        self.assertIn("Verify complete package", workflow)
+        self.assertIn("Verify component packages", workflow)
 
 
 if __name__ == "__main__":

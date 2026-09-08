@@ -2,12 +2,12 @@
 """Audit containment of student-facing text inside shaded/coloured PowerPoint panels.
 
 The audit is intentionally conservative:
-- hard failures are reported when a plausible panel/text pairing is strong and
-  the text box crosses the panel boundary;
+- explicit DLP panel/text ownership is deterministic and fail-closed;
+- hard failures are reported when a plausible legacy panel/text pairing is strong
+  and the text box crosses the panel boundary;
 - inadequate margins on filled instructional text panels are hard failures;
 - severe estimated text-fit overflow inside filled instructional panels is a hard failure;
-- padding problems on explicitly owned panel/text pairs are hard failures;
-- ambiguous spatial pairings are reported for human review.
+- ambiguous legacy spatial pairings are reported for human review.
 
 Render-level inspection remains mandatory because PowerPoint line wrapping and
 font metrics can create visible overflow even when nominal text-box bounds fit.
@@ -24,6 +24,8 @@ from pathlib import Path
 from typing import Iterable, Optional
 
 from pptx import Presentation
+from pptx.enum.dml import MSO_FILL
+from pptx.enum.shapes import MSO_SHAPE_TYPE
 
 
 def file_sha256(path: Path) -> str:
@@ -32,8 +34,7 @@ def file_sha256(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
-from pptx.enum.dml import MSO_FILL
-from pptx.enum.shapes import MSO_SHAPE_TYPE
+
 
 EMU_PER_INCH = 914400
 DEFAULT_PADDING_IN = 0.15
@@ -42,6 +43,9 @@ MIN_PAIR_OVERLAP = 0.45
 STRONG_PAIR_OVERLAP = 0.75
 MIN_PANEL_HEAVY_SLIDES = 3
 MIN_PANEL_HEAVY_COUNT = 5
+EXPLICIT_PANEL_PREFIX = "DLP:panel:"
+EXPLICIT_TEXT_PREFIX = "DLP:"
+EXPLICIT_OWNER_MARKER = "|panel="
 PANEL_NAME_TOKENS = (
     "panel", "card", "footer", "box", "callout", "banner",
     "all_", "most_", "some_", "why_", "question_", "answer_",
@@ -104,6 +108,26 @@ def name_of(shape):
     return (getattr(shape, "name", "") or "").strip()
 
 
+def explicit_panel_id(name: str) -> Optional[str]:
+    if not name.startswith(EXPLICIT_PANEL_PREFIX):
+        return None
+    owner = name[len(EXPLICIT_PANEL_PREFIX):].strip()
+    return owner or None
+
+
+def explicit_text_owner(name: str) -> Optional[str]:
+    if not name.startswith(EXPLICIT_TEXT_PREFIX) or name.startswith(EXPLICIT_PANEL_PREFIX):
+        return None
+    if EXPLICIT_OWNER_MARKER not in name:
+        return None
+    owner = name.split(EXPLICIT_OWNER_MARKER, 1)[1].split("|", 1)[0].strip()
+    return owner or None
+
+
+def is_explicit_dlp_text_name(name: str) -> bool:
+    return name.startswith(EXPLICIT_TEXT_PREFIX) and not name.startswith(EXPLICIT_PANEL_PREFIX)
+
+
 def has_visible_fill(shape):
     fill = getattr(shape, "fill", None)
     if fill is None:
@@ -160,6 +184,7 @@ def centre_inside(text_box, panel_box):
 
 
 def explicit_owner_key(name) -> Optional[str]:
+    """Legacy suffix-based owner matching retained for older decks."""
     normalised = name.lower().replace(" ", "_")
     for suffix in (
         "_panel", "_card", "_footer", "_box", "_text", "_task", "_response",
@@ -234,7 +259,10 @@ def estimate_filled_panel_text_fit(shape):
         "available_height_pt": round(inner_height_pt, 1),
         "estimated_fill_ratio": round(estimated_height_pt / inner_height_pt, 3),
     }
+
+
 def choose_panel(text_shape, panels, text_index, indices):
+    """Legacy fallback used only when no deterministic DLP owner is declared."""
     text_box = bbox(text_shape)
     text_name = name_of(text_shape)
     text_key = explicit_owner_key(text_name)
@@ -278,6 +306,21 @@ def choose_panel(text_shape, panels, text_index, indices):
     }
 
 
+def _explicit_pair(text_shape, panel, owner, padding):
+    metrics = containment_metrics(bbox(text_shape), bbox(panel), padding)
+    return {
+        "text_shape": name_of(text_shape),
+        "panel_shape": name_of(panel),
+        "text": text_of(text_shape)[:160],
+        "overlap_ratio": round(overlap_ratio(bbox(text_shape), bbox(panel)), 4),
+        "confidence": "explicit",
+        "named_match": True,
+        "name_signal": True,
+        "owner_id": owner,
+        **metrics,
+    }
+
+
 def audit_slide(slide, slide_no, slide_width, slide_height, padding_in):
     shapes = list(iter_shapes(slide.shapes))
     slide_area = slide_width * slide_height
@@ -288,7 +331,28 @@ def audit_slide(slide, slide_no, slide_width, slide_height, padding_in):
     pairs = []
     issues = []
 
+    explicit_panels: dict[str, object] = {}
+    for shape in shapes:
+        owner = explicit_panel_id(name_of(shape))
+        if owner is None:
+            continue
+        if owner in explicit_panels:
+            issues.append({
+                "severity": "fail",
+                "code": "duplicate_explicit_panel_owner",
+                "owner_id": owner,
+                "message": f"More than one panel declares the explicit owner id {owner!r}.",
+            })
+        else:
+            explicit_panels[owner] = shape
+    explicit_mode = bool(explicit_panels)
+
     for text_shape in texts:
+        text_name = name_of(text_shape)
+        # A panel can itself contain a heading; do not treat the panel shape as a
+        # subordinate DLP text element requiring another panel owner.
+        is_explicit_panel_shape = explicit_panel_id(text_name) is not None
+
         if has_visible_fill(text_shape) and is_candidate_panel(text_shape, slide_area):
             text_frame = text_shape.text_frame
             margins = {
@@ -301,7 +365,7 @@ def audit_slide(slide, slide_no, slide_width, slide_height, padding_in):
                 issues.append({
                     "severity": "fail",
                     "code": "internal_panel_margin_small",
-                    "shape": name_of(text_shape),
+                    "shape": text_name,
                     "text": text_of(text_shape)[:160],
                     "message": f"Filled instructional text panel has internal margins below {padding_in:.2f} in.",
                     "margins_in": {
@@ -315,11 +379,52 @@ def audit_slide(slide, slide_no, slide_width, slide_height, padding_in):
                     "severity": "fail",
                     "code": "internal_panel_text_fit_risk",
                     "slide": slide_no,
-                    "shape": name_of(text_shape),
+                    "shape": text_name,
                     "text": text_of(text_shape)[:160],
                     "message": "Estimated wrapped text height substantially exceeds the filled panel's usable height.",
                     **text_fit,
                 })
+
+        declared_owner = explicit_text_owner(text_name)
+        if declared_owner is not None:
+            panel = explicit_panels.get(declared_owner)
+            if panel is None:
+                issues.append({
+                    "severity": "fail",
+                    "code": "explicit_panel_missing",
+                    "text_shape": text_name,
+                    "text": text_of(text_shape)[:160],
+                    "owner_id": declared_owner,
+                    "message": f"DLP text declares panel owner {declared_owner!r}, but no such panel exists on the slide.",
+                })
+                continue
+            pair = _explicit_pair(text_shape, panel, declared_owner, padding)
+            pairs.append(pair)
+            if not pair["inside"]:
+                issues.append({
+                    "severity": "fail",
+                    "code": "explicit_text_crosses_panel_bounds",
+                    **pair,
+                    "message": "Explicitly owned DLP text crosses the bounds of its declared panel.",
+                })
+            elif not pair["padded"]:
+                issues.append({
+                    "severity": "fail",
+                    "code": "explicit_panel_padding_violation",
+                    **pair,
+                    "message": f"Explicitly owned DLP text does not preserve {padding_in:.2f} in padding on every edge.",
+                })
+            continue
+
+        if explicit_mode and is_explicit_dlp_text_name(text_name) and not is_explicit_panel_shape:
+            issues.append({
+                "severity": "fail",
+                "code": "dlp_text_missing_panel_owner",
+                "text_shape": text_name,
+                "text": text_of(text_shape)[:160],
+                "message": "This slide uses explicit DLP panels, but meaningful DLP text has no declared panel owner.",
+            })
+            continue
 
         panel, metadata = choose_panel(text_shape, panels, indices[id(text_shape)], indices)
         if panel is None:
@@ -327,7 +432,7 @@ def audit_slide(slide, slide_no, slide_width, slide_height, padding_in):
 
         metrics = containment_metrics(bbox(text_shape), bbox(panel), padding)
         pair = {
-            "text_shape": name_of(text_shape),
+            "text_shape": text_name,
             "panel_shape": name_of(panel),
             "text": text_of(text_shape)[:160],
             **metadata,
@@ -429,7 +534,7 @@ def main():
         "summary": summary,
         "results": results,
         "coverage_issues": coverage_issues,
-        "note": "Geometry screening only. Spatial pairings without explicit ownership are heuristic. Render-level inspection is mandatory.",
+        "note": "Geometry screening only. Explicit DLP ownership is deterministic; legacy spatial pairings are heuristic. Render-level inspection is mandatory.",
     }
 
     output = Path(args.out)

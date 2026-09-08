@@ -113,17 +113,19 @@ When a paragraph, model or question sits inside a panel, the text region should 
 
 Every panel should have a clear relationship to the text it contains.
 
-During generation, record panel/text ownership explicitly where possible. For example:
+New Daily Lesson Pack layouts that use separate panel and text shapes must record this relationship deterministically in PowerPoint shape names:
 
-- `why_panel` → `why_text`
-- `all_panel` → `all_task`
-- `most_panel` → `most_task`
-- `some_panel` → `some_task`
-- `question_panel` → `question_text`
+- panel: `DLP:panel:<owner-id>`
+- main text: `DLP:main|panel=<owner-id>`
+- instruction: `DLP:instruction|panel=<owner-id>`
+- explanation: `DLP:explanation|panel=<owner-id>`
+- reasoning: `DLP:why|panel=<owner-id>`
 
-Named or otherwise traceable panel/text pairs are preferable to relying on visual proximity alone because they permit deterministic geometric QA.
+The `<owner-id>` is local to the slide and must be unique for each panel. Examples include `morning-literacy`, `all-q1`, `why-q3` and `shared-question-2`.
 
-If explicit ownership metadata is unavailable, use spatial pairing only as a heuristic and require human inspection of every flagged case.
+When a slide declares one or more `DLP:panel:<owner-id>` shapes, meaningful DLP-tagged subordinate text on that slide must declare its panel owner. A text shape that refers to a non-existent owner, crosses the declared panel boundary or violates required padding is a release-blocking failure. Duplicate explicit panel owner IDs are also failures.
+
+Legacy decks may retain suffix-based or spatial pairing while they are being migrated. The audit may use those relationships heuristically, but new/modified DLP panel-driven templates should not rely on proximity alone.
 
 ## Automated containment audit
 
@@ -133,11 +135,13 @@ Run:
 
 The script is a screening and blocking geometry check. It should:
 
-- identify likely filled/shaded panel shapes;
-- pair text boxes with the smallest plausible panel underneath them;
+- resolve explicit `DLP:panel:<owner-id>` relationships before any heuristic pairing;
+- hard-fail missing, duplicate or geometrically invalid explicit ownership;
+- identify likely filled/shaded panel shapes for legacy layouts;
+- pair legacy text boxes with the smallest plausible panel underneath them;
 - detect text boxes that cross panel boundaries;
 - detect text boxes that violate minimum internal padding;
-- report suspected panel/text pairs for full-size review;
+- report suspected legacy panel/text pairs for full-size review;
 - distinguish hard geometric failures from ambiguous heuristic matches.
 
 A hard geometric failure blocks release. Audit coverage is also a release condition: when a deck contains panels across at least three slides and at least five candidate panels overall, a result of zero paired text boxes is an ineffective audit, not a pass. Repair the panel/text ownership or pairing logic and rerun the audit.
@@ -171,6 +175,9 @@ Do not fix panel overflow by shrinking the main warm-up element below 36 pt or t
 A teaching deck fails panel-containment QA if any of the following is true:
 
 - a text box extends outside the shaded/coloured/bordered panel it belongs to;
+- explicit DLP text refers to a missing panel owner;
+- a DLP panel-driven slide contains meaningful tagged text with no owner;
+- duplicate explicit panel owner IDs make ownership ambiguous;
 - required internal padding is absent on any edge;
 - a panel's fixed geometry forces meaningful text below its readability role range;
 - wrapped or rendered text visually escapes or clips at the panel boundary;

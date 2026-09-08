@@ -71,6 +71,14 @@ def expected_checks(content, manifest, method):
             expected.update((rule['id'], f"{a['id']}:{n}") for a in manifest['artifacts'] for n in range(1, a['pages']+1))
     return expected
 
+def _validate_relationship_field(prefix, relationship_name, relationship, key, fields, errors):
+    field_name = relationship.get(key) if isinstance(relationship, dict) else None
+    if not isinstance(field_name, str) or not field_name.strip():
+        errors.append(prefix+f': {relationship_name} relationship requires {key}')
+        return
+    if field_name not in fields:
+        errors.append(prefix+f': {relationship_name} relationship references missing field {field_name}')
+
 def validate_content(content):
     errors = []
     if content.get('schema_version') != 3:
@@ -95,6 +103,36 @@ def validate_content(content):
             errors.append(prefix+': fields must be non-empty strings')
         if not fields.get('prompt') or not fields.get('answer'):
             errors.append(prefix+': prompt and answer required')
+
+        relationships = task.get('relationships', {})
+        if relationships and not isinstance(relationships, dict):
+            errors.append(prefix+': relationships must be an object')
+            relationships = {}
+        has_why_prompt = 'why_prompt' in fields
+        has_why_answer = 'why_answer' in fields
+        if has_why_prompt != has_why_answer:
+            errors.append(prefix+': why prompt and answer must both be present')
+        if has_why_prompt or has_why_answer:
+            why = relationships.get('why') if isinstance(relationships, dict) else None
+            if not isinstance(why, dict):
+                errors.append(prefix+': why relationship required for why prompt/answer fields')
+            else:
+                _validate_relationship_field(prefix, 'why', why, 'prompt_field', fields, errors)
+                _validate_relationship_field(prefix, 'why', why, 'answer_field', fields, errors)
+                concept = why.get('concept')
+                if not isinstance(concept, str) or not concept.strip():
+                    errors.append(prefix+': why relationship requires a non-empty concept')
+
+        reading_owner = owners.get(task['instance_id']) == 'dlp-shared-reading'
+        if reading_owner and 'paragraph' in fields:
+            reading = relationships.get('reading') if isinstance(relationships, dict) else None
+            if not isinstance(reading, dict):
+                errors.append(prefix+': reading relationship required for shared-reading paragraph/question/answer fields')
+            else:
+                _validate_relationship_field(prefix, 'reading', reading, 'paragraph_field', fields, errors)
+                _validate_relationship_field(prefix, 'reading', reading, 'question_field', fields, errors)
+                _validate_relationship_field(prefix, 'reading', reading, 'answer_field', fields, errors)
+
         demands = task.get('demands', [])
         if not demands or len({d['id'] for d in demands}) != len(demands):
             errors.append(prefix+': unique response demands required')
