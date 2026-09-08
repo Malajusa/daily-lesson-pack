@@ -117,7 +117,6 @@ class ReleaseContractTests(unittest.TestCase):
             self.assertTrue((ROOT / "examples" / "benchmarks" / benchmark).is_file())
 
     def test_packaged_profile_directory_reference_is_valid(self) -> None:
-        # Inspect the generated file map without installing a scratch skill.
         sys.path.insert(0, str(ROOT / "scripts"))
         from build_chatgpt_package import build_file_map
         version, files = build_file_map(ROOT)
@@ -127,6 +126,39 @@ class ReleaseContractTests(unittest.TestCase):
             for required in ("references/year-level-profiles/year-4-5.md", "references/year-level-profiles/year-6.md", "references/qa-workflow-v3.md", "references/qa-requirements.json", "scripts/content_source.py", "scripts/pack_evidence.py"):
                 self.assertIn(prefix + required, files)
         self.assertIn("scripts/audit_release_bundle.py",files)
+
+    def test_complete_package_contains_supported_build_runtime(self) -> None:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from build_chatgpt_package import build_file_map
+        _, files = build_file_map(ROOT)
+        self.assertIn("scripts/build_daily_pack.py", files)
+        self.assertIn("scripts/dlp_build_runtime.py", files)
+
+    def test_orchestrator_prohibits_ad_hoc_deck_generation(self) -> None:
+        text = read("SKILL.md")
+        self.assertIn("Mandatory supported generation path", text)
+        self.assertIn("ad-hoc", text)
+        self.assertIn("python-pptx", text)
+        self.assertIn("PptxGenJS", text)
+        self.assertIn("LibreOffice", text)
+        self.assertIn("candidate", text.lower())
+        self.assertIn("same deck", text.lower())
+
+    def test_python_script_request_still_uses_repository_runtime(self) -> None:
+        text = read("SKILL.md")
+        self.assertIn("PowerPoint as a Python script", text)
+        self.assertIn("scripts/build_daily_pack.py", text)
+
+    def test_agent_default_prompt_requires_repository_pipeline(self) -> None:
+        text = read("agents/openai.yaml")
+        self.assertIn("repository-owned build and release pipeline", text)
+        self.assertIn("ad-hoc", text)
+
+    def test_package_validator_requires_runtime(self) -> None:
+        text = read("scripts/audit_package_dependencies.py")
+        self.assertIn("scripts/build_daily_pack.py", text)
+        self.assertIn("scripts/dlp_build_runtime.py", text)
+        self.assertIn("importlib", text)
 
 
 if __name__ == "__main__":
