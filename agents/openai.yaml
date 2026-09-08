@@ -1,7 +1,7 @@
 interface:
   display_name: "Daily Lesson Pack"
   short_description: "Build and verify daily classroom lesson packs"
-  default_prompt: "Use $daily-lesson-pack to build and quality-assure the next timetable-aligned teaching pack."
+  default_prompt: "Use $daily-lesson-pack through the repository-owned build and release pipeline to build and quality-assure the next timetable-aligned teaching pack. Do not substitute an ad-hoc deck generator; return only an explicitly unreleased candidate when complete release evidence is unavailable."
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.svg"
 policy:
