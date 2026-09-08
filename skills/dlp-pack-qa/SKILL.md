@@ -247,7 +247,10 @@ Use all relevant regression records whenever a change affects the orchestrator, 
 - `examples/benchmarks/universal-maths-canon-regression.md`;
 - `examples/benchmarks/memory-independent-wednesday-regression.md`;
 - `examples/benchmarks/year-profile-isolation-regression.md`;
-- `examples/benchmarks/t3w7-thursday-known-failure.md`.
+- `examples/benchmarks/t3w7-thursday-known-failure.md`;
+- `examples/benchmarks/t3w8-tuesday-bypass-known-failure.md`.
+
+The T3W8 Tuesday bypass record is mandatory whenever routing, generation entry points, packaging, component acceptance, presentation QA or release certification changes. A request for a Python-generated PowerPoint does not waive the repository runtime, current timetable/context provenance, component evidence or final release gates.
 
 Treat Year 4/5 classroom-feedback records as Year 4/5 calibration evidence where their content is year-specific. Their visual and universal architecture lessons may apply more broadly only when the relevant shared rule says so.
 
