@@ -165,6 +165,14 @@ class ReleaseContractTests(unittest.TestCase):
         self.assertIn("scripts/dlp_build_runtime.py", text)
         self.assertIn("importlib", text)
 
+    def test_ci_builds_and_audits_release_packages(self) -> None:
+        workflow = read(".github/workflows/dlp-tests.yml")
+        self.assertIn("build_chatgpt_package.py", workflow)
+        self.assertIn("audit_package_dependencies.py", workflow)
+        self.assertIn("package_component_skills.py", workflow)
+        self.assertIn("Verify complete package", workflow)
+        self.assertIn("Verify component packages", workflow)
+
 
 if __name__ == "__main__":
     unittest.main()
