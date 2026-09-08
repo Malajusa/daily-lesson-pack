@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import re
+import sys
 from pathlib import Path
 
 
@@ -18,6 +20,10 @@ ICON_RE = re.compile(
     r"^\s*icon_(?:small|large):\s*[\"']?([^\"'\s#]+)", re.MULTILINE
 )
 FRONTMATTER_NAME_RE = re.compile(r"^name:\s*([^\n]+)$", re.MULTILINE)
+MANDATORY_RUNTIME_FILES = (
+    "scripts/build_daily_pack.py",
+    "scripts/dlp_build_runtime.py",
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -47,7 +53,11 @@ def validate_manifest(root: Path, failures: list[str]) -> None:
         return
 
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    version = (root / "VERSION").read_text(encoding="utf-8").strip()
+    version_path = root / "VERSION"
+    if not version_path.is_file():
+        failures.append("Missing VERSION")
+        return
+    version = version_path.read_text(encoding="utf-8").strip()
     if manifest.get("version") != version:
         failures.append(
             f"Manifest version {manifest.get('version')!r} does not match VERSION {version!r}"
@@ -80,6 +90,9 @@ def validate_manifest(root: Path, failures: list[str]) -> None:
 def validate_markdown_references(root: Path, failures: list[str]) -> None:
     skill_files = [root / "SKILL.md", *sorted((root / "skills").glob("*/SKILL.md"))]
     for skill_file in skill_files:
+        if not skill_file.is_file():
+            failures.append(f"Missing skill entrypoint: {skill_file.relative_to(root)}")
+            continue
         text = skill_file.read_text(encoding="utf-8")
         for token in REFERENCE_RE.findall(text):
             if "<" in token or ">" in token:
@@ -107,6 +120,9 @@ def validate_metadata_icons(root: Path, failures: list[str]) -> None:
         *sorted((root / "skills").glob("*/agents/openai.yaml")),
     ]
     for metadata_file in metadata_files:
+        if not metadata_file.is_file():
+            failures.append(f"Missing agent metadata: {metadata_file.relative_to(root)}")
+            continue
         text = metadata_file.read_text(encoding="utf-8")
         skill_root = metadata_file.parent.parent
         for token in ICON_RE.findall(text):
@@ -118,6 +134,9 @@ def validate_metadata_icons(root: Path, failures: list[str]) -> None:
 
 def validate_registry(root: Path, failures: list[str]) -> None:
     registry_path = root / "skills" / "registry.json"
+    if not registry_path.is_file():
+        failures.append("Missing skills/registry.json")
+        return
     registry = json.loads(registry_path.read_text(encoding="utf-8"))
     components = registry.get("components")
     if not isinstance(components, list) or len(components) != 8:
@@ -146,7 +165,11 @@ def validate_provenance(root: Path, failures: list[str]) -> None:
         failures.append("Missing RELEASE-PROVENANCE.json")
         return
     provenance = json.loads(path.read_text(encoding="utf-8"))
-    version = (root / "VERSION").read_text(encoding="utf-8").strip()
+    version_path = root / "VERSION"
+    if not version_path.is_file():
+        failures.append("Missing VERSION")
+        return
+    version = version_path.read_text(encoding="utf-8").strip()
     if provenance.get("version") != version:
         failures.append("Release provenance version does not match VERSION")
     base_commit = provenance.get("base_commit")
@@ -155,6 +178,32 @@ def validate_provenance(root: Path, failures: list[str]) -> None:
     sources = provenance.get("reconciled_sources")
     if not isinstance(sources, list) or len(sources) < 2:
         failures.append("Release provenance must identify both reconciled source lines")
+
+
+def validate_runtime(root: Path, failures: list[str]) -> None:
+    for relative in MANDATORY_RUNTIME_FILES:
+        if not (root / relative).is_file():
+            failures.append(f"Missing mandatory runtime: {relative}")
+
+    runtime_path = root / "scripts" / "dlp_build_runtime.py"
+    if not runtime_path.is_file():
+        return
+
+    module_name = "_dlp_package_runtime_validation"
+    try:
+        spec = importlib.util.spec_from_file_location(module_name, runtime_path)
+        if spec is None or spec.loader is None:
+            raise ImportError("could not create import specification")
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[module_name] = module
+        spec.loader.exec_module(module)
+        for name in ("stage_candidate", "promote_release", "validate_resolved_context"):
+            if not callable(getattr(module, name, None)):
+                failures.append(f"Mandatory runtime is missing callable {name}")
+    except Exception as exc:
+        failures.append(f"Mandatory runtime is not importable: {exc}")
+    finally:
+        sys.modules.pop(module_name, None)
 
 
 def main() -> int:
@@ -172,6 +221,7 @@ def main() -> int:
         if not args.component:
             validate_registry(root, failures)
             validate_provenance(root, failures)
+            validate_runtime(root, failures)
 
     report = {
         "status": "PASS" if not failures else "FAIL",
