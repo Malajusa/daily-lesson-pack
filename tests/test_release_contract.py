@@ -28,11 +28,11 @@ def load_contract_audit():
 
 class ReleaseContractTests(unittest.TestCase):
     def test_version_is_reconciled_release(self) -> None:
-        self.assertEqual(read("VERSION").strip(), "3.9.0")
+        self.assertEqual(read("VERSION").strip(), "3.9.1")
 
     def test_release_provenance_records_both_source_lines(self) -> None:
         provenance = json.loads(read("RELEASE-PROVENANCE.json"))
-        self.assertEqual(provenance["version"], "3.9.0")
+        self.assertEqual(provenance["version"], "3.9.1")
         self.assertEqual(
             provenance["base_commit"],
             "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
@@ -50,6 +50,21 @@ class ReleaseContractTests(unittest.TestCase):
         self.assertTrue((ROOT / "references/visual-exemplar-standard.md").is_file())
         self.assertTrue((ROOT / "scripts/audit_visual_exemplar.py").is_file())
         self.assertIn("visual-exemplar-standard.md", read("SKILL.md"))
+
+    def test_teacher_approved_morning_work_exemplar_is_packaged(self) -> None:
+        asset = "assets/visual-exemplars/t3w8-wednesday-morning-work-exemplar.pptx"
+        benchmark = "examples/benchmarks/t3w8-wednesday-morning-work-exemplar.md"
+        self.assertTrue((ROOT / asset).is_file())
+        self.assertTrue((ROOT / benchmark).is_file())
+        self.assertIn(benchmark, read("skills/dlp-morning-work/SKILL.md"))
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from build_chatgpt_package import build_file_map
+        _, files = build_file_map(ROOT)
+        for prefix in ("", "skills/dlp-morning-work/", "skills/dlp-pack-qa/"):
+            self.assertIn(prefix + asset, files)
+        self.assertIn(benchmark, files)
+        self.assertIn("skills/dlp-morning-work/" + benchmark, files)
+        self.assertIn("skills/dlp-pack-qa/" + benchmark, files)
 
     def test_release_is_memory_independent(self) -> None:
         orchestrator = read("SKILL.md")
@@ -117,6 +132,7 @@ class ReleaseContractTests(unittest.TestCase):
             "memory-independent-wednesday-regression.md",
             "t3w7-thursday-known-failure.md",
             "t3w8-tuesday-bypass-known-failure.md",
+            "t3w8-wednesday-morning-work-exemplar.md",
         ):
             self.assertIn(benchmark, qa)
             self.assertTrue((ROOT / "examples" / "benchmarks" / benchmark).is_file())

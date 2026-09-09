@@ -27,6 +27,14 @@ The active profile controls retrieval pitch, reasonable prior knowledge, languag
 
 ## Required output
 
+Before generation, read
+`examples/benchmarks/t3w8-wednesday-morning-work-exemplar.md` and verify the
+checksum of
+`assets/visual-exemplars/t3w8-wednesday-morning-work-exemplar.pptx`. Use it as
+the teacher-approved benchmark for composition, task balance and projected
+usability. Adapt all content to the current context; never copy its date,
+calculations, sentence or fractions focus by default.
+
 - Slide 1 titled `Morning Work`.
 - Student task only: no decorative cover, timetable, date banner, `Get ready`, `Get out`, `You need`, routine reminder or generic materials list.
 - Design an accessible 8-10 minute core task for the active profile. Add meaningful extensions that can carry independent work longer when arrival time allows, up to roughly 20-30 minutes, where the runtime classroom context supports this routine.

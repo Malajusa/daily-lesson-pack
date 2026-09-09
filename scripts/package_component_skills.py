@@ -31,6 +31,12 @@ VISUAL_EXEMPLAR_REFERENCE = "references/visual-exemplar-standard.md"
 VISUAL_EXEMPLAR_ASSET = (
     "assets/visual-exemplars/t3w6-tuesday-edited-visual-exemplar.pptx"
 )
+MORNING_WORK_EXEMPLAR_ASSET = (
+    "assets/visual-exemplars/t3w8-wednesday-morning-work-exemplar.pptx"
+)
+MORNING_WORK_EXEMPLAR_BENCHMARK = (
+    "examples/benchmarks/t3w8-wednesday-morning-work-exemplar.md"
+)
 UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
 MEMORY_INDEPENDENT_BENCHMARK = (
     "examples/benchmarks/memory-independent-wednesday-regression.md"
@@ -49,6 +55,7 @@ QA_ONLY_FILES = (
     YEAR_PROFILE_ISOLATION_BENCHMARK,
     "examples/benchmarks/t3w7-thursday-known-failure.md",
     "examples/benchmarks/t3w8-tuesday-bypass-known-failure.md",
+    MORNING_WORK_EXEMPLAR_BENCHMARK,
     "scripts/audit_pack_contract.py",
     YEAR_PROFILE_AUDIT,
     "scripts/audit_slide_typography.py",
@@ -154,6 +161,17 @@ def main() -> int:
                 package_files[relative_path] = read_required(repo, relative_path)
             package_files[VISUAL_EXEMPLAR_ASSET] = read_required(
                 repo, VISUAL_EXEMPLAR_ASSET
+            )
+            package_files[MORNING_WORK_EXEMPLAR_ASSET] = read_required(
+                repo, MORNING_WORK_EXEMPLAR_ASSET
+            )
+
+        if name == "dlp-morning-work":
+            package_files[MORNING_WORK_EXEMPLAR_BENCHMARK] = read_required(
+                repo, MORNING_WORK_EXEMPLAR_BENCHMARK
+            )
+            package_files[MORNING_WORK_EXEMPLAR_ASSET] = read_required(
+                repo, MORNING_WORK_EXEMPLAR_ASSET
             )
 
         zip_path = out_dir / f"{name}.zip"

@@ -38,6 +38,12 @@ VISUAL_EXEMPLAR_REFERENCE = "references/visual-exemplar-standard.md"
 VISUAL_EXEMPLAR_ASSET = (
     "assets/visual-exemplars/t3w6-tuesday-edited-visual-exemplar.pptx"
 )
+MORNING_WORK_EXEMPLAR_ASSET = (
+    "assets/visual-exemplars/t3w8-wednesday-morning-work-exemplar.pptx"
+)
+MORNING_WORK_EXEMPLAR_BENCHMARK = (
+    "examples/benchmarks/t3w8-wednesday-morning-work-exemplar.md"
+)
 UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
 MEMORY_INDEPENDENT_BENCHMARK = (
     "examples/benchmarks/memory-independent-wednesday-regression.md"
@@ -55,6 +61,7 @@ REGRESSION_BENCHMARKS = (
     YEAR_PROFILE_ISOLATION_BENCHMARK,
     "examples/benchmarks/t3w7-thursday-known-failure.md",
     "examples/benchmarks/t3w8-tuesday-bypass-known-failure.md",
+    MORNING_WORK_EXEMPLAR_BENCHMARK,
 )
 
 ROOT_RUNTIME_FILES = (
@@ -94,6 +101,7 @@ ROOT_RUNTIME_FILES = (
     "agents/openai.yaml",
     "assets/icon.svg",
     VISUAL_EXEMPLAR_ASSET,
+    MORNING_WORK_EXEMPLAR_ASSET,
     "skills/registry.json",
     *COMMON_REFERENCES,
     YEAR_LEVEL_CONTEXT_REFERENCE,
@@ -216,8 +224,19 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
             files[f"{component_root}/{VISUAL_EXEMPLAR_ASSET}"] = read_required(
                 repo, VISUAL_EXEMPLAR_ASSET
             )
+            files[f"{component_root}/{MORNING_WORK_EXEMPLAR_ASSET}"] = read_required(
+                repo, MORNING_WORK_EXEMPLAR_ASSET
+            )
             files[f"{component_root}/examples/context-record-wednesday.json"] = read_required(
                 repo, "examples/context-record-wednesday.json"
+            )
+
+        if name == "dlp-morning-work":
+            files[f"{component_root}/{MORNING_WORK_EXEMPLAR_BENCHMARK}"] = read_required(
+                repo, MORNING_WORK_EXEMPLAR_BENCHMARK
+            )
+            files[f"{component_root}/{MORNING_WORK_EXEMPLAR_ASSET}"] = read_required(
+                repo, MORNING_WORK_EXEMPLAR_ASSET
             )
 
     return version, files

@@ -1,6 +1,6 @@
 {
-  "version": "3.9.0",
-  "created": "2026-09-08",
+  "version": "3.9.1",
+  "created": "2026-09-09",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
   "base_commit": "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
   "reconciled_sources": [
@@ -39,6 +39,11 @@
       "line": "release-pipeline-enforcement",
       "base_commit": "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
       "contribution": "Repository-owned candidate staging and release promotion, anti-bypass routing for Python-generated PowerPoint requests, package-runtime validation, semantic relationship and panel-ownership hardening, end-to-end release-boundary tests and the T3W8 Tuesday bypass regression"
+    },
+    {
+      "line": "teacher-approved-morning-work-exemplar",
+      "artefact_sha256": "1C114304DBC69E5EC8B112F98952291048C5818A0B7DDA3899EBEC0DC80519D5",
+      "contribution": "Teacher-approved T3W8 Wednesday Morning Work exemplar, adaptation contract and complete/component package dependencies"
     }
   ],
   "intentional_removals": [

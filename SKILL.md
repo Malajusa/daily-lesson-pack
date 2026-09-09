@@ -170,6 +170,12 @@ the 16:9 canvas.
 
 Do not inherit the exemplar's lesson wording, year-level pitch, sequencing errors or superseded pedagogy. The current orchestrator, active year profile, component contracts, Mathematics canon and regression records remain authoritative for content.
 
+For Morning Work specifically, also read
+`examples/benchmarks/t3w8-wednesday-morning-work-exemplar.md` and use
+`assets/visual-exemplars/t3w8-wednesday-morning-work-exemplar.pptx` as the
+teacher-approved component exemplar. Its checksum, approved characteristics
+and content-firewall rules are defined in that benchmark.
+
 ## Mandatory Mathematics canon
 
 For every main Mathematics lesson, `dlp-maths-lesson` must read and apply `references/universal-maths-instruction-canon.md` before generation. For fraction equivalence or fraction-decimal conversion, it must also apply `references/fraction-equivalence-standard.md`. The component must complete the canon's internal planning contract and substantiate its Mathematics acceptance checks before assembly.

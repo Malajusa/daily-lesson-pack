@@ -40,6 +40,11 @@ and a different colour system for each component.
 
 - Morning Work: use a whole-canvas working layout with two broad Maths/Literacy
   areas where both are present. Every response must be executable in a book.
+  For its teacher-approved component benchmark, read
+  `../examples/benchmarks/t3w8-wednesday-morning-work-exemplar.md` and verify
+  `../assets/visual-exemplars/t3w8-wednesday-morning-work-exemplar.pptx` against
+  SHA-256
+  `1c114304dbc69e5ec8b112f98952291048c5818a0b7dda3899ebec0dc80519d5`.
 - Literacy warm-up: use amber reminder, blue question and green answer triads.
 - Shared Reading: use blue paragraph-and-question slides followed immediately
   by green answer slides.
