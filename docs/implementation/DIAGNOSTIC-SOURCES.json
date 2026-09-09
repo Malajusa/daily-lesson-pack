@@ -1,0 +1,18 @@
+{
+  "status": "diagnostic-only-not-release-evidence",
+  "files": [
+    {
+      "name": "Thursday_10_September_2026_Daily_Lesson_Pack.pptx",
+      "sha256": "78fe62191c16b4c4388964c04bee3e837d236b96ac2a15f286c9f4ea6ac63f9c"
+    },
+    {
+      "name": "findings.json",
+      "sha256": "47f894cefa2733d3f1fc006a1f6bed561d4eb3ac12907f5bbb2fc6f955334526"
+    },
+    {
+      "name": "superseded-patch-validation.json",
+      "sha256": "30e5ea072ea5e9a24bf97f41f73f08bd8fdef001e1aba226f9a06ea59596af7a"
+    }
+  ],
+  "public_copy_included": false
+}

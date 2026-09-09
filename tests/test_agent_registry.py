@@ -48,7 +48,7 @@ class RegistryTests(unittest.TestCase):
         for path in (ROOT/'schemas').glob('*.schema.json'):
             validator = schema_validator(path)
             validator.check_schema(validator.schema)
-        self.assertEqual(len(list((ROOT/'schemas').glob('*.schema.json'))), 9)
+        self.assertEqual(len(list((ROOT/'schemas').glob('*.schema.json'))), 10)
 
     def test_qa_is_explicit_only(self):
         text = (ROOT/'skills/dlp-pack-qa/agents/openai.yaml').read_text()

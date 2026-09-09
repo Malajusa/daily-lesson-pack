@@ -96,6 +96,8 @@ def main() -> int:
         status = str(report.get("overall_status", report.get("status", ""))).lower()
         if status != "pass":
             failures.append(f"{name} report status is {status or 'missing'}")
+        if name == "year_profile" and report.get("release_mode") != "normal":
+            failures.append("year_profile is not eligible for classroom-ready release")
         report_hash = str(report.get("artifact_sha256", "")).lower()
         if not report_hash:
             failures.append(f"{name} report is not bound to a deck SHA-256")

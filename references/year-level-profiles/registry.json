@@ -1,0 +1,67 @@
+{
+  "$schema": "https://daily-lesson-pack.local/schemas/year-level-profile.schema.json",
+  "schema_version": 1,
+  "revision": "1",
+  "coverage_semantics": "system-capability-not-learner-ceiling",
+  "profiles": [
+    {
+      "profile_id": "year-4-5",
+      "path": "references/year-level-profiles/year-4-5.md",
+      "revision": "baseline-cf8bda1",
+      "sha256": "4314b86009196af54cc57a49812d40e42e161a7078d5d6cf505a78bc9a66338e",
+      "status": "calibrated",
+      "release_mode": "normal",
+      "curriculum_anchor": {
+        "years": [
+          4,
+          5
+        ],
+        "source": "references/year-level-profiles/year-4-5.md"
+      },
+      "retrieval_guidance": "references/year-level-profiles/year-4-5.md",
+      "language_representation_guidance": "references/year-level-profiles/year-4-5.md",
+      "jurisdiction_mapping": null,
+      "domains": {
+        "mathematics": {
+          "status": "declared-baseline",
+          "source": "references/year-level-profiles/year-4-5.md",
+          "evidence_status": "implemented-unverified"
+        },
+        "literacy": {
+          "status": "declared-baseline",
+          "source": "references/year-level-profiles/year-4-5.md",
+          "evidence_status": "implemented-unverified"
+        }
+      }
+    },
+    {
+      "profile_id": "year-6",
+      "path": "references/year-level-profiles/year-6.md",
+      "revision": "d02-release-status-1",
+      "sha256": "1af61874da290d1a5d161cab1e5cbf83cffea7bf4820a8381bb3c83ed535d11b",
+      "status": "scaffold",
+      "release_mode": "candidate",
+      "curriculum_anchor": {
+        "years": [
+          6
+        ],
+        "source": "references/year-level-profiles/year-6.md"
+      },
+      "retrieval_guidance": "references/year-level-profiles/year-6.md",
+      "language_representation_guidance": "references/year-level-profiles/year-6.md",
+      "jurisdiction_mapping": null,
+      "domains": {
+        "mathematics": {
+          "status": "scaffold",
+          "source": "references/year-level-profiles/year-6.md",
+          "evidence_status": "implemented-unverified"
+        },
+        "literacy": {
+          "status": "scaffold",
+          "source": "references/year-level-profiles/year-6.md",
+          "evidence_status": "implemented-unverified"
+        }
+      }
+    }
+  ]
+}

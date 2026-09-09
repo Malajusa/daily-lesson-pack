@@ -8,6 +8,8 @@ import json
 import zipfile
 from pathlib import Path
 
+from year_profile_registry import PROFILE_REGISTRY_FILES, profile_reference_paths
+
 
 COMMON_REFERENCES = (
     "references/qa-workflow-v3.md",
@@ -20,10 +22,7 @@ COMMON_REFERENCES = (
 )
 
 YEAR_LEVEL_CONTEXT_REFERENCE = "references/year-level-context-contract.md"
-YEAR_LEVEL_PROFILE_REFERENCES = (
-    "references/year-level-profiles/year-4-5.md",
-    "references/year-level-profiles/year-6.md",
-)
+
 MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
 FRACTION_REFERENCE = "references/fraction-equivalence-standard.md"
 SHARED_CONTEXT_REFERENCE = "references/shared-class-context-contract.md"
@@ -113,7 +112,8 @@ def main() -> int:
         component_references = (
             *COMMON_REFERENCES,
             YEAR_LEVEL_CONTEXT_REFERENCE,
-            *YEAR_LEVEL_PROFILE_REFERENCES,
+            *profile_reference_paths(repo),
+            *PROFILE_REGISTRY_FILES,
         )
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             component_references = (*component_references, MATH_REFERENCE, FRACTION_REFERENCE)

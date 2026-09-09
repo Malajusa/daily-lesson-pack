@@ -105,7 +105,12 @@ They serve different purposes and must not be collapsed.
 
 The active year-level profile defines stable developmental and curriculum-facing calibration: expected prior knowledge, language load, reasonable task demand, independence, scaffolding and year-appropriate misconceptions/representations.
 
-Supported year profiles must be explicitly authored under `references/year-level-profiles/`. Do not silently approximate an unsupported year by reusing another profile.
+Supported year profiles must be explicitly authored under `references/year-level-profiles/`
+and registered in `references/year-level-profiles/registry.json`. The runtime,
+profile audit and package builders validate that registry against the exact
+profile sources. Read its subject coverage and maturity alongside the profile;
+coverage describes system capability, never a learner ceiling or placement.
+Do not silently approximate an unsupported year by reusing another profile.
 
 Current profiles include:
 
@@ -220,7 +225,7 @@ Every content-component handoff must include:
 ## Orchestration workflow
 
 1. Resolve the requested year level or combined year band from current-run user/school sources.
-2. Load the matching profile under `references/year-level-profiles/`. If no supported profile exists, mark year profile `unresolved` and block classroom-ready release rather than borrowing another profile.
+2. Load the matching registered profile under `references/year-level-profiles/`. Use its registered status and revision; a caller cannot promote a scaffold to calibrated. If no supported profile exists, mark year profile `unresolved` and block classroom-ready release rather than borrowing another profile.
 3. Resolve exact date, term, week, day, timetable and interruptions from the current run's supplied sources.
 4. Resolve current Maths and English/literacy sequence, day-level focus and explicit status exceptions from the user's current sources.
 5. Verify and load the approved visual-only exemplar.

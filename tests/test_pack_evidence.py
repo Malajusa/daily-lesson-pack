@@ -140,7 +140,10 @@ class EvidenceTests(unittest.TestCase):
             args+=['--'+flag,str(self.p/(flag+'.json'))]
         for flag,name in [('manifest','manifest.json'),('content','content.json'),('context-record','context.json'),('component-record','components.json'),('warning-ledger','warnings.json'),('visual-review','visual-review.json'),('semantic-review','review.json'),('semantic-trace','trace.json'),('visual-trace','visual-trace.json')]:args+=['--'+flag,str(self.p/name)]
         def screen(command,**kwargs):
-            Path(command[command.index('--out')+1]).write_text(json.dumps({'status':'PASS','artifact_sha256':digest(self.p/'deck.pptx')}))
+            report = {'status':'PASS','artifact_sha256':digest(self.p/'deck.pptx')}
+            if Path(command[1]).name == 'audit_year_profile_context.py':
+                report['release_mode'] = 'normal'
+            Path(command[command.index('--out')+1]).write_text(json.dumps(report))
             return type('Result',(),{'returncode':0,'stderr':''})()
         with patch.object(sys,'argv',args),patch.object(gate.subprocess,'run',side_effect=screen) as screens,redirect_stdout(io.StringIO()):
             self.assertEqual(gate.main(),0)

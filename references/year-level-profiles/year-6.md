@@ -56,4 +56,4 @@ A Year 6-specific correction should normally be made here. If evidence demonstra
 
 This scaffold is sufficient to route and isolate Year 6 development, but it is not yet a claim that Year 6 content is fully calibrated.
 
-Until the calibration evidence above is established, label Year 6 generated packs as **candidate/calibration output** rather than classroom-ready unless the generated pack has been specifically reviewed and passed against supplied Year 6 evidence and the full QA suite.
+Until the calibration evidence above is established, label Year 6 generated packs as **candidate/calibration output**. Passing general pack QA does not promote a scaffold to classroom-ready. Profile-specific review must establish the calibration evidence and an explicit registry/source revision before the standard release path may promote the output; an ad-hoc caller status cannot grant that exception.

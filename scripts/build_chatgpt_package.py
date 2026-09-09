@@ -15,6 +15,8 @@ import json
 import zipfile
 from pathlib import Path
 
+from year_profile_registry import PROFILE_REGISTRY_FILES, profile_reference_paths
+
 
 COMMON_REFERENCES = (
     "references/qa-workflow-v3.md",
@@ -27,10 +29,7 @@ COMMON_REFERENCES = (
 )
 
 YEAR_LEVEL_CONTEXT_REFERENCE = "references/year-level-context-contract.md"
-YEAR_LEVEL_PROFILE_REFERENCES = (
-    "references/year-level-profiles/year-4-5.md",
-    "references/year-level-profiles/year-6.md",
-)
+
 MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
 FRACTION_REFERENCE = "references/fraction-equivalence-standard.md"
 SHARED_CONTEXT_REFERENCE = "references/shared-class-context-contract.md"
@@ -105,7 +104,7 @@ ROOT_RUNTIME_FILES = (
     "skills/registry.json",
     *COMMON_REFERENCES,
     YEAR_LEVEL_CONTEXT_REFERENCE,
-    *YEAR_LEVEL_PROFILE_REFERENCES,
+    *PROFILE_REGISTRY_FILES,
     MATH_REFERENCE,
     FRACTION_REFERENCE,
     SHARED_CONTEXT_REFERENCE,
@@ -164,7 +163,8 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
     version = read_required(repo, "VERSION").decode("utf-8").strip()
     registry = json.loads(read_required(repo, "skills/registry.json"))
 
-    files = {path: read_required(repo, path) for path in ROOT_RUNTIME_FILES}
+    files = {path: read_required(repo, path)
+             for path in (*ROOT_RUNTIME_FILES, *profile_reference_paths(repo))}
 
     for component in registry["components"]:
         name = component["name"]
@@ -177,7 +177,8 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
         component_references = (
             *COMMON_REFERENCES,
             YEAR_LEVEL_CONTEXT_REFERENCE,
-            *YEAR_LEVEL_PROFILE_REFERENCES,
+            *profile_reference_paths(repo),
+            *PROFILE_REGISTRY_FILES,
         )
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             component_references = (*component_references, MATH_REFERENCE, FRACTION_REFERENCE)
