@@ -310,3 +310,11 @@ For future updates, record changes under one or more of:
 - **Removed** — behaviour deliberately retired.
 
 Where useful, include the reason for the change and the regression example used to validate it.
+# Unreleased — D02 profile registry
+
+- Register existing profile identity, source hashes, revision and subject coverage
+  in one validated discovery source used by runtime, QA and package builders.
+- Reject caller-supplied maturity promotions and retain Year 6 candidate status.
+- Preserve the implementation handover and issue dependencies under
+  `docs/implementation/`; creator defaults, persistence and point-of-need migration
+  remain tracked work, not claims of this change.

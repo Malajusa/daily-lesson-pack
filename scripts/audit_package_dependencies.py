@@ -11,6 +11,9 @@ import sys
 import subprocess
 from pathlib import Path
 
+from year_profile_registry import PROFILE_REGISTRY_FILES, YearProfileRegistry
+from agent_protocol import ProtocolError
+
 
 REFERENCE_RE = re.compile(
     r"`((?:\.\./)*(?:assets|examples|references|scripts|skills)/"
@@ -21,6 +24,7 @@ ICON_RE = re.compile(
 )
 FRONTMATTER_NAME_RE = re.compile(r"^name:\s*([^\n]+)$", re.MULTILINE)
 MANDATORY_RUNTIME_FILES = (
+    *PROFILE_REGISTRY_FILES,
     "scripts/build_daily_pack.py",
     "scripts/dlp_build_runtime.py",
     "requirements.txt",
@@ -238,6 +242,10 @@ def main() -> int:
     if not root.is_dir():
         failures.append(f"Skill root is not a directory: {root}")
     else:
+        try:
+            YearProfileRegistry.load(root)
+        except ProtocolError as exc:
+            failures.append(str(exc))
         if not args.component:
             validate_manifest(root, failures)
         validate_markdown_references(root, failures)

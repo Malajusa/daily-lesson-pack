@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "base_commit": "cf8bda191733c2b54feb2f4f30b5cd4ce7bd9d79",
+  "branch": "feat/d02-validated-profile-registry",
+  "scope": "D02 registry foundation; A01-A06 accounted for in BASELINE.md",
+  "issues": {
+    "A01": {
+      "work_status": "verified",
+      "capability_status": "verified",
+      "note": "Original controlling decisions, full backlog, issues and traceability preserved unchanged."
+    },
+    "A02": {
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Pinned clean main, inspected open PRs, verified 124 baseline tests and all nine package audits. Relevant D02 capability inventory complete; remaining roadmap not fully audited."
+    },
+    "A03": {
+      "work_status": "blocked",
+      "capability_status": "partial",
+      "note": "JSON command adapters exist; actual teaching provider, canonical renderer and private persistent backend not configured or verified here."
+    },
+    "A04": {
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Diagnostic source hashes checked and evidence qualifications recorded; deck remains outside public repository. Minimal deck regressions pending."
+    },
+    "A05": {
+      "work_status": "verified",
+      "capability_status": "verified",
+      "note": "AGENTS.md defines bounded roles and separate review; review result recorded separately."
+    },
+    "A06": {
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Deterministic baseline known; actual teacher time, costs, classroom outcomes and pilot still unknown."
+    },
+    "D01": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "D02": {
+      "work_status": "verified-source-and-package",
+      "capability_status": "verified",
+      "note": "11 focused tests, 135 full tests, all nine package audits and clean subprocess imports pass; independent review findings fixed and rechecked. Installed activation remains unverified."
+    },
+    "D03": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "D04": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "D05": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "D06": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "D07": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "D08": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "D09": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "D10": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "R01": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "R02": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "R03": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "R04": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "R05": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "R06": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "R07": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "L01": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "L02": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "L03": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "L04": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "L05": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "L06": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "L07": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "L08": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "L09": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C01": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C02": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C03": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C04": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C05": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C06": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C07": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C08": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C09": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C10": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C11": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C12": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C13": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C14": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "C15": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "H01": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "H02": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "H03": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "H04": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "H05": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "H06": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "H07": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "H08": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "H09": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "S01": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "S02": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "S03": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "S04": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "S05": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "S06": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "S07": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "S08": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "S09": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "E01": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "E02": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "E03": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "E04": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "E05": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "E06": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    },
+    "E07": {
+      "work_status": "backlog",
+      "capability_status": null,
+      "note": "Retained; not individually audited in this bounded slice."
+    }
+  }
+}
