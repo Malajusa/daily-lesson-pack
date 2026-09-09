@@ -1,6 +1,6 @@
 ---
 name: daily-lesson-pack
-description: Orchestrate timetable-aligned, year-profile-aware Daily Lesson Packs by resolving runtime teacher context, routing each teaching component to a specialised Daily Lesson Pack skill, assembling the outputs, and requiring independent QA before release.
+description: Use when creating, revising or reviewing a teacher’s timetable-aligned Daily Lesson Pack, including individual daily teaching components and Python-entry-script requests.
 ---
 
 # Daily Lesson Pack — Orchestrator
@@ -60,6 +60,23 @@ records only, never a released pack. Any content repair invalidates all applicab
 pack QA. Missing/malformed reviews, exhausted budgets or ambiguous defects leave
 an unreleased result. Existing context/component schema 2, content/manifest schema 3
 and the repository release authority remain unchanged.
+
+## Creator defaults and real saved settings
+
+Read `references/creator-settings-contract.md` before resolving preferences.
+Automatically load `config/creator-defaults.json` and any authenticated host's
+configured private classroom settings; do not ask the creator to select a preset.
+The orchestrator CLI supports a private `settings` binding and source-backed
+current `instructional_overrides`. Clear ongoing changes are saved only through
+`scripts/teacher_context_store.py` after actual teacher authority, revision checks
+and a successful read-after-write. Never claim that a transient session is durable
+storage or that a proposal has been saved. Unsupported/ambiguous scope is not
+silently made permanent. Generators and reviewers cannot mutate this store.
+
+Freeze the resolved calibration and project it to every specialist. Main Year 5
+direction and Year 3/4 retrieval are configurable creator defaults, not student
+placements. A timetable, current lesson focus or attainment still needs evidence.
+The sidecar and narrow candidate-status guards do not install or activate a host.
 
 ## Purpose
 
@@ -136,7 +153,7 @@ Use sources in this order:
 1. the user's current explicit instruction;
 2. current-run user/school context: timetable, overviews, unit plans, day-level focus and explicit status exceptions;
 3. the active year-level profile for developmental/curriculum pitch;
-4. connected calendar and authoritative school sources where available;
+4. authoritative school planning sources explicitly supplied for this run;
 5. bundled universal component-skill defaults and instructional canons.
 
 For **current lesson focus and local sequencing**, the user's current overview/program outranks the year-level profile.
@@ -149,7 +166,7 @@ Assume the previous scheduled lesson was covered sufficiently to advance unless 
 
 If a user's overview defines only some weekdays, do not invent the missing day's focus from another day or another user's historic sequence. Use the requested teacher's explicit day-level focus or another authoritative current-run source.
 
-Do not browse the public web to infer school dates or timetable events unless the user asks for verification.
+The school calendar is not a planning source for this skill. Do not infer school dates or timetable events from calendar lookups. Explicit requested verification is a separate task and does not silently alter the supplied timetable.
 
 ## Year-profile isolation rule
 
@@ -224,7 +241,7 @@ Every content-component handoff must include:
 
 ## Orchestration workflow
 
-1. Resolve the requested year level or combined year band from current-run user/school sources.
+1. Load creator defaults and configured private settings, apply source-backed current overrides, and resolve the active registered profile without asking for a preset.
 2. Load the matching registered profile under `references/year-level-profiles/`. Use its registered status and revision; a caller cannot promote a scaffold to calibrated. If no supported profile exists, mark year profile `unresolved` and block classroom-ready release rather than borrowing another profile.
 3. Resolve exact date, term, week, day, timetable and interruptions from the current run's supplied sources.
 4. Resolve current Maths and English/literacy sequence, day-level focus and explicit status exceptions from the user's current sources.
@@ -266,7 +283,7 @@ If the active year-level profile itself is marked calibration/candidate-only, ge
 - Every meaningful Numeracy warm-up task/answer is at least 36 pt; substantive `Why` text is at least 28 pt. Compliance is assessed per text element, not by the largest text on the slide.
 - No generic whiteboard footer is required unless the user explicitly requests one. The Mathematics green `Why` panel is instructional content, not a generic footer instruction.
 - The main Mathematics lesson must apply the complete universal Mathematics canon, including meaning before procedure, purposeful representation, genuine guided practice, model-to-practice alignment and complete answer modelling.
-- Mixed Year 4/5 Mathematics includes explicit pathways for both year levels. When only one year has an active curriculum code, the other pathway uses an authorised prerequisite or consolidation bridge.
+- Mathematics uses a shared central idea, task-specific readiness checks, conditional support and connected challenge. Enrolment year alone cannot assign a pathway; absent learner evidence remains unknown. Prior supported success requires an independent recheck before support is faded.
 - Two Mathematics timetable blocks require two unique instances and a visible breakpoint. A final hundred grid alone cannot explain fraction equivalence; show repartitioning and the invariant amount.
 - Mathematics warm-ups and Morning Work must remain retrieval while still using exact mathematics, precise terminology and non-revealing question slides.
 - A Mathematics question requiring a model, explanation, comparison, justification, proof, label or equation must have an answer slide that demonstrates every requested element.

@@ -72,7 +72,7 @@ class HardeningContractTests(unittest.TestCase):
                 "timetable_instances": instances,
             }))
             required = set(audit.REQUIRED_CHECKS["dlp-maths-lesson"])
-            required.update({"MATHS.YEAR4.PATHWAY", "MATHS.YEAR5.PATHWAY"})
+            required.update({"MATHS.POINT_OF_NEED", "MATHS.READINESS.CHECK"})
             required.add("MATHS.BLOCK.BREAKPOINT")
             record = {
                 "schema_version": 2,

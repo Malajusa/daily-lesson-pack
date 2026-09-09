@@ -24,6 +24,8 @@ def source_path(source: dict, registry: AgentRegistry, source_root: Path) -> Pat
 def freeze_context(context: dict, registry: AgentRegistry, source_root: Path) -> dict:
     from year_profile_registry import YearProfileRegistry, REGISTRY_PATH
     frozen = copy.deepcopy(context)
+    from resolve_instructional_calibration import freeze_calibration
+    freeze_calibration(frozen, root=registry.root, source_root=source_root)
     profiles = YearProfileRegistry.load(registry.root)
     frozen['active_year_profile'] = profiles.validate_active(frozen.get('active_year_profile'))
     provenance = frozen.get('source_provenance')

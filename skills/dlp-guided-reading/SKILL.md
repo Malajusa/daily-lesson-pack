@@ -5,6 +5,14 @@ description: Represent the scheduled Guided Reading block and authorised Alpha-E
 
 # DLP Guided Reading
 
+## Resolved instructional preferences
+
+Read `references/creator-settings-contract.md` and use the orchestrator's frozen
+`instructional_calibration` when present. Do not independently reload or save
+private settings, change the requested warm-up count, or infer student attainment
+from enrolment year. Legacy inputs use the documented public defaults, not hidden
+chat memory. Existing final-artifact and independent-review gates still apply.
+
 ## Mandatory evidence workflow (v3)
 
 Read `references/qa-workflow-v3.md` and the applicable entries in

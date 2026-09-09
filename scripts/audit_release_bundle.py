@@ -44,6 +44,8 @@ def main() -> int:
     failures: list[str] = []
     reports: dict[str, dict] = {}
     try:
+        from resolve_instructional_calibration import instructional_context_errors
+        failures.extend(instructional_context_errors(json.loads(args.context_record.read_text()), require_release=True))
         bundle_errors, content, manifest = audit_pack(args.manifest, args.content, args.context_record)
         failures.extend(bundle_errors)
         deck_entry = next(a for a in manifest['artifacts'] if a['role'] == 'deck')

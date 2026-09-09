@@ -81,7 +81,8 @@ def validate_request(request: dict) -> list[str]:
 
 
 def validate_resolved_context(context: dict) -> list[str]:
-    errors: list[str] = []
+    from resolve_instructional_calibration import instructional_context_errors
+    errors: list[str] = instructional_context_errors(context)
     if context.get("schema_version") != 2:
         errors.append("context schema_version must be 2")
 

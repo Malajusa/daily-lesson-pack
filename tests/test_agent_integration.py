@@ -37,7 +37,7 @@ class IntegrationTests(unittest.TestCase):
         for path in required:
             self.assertIn(path,files)
         self.assertIn('schemas/year-level-profile.schema.json', files)
-        self.assertEqual(len([p for p in files if p.startswith('schemas/')]), 10)
+        self.assertEqual(len([p for p in files if p.startswith('schemas/')]), 11)
         self.assertIn('skills/registry.json',files)
 
     def test_package_validator_requires_new_runtime(self):

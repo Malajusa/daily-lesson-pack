@@ -101,6 +101,8 @@ REQUIRED_CHECKS = {
         "MATHS.REPRESENTATION.PURPOSE",
         "MATHS.REPRESENTATION.EXACTNESS",
         "MATHS.DIFFERENTIATION",
+        "MATHS.POINT_OF_NEED",
+        "MATHS.READINESS.CHECK",
         "MATHS.MODEL_PRACTICE",
         "MATHS.EXIT",
         "VISUAL.READABILITY",
@@ -574,8 +576,6 @@ def audit_component_record(
             if str(check.get("result", "")).upper() != "PASS" or not valid_evidence(check.get("evidence")):
                 issues.append(issue("component_check_unsubstantiated", "Every check needs a stable ID, PASS result and concrete evidence.", instance_id=instance_id, check_id=check_id or "MISSING"))
         required = set(REQUIRED_CHECKS.get(owner, GENERIC_REQUIRED_CHECKS))
-        if owner == "dlp-maths-lesson" and active_year_profile == "year-4-5":
-            required.update({"MATHS.YEAR4.PATHWAY", "MATHS.YEAR5.PATHWAY"})
         if owner == "dlp-maths-lesson" and maths_instance_count > 1:
             required.add("MATHS.BLOCK.BREAKPOINT")
         if owner == "dlp-maths-lesson" and fraction_focus:

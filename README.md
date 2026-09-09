@@ -1,3 +1,9 @@
+> **3.10.0-rc.1 is an unreleased source candidate.** The checked-in `dist/` ZIPs
+> are historical builds, not this candidate. Current candidate packages are built
+> and verified from their exact CI commit, with external digests and source/file
+> manifests. A passing technical build is not classroom or unattended acceptance.
+> See `docs/implementation/RELEASE-CANDIDATE-2026-09-09.md` for actual scope and blockers.
+
 # Daily Lesson Pack
 
 Version-controlled development repository for the **Daily Lesson Pack** skill.

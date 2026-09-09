@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "revision": "creator-defaults-1",
+  "decision_sources": ["DEC-01", "DEC-02", "DEC-03", "DEC-04"],
+  "values": {
+    "active_year_profile": "year-4-5",
+    "main_curriculum_year": 5,
+    "retrieval_years": [3, 4],
+    "differentiation_mode": "point-of-need",
+    "locale": "en-AU",
+    "timezone": "Australia/Perth"
+  }
+}

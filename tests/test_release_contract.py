@@ -28,11 +28,11 @@ def load_contract_audit():
 
 class ReleaseContractTests(unittest.TestCase):
     def test_version_is_reconciled_release(self) -> None:
-        self.assertEqual(read("VERSION").strip(), "3.9.1")
+        self.assertEqual(read("VERSION").strip(), "3.10.0-rc.1")
 
     def test_release_provenance_records_both_source_lines(self) -> None:
         provenance = json.loads(read("RELEASE-PROVENANCE.json"))
-        self.assertEqual(provenance["version"], "3.9.1")
+        self.assertEqual(provenance["version"], "3.10.0-rc.1")
         self.assertEqual(
             provenance["base_commit"],
             "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",

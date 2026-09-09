@@ -22,3 +22,9 @@ __pycache__/
 
 # Per-run lesson content, receipts and candidate artefacts are not source.
 /runs/
+
+# Private host inputs and SQLite state never belong in source.
+/runtime/
+**/.dlp-calibration/
+*.sqlite
+*.sqlite-*

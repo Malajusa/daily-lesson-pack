@@ -1,0 +1,206 @@
+{
+  "document_type": "proposed_release_workflow_register",
+  "schema_version": 1,
+  "date": "2026-09-09",
+  "timezone": "Australia/Perth",
+  "repository": "Malajusa/daily-lesson-pack",
+  "inspected_main_sha": "c31f686fb75c3addbb47ccbd147ba6e11e488e55",
+  "status": "planned_not_implemented",
+  "runtime_consumption": "This is a planning register, not an existing runtime schema or executable release authority.",
+  "existing_backlog_policy": "Preserve all 72 existing IDs; these packages coordinate release and do not replace the backlog.",
+  "dependencies_note": "W2 fixture preparation can start after W0; its live G2b needs the real reviewer host from W4. W3 persistence acceptance needs W4 host capability. W6 requires actual live gates, not preparation alone.",
+  "work_packages": [
+    {
+      "id": "W0",
+      "title": "Establish baseline and real host route",
+      "depends_on": [],
+      "existing_issue_scope": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06"
+      ],
+      "exit_gates": [
+        "G0"
+      ],
+      "owner_role": "integrator",
+      "status": "planned",
+      "evidence": [],
+      "acceptance_depends_on": []
+    },
+    {
+      "id": "W1",
+      "title": "Close profile and release-authority bypasses",
+      "depends_on": [
+        "W0"
+      ],
+      "existing_issue_scope": [
+        "D02"
+      ],
+      "exit_gates": [
+        "G1"
+      ],
+      "owner_role": "runtime/profile implementer",
+      "status": "planned",
+      "evidence": [],
+      "acceptance_depends_on": []
+    },
+    {
+      "id": "W2",
+      "title": "Recover benchmark and prove blind QA",
+      "depends_on": [
+        "W0"
+      ],
+      "existing_issue_scope": [
+        "A04",
+        "A06",
+        "E03"
+      ],
+      "exit_gates": [
+        "G2a",
+        "G2b"
+      ],
+      "owner_role": "evaluation implementer",
+      "status": "planned",
+      "evidence": [],
+      "acceptance_depends_on": [
+        "W4"
+      ]
+    },
+    {
+      "id": "W3",
+      "title": "Creator settings and point-of-need behaviour",
+      "depends_on": [
+        "W0",
+        "W1"
+      ],
+      "existing_issue_scope": [
+        "D01",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "D10"
+      ],
+      "exit_gates": [
+        "G3"
+      ],
+      "owner_role": "settings/instructional implementer",
+      "status": "planned",
+      "evidence": [],
+      "acceptance_depends_on": [
+        "W4"
+      ]
+    },
+    {
+      "id": "W4",
+      "title": "Complete one real production route",
+      "depends_on": [
+        "W0"
+      ],
+      "existing_issue_scope": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07"
+      ],
+      "exit_gates": [
+        "G4"
+      ],
+      "owner_role": "runtime implementer",
+      "status": "planned",
+      "evidence": [],
+      "acceptance_depends_on": []
+    },
+    {
+      "id": "W5",
+      "title": "Resolve release-critical classroom-usability blockers",
+      "depends_on": [
+        "W0",
+        "W3",
+        "W4"
+      ],
+      "existing_issue_scope": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05",
+        "L06",
+        "L07",
+        "L08",
+        "L09",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15"
+      ],
+      "exit_gates": [
+        "G5"
+      ],
+      "owner_role": "instructional implementer",
+      "status": "planned",
+      "evidence": [],
+      "acceptance_depends_on": []
+    },
+    {
+      "id": "W6",
+      "title": "Freeze package, clean-install and accept",
+      "depends_on": [
+        "W1",
+        "W2",
+        "W3",
+        "W4",
+        "W5"
+      ],
+      "existing_issue_scope": [
+        "E01",
+        "E03",
+        "E04",
+        "E05",
+        "E07"
+      ],
+      "exit_gates": [
+        "G6"
+      ],
+      "owner_role": "integrator/release verifier",
+      "status": "planned",
+      "evidence": [],
+      "acceptance_depends_on": []
+    },
+    {
+      "id": "W7",
+      "title": "Prove unattended schedule and delivery",
+      "depends_on": [
+        "W6"
+      ],
+      "existing_issue_scope": [],
+      "exit_gates": [
+        "G7"
+      ],
+      "owner_role": "runtime/release verifier",
+      "status": "planned",
+      "evidence": [],
+      "acceptance_depends_on": []
+    }
+  ]
+}

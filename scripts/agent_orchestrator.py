@@ -387,14 +387,20 @@ def main() -> int:
     args=parser.parse_args()
     try:
         config=read_json(args.config)
-        if set(config)-{'agents','assembly_command','timeout_seconds'}:
+        if set(config)-{'agents','assembly_command','timeout_seconds','settings'}:
             raise ProtocolError('Unknown host configuration key')
         timeout=config.get('timeout_seconds',300)
         orchestrator=DailyPackOrchestrator(registry=AgentRegistry.load(),
             adapter=JsonCommandAdapter(config['agents'],timeout=timeout),run_root=args.out,
             pipeline=RepositoryPipeline(config.get('assembly_command'),timeout=timeout),
             timeout=timeout,max_parallelism=args.max_parallelism)
-        status=asyncio.run(orchestrator.run(request=read_json(args.request),context=read_json(args.context),
+        request, context = read_json(args.request), read_json(args.context)
+        if config.get('settings') is not None or 'instructional_overrides' in request or 'instructional_scope' in request:
+            from resolve_instructional_calibration import prepare_host_context
+            request_source=args.request.resolve().relative_to(args.sources.resolve()).as_posix()
+            context=prepare_host_context(context,request,settings=config.get('settings'),
+                source_root=args.sources,request_source=request_source,root=orchestrator.registry.root)
+        status=asyncio.run(orchestrator.run(request=request,context=context,
                        source_root=args.sources,stop_after_components=args.stop_after=='components'))
         print(json.dumps(status,indent=2))
         return 0 if status['status'] in ('COMPONENTS_VALIDATED','RELEASED') else 1

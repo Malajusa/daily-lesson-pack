@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "base_commit": "cf8bda191733c2b54feb2f4f30b5cd4ce7bd9d79",
-  "branch": "feat/d02-validated-profile-registry",
-  "scope": "D02 registry foundation; A01-A06 accounted for in BASELINE.md",
+  "base_commit": "c31f686fb75c3addbb47ccbd147ba6e11e488e55",
+  "branch": "fix/release-readiness-20260909",
+  "scope": "3.10.0-rc.1: integrated D02; creator resolver/settings and point-of-need boundaries; exact-package integrity. Candidate only.",
   "issues": {
     "A01": {
       "work_status": "verified",
@@ -12,17 +12,17 @@
     "A02": {
       "work_status": "partial",
       "capability_status": "partial",
-      "note": "Pinned clean main, inspected open PRs, verified 124 baseline tests and all nine package audits. Relevant D02 capability inventory complete; remaining roadmap not fully audited."
+      "note": "Pinned current main and PR11; baseline 125 and integrated 136 tests observed. Exact-source CI/archive evidence retained. No active host identity verified."
     },
     "A03": {
       "work_status": "blocked",
       "capability_status": "partial",
-      "note": "JSON command adapters exist; actual teaching provider, canonical renderer and private persistent backend not configured or verified here."
+      "note": "SQLite backend and optional host settings binding implemented/tested. Actual teaching provider, renderer, authentication and durable production volume remain unverified."
     },
     "A04": {
       "work_status": "partial",
       "capability_status": "partial",
-      "note": "Diagnostic source hashes checked and evidence qualifications recorded; deck remains outside public repository. Minimal deck regressions pending."
+      "note": "Profile/settings/package negative controls added. Original historical mass/narrative deck/full review absent; live benchmark blocked, not fabricated."
     },
     "A05": {
       "work_status": "verified",
@@ -35,59 +35,59 @@
       "note": "Deterministic baseline known; actual teacher time, costs, classroom outcomes and pilot still unknown."
     },
     "D01": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "verified-source",
+      "capability_status": "verified",
+      "note": "Authoritative creator-defaults.json automatically resolved and source-hashed; tests and clean package imports. Actual installed host unverified."
     },
     "D02": {
-      "work_status": "verified-source-and-package",
+      "work_status": "verified-source",
       "capability_status": "verified",
-      "note": "11 focused tests, 135 full tests, all nine package audits and clean subprocess imports pass; independent review findings fixed and rechecked. Installed activation remains unverified."
+      "note": "Integrated upstream registry with current main. New direct CLI negatives reject false calibration, unknown maturity and wrong source; positive controls preserve profile modes."
     },
     "D03": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "verified-source",
+      "capability_status": "verified",
+      "note": "One field-specific resolver and schema-validated sidecar feed all agent projections and finalisation. Current request/source binding and expiry covered."
     },
     "D04": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "SQLite private backend: revisions, atomic writes, concurrency, fresh-connection confirmation, corrupt-state refusal tested. Actual host private volume and backup integration remain unverified."
     },
     "D05": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Structured overrides cover all requested scopes; bounded count-language parser implemented with ambiguous-input refusal. General natural-language host interpretation unverified."
     },
     "D06": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Host teacher-request authority required; private store cannot be inside package, database path/namespace omitted from projections, deletion/export implemented. Real host authentication/OS isolation not verified."
     },
     "D07": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Versioned calibration sidecar preserves run-context schema2; producers/consumers/audits migrated and future store versions rejected. Operational backup/rollback not verified."
     },
     "D08": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "verified-source",
+      "capability_status": "verified",
+      "note": "Old mandatory year pathways retired across runtime/QA/component contracts with new IDs. Actual model instructional behaviour still needs counterfactual evaluation."
     },
     "D09": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Missing timetable/current facts still block; preferences cannot stand in for those sources. Automatic retrieval of saved current planning documents and actual host interaction unverified."
     },
     "D10": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Complete/eight component packages include settings/calibration dependencies and manifests; clean interpreter imports tested. No active user installation or production session claimed."
     },
     "R01": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Existing registry/DAG reused and calibration projected to every generator. No new orchestration framework introduced; real provider invocation unverified."
     },
     "R02": {
       "work_status": "backlog",
@@ -115,9 +115,9 @@
       "note": "Retained; not individually audited in this bounded slice."
     },
     "R07": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Existing complete-pack authority retained; direct finalisation calibration/candidate constraints added. End-to-end actual provider/renderer/reviewer evidence missing."
     },
     "L01": {
       "work_status": "backlog",
@@ -330,9 +330,9 @@
       "note": "Retained; not individually audited in this bounded slice."
     },
     "E01": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Additional behavioural Python/schema/SQLite/package tests and exact-source CI retention implemented. Live model, rendered-pack and teacher evidence are not covered by those results."
     },
     "E02": {
       "work_status": "backlog",
@@ -340,14 +340,14 @@
       "note": "Retained; not individually audited in this bounded slice."
     },
     "E03": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Approved morning-work/full visual exemplar bytes preserved. Missing historical originals prevent completion of blind fixture; held-out live evaluation outstanding."
     },
     "E04": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Exact package digests/source manifests, verified pre-extraction checks and fresh-process imports implemented. Actual installed host activation and rollback outstanding."
     },
     "E05": {
       "work_status": "backlog",
@@ -360,9 +360,11 @@
       "note": "Retained; not individually audited in this bounded slice."
     },
     "E07": {
-      "work_status": "backlog",
-      "capability_status": null,
-      "note": "Retained; not individually audited in this bounded slice."
+      "work_status": "partial",
+      "capability_status": "partial",
+      "note": "Deterministic creator defaults, precedence, scope/namespace isolation and count contracts tested. Actual model counterfactuals/new-session host tests outstanding."
     }
-  }
+  },
+  "release_status": "candidate-unreleased",
+  "checkpoint": "docs/implementation/RELEASE-CANDIDATE-2026-09-09.md"
 }

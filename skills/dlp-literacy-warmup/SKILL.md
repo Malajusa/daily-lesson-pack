@@ -15,6 +15,14 @@ canonical task text and complete review coverage. Required checks cannot be
 replaced by a broad component PASS. Only the complete-pack release command may
 authorise classroom-ready output.
 
+## Resolved instructional preferences
+
+Read `references/creator-settings-contract.md` and use the orchestrator's frozen
+`instructional_calibration` when present. Do not independently reload or save
+private settings, change the requested warm-up count, or infer student attainment
+from enrolment year. Legacy inputs use the documented public defaults, not hidden
+chat memory. Existing final-artifact and independent-review gates still apply.
+
 ## Ownership
 
 Own the Literacy warm-up only. Keep it separate from Morning Work, Shared Reading, Guided Reading, spelling instruction and the main writing lesson.

@@ -8,10 +8,19 @@ import json
 import zipfile
 from pathlib import Path
 
+from package_identity import manifest, source_revision
+
 from year_profile_registry import PROFILE_REGISTRY_FILES, profile_reference_paths
 
 
 COMMON_REFERENCES = (
+    "references/creator-settings-contract.md",
+    "scripts/resolve_overrides.py",
+    "scripts/verify_package_archive.py",
+    "config/creator-defaults.json",
+    "schemas/instructional-calibration.schema.json",
+    "scripts/teacher_context_store.py",
+    "scripts/resolve_instructional_calibration.py",
     "references/qa-workflow-v3.md",
     "references/qa-requirements.json",
     "references/slide-deck-quality-standards.md",
@@ -101,6 +110,7 @@ def main() -> int:
     out_dir = (repo / args.out).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
     package_paths: list[Path] = []
+    revision = source_revision(repo)
 
     for component in registry["components"]:
         name = component["name"]
@@ -174,6 +184,7 @@ def main() -> int:
                 repo, MORNING_WORK_EXEMPLAR_ASSET
             )
 
+        package_files["PACKAGE-MANIFEST.json"] = manifest(version, package_files, source_commit=revision)
         zip_path = out_dir / f"{name}.zip"
         with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
             for relative_path in sorted(package_files):

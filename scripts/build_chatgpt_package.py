@@ -15,10 +15,19 @@ import json
 import zipfile
 from pathlib import Path
 
+from package_identity import manifest, source_revision
+
 from year_profile_registry import PROFILE_REGISTRY_FILES, profile_reference_paths
 
 
 COMMON_REFERENCES = (
+    "references/creator-settings-contract.md",
+    "scripts/resolve_overrides.py",
+    "scripts/verify_package_archive.py",
+    "config/creator-defaults.json",
+    "schemas/instructional-calibration.schema.json",
+    "scripts/teacher_context_store.py",
+    "scripts/resolve_instructional_calibration.py",
     "references/qa-workflow-v3.md",
     "references/qa-requirements.json",
     "references/slide-deck-quality-standards.md",
@@ -243,22 +252,6 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
     return version, files
 
 
-def manifest(version: str, files: dict[str, bytes]) -> bytes:
-    entries = []
-    for path in sorted(files):
-        data = files[path]
-        entries.append(
-            {
-                "path": path,
-                "sha256": hashlib.sha256(data).hexdigest(),
-                "bytes": len(data),
-            }
-        )
-    return (json.dumps({"version": version, "files": entries}, indent=2) + "\n").encode(
-        "utf-8"
-    )
-
-
 def write_deterministic(archive: zipfile.ZipFile, path: str, data: bytes) -> None:
     info = zipfile.ZipInfo(path, date_time=(1980, 1, 1, 0, 0, 0))
     info.compress_type = zipfile.ZIP_DEFLATED
@@ -275,7 +268,7 @@ def main() -> int:
     destination.parent.mkdir(parents=True, exist_ok=True)
 
     version, files = build_file_map(repo)
-    files["PACKAGE-MANIFEST.json"] = manifest(version, files)
+    files["PACKAGE-MANIFEST.json"] = manifest(version, files, source_commit=source_revision(repo))
 
     package_root = "daily-lesson-pack"
     with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED) as archive:
