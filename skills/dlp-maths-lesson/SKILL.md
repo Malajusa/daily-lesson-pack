@@ -15,6 +15,14 @@ canonical task text and complete review coverage. Required checks cannot be
 replaced by a broad component PASS. Only the complete-pack release command may
 authorise classroom-ready output.
 
+## Resolved instructional preferences
+
+Read `references/creator-settings-contract.md` and use the orchestrator's frozen
+`instructional_calibration` when present. Do not independently reload or save
+private settings, change the requested warm-up count, or infer student attainment
+from enrolment year. Legacy inputs use the documented public defaults, not hidden
+chat memory. Existing final-artifact and independent-review gates still apply.
+
 ## Ownership
 
 Own the main Mathematics lesson. Do not absorb the cumulative Mathematics warm-up into this sequence.
@@ -212,11 +220,14 @@ explanation of equivalence.
 
 Differentiate through representation, scaffold, reasoning, abstraction, strategy selection and context—not only by assigning more questions.
 
-For a mixed Year 4/5 class, state the common central idea and provide an explicit
-Year 4 pathway and Year 5 pathway in modelling, guided practice and independent
-evidence. If the active curriculum code belongs to only one year level, bridge
-the other year from its authorised prerequisite or consolidation boundary;
-never silently assign the active-year outcome to both cohorts.
+State the common central idea and use task-specific readiness evidence to select
+conditional support, prerequisite intervention, independent practice and connected
+challenge. Enrolment year is not evidence of readiness. With no observations,
+provide a diagnostic check and conditional teacher responses; do not invent groups.
+Supported success requires an independent recheck before support is faded.
+Do not replace year streams with permanent Support/Core/Challenge membership.
+Apply the frozen instructional_calibration supplied by the orchestrator; creator
+retrieval defaults are an emphasis, not a ceiling or a student attainment claim.
 
 Do not define higher attainment as completing the same task with more working or checking. Where students choose between levels, each task must be a complete mathematical task at a different level of complexity rather than a different completeness standard for one question.
 
@@ -234,7 +245,7 @@ Before returning the component for assembly, record `PASS` or `FAIL` and substan
 - representation selected for a stated mathematical purpose;
 - representation exactness verified;
 - representation/language/notation correspondence verified;
-- Year 4 and Year 5 pathways verified, including any inactive-year bridge;
+- task-specific readiness checks and conditional support/challenge verified;
 - technical vocabulary verified;
 - guided-practice answer withheld;
 - hardest independent demand matched to a modelled precursor and active profile;
@@ -245,7 +256,7 @@ Before returning the component for assembly, record `PASS` or `FAIL` and substan
 Use the stable audit IDs required by `component-instance-contract.md`:
 `MATHS.PLANNING`, `MATHS.REPRESENTATION.PURPOSE`,
 `MATHS.REPRESENTATION.EXACTNESS`, `MATHS.DIFFERENTIATION`,
-`MATHS.YEAR4.PATHWAY`, `MATHS.YEAR5.PATHWAY`,
+`MATHS.POINT_OF_NEED`, `MATHS.READINESS.CHECK`,
 `MATHS.MODEL_PRACTICE`, `MATHS.EXIT` and `VISUAL.READABILITY`.
 Add `MATHS.BLOCK.BREAKPOINT` when the day contains multiple Mathematics
 instances and `MATHS.FRACTION.REPARTITIONING` when the fraction-equivalence
@@ -267,7 +278,7 @@ Fail the component if:
 - the representation changes the mathematical focus;
 - a diagram or model is mathematically inaccurate;
 - an equivalence lesson shows only a final decimal grid without the repartitioning relationship;
-- a mixed-year lesson provides no substantive pathway for one year level;
+- support or challenge is assigned from enrolment year or invented ability membership;
 - a decorative image is used as mathematical evidence;
 - a visual, explanation and equation do not correspond;
 - a `We do` or task slide reveals the answer;

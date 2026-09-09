@@ -57,3 +57,9 @@ reduce scope or ask for a decision before building the deck.
 
 Component `PASS` is an input to independent QA, not evidence by itself. Freeform
 strings such as `checked` or `all checks passed` are invalid.
+
+## Point-of-need migration
+
+The two year-pathway check IDs are retired. Every Mathematics instance now requires
+`MATHS.POINT_OF_NEED` and `MATHS.READINESS.CHECK`, regardless of enrolment.
+Historical year-pathway PASS records do not satisfy the new checks.

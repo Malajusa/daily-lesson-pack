@@ -8,8 +8,9 @@ import hashlib
 import json
 from pathlib import Path
 
+from agent_protocol import ProtocolError
+from year_profile_registry import YearProfileRegistry
 
-SUPPORTED_PROFILES = {"year-4-5", "year-6"}
 RUNTIME_FIELDS = {
     "timetable",
     "mathematics_focus",
@@ -65,6 +66,7 @@ def main() -> int:
     active = context.get("active_year_profile")
     profile = ""
     profile_status = ""
+    release_mode = "candidate"
     if not isinstance(active, dict):
         failures.append("Context record is missing active_year_profile")
     else:
@@ -74,10 +76,17 @@ def main() -> int:
         profile_status = str(active.get("status", "")).strip().lower()
         if not resolved:
             failures.append("active_year_profile is unresolved")
-        if profile not in SUPPORTED_PROFILES:
-            failures.append(f"Unsupported active_year_profile: {profile or 'MISSING'}")
         if not source:
             failures.append("active_year_profile does not identify its profile source")
+        try:
+            registry = YearProfileRegistry.load()
+            # Derive the mode before checking caller assertions, so a false
+            # maturity claim still reports the actual candidate restriction.
+            release_mode = registry.release_mode(profile)
+            validated = registry.validate_active(active)
+            profile_status = validated['status']
+        except ProtocolError as exc:
+            failures.append(str(exc))
 
     for field in RUNTIME_FIELDS:
         entry = context.get(field)
@@ -125,12 +134,6 @@ def main() -> int:
                 f"Component instance {instance_id or 'MISSING'} profile mismatch: "
                 f"{component_profile} != {profile}"
             )
-
-    release_mode = "candidate" if profile_status in {"candidate", "calibration", "scaffold"} else "normal"
-    if profile == "year-6" and not profile_status:
-        # The bundled Year 6 profile is currently a calibration scaffold. Requiring
-        # an explicit status prevents a caller from silently treating it as mature.
-        failures.append("Year 6 context must record profile status while calibration is incomplete")
 
     report = {
         "status": "PASS" if not failures else "FAIL",

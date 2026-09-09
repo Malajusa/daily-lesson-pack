@@ -131,9 +131,13 @@ class AgentRegistry:
                 self._file(raw['requirements_source'])
 
     def references_for(self, agent_id: str, context: dict) -> list[dict]:
+        from year_profile_registry import YearProfileRegistry, REGISTRY_PATH
+        YearProfileRegistry.load(self.root).validate_active(context.get('active_year_profile'))
         raw = self.get(agent_id).raw
         paths = [raw['entrypoint'], 'references/year-level-context-contract.md',
+                 'references/creator-settings-contract.md',
                  'references/shared-class-context-contract.md',
+                 REGISTRY_PATH,
                  context['active_year_profile']['source']]
         inputs = (self.get(raw['reviews_owner']).raw['input'] if raw.get('reviews_owner')
                   else raw.get('input', {}))

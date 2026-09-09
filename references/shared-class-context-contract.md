@@ -8,6 +8,7 @@ It is deliberately separate from `year-level-context-contract.md`.
 
 - Runtime context answers: **What is this class teaching now, when, and under what local constraints?**
 - The active year-level profile answers: **What is an appropriate developmental and curriculum-facing pitch for this year level?**
+- The creator-settings contract answers: **Which authorised preferences apply for this class and date?**
 - The pack profile answers: **What stable slide counts and release behaviours apply across supported profiles?**
 
 Load `default-pack-profile.json` as the bundled architecture profile. A current
@@ -20,7 +21,7 @@ A teacher's timetable or overview must never become the definition of a year-lev
 
 Resolve these from the current request, current-run files, connected authoritative sources or an explicitly selected reusable user/school context file:
 
-1. active year level or explicitly authored combined year band;
+1. active registered profile, automatically selected from creator defaults or authorised preferences unless the current request overrides it;
 2. exact date, term, week and day;
 3. that teacher's timetable for the requested day, including interruptions;
 4. current Mathematics overview/topic and day-level focus;
@@ -61,7 +62,7 @@ Use runtime facts in this order:
 1. the user's current explicit instruction;
 2. current-run timetable/overview/unit files;
 3. explicitly selected maintained user/school context;
-4. connected calendar or authoritative school source;
+4. authoritative school planning material explicitly supplied for this run;
 5. older local planning only when it is clearly still current.
 
 Chat memory, saved personal context and another account's Project context may help identify what to look for, but must not silently supply timetable facts, lesson focus, class size, copy quantity or local routines.
@@ -100,3 +101,11 @@ If the same supplied inputs produce materially weaker pedagogy, visual design or
 ## Privacy boundary
 
 Do not store student names, diagnoses, assessment records or other personal student information in the portable runtime-context contract or year-level profiles.
+
+## Authorised persistence is not hidden recall
+
+`creator-settings-contract.md` supersedes any interpretation that all preferences
+must be supplied again each run. Real private revisioned settings may load
+automatically. Current lesson facts still need valid planning sources. The school
+calendar is not a source for this skill. Nothing here authorises student records,
+private bindings or saved settings to enter a portable package.

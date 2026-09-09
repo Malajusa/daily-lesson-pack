@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily-lesson-pack.local/schemas/instructional-calibration.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "on",
+    "settings_revision",
+    "defaults_sha256",
+    "values",
+    "provenance",
+    "profile"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "on": {
+      "type": "string",
+      "format": "date"
+    },
+    "settings_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "defaults_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "values": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "active_year_profile",
+        "main_curriculum_year",
+        "retrieval_years",
+        "differentiation_mode",
+        "locale",
+        "timezone",
+        "literacy_sequence_count",
+        "numeracy_prompt_answer_pairs"
+      ],
+      "properties": {
+        "active_year_profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "main_curriculum_year": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "retrieval_years": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          }
+        },
+        "differentiation_mode": {
+          "const": "point-of-need"
+        },
+        "locale": {
+          "enum": [
+            "en-AU",
+            "en-GB",
+            "en-US",
+            "en-NZ"
+          ]
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "literacy_sequence_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "numeracy_prompt_answer_pairs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "source",
+          "revision",
+          "scope"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "scope": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "default",
+                      "current",
+                      "profile",
+                      "standing"
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "unit",
+                      "lesson",
+                      "progression"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "start",
+                  "end"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "date"
+                  },
+                  "start": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "end": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source",
+        "revision",
+        "status",
+        "release_mode"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "revision": {
+          "type": [
+            "string",
+            "integer"
+          ]
+        },
+        "status": {
+          "type": "string"
+        },
+        "release_mode": {
+          "enum": [
+            "normal",
+            "candidate"
+          ]
+        }
+      }
+    }
+  }
+}

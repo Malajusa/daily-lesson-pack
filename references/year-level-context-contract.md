@@ -12,6 +12,32 @@ The user's current timetable, Maths/English overviews, current unit sequence and
 
 Every Daily Lesson Pack run must resolve an active year-level profile before content generation.
 
+`references/year-level-profiles/registry.json` is the versioned discovery source,
+validated by `scripts/year_profile_registry.py` against
+`schemas/year-level-profile.schema.json`. Profile IDs, source hashes, revisions
+and maturity must agree. A missing, corrupt or stale registry is an error; it
+must not silently select a fallback profile.
+
+The registry separates curriculum anchor, retrieval guidance, language and
+representation guidance, subject coverage and jurisdiction mapping. Its anchors
+describe authored profile scope, not the creator's saved direction or student
+readiness. The profile's `calibrated` label records the existing source claim;
+domain evidence remains `implemented-unverified` until actual evaluations support
+a stronger claim. Year 6 remains a scaffold. Any candidate/scaffold domain makes
+the profile's release mode candidate. Null jurisdiction mapping means unverified,
+not permission to invent curriculum codes.
+
+The final release consumer requires normal profile release mode. Candidate QA
+can pass as a diagnostic without granting classroom-ready promotion. Graduation
+requires supported profile-specific review and an explicit source/registry update.
+
+Runtime freezing binds the registry source hash and derives profile status,
+revision and release mode. Generator/reviewer references include that same
+registry. QA validates caller assertions against repository metadata even on the
+direct audit path. This metadata migration does not change existing task pathway
+requirements: their point-of-need replacement remains D08, with explicit check-ID
+migration required before claiming that behaviour is implemented.
+
 Supported profile states are:
 
 - a single year profile, such as `year-6`;

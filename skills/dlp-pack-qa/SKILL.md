@@ -5,6 +5,14 @@ description: Independently quality-assure a complete Daily Lesson Pack and retur
 
 # DLP Pack QA
 
+## Resolved instructional preferences
+
+Read `references/creator-settings-contract.md` and use the orchestrator's frozen
+`instructional_calibration` when present. Do not independently reload or save
+private settings, change the requested warm-up count, or infer student attainment
+from enrolment year. Legacy inputs use the documented public defaults, not hidden
+chat memory. Existing final-artifact and independent-review gates still apply.
+
 ## Mandatory evidence workflow (v3)
 
 Read `references/qa-workflow-v3.md` and the applicable entries in
@@ -141,7 +149,7 @@ Apply `references/fraction-equivalence-standard.md` when equivalence or fraction
 - Focused prerequisite retrieval is distinct from the cumulative Mathematics warm-up.
 - Year 6 demand is not produced by mechanically enlarging Year 4/5 numbers, text length or step count.
 - Each Mathematics timetable block has its own instance ID, purpose and feasible time estimate.
-- Mixed Year 4/5 instruction states a common central idea and provides substantive Year 4 and Year 5 pathways. An inactive year level receives an authorised prerequisite/consolidation bridge, not the other year's outcome by implication.
+- Mathematics uses a common central idea, readiness checks and conditional support/challenge based on task-specific evidence. Enrolment alone cannot select a pathway. Missing evidence remains unknown; supported success requires an independent recheck.
 
 #### Mathematical meaning and language
 - A newly introduced procedure is grounded in quantities, units, properties or relationships before procedural shorthand is used.

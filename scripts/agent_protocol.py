@@ -143,8 +143,6 @@ def required_component_checks(context: dict, owner: str) -> list[str]:
     from audit_pack_contract import REQUIRED_CHECKS, GENERIC_REQUIRED_CHECKS
     checks = set(REQUIRED_CHECKS.get(owner, GENERIC_REQUIRED_CHECKS))
     if owner == 'dlp-maths-lesson':
-        if context['active_year_profile']['value'] == 'year-4-5':
-            checks.update(('MATHS.YEAR4.PATHWAY', 'MATHS.YEAR5.PATHWAY'))
         if sum(i['owner'] == owner for i in context['timetable_instances']) > 1:
             checks.add('MATHS.BLOCK.BREAKPOINT')
         focus = str(context['mathematics_focus']['value']).lower()

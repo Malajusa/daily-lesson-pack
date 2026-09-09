@@ -1,5 +1,5 @@
 {
-  "version": "3.9.1",
+  "version": "3.10.0-rc.1",
   "created": "2026-09-09",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
   "base_commit": "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
@@ -49,5 +49,14 @@
   "intentional_removals": [
     "Removed the fixed 29-copy runtime default from the portable context contract; printing quantity must now come from the current user's authoritative context.",
     "Removed the hard-coded Term 3 Information Report weekday spine from the universal writing component; the current user's English/writing overview now controls genre and sequence."
+  ],
+  "release_status": "candidate-unreleased",
+  "candidate_base_commit": "c31f686fb75c3addbb47ccbd147ba6e11e488e55",
+  "integrated_profile_commit": "7cba2d72642dcc22cf8a8d1ea8e8a075ff0766ad",
+  "evidence_limits": [
+    "No production host activation",
+    "No live blind benchmark acceptance",
+    "No teacher pilot or unattended-delivery acceptance",
+    "No independent review of these new changes"
   ]
 }

@@ -389,6 +389,9 @@
           }
         }
       ]
+    },
+    "instructional_calibration": {
+      "$ref": "instructional-calibration.schema.json"
     }
   }
 }

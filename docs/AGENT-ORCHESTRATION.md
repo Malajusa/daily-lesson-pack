@@ -55,7 +55,7 @@ JSON on stdin/stdout. There is no built-in paid API integration and no provider
 credentials are requested, stored or installed. The trusted host implements
 its provider/skill invocation using fresh contexts.
 
-A host configuration has three keys:
+A host configuration has three execution keys and an optional private `settings` binding:
 
 ```json
 {
@@ -202,3 +202,15 @@ pedagogical/visual QA. Tests exercise concurrency, state transitions, malformed
 handoffs, cumulative repairs, canonical staging, rendered-file coverage and
 release refusal. A successful test run does not establish a real model's
 teaching quality or complete a live provider integration.
+
+## Creator configuration integration
+
+Read `references/creator-settings-contract.md`. An optional `settings` object has
+exactly `store`, `teacher` and `classroom`; the trusted host chooses an actual
+private durable location and authenticated namespace. The CLI loads it before
+freezing every fresh context. Request-only `instructional_overrides` and explicit
+`instructional_scope` are verified against the actual request source and do not
+become standing preferences. A corrupted configured store blocks the run.
+
+No settings database is supplied, installed or activated by these source changes.
+The host still needs genuine teaching/review commands and canonical assembly.

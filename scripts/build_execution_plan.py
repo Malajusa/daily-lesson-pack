@@ -22,7 +22,22 @@ def source_path(source: dict, registry: AgentRegistry, source_root: Path) -> Pat
 
 
 def freeze_context(context: dict, registry: AgentRegistry, source_root: Path) -> dict:
+    from year_profile_registry import YearProfileRegistry, REGISTRY_PATH
     frozen = copy.deepcopy(context)
+    from resolve_instructional_calibration import freeze_calibration
+    freeze_calibration(frozen, root=registry.root, source_root=source_root)
+    profiles = YearProfileRegistry.load(registry.root)
+    frozen['active_year_profile'] = profiles.validate_active(frozen.get('active_year_profile'))
+    provenance = frozen.get('source_provenance')
+    if not isinstance(provenance, list):
+        raise ProtocolError('source_provenance must be a list')
+    bindings = [s for s in provenance if isinstance(s, dict) and s.get('path') == REGISTRY_PATH]
+    if bindings and (len(bindings) != 1 or bindings[0].get('kind') != 'repository_reference'
+                     or bindings[0].get('sha256') != sha256_file(registry.root / REGISTRY_PATH)):
+        raise ProtocolError('Profile registry provenance must bind the repository registry')
+    if not bindings:
+        provenance.append(dict(id='profile-registry', kind='repository_reference',
+                               path=REGISTRY_PATH, sha256=sha256_file(registry.root / REGISTRY_PATH)))
     frozen['frozen'] = True
     validate_json(frozen, registry.root / 'schemas/run-context.schema.json')
     from dlp_build_runtime import validate_resolved_context, REQUIRED_CONTEXT_FIELDS

@@ -11,6 +11,9 @@ import sys
 import subprocess
 from pathlib import Path
 
+from year_profile_registry import PROFILE_REGISTRY_FILES, YearProfileRegistry
+from agent_protocol import ProtocolError
+
 
 REFERENCE_RE = re.compile(
     r"`((?:\.\./)*(?:assets|examples|references|scripts|skills)/"
@@ -21,6 +24,11 @@ ICON_RE = re.compile(
 )
 FRONTMATTER_NAME_RE = re.compile(r"^name:\s*([^\n]+)$", re.MULTILINE)
 MANDATORY_RUNTIME_FILES = (
+    "config/creator-defaults.json",
+    "scripts/teacher_context_store.py",
+    "scripts/resolve_instructional_calibration.py",
+    "schemas/instructional-calibration.schema.json",
+    *PROFILE_REGISTRY_FILES,
     "scripts/build_daily_pack.py",
     "scripts/dlp_build_runtime.py",
     "requirements.txt",
@@ -52,7 +60,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--component",
         action="store_true",
-        help="Validate a standalone component package without a root manifest or registry",
+        help="Validate a manifested standalone component package without the orchestrator registry",
     )
     parser.add_argument("--out", type=Path)
     return parser.parse_args()
@@ -62,22 +70,30 @@ def relative_files(root: Path) -> set[str]:
     return {
         path.relative_to(root).as_posix()
         for path in root.rglob("*")
-        if path.is_file() and path.name != "PACKAGE-MANIFEST.json"
+        if path.is_file() and path != root / "PACKAGE-MANIFEST.json"
     }
 
 
-def validate_manifest(root: Path, failures: list[str]) -> None:
+def validate_manifest(root: Path, failures: list[str], *, component: bool = False) -> None:
     manifest_path = root / "PACKAGE-MANIFEST.json"
     if not manifest_path.is_file():
         failures.append("Missing PACKAGE-MANIFEST.json")
         return
 
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    version_path = root / "VERSION"
-    if not version_path.is_file():
-        failures.append("Missing VERSION")
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if not isinstance(manifest, dict):
+            raise ValueError("Manifest must be an object")
+        if component:
+            metadata = json.loads((root / "PACKAGE.json").read_text(encoding="utf-8"))
+            version = metadata["daily_lesson_pack_version"]
+        else:
+            version = (root / "VERSION").read_text(encoding="utf-8").strip()
+        if not isinstance(version, str) or not version:
+            raise ValueError("Missing package version")
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        failures.append("Invalid manifest/version metadata: " + str(exc))
         return
-    version = version_path.read_text(encoding="utf-8").strip()
     if manifest.get("version") != version:
         failures.append(
             f"Manifest version {manifest.get('version')!r} does not match VERSION {version!r}"
@@ -88,7 +104,15 @@ def validate_manifest(root: Path, failures: list[str]) -> None:
         failures.append("Manifest files must be a list")
         return
 
-    declared = {entry.get("path") for entry in entries}
+    if any(not isinstance(entry,dict) or not isinstance(entry.get("path"),str) for entry in entries):
+        failures.append("Invalid manifest entry")
+        return
+    declared = {entry["path"] for entry in entries}
+    if len(declared) != len(entries):
+        failures.append("Duplicate manifest path")
+    if any(path.is_symlink() for path in root.rglob("*")):
+        failures.append("Installed skill contains a symbolic link")
+        return
     actual = relative_files(root)
     for path in sorted(actual - declared):
         failures.append(f"Undeclared file: {path}")
@@ -217,6 +241,8 @@ import dlp_build_runtime as runtime
 from agent_registry import AgentRegistry
 from agent_orchestrator import DailyPackOrchestrator
 AgentRegistry.load()
+from resolve_instructional_calibration import resolve
+resolve(on="2026-09-09")
 for name in ('stage_candidate','promote_release','validate_resolved_context'):
     if not callable(getattr(runtime,name,None)):
         raise ValueError('Missing mandatory runtime callable: '+name)
@@ -238,14 +264,18 @@ def main() -> int:
     if not root.is_dir():
         failures.append(f"Skill root is not a directory: {root}")
     else:
-        if not args.component:
-            validate_manifest(root, failures)
+        try:
+            YearProfileRegistry.load(root)
+        except ProtocolError as exc:
+            failures.append(str(exc))
+        validate_manifest(root, failures, component=args.component)
         validate_markdown_references(root, failures)
         validate_metadata_icons(root, failures)
         if not args.component:
             validate_registry(root, failures)
             validate_provenance(root, failures)
-            validate_runtime(root, failures)
+            if not failures:
+                validate_runtime(root, failures)
 
     report = {
         "status": "PASS" if not failures else "FAIL",

@@ -981,10 +981,10 @@
       ]
     },
     {
-      "id": "QA.B4081F2450",
+      "id": "QA.593BB758BF",
       "owner": "dlp-maths-lesson",
       "scope": "instance",
-      "statement": "Mixed Year 4/5 instruction states a common central idea and provides substantive Year 4 and Year 5 pathways. An inactive year level receives an authorised prerequisite/consolidation bridge, not the other year's outcome by implication.",
+      "statement": "Mathematics uses a common central idea with task-specific diagnostic checks and conditional support, prerequisite intervention, independent rechecks and connected challenge. Enrolment year or fixed ability membership does not select a pathway; absent evidence remains unknown.",
       "method": "semantic",
       "evidence": [
         "observation",
@@ -1419,6 +1419,16 @@
         "observation",
         "citations"
       ]
+    }
+  ],
+  "requirements_revision": "2026-09-09-point-of-need-1",
+  "retired_requirements": [
+    {
+      "id": "QA.B4081F2450",
+      "replaced_by": [
+        "QA.593BB758BF"
+      ],
+      "reason": "DEC-04 retires compulsory year pathways; historical reviews do not certify the replacement."
     }
   ]
 }

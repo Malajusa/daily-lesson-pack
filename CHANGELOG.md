@@ -1,3 +1,17 @@
+# 3.10.0-rc.1 — Unreleased candidate
+
+- Integrate D02 registry and preserve the 72-item creator-first roadmap.
+- Add source-backed creator defaults, private revisioned SQLite preferences,
+  scoped overrides, cautious conversational count parsing and actual host-CLI loading.
+- Replace compulsory year-pathway checks with point-of-need requirements; retire
+  the old central QA ID without recertifying historical reviews.
+- Validate calibration on direct finalisation, preserve candidate status outside
+  registered main-curriculum coverage and distribute calibration dependencies.
+- Add digest-first archive verification, per-component manifests and clean-source
+  identity; do not execute an installed runtime after its static audit fails.
+- Production integration, blind model evaluation, independent review, active
+  installation, classroom pilot and unattended delivery remain unaccepted.
+
 # Changelog
 
 ## Unreleased — agent orchestration v2
@@ -310,3 +324,11 @@ For future updates, record changes under one or more of:
 - **Removed** — behaviour deliberately retired.
 
 Where useful, include the reason for the change and the regression example used to validate it.
+# Unreleased — D02 profile registry
+
+- Register existing profile identity, source hashes, revision and subject coverage
+  in one validated discovery source used by runtime, QA and package builders.
+- Reject caller-supplied maturity promotions and retain Year 6 candidate status.
+- Preserve the implementation handover and issue dependencies under
+  `docs/implementation/`; creator defaults, persistence and point-of-need migration
+  remain tracked work, not claims of this change.

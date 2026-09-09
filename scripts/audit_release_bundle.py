@@ -44,6 +44,8 @@ def main() -> int:
     failures: list[str] = []
     reports: dict[str, dict] = {}
     try:
+        from resolve_instructional_calibration import instructional_context_errors
+        failures.extend(instructional_context_errors(json.loads(args.context_record.read_text()), require_release=True))
         bundle_errors, content, manifest = audit_pack(args.manifest, args.content, args.context_record)
         failures.extend(bundle_errors)
         deck_entry = next(a for a in manifest['artifacts'] if a['role'] == 'deck')
@@ -96,6 +98,8 @@ def main() -> int:
         status = str(report.get("overall_status", report.get("status", ""))).lower()
         if status != "pass":
             failures.append(f"{name} report status is {status or 'missing'}")
+        if name == "year_profile" and report.get("release_mode") != "normal":
+            failures.append("year_profile is not eligible for classroom-ready release")
         report_hash = str(report.get("artifact_sha256", "")).lower()
         if not report_hash:
             failures.append(f"{name} report is not bound to a deck SHA-256")
