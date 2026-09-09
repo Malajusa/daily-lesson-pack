@@ -7,11 +7,17 @@ on:
       - enforce-dlp-build-release-pipeline-20260908
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -19,58 +25,77 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
+      - name: Record exact source
+        run: |
+          mkdir -p /tmp/dlp-candidate/packages
+          git rev-parse HEAD > /tmp/dlp-candidate/SOURCE_COMMIT.txt
+          git archive --format=zip HEAD > /tmp/dlp-candidate/source.zip
+          python -m pip freeze > /tmp/dlp-candidate/environment.txt
       - name: Run unit tests
-        run: python -m unittest discover -s tests -v
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest discover -s tests -v 2>&1 | tee /tmp/dlp-candidate/tests.log
       - name: Build complete package
-        run: python scripts/build_chatgpt_package.py --out dist/chatgpt/daily-lesson-pack.zip
+        run: python scripts/build_chatgpt_package.py --out /tmp/dlp-candidate/packages/daily-lesson-pack.zip
       - name: Verify complete package
         run: |
           python - <<'PY'
           from pathlib import Path
-          import shutil
-          import zipfile
-
-          destination = Path('/tmp/dlp-complete')
-          shutil.rmtree(destination, ignore_errors=True)
-          destination.mkdir(parents=True)
-          with zipfile.ZipFile('dist/chatgpt/daily-lesson-pack.zip') as archive:
-              archive.extractall(destination)
+          import hashlib, json, subprocess, sys
+          sys.path.insert(0, 'scripts')
+          from verify_package_archive import extract_verified
+          package = Path('/tmp/dlp-candidate/packages/daily-lesson-pack.zip')
+          source = Path('/tmp/dlp-candidate/SOURCE_COMMIT.txt').read_text().strip()
+          receipt = extract_verified(package, Path('/tmp/dlp-verified-complete'),
+              expected_sha256=hashlib.sha256(package.read_bytes()).hexdigest(), expected_source_commit=source)
+          Path('/tmp/dlp-candidate/complete-receipt.json').write_text(json.dumps(receipt, indent=2))
+          subprocess.run([sys.executable, 'scripts/audit_package_dependencies.py', '--skill-root',
+              '/tmp/dlp-verified-complete/daily-lesson-pack', '--out', '/tmp/dlp-candidate/complete-audit.json'], check=True)
           PY
-          python scripts/audit_package_dependencies.py --skill-root /tmp/dlp-complete/daily-lesson-pack
       - name: Build component packages
-        run: python scripts/package_component_skills.py --out dist/component-skills
+        run: python scripts/package_component_skills.py --out /tmp/dlp-candidate/packages/components
       - name: Verify component packages
         run: |
           python - <<'PY'
           from pathlib import Path
-          import shutil
-          import subprocess
-          import sys
-          import zipfile
-
-          package_dir = Path('dist/component-skills')
-          verification_root = Path('/tmp/dlp-components')
-          shutil.rmtree(verification_root, ignore_errors=True)
-          verification_root.mkdir(parents=True)
-
-          packages = sorted(package_dir.glob('dlp-*.zip'))
+          import hashlib, json, subprocess, sys
+          sys.path.insert(0, 'scripts')
+          from verify_package_archive import extract_verified
+          source = Path('/tmp/dlp-candidate/SOURCE_COMMIT.txt').read_text().strip()
+          packages = sorted(Path('/tmp/dlp-candidate/packages/components').glob('dlp-*.zip'))
           if len(packages) != 8:
-              raise SystemExit(f'Expected 8 component packages, found {len(packages)}')
-
+              raise SystemExit('Expected eight component packages')
+          receipts = []
           for package in packages:
-              destination = verification_root / package.stem
-              destination.mkdir(parents=True)
-              with zipfile.ZipFile(package) as archive:
-                  archive.extractall(destination)
-              skill_root = destination / package.stem
-              subprocess.run(
-                  [
-                      sys.executable,
-                      'scripts/audit_package_dependencies.py',
-                      '--skill-root',
-                      str(skill_root),
-                      '--component',
-                  ],
-                  check=True,
-              )
+              destination = Path('/tmp/dlp-verified-components') / package.stem
+              receipt = extract_verified(package, destination,
+                  expected_sha256=hashlib.sha256(package.read_bytes()).hexdigest(), expected_source_commit=source)
+              receipts.append(receipt)
+              subprocess.run([sys.executable, 'scripts/audit_package_dependencies.py', '--skill-root',
+                  str(destination / package.stem), '--component', '--out',
+                  '/tmp/dlp-candidate/' + package.stem + '-audit.json'], check=True)
+          Path('/tmp/dlp-candidate/component-receipts.json').write_text(json.dumps(receipts, indent=2))
           PY
+      - name: Verify reproducible package and unchanged source
+        run: |
+          python scripts/build_chatgpt_package.py --out /tmp/dlp-rebuilt.zip
+          cmp /tmp/dlp-candidate/packages/daily-lesson-pack.zip /tmp/dlp-rebuilt.zip
+          git diff --exit-code
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json
+          root = Path('/tmp/dlp-candidate')
+          files = {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                   for p in sorted(root.rglob('*')) if p.is_file()}
+          (root / 'SHA256SUMS.json').write_text(json.dumps(files, indent=2))
+          (root / 'SCOPE.txt').write_text('Deterministic source/package evidence only. Not independent model review, host activation, classroom pilot or unattended-delivery acceptance.\n')
+          PY
+      - name: Retain exact-source candidate and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dlp-candidate-${{ github.event.pull_request.head.sha || github.sha }}
+          path: /tmp/dlp-candidate/
+          if-no-files-found: error
+          retention-days: 7
