@@ -151,7 +151,10 @@ def read_required(repo: Path, relative_path: str) -> bytes:
     source = repo / relative_path
     if not source.is_file():
         raise FileNotFoundError(f"Missing package dependency: {source}")
-    return source.read_bytes()
+    data = source.read_bytes()
+    if source.name == "VERSION" or source.suffix.lower() in {".json", ".md", ".py", ".svg", ".yaml", ".yml"}:
+        return data.replace(b"\r\n", b"\n")
+    return data
 
 
 def package_json(

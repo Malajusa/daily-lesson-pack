@@ -22,6 +22,22 @@ class YearProfileRegistryTests(unittest.TestCase):
         self.assertEqual(self.registry.get('year-6')['release_mode'], 'candidate')
         self.assertEqual(self.registry.get('year-4-5')['status'], 'calibrated')
 
+    def test_profile_sources_accept_windows_line_endings_for_digest_stability(self):
+        from year_profile_registry import YearProfileRegistry
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for relative in ('references/year-level-profiles/registry.json',
+                             'schemas/year-level-profile.schema.json'):
+                target = root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((ROOT / relative).read_bytes())
+            for profile in self.registry.payload['profiles']:
+                target = root / profile['path']
+                target.parent.mkdir(parents=True, exist_ok=True)
+                source = (ROOT / profile['path']).read_bytes().replace(b'\r\n', b'\n')
+                target.write_bytes(source.replace(b'\n', b'\r\n'))
+            self.assertEqual(YearProfileRegistry.load(root).ids(), ('year-4-5', 'year-6'))
+
     def test_profile_results_are_isolated_copies(self):
         first = self.registry.get('year-4-5')
         first['domains']['mathematics']['status'] = 'scaffold'

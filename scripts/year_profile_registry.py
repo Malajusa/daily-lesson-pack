@@ -6,15 +6,21 @@ Curriculum/retrieval preferences and scoped overrides belong to D01/D03.
 from __future__ import annotations
 
 import copy
+import hashlib
 from pathlib import Path
 
-from agent_protocol import ProtocolError, read_json, safe_path, sha256_file, validate_json
+from agent_protocol import ProtocolError, read_json, safe_path, validate_json
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = 'references/year-level-profiles/registry.json'
 SCHEMA_PATH = 'schemas/year-level-profile.schema.json'
 PROFILE_REGISTRY_FILES = (REGISTRY_PATH, SCHEMA_PATH,
                           'scripts/year_profile_registry.py', 'scripts/agent_protocol.py')
+
+
+def profile_source_sha256(path: Path) -> str:
+    """Hash portable profile text, independent of a Windows CRLF checkout."""
+    return hashlib.sha256(path.read_bytes().replace(b'\r\n', b'\n')).hexdigest()
 
 
 class YearProfileRegistry:
@@ -32,7 +38,7 @@ class YearProfileRegistry:
             if profile['curriculum_anchor']['years'] != [int(year) for year in ident.split('-')[1:]]:
                 raise ProtocolError('Curriculum coverage disagrees with profile identity: ' + ident)
             path = safe_path(self.root, profile['path'])
-            if not path.is_file() or sha256_file(path) != profile['sha256']:
+            if not path.is_file() or profile_source_sha256(path) != profile['sha256']:
                 raise ProtocolError('Missing or changed profile source: ' + ident)
             status_lines = [line for line in path.read_text(encoding='utf-8').splitlines()
                             if line.startswith('Status: ')]
