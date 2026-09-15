@@ -328,6 +328,20 @@ def stage_candidate(
     return status
 
 
+def _write_blocked_release_report(candidate: Path, reason: str) -> Path:
+    """Persist an auditable FAIL record for a policy-blocked promotion attempt."""
+    report_path = candidate / "release-audit.json"
+    report = {
+        "status": "FAIL",
+        "artifact_sha256": sha256(candidate / "pack.pptx") if (candidate / "pack.pptx").is_file() else "",
+        "manifest_sha256": sha256(candidate / "manifest.json") if (candidate / "manifest.json").is_file() else "",
+        "render_manifest_sha256": sha256(candidate / "render-manifest.json") if (candidate / "render-manifest.json").is_file() else "",
+        "failures": [reason],
+    }
+    report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    return report_path
+
+
 def promote_release(
     candidate_dir: Path,
     released_dir: Path,
@@ -338,15 +352,9 @@ def promote_release(
     """Run the repository release authority and promote only its same-hash PASS."""
     candidate = Path(candidate_dir)
     released = Path(released_dir)
-    if not (candidate / "render-manifest.json").is_file():
-        return {
-            "status": "CANDIDATE",
-            "reason": "Release requires repo-rendered provenance; external deck candidates are not release-eligible.",
-        }
     required_candidate = (
         candidate / "pack.pptx",
         candidate / "manifest.json",
-        candidate / "render-manifest.json",
         candidate / "content.json",
         candidate / "context.json",
         candidate / "component-record.json",
@@ -363,6 +371,11 @@ def promote_release(
 
     release_report = candidate / "release-audit.json"
     release_report.unlink(missing_ok=True)
+    if not (candidate / "render-manifest.json").is_file():
+        reason = "Release requires repo-rendered provenance; external deck candidates are not release-eligible."
+        _write_blocked_release_report(candidate, reason)
+        return {"status": "CANDIDATE", "reason": reason}
+
     command = [
         sys.executable,
         str(ROOT / "audit_release_bundle.py"),
