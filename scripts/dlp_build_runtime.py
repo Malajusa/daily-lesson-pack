@@ -45,6 +45,7 @@ REQUIRED_RELEASE_EVIDENCE = (
     "typography",
     "containment",
     "visual",
+    "composition",
     "semantic_review",
     "warning_ledger",
     "visual_review",
@@ -126,9 +127,6 @@ def validate_resolved_context(context: dict) -> list[str]:
 
 
 def _component_entries(component_record: dict) -> list[dict]:
-    # `components` is the canonical schema-v2 key. `instances` is accepted here
-    # only so the staging validator can report a useful candidate error for
-    # early/runtime fixtures; final repository audits still enforce canonical v2.
     entries = component_record.get("components")
     if entries is None:
         entries = component_record.get("instances")
@@ -187,6 +185,33 @@ def validate_component_record(context: dict, component_record: dict) -> list[str
     return errors
 
 
+def validate_render_manifest(
+    render_manifest: dict,
+    *,
+    deck_path: Path,
+    context_path: Path,
+    content_path: Path,
+    component_record_path: Path,
+) -> list[str]:
+    errors: list[str] = []
+    if render_manifest.get("schema_version") != 1:
+        errors.append("render manifest schema_version must be 1")
+    if render_manifest.get("renderer") != "daily-lesson-pack":
+        errors.append("render manifest renderer must be daily-lesson-pack")
+    expected = {
+        "deck_sha256": sha256(deck_path),
+        "context_sha256": sha256(context_path),
+        "content_sha256": sha256(content_path),
+        "component_record_sha256": sha256(component_record_path),
+    }
+    for key, value in expected.items():
+        if str(render_manifest.get(key, "")).lower() != value:
+            errors.append(f"render manifest {key} does not match current input")
+    if not isinstance(render_manifest.get("slides"), list):
+        errors.append("render manifest slides must be a list")
+    return errors
+
+
 def _load_and_validate_inputs(
     *,
     request_path: Path,
@@ -237,6 +262,7 @@ def stage_candidate(
     component_record_path: Path,
     deck_path: Path,
     manifest_path: Path,
+    render_manifest_path: Path | None = None,
 ) -> dict:
     """Validate and stage a candidate. Never creates or mutates released/."""
     _load_and_validate_inputs(
@@ -247,6 +273,23 @@ def stage_candidate(
         deck_path=deck_path,
         manifest_path=manifest_path,
     )
+    renderer_provenance = "external"
+    if render_manifest_path is not None:
+        render_manifest_path = Path(render_manifest_path)
+        if not render_manifest_path.is_file():
+            raise ValueError("render manifest path does not exist")
+        render_manifest = read_json(render_manifest_path)
+        render_errors = validate_render_manifest(
+            render_manifest,
+            deck_path=Path(deck_path),
+            context_path=Path(context_path),
+            content_path=Path(content_path),
+            component_record_path=Path(component_record_path),
+        )
+        if render_errors:
+            raise ValueError("\n".join(render_errors))
+        renderer_provenance = "repo-rendered"
+
     run_root = Path(run_root)
     candidate = run_root / "candidate"
     if candidate.exists():
@@ -261,6 +304,8 @@ def stage_candidate(
         "pack.pptx": Path(deck_path),
         "manifest.json": Path(manifest_path),
     }
+    if render_manifest_path is not None:
+        copies["render-manifest.json"] = Path(render_manifest_path)
     for destination, source in copies.items():
         shutil.copy2(source, candidate / destination)
 
@@ -270,10 +315,31 @@ def stage_candidate(
         "artifact_sha256": sha256(candidate / "pack.pptx"),
         "manifest_sha256": sha256(candidate / "manifest.json"),
         "release_ready": False,
-        "reason": "Independent semantic/visual review and final repository release audit are still required.",
+        "renderer_provenance": renderer_provenance,
+        "reason": (
+            "Independent semantic/visual review and final repository release audit are still required."
+            if renderer_provenance == "repo-rendered"
+            else "External deck staged as candidate only; current release policy requires repo-rendered provenance."
+        ),
     }
+    if render_manifest_path is not None:
+        status["render_manifest_sha256"] = sha256(candidate / "render-manifest.json")
     (candidate / "candidate-status.json").write_text(json.dumps(status, indent=2) + "\n", encoding="utf-8")
     return status
+
+
+def _write_blocked_release_report(candidate: Path, reason: str) -> Path:
+    """Persist an auditable FAIL record for a policy-blocked promotion attempt."""
+    report_path = candidate / "release-audit.json"
+    report = {
+        "status": "FAIL",
+        "artifact_sha256": sha256(candidate / "pack.pptx") if (candidate / "pack.pptx").is_file() else "",
+        "manifest_sha256": sha256(candidate / "manifest.json") if (candidate / "manifest.json").is_file() else "",
+        "render_manifest_sha256": sha256(candidate / "render-manifest.json") if (candidate / "render-manifest.json").is_file() else "",
+        "failures": [reason],
+    }
+    report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    return report_path
 
 
 def promote_release(
@@ -298,13 +364,17 @@ def promote_release(
 
     missing_evidence = [key for key in REQUIRED_RELEASE_EVIDENCE if key not in evidence or not Path(evidence[key]).is_file()]
     if missing_evidence:
-        return {
-            "status": "CANDIDATE",
-            "reason": "Release evidence is incomplete: " + ", ".join(missing_evidence),
-        }
+        reason = "Release evidence is incomplete: " + ", ".join(missing_evidence)
+        _write_blocked_release_report(candidate, reason)
+        return {"status": "CANDIDATE", "reason": reason}
 
     release_report = candidate / "release-audit.json"
     release_report.unlink(missing_ok=True)
+    if not (candidate / "render-manifest.json").is_file():
+        reason = "Release requires repo-rendered provenance; external deck candidates are not release-eligible."
+        _write_blocked_release_report(candidate, reason)
+        return {"status": "CANDIDATE", "reason": reason}
+
     command = [
         sys.executable,
         str(ROOT / "audit_release_bundle.py"),
@@ -314,6 +384,7 @@ def promote_release(
         "--typography", str(evidence["typography"]),
         "--containment", str(evidence["containment"]),
         "--visual", str(evidence["visual"]),
+        "--composition", str(evidence["composition"]),
         "--semantic-review", str(evidence["semantic_review"]),
         "--out", str(release_report),
         "--manifest", str(candidate / "manifest.json"),
@@ -340,21 +411,26 @@ def promote_release(
 
     deck_hash = sha256(candidate / "pack.pptx")
     manifest_hash = sha256(candidate / "manifest.json")
+    render_manifest_hash = sha256(candidate / "render-manifest.json")
     if report.get("status") != "PASS":
         return {"status": "CANDIDATE", "reason": "Final release report status is not PASS."}
     if str(report.get("artifact_sha256", "")).lower() != deck_hash:
         return {"status": "CANDIDATE", "reason": "Release report is not bound to the current deck hash."}
     if str(report.get("manifest_sha256", "")).lower() != manifest_hash:
         return {"status": "CANDIDATE", "reason": "Release report is not bound to the current manifest hash."}
+    if str(report.get("render_manifest_sha256", "")).lower() != render_manifest_hash:
+        return {"status": "CANDIDATE", "reason": "Release report is not bound to the current render manifest hash."}
 
     if released.exists():
         shutil.rmtree(released)
     released.mkdir(parents=True, exist_ok=True)
     shutil.copy2(candidate / "pack.pptx", released / "pack.pptx")
+    shutil.copy2(candidate / "render-manifest.json", released / "render-manifest.json")
     shutil.copy2(release_report, released / "release.json")
     return {
         "status": "RELEASED",
         "released": str(released),
         "artifact_sha256": deck_hash,
         "manifest_sha256": manifest_hash,
+        "render_manifest_sha256": render_manifest_hash,
     }

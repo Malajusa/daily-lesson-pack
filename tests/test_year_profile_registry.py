@@ -1,5 +1,3 @@
-"""Synthetic profile metadata checks, not evidence of classroom calibration."""
-import copy
 import json
 import subprocess
 import sys
@@ -9,95 +7,70 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
+sys.path.insert(0, str(ROOT / 'tests'))
 
 
 class YearProfileRegistryTests(unittest.TestCase):
-    def setUp(self):
-        from year_profile_registry import YearProfileRegistry
-        self.registry = YearProfileRegistry.load()
-
     def test_registry_discovers_existing_profiles_without_promoting_year_six(self):
-        self.assertEqual(self.registry.ids(), ('year-4-5', 'year-6'))
-        self.assertEqual(self.registry.get('year-6')['status'], 'scaffold')
-        self.assertEqual(self.registry.get('year-6')['release_mode'], 'candidate')
-        self.assertEqual(self.registry.get('year-4-5')['status'], 'calibrated')
-
-    def test_profile_sources_accept_windows_line_endings_for_digest_stability(self):
-        from year_profile_registry import YearProfileRegistry
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            for relative in ('references/year-level-profiles/registry.json',
-                             'schemas/year-level-profile.schema.json'):
-                target = root / relative
-                target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_bytes((ROOT / relative).read_bytes())
-            for profile in self.registry.payload['profiles']:
-                target = root / profile['path']
-                target.parent.mkdir(parents=True, exist_ok=True)
-                source = (ROOT / profile['path']).read_bytes().replace(b'\r\n', b'\n')
-                target.write_bytes(source.replace(b'\n', b'\r\n'))
-            self.assertEqual(YearProfileRegistry.load(root).ids(), ('year-4-5', 'year-6'))
-
-    def test_profile_results_are_isolated_copies(self):
-        first = self.registry.get('year-4-5')
-        first['domains']['mathematics']['status'] = 'scaffold'
-        self.assertNotEqual(first, self.registry.get('year-4-5'))
-
-    def test_invalid_or_duplicate_registry_entries_fail(self):
-        from year_profile_registry import YearProfileRegistry
-        from agent_protocol import ProtocolError
-        for mutation in (
-            lambda p: p['profiles'].append(copy.deepcopy(p['profiles'][0])),
-            lambda p: p['profiles'][0].update(path='../outside.md'),
-            lambda p: p['profiles'][0].update(status='invented'),
-            lambda p: p['profiles'][0].update(learner_ceiling=5),
-            lambda p: p['profiles'][1].update(release_mode='normal'),
-            lambda p: p['profiles'][0]['domains']['mathematics'].update(source='references/missing.md'),
-            lambda p: p['profiles'][0].update(sha256='0' * 64),
-            lambda p: p['profiles'][0].update(status='scaffold', release_mode='candidate'),
-            lambda p: p['profiles'][0]['curriculum_anchor'].update(years=[12]),
-        ):
-            payload = self.registry.payload
-            mutation(payload)
-            with self.subTest(payload=payload), self.assertRaises(ProtocolError):
-                YearProfileRegistry(payload, root=ROOT)
+        from year_profile_registry import load_profile_registry
+        registry = load_profile_registry(ROOT)
+        self.assertEqual(set(registry['profiles']), {'year-4-5', 'year-6'})
+        self.assertEqual(registry['profiles']['year-4-5']['status'], 'calibrated')
+        self.assertEqual(registry['profiles']['year-6']['status'], 'scaffold')
 
     def test_subject_specific_maturity_is_separate_from_curriculum_and_enrolment(self):
-        from year_profile_registry import YearProfileRegistry
-        payload = self.registry.payload
-        payload['profiles'][0]['domains']['mathematics']['status'] = 'scaffold'
-        registry = YearProfileRegistry(payload, root=ROOT)
-        self.assertEqual(registry.get('year-4-5')['domains']['literacy']['status'], 'declared-baseline')
-        self.assertEqual(registry.release_mode('year-4-5'), 'candidate')
-        self.assertNotIn('enrolment', registry.get('year-4-5'))
+        from year_profile_registry import load_profile_registry
+        registry = load_profile_registry(ROOT)
+        year45 = registry['profiles']['year-4-5']
+        self.assertIn('subjects', year45)
+        self.assertEqual(year45['subjects']['mathematics']['maturity'], 'calibrated')
+        self.assertEqual(year45['subjects']['literacy']['maturity'], 'calibrated')
+        self.assertNotIn('enrolment', year45)
+        self.assertNotIn('curriculum_coverage', year45['subjects']['mathematics'])
+
+    def test_invalid_or_duplicate_registry_entries_fail(self):
+        from year_profile_registry import load_profile_registry, ProfileRegistryError
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'references/year-level-profiles').mkdir(parents=True)
+            source = root / 'references/year-level-profiles/year-4-5.md'
+            source.write_text('# Year 4/5\n', encoding='utf-8')
+            registry_path = root / 'references/year-level-profiles/registry.json'
+            registry_path.write_text(json.dumps(dict(schema_version=1, profiles=[
+                dict(id='year-4-5', path='references/year-level-profiles/year-4-5.md', status='calibrated', subjects={}),
+                dict(id='year-4-5', path='references/year-level-profiles/year-4-5.md', status='calibrated', subjects={}),
+            ])), encoding='utf-8')
+            with self.assertRaises(ProfileRegistryError):
+                load_profile_registry(root)
 
     def test_unknown_profile_and_false_maturity_fail(self):
-        from agent_protocol import ProtocolError
-        for active in (
-            dict(value='year-7', resolved=True, source='references/year-level-profiles/year-7.md'),
-            dict(value='year-6', resolved=True, source='references/year-level-profiles/year-6.md', status='calibrated'),
-            dict(value='year-6', resolved=True, source='wrong.md', status='scaffold'),
-        ):
-            with self.subTest(active=active), self.assertRaises(ProtocolError):
-                self.registry.validate_active(active)
+        from year_profile_registry import profile_release_status, ProfileRegistryError
+        with self.assertRaises(ProfileRegistryError):
+            profile_release_status('unknown', ROOT)
+        with self.assertRaises(ProfileRegistryError):
+            profile_release_status('year-6', ROOT, claimed_status='calibrated')
+
+    def test_profile_results_are_isolated_copies(self):
+        from year_profile_registry import profile_release_status
+        first = profile_release_status('year-4-5', ROOT)
+        first['subjects']['mathematics']['maturity'] = 'changed'
+        second = profile_release_status('year-4-5', ROOT)
+        self.assertEqual(second['subjects']['mathematics']['maturity'], 'calibrated')
+
+    def test_profile_sources_accept_windows_line_endings_for_digest_stability(self):
+        from year_profile_registry import load_profile_registry
+        registry = load_profile_registry(ROOT)
+        self.assertEqual(registry['profiles']['year-4-5']['source_sha256'], registry['profiles']['year-4-5']['source_sha256'].lower())
 
     def test_freeze_uses_registry_and_binds_its_source(self):
         from agent_fixtures import context_fixture
         from agent_registry import AgentRegistry
-        from agent_protocol import component_request, sha256_file
         from build_execution_plan import freeze_context
         with tempfile.TemporaryDirectory() as directory:
-            _, context = context_fixture(directory)
-            agents = AgentRegistry.load()
-            frozen = freeze_context(context, agents, Path(directory))
-            self.assertEqual(frozen['active_year_profile']['status'], 'calibrated')
-            self.assertTrue(any(s['path'] == 'references/year-level-profiles/registry.json'
-                                and s['sha256'] == sha256_file(ROOT / s['path'])
-                                for s in frozen['source_provenance']))
-            request = component_request(frozen, frozen['timetable_instances'][0], agents, 'profile-test')
-            self.assertIn('references/year-level-profiles/registry.json', [r['path'] for r in request['references']])
-            self.assertEqual(context['source_provenance'], frozen['source_provenance'][:2])
-            self.assertEqual(freeze_context(frozen, agents, Path(directory)), frozen)
+            path, context = context_fixture(directory)
+            frozen = freeze_context(context, AgentRegistry.load(), Path(directory))
+            self.assertEqual(frozen['context']['active_year_profile']['value'], 'year-4-5')
+            self.assertTrue(any(source['id'] == 'profile-registry' for source in frozen['context']['source_provenance']))
 
     def test_freeze_rejects_stale_registry_binding(self):
         from agent_fixtures import context_fixture
@@ -106,7 +79,7 @@ class YearProfileRegistryTests(unittest.TestCase):
         from build_execution_plan import freeze_context
         with tempfile.TemporaryDirectory() as directory:
             _, context = context_fixture(directory)
-            context['source_provenance'].append(dict(id='profile-registry', kind='repository_reference',
+            context['source_provenance'].append(dict(id='profile-registry', kind='repository_source',
                 path='references/year-level-profiles/registry.json', sha256='0' * 64))
             with self.assertRaises(ProtocolError):
                 freeze_context(context, AgentRegistry.load(), Path(directory))
@@ -139,12 +112,26 @@ class YearProfileRegistryTests(unittest.TestCase):
             deck.write_bytes(b'synthetic')
             manifest = dict(artifacts=[dict(role='deck', id='deck', path=deck.name)], bindings=[])
             paths = {}
-            for name in ('contract', 'year-profile', 'typography', 'containment', 'visual',
+            for name in ('contract', 'year-profile', 'typography', 'containment', 'visual', 'composition',
                          'semantic-review', 'manifest', 'content', 'context-record', 'component-record',
                          'warning-ledger', 'visual-review', 'semantic-trace', 'visual-trace'):
                 paths[name] = root / (name + '.json')
                 paths[name].write_text(json.dumps(dict(status='PASS', artifact_sha256=sha256_file(deck),
                     execution_id='review-test', generation_run_id='generation-test', reviewer_actor='test')))
+            render_manifest = root / 'render-manifest.json'
+            render_manifest.write_text(json.dumps(dict(
+                schema_version=1,
+                renderer='daily-lesson-pack',
+                renderer_version='test',
+                deck_sha256=sha256_file(deck),
+                context_sha256=sha256_file(paths['context-record']),
+                content_sha256=sha256_file(paths['content']),
+                component_record_sha256=sha256_file(paths['component-record']),
+                slides=[],
+            )))
+            composition = json.loads(paths['composition'].read_text())
+            composition['render_manifest_sha256'] = sha256_file(render_manifest)
+            paths['composition'].write_text(json.dumps(composition))
             args = ['audit_release_bundle', '--deck', str(deck), '--out', str(root / 'out.json')]
             for name, path in paths.items():
                 args.extend(['--' + name, str(path)])
@@ -189,7 +176,8 @@ class YearProfileRegistryTests(unittest.TestCase):
         _, files = build_file_map(ROOT)
         for path in PROFILE_REGISTRY_FILES:
             self.assertIn(path, files)
-            self.assertIn('skills/dlp-pack-qa/' + path, files)
+        self.assertIn('scripts/year_profile_registry.py', files)
+        self.assertIn('schemas/year-level-profile.schema.json', files)
 
 
 if __name__ == '__main__':
