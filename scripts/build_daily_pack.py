@@ -2,8 +2,9 @@
 """Supported Daily Lesson Pack staging/release entry point.
 
 This command does not generate pedagogical content. Component skills and
-canonical content records must already exist. It validates/stages the candidate
-and optionally requests release through the repository-owned final audit.
+canonical content records must already exist. Repository-rendered decks include
+a same-hash render manifest; externally assembled decks may still be staged as
+candidates but are not release-eligible under the current policy.
 """
 
 from __future__ import annotations
@@ -23,14 +24,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--component-record", type=Path, required=True)
     parser.add_argument("--deck", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument(
+        "--render-manifest",
+        type=Path,
+        help="Same-hash manifest emitted by scripts/render_daily_pack.py; required for release eligibility.",
+    )
     parser.add_argument("--out", type=Path, required=True, help="Run root containing candidate/ and released/")
     parser.add_argument(
         "--release-evidence-dir",
         type=Path,
         help=(
             "Optional directory containing contract.json, year_profile.json, typography.json, "
-            "containment.json, visual.json, semantic_review.json, warning_ledger.json, "
-            "visual_review.json, semantic_trace.json and visual_trace.json"
+            "containment.json, visual.json, composition.json, semantic_review.json, "
+            "warning_ledger.json, visual_review.json, semantic_trace.json and visual_trace.json"
         ),
     )
     return parser.parse_args()
@@ -47,6 +53,7 @@ def main() -> int:
             component_record_path=args.component_record,
             deck_path=args.deck,
             manifest_path=args.manifest,
+            render_manifest_path=args.render_manifest,
         )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(json.dumps({"status": "FAIL", "reason": str(exc)}, indent=2))
