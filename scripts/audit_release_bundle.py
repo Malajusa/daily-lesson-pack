@@ -25,6 +25,16 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def audit_pack(manifest_path: Path, content_path: Path, context_path: Path):
+    """Patch-compatible release audit seam backed by renderer-aware canonical auditing."""
+    return audit_repo_rendered_pack(
+        manifest_path,
+        content_path,
+        context_path,
+        Path(manifest_path).parent / "render-manifest.json",
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--deck", type=Path, required=True)
@@ -65,12 +75,7 @@ def main() -> int:
 
         from resolve_instructional_calibration import instructional_context_errors
         failures.extend(instructional_context_errors(json.loads(args.context_record.read_text()), require_release=True))
-        bundle_errors, content, manifest = audit_repo_rendered_pack(
-            args.manifest,
-            args.content,
-            args.context_record,
-            render_manifest_path,
-        )
+        bundle_errors, content, manifest = audit_pack(args.manifest, args.content, args.context_record)
         failures.extend(bundle_errors)
         deck_entry = next(a for a in manifest['artifacts'] if a['role'] == 'deck')
         if (args.manifest.parent/deck_entry['path']).resolve() != args.deck.resolve():
