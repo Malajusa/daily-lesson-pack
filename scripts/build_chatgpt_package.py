@@ -72,6 +72,15 @@ REGRESSION_BENCHMARKS = (
     MORNING_WORK_EXEMPLAR_BENCHMARK,
 )
 
+RENDER_RUNTIME_FILES = (
+    "scripts/slide_render_model.py",
+    "scripts/slide_renderer.py",
+    "scripts/render_daily_pack.py",
+    "scripts/render_provenance.py",
+    "scripts/audit_repo_rendered_pack.py",
+    "scripts/audit_visual_composition.py",
+)
+
 ROOT_RUNTIME_FILES = (
     "requirements.txt",
     "skills/registry.v2.json",
@@ -99,10 +108,17 @@ ROOT_RUNTIME_FILES = (
     "scripts/content_source.py",
     "scripts/dlp_build_runtime.py",
     "scripts/build_daily_pack.py",
+    *RENDER_RUNTIME_FILES,
     "tests/test_pack_evidence.py",
     "tests/test_build_runtime.py",
     "tests/test_semantic_relationships.py",
     "tests/test_panel_ownership.py",
+    "tests/test_slide_render_model.py",
+    "tests/test_slide_renderer.py",
+    "tests/test_render_daily_pack.py",
+    "tests/test_visual_composition_audit.py",
+    "tests/test_render_provenance.py",
+    "tests/test_repo_rendered_pack_audit.py",
     "SKILL.md",
     "VERSION",
     "RELEASE-PROVENANCE.json",
@@ -231,6 +247,9 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
                 "scripts/audit_slide_typography.py",
                 "scripts/audit_panel_containment.py",
                 "scripts/audit_visual_exemplar.py",
+                "scripts/audit_visual_composition.py",
+                "scripts/audit_repo_rendered_pack.py",
+                "scripts/render_provenance.py",
                 "scripts/audit_release_bundle.py",
             ):
                 files[f"{component_root}/{script}"] = read_required(repo, script)
