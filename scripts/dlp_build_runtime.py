@@ -364,10 +364,9 @@ def promote_release(
 
     missing_evidence = [key for key in REQUIRED_RELEASE_EVIDENCE if key not in evidence or not Path(evidence[key]).is_file()]
     if missing_evidence:
-        return {
-            "status": "CANDIDATE",
-            "reason": "Release evidence is incomplete: " + ", ".join(missing_evidence),
-        }
+        reason = "Release evidence is incomplete: " + ", ".join(missing_evidence)
+        _write_blocked_release_report(candidate, reason)
+        return {"status": "CANDIDATE", "reason": reason}
 
     release_report = candidate / "release-audit.json"
     release_report.unlink(missing_ok=True)
