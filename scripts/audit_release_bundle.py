@@ -9,7 +9,8 @@ import json
 import re
 import subprocess
 import sys
-from pack_evidence import audit_pack, audit_review, digest
+from audit_repo_rendered_pack import audit_repo_rendered_pack
+from pack_evidence import audit_review, digest
 from pathlib import Path
 
 
@@ -64,7 +65,12 @@ def main() -> int:
 
         from resolve_instructional_calibration import instructional_context_errors
         failures.extend(instructional_context_errors(json.loads(args.context_record.read_text()), require_release=True))
-        bundle_errors, content, manifest = audit_pack(args.manifest, args.content, args.context_record)
+        bundle_errors, content, manifest = audit_repo_rendered_pack(
+            args.manifest,
+            args.content,
+            args.context_record,
+            render_manifest_path,
+        )
         failures.extend(bundle_errors)
         deck_entry = next(a for a in manifest['artifacts'] if a['role'] == 'deck')
         if (args.manifest.parent/deck_entry['path']).resolve() != args.deck.resolve():
@@ -72,7 +78,6 @@ def main() -> int:
         failures.extend(audit_review(args.semantic_review, 'semantic', args.manifest, args.content, content, manifest, args.semantic_trace))
         failures.extend(audit_review(args.visual_review, 'visual', args.manifest, args.content, content, manifest, args.visual_trace))
         if not failures:
-            # Structural visual audit adapter is derived only AFTER page-level review validates.
             reviewed = json.loads(args.visual_review.read_text())
             component = json.loads(args.component_record.read_text())
             adapter = dict(reviewed, artifact_sha256=deck_hash,
