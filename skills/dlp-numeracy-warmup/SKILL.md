@@ -7,7 +7,7 @@ description: Use when a teacher asks for a short Mathematics or numeracy warm-up
 
 ## Output contract
 
-Default output is exactly **5 adjacent question/answer pairs = 10 slides**:
+Default output is exactly **5 adjacent question/answer pairs = 10 slides total**:
 
 `QUESTION 1 → ANSWER 1 → QUESTION 2 → ANSWER 2 → QUESTION 3 → ANSWER 3 → QUESTION 4 → ANSWER 4 → QUESTION 5 → ANSWER 5`
 
