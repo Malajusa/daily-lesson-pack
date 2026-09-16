@@ -58,6 +58,9 @@ NUMERACY_WARMUP_RELEASE_BOUNDARIES = (
 NUMERACY_WARMUP_BENCHMARK = (
     "examples/benchmarks/numeracy-warmup-release-boundaries-regression.md"
 )
+NUMERACY_WARMUP_VALIDATOR = (
+    "skills/dlp-numeracy-warmup/scripts/validate_warmup_deck.py"
+)
 YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
 
 QA_ONLY_FILES = (
@@ -126,12 +129,17 @@ def main() -> int:
         if f"name: {name}".encode("utf-8") not in skill_text:
             raise ValueError(f"Skill name mismatch in {entrypoint}: expected {name}")
 
-        component_references = (
-            *COMMON_REFERENCES,
-            YEAR_LEVEL_CONTEXT_REFERENCE,
-            *profile_reference_paths(repo),
-            *PROFILE_REGISTRY_FILES,
-        )
+        if name == "dlp-numeracy-warmup":
+            # Standalone-first package: no private teacher settings, creator defaults,
+            # orchestrator QA runtime or registered-profile dependency is required.
+            component_references = ()
+        else:
+            component_references = (
+                *COMMON_REFERENCES,
+                YEAR_LEVEL_CONTEXT_REFERENCE,
+                *profile_reference_paths(repo),
+                *PROFILE_REGISTRY_FILES,
+            )
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             component_references = (*component_references, MATH_REFERENCE, FRACTION_REFERENCE)
         if name == "dlp-pack-qa":
@@ -160,14 +168,18 @@ def main() -> int:
             ).encode("utf-8"),
         }
 
-        for helper in ("scripts/pack_evidence.py", "scripts/content_source.py"):
-            package_files[helper] = read_required(repo, helper)
+        if name != "dlp-numeracy-warmup":
+            for helper in ("scripts/pack_evidence.py", "scripts/content_source.py"):
+                package_files[helper] = read_required(repo, helper)
         for relative_path in component_references:
             package_files[relative_path] = read_required(repo, relative_path)
 
         if name == "dlp-numeracy-warmup":
             package_files["references/release-boundaries.json"] = read_required(
                 repo, NUMERACY_WARMUP_RELEASE_BOUNDARIES
+            )
+            package_files["scripts/validate_warmup_deck.py"] = read_required(
+                repo, NUMERACY_WARMUP_VALIDATOR
             )
             package_files[NUMERACY_WARMUP_BENCHMARK] = read_required(
                 repo, NUMERACY_WARMUP_BENCHMARK
