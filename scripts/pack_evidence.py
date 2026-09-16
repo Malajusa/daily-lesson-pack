@@ -321,6 +321,8 @@ def audit_review(review_path, method, manifest_path, content_path, content, mani
         # N/A is a reasoned applicability decision, never an absent entry.
         if check.get('result') not in ('PASS','NA') or not check.get('observation') or not check.get('citations'):
             errors.append(method+': incomplete/failed check '+str(key))
+        if check.get('result') == 'NA' and check['id'].startswith('NW.'):
+            errors.append('Release boundary cannot be waived: '+str(key))
         if check.get('result') == 'NA' and (not check.get('applicability_reason') or method == 'visual'):
             errors.append(method+': invalid applicability decision '+str(key))
         if check.get('result') == 'NA' and check['id'].startswith('TASK.'):
