@@ -56,9 +56,13 @@ def extract(path, location):
         return doc[page-1].get_text(clip=fitz.Rect(box))
 
 def _release_boundary_path(owner):
-    repo_path = ROOT/'skills'/owner/'references/release-boundaries.json'
-    if repo_path.is_file():
-        return repo_path
+    candidates = [
+        ROOT/'skills'/owner/'references/release-boundaries.json',
+        ROOT.parent/owner/'references/release-boundaries.json',
+    ]
+    for path in candidates:
+        if path.is_file():
+            return path
     package_path = ROOT/'PACKAGE.json'
     if package_path.is_file():
         package = read(package_path)
@@ -68,12 +72,17 @@ def _release_boundary_path(owner):
                 return direct_path
     return None
 
-def release_boundary_rules(content):
-    rules = []
+def _boundary_paths(content):
+    result = []
     for owner in sorted({i['owner'] for i in content['instances']}):
         path = _release_boundary_path(owner)
-        if path is None:
-            continue
+        if path is not None:
+            result.append((owner, path))
+    return result
+
+def release_boundary_rules(content):
+    rules = []
+    for owner, path in _boundary_paths(content):
         contract = read(path)
         if contract.get('owner') != owner:
             raise ValueError(f'Release boundary owner mismatch for {owner}')
@@ -98,6 +107,21 @@ def release_boundary_rules(content):
                 'method': 'semantic',
             })
     return rules
+
+def requirements_digest(content):
+    central = ROOT/'references/qa-requirements.json'
+    boundaries = _boundary_paths(content)
+    if not boundaries:
+        return digest(central)
+    hasher = hashlib.sha256()
+    hasher.update(b'qa-requirements.json\0')
+    hasher.update(central.read_bytes())
+    for owner, path in boundaries:
+        hasher.update(b'\0release-boundary\0')
+        hasher.update(owner.encode('utf-8'))
+        hasher.update(b'\0')
+        hasher.update(path.read_bytes())
+    return hasher.hexdigest()
 
 def expected_checks(content, manifest, method):
     registry = list(read(ROOT/'references/qa-requirements.json')['requirements'])
@@ -293,7 +317,7 @@ def audit_review(review_path, method, manifest_path, content_path, content, mani
     errors = []
     if review.get('manifest_sha256') != digest(manifest_path) or review.get('content_sha256') != digest(content_path):
         errors.append(method+': review belongs to different pack/content')
-    if review.get('requirements_sha256') != digest(ROOT/'references/qa-requirements.json'):
+    if review.get('requirements_sha256') != requirements_digest(content):
         errors.append(method+': review uses stale requirements')
     # The host exports this receipt. The generator must not fabricate its fields.
     if trace.get('source') not in ('collaboration','external-runner','human-review'):
