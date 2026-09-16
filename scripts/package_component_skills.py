@@ -52,6 +52,12 @@ MEMORY_INDEPENDENT_BENCHMARK = (
 YEAR_PROFILE_ISOLATION_BENCHMARK = (
     "examples/benchmarks/year-profile-isolation-regression.md"
 )
+NUMERACY_WARMUP_RELEASE_BOUNDARIES = (
+    "skills/dlp-numeracy-warmup/references/release-boundaries.json"
+)
+NUMERACY_WARMUP_BENCHMARK = (
+    "examples/benchmarks/numeracy-warmup-release-boundaries-regression.md"
+)
 YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
 
 QA_ONLY_FILES = (
@@ -61,6 +67,7 @@ QA_ONLY_FILES = (
     UNIVERSAL_MATHS_BENCHMARK,
     MEMORY_INDEPENDENT_BENCHMARK,
     YEAR_PROFILE_ISOLATION_BENCHMARK,
+    NUMERACY_WARMUP_BENCHMARK,
     "examples/benchmarks/t3w7-thursday-known-failure.md",
     "examples/benchmarks/t3w8-tuesday-bypass-known-failure.md",
     MORNING_WORK_EXEMPLAR_BENCHMARK,
@@ -157,6 +164,14 @@ def main() -> int:
             package_files[helper] = read_required(repo, helper)
         for relative_path in component_references:
             package_files[relative_path] = read_required(repo, relative_path)
+
+        if name == "dlp-numeracy-warmup":
+            package_files["references/release-boundaries.json"] = read_required(
+                repo, NUMERACY_WARMUP_RELEASE_BOUNDARIES
+            )
+            package_files[NUMERACY_WARMUP_BENCHMARK] = read_required(
+                repo, NUMERACY_WARMUP_BENCHMARK
+            )
 
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             package_files[UNIVERSAL_MATHS_BENCHMARK] = read_required(
