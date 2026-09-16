@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "owner": "dlp-numeracy-warmup",
+  "release_policy": "fail_closed",
+  "boundaries": [
+    {
+      "id": "NW.PROMPT.THREE_TIERS_ONLY",
+      "statement": "Every question slide contains exactly three student tasks labelled All, Most and Some. It contains no Why box, reasoning prompt, explanation prompt or fourth student task.",
+      "evidence": [
+        "semantic review of the question slide",
+        "rendered-slide inspection"
+      ]
+    },
+    {
+      "id": "NW.PAIR.ADJACENT",
+      "statement": "Every question slide is followed immediately by its matched answer slide. No reminder, transition, model, unrelated answer or other slide may appear between the pair.",
+      "evidence": [
+        "slide-order inspection"
+      ]
+    },
+    {
+      "id": "NW.ANSWER.MIRROR",
+      "statement": "Every answer slide preserves the All, Most and Some order and positions from the preceding question slide and supplies the matched answer for all three tasks.",
+      "evidence": [
+        "semantic comparison of each adjacent question/answer pair",
+        "rendered-slide inspection"
+      ]
+    },
+    {
+      "id": "NW.REASONING.ANSWER_ONLY",
+      "statement": "Reasoning or explanation appears on the answer slide only, in the established bottom green Why panel. The answer-slide explanation is concise mathematical reasoning rather than a generic checking instruction.",
+      "evidence": [
+        "semantic review of both slides in every pair",
+        "rendered-slide inspection"
+      ]
+    }
+  ],
+  "release_rule": "Every boundary must have explicit PASS evidence for every warm-up pair. A missing result or any FAIL makes the dlp-numeracy-warmup component FAIL and blocks classroom-ready release."
+}
