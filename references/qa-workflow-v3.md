@@ -2,12 +2,22 @@
 
 ## Authority and applicability
 
-`references/qa-requirements.json` is the authoritative release coverage register.
-Its stable IDs preserve the existing QA requirements; component prose explains
-how to meet them. A requirement is never satisfied merely because its checklist
-entry exists. The independent reviewer must evaluate its actual meaning.
-Read the register entries for the scheduled owners before authoring. Resolve
-the active year profile separately; do not change Year 4/5 or Year 6 pitch.
+`references/qa-requirements.json` is the core release coverage register. A
+component may additionally define a fail-closed
+`references/release-boundaries.json` contract. `scripts/pack_evidence.py` merges
+any applicable component release boundaries into the required semantic review;
+those boundary checks are non-waivable and are release-blocking. The review
+requirements hash binds both the central register and every applicable component
+release-boundary contract, so a boundary change invalidates earlier review
+evidence.
+
+Stable IDs preserve the existing QA requirements; component prose explains how
+to meet them. A requirement is never satisfied merely because its checklist
+entry exists. The independent reviewer must evaluate its actual meaning. Read
+the register entries and any applicable release-boundary contract for the
+scheduled owners before authoring. Resolve the active year profile separately;
+do not change Year 4/5 or Year 6 pitch.
+
 Each context record declares `required_artifacts`, using roles `deck`, `briefing`,
 `student`, `answers`, `printing_plan` as applicable to the current request.
 The explicit context and timetable determine omissions; absence is not an
@@ -27,7 +37,7 @@ briefing and print-plan text. All delivered text comes from these records.
 Tasks also carry `demands` (unique `id`, `action`, exact `answer_quote`).
 Choice tasks carry `options` (`text`, boolean `correct`; each distractor includes
 `misconception` and `rejection_reason`). Revision tasks carry `fields.before`,
-`fields.after` and `propositions` with exact `before_quote` and `after_quote`.
+`fields.after` and `propositions` with exact `before_quote`, `after_quote`.
 The reviewer independently enumerates original claims, including qualifications
 such as “valuable”, and verifies the map is exhaustive and meaning-preserving.
 Matching a quoted fragment alone does not establish semantic equivalence.
@@ -44,8 +54,8 @@ Tag subordinate PPTX shapes `DLP:instruction`, `DLP:explanation`, `DLP:cue`, or
 minimum; supporting instructional text has a 28 pt floor. Role assignments are
 subject to visual review. Do not relabel main content to evade its floor.
 For mathematical diagrams or tables, bind their accompanying exact field text
-and require independent visual representation checks; text equality alone
-does not verify a quantity, partition, scale or drawing.
+and require independent visual representation checks; text equality alone does
+not verify a quantity, partition, scale or drawing.
 
 ## Complete-pack manifest
 
@@ -70,28 +80,32 @@ the complete applicable release command.
 ## Executed independent review
 
 Use a fresh review agent/process with this skill, resolved context, canonical
-content, final artefacts/renders and the register. Do not supply generator PASS
-assertions or desired conclusions. Reading the QA skill in the generator's own
-thread is not independent review. If no independent execution facility exists,
-deliver a candidate with review pending; never fabricate independence.
+content, final artefacts/renders, the central register, and any applicable
+component release-boundary contracts. Do not supply generator PASS assertions
+or desired conclusions. Reading the QA skill in the generator's own thread is
+not independent review. If no independent execution facility exists, deliver a
+candidate with review pending; never fabricate independence.
 
 Generate UNREVIEWED checklist skeletons with:
 `python scripts/content_source.py --content content.json --manifest manifest.json --method semantic --out semantic.json`
-and again with `--method visual`. The register expands pack, owner-instance,
-task and every-artefact-page scopes. Review every entry. Record `PASS`, `FAIL`
-or justified `NA`, `observation`, and exact `citations` containing `artifact`,
-`page`, `shape_id`/`bbox`, and `quote`. Visual checks cite the rendered page.
-NA requires an `applicability_reason` and source citation; it cannot excuse an
-observed defect. Every page requires visual PASS. Keep source evidence detailed
-enough to verify facts preserved, demands answered and distractors plausible.
+and again with `--method visual`. The central register plus applicable component
+release boundaries expand pack, owner-instance, task and every-artefact-page
+scopes. Review every entry. Record `PASS`, `FAIL` or justified `NA`, `observation`,
+and exact `citations` containing `artifact`, `page`, `shape_id`/`bbox`, and
+`quote`. Visual checks cite the rendered page. NA requires an
+`applicability_reason` and source citation; it cannot excuse an observed defect.
+A component release-boundary check cannot be marked `NA`: it requires explicit
+`PASS`. Every page requires visual PASS. Keep source evidence detailed enough
+to verify facts preserved, demands answered and distractors plausible.
 
 The host captures the actual independent execution receipt, never the generator:
 `source` (`collaboration`, `external-runner`, or `human-review`), `execution_id`,
 `reviewer_actor`, `generator_actor`, `review_sha256`, `manifest_sha256`,
 `transcript_path` relative to the receipt, `transcript_sha256`. Save the raw
 host invocation/completion transcript. Receipt and review share execution_id.
-The review carries manifest/content/requirements hashes; it does not use the
-legacy evidence-string or run-ID-only schema.
+The review carries manifest/content/requirements hashes; the requirements hash
+covers the central register and applicable release-boundary contracts. It does
+not use the legacy evidence-string or run-ID-only schema.
 Different labels alone never count as independent execution. These receipts
 make provenance inspectable; local JSON cannot cryptographically authenticate
 the host. A deployment needing that guarantee must use host-signed receipts.
@@ -103,8 +117,9 @@ plus `--manifest`, `--content`, `--context-record`, `--component-record`,
 `--warning-ledger`, `--visual-review`, `--semantic-trace` and `--visual-trace`.
 The command validates complete-pack evidence first, then runs the repository
 audits itself and overwrites report outputs. It does not trust supplied PASS
-files. Warning dispositions remain individually required. Semantic checks and
-visual page coverage are required even when structural audits pass.
+files. Warning dispositions remain individually required. Semantic checks,
+non-waivable component release boundaries and visual page coverage are required
+even when structural audits pass.
 Only its final PASS for the current manifest permits “classroom-ready”.
 Report any unfinished gate accurately; counts of checks are not evidence of
 educational quality. Do not reuse an earlier pack's release decision.
