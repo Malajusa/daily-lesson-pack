@@ -264,10 +264,12 @@ def main() -> int:
     if not root.is_dir():
         failures.append(f"Skill root is not a directory: {root}")
     else:
-        try:
-            YearProfileRegistry.load(root)
-        except ProtocolError as exc:
-            failures.append(str(exc))
+        profile_registry = root / "references" / "year-level-profiles" / "registry.json"
+        if not args.component or profile_registry.is_file():
+            try:
+                YearProfileRegistry.load(root)
+            except ProtocolError as exc:
+                failures.append(str(exc))
         validate_manifest(root, failures, component=args.component)
         validate_markdown_references(root, failures)
         validate_metadata_icons(root, failures)

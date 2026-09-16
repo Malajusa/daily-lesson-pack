@@ -65,6 +65,9 @@ NUMERACY_WARMUP_RELEASE_BOUNDARIES = (
 NUMERACY_WARMUP_BENCHMARK = (
     "examples/benchmarks/numeracy-warmup-release-boundaries-regression.md"
 )
+NUMERACY_WARMUP_VALIDATOR = (
+    "skills/dlp-numeracy-warmup/scripts/validate_warmup_deck.py"
+)
 YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
 REGRESSION_BENCHMARKS = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
@@ -224,6 +227,9 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
         if name == "dlp-numeracy-warmup":
             files[f"{component_root}/references/release-boundaries.json"] = read_required(
                 repo, NUMERACY_WARMUP_RELEASE_BOUNDARIES
+            )
+            files[f"{component_root}/scripts/validate_warmup_deck.py"] = read_required(
+                repo, NUMERACY_WARMUP_VALIDATOR
             )
             files[f"{component_root}/{NUMERACY_WARMUP_BENCHMARK}"] = read_required(
                 repo, NUMERACY_WARMUP_BENCHMARK

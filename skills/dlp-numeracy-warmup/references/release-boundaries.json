@@ -1,11 +1,19 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "owner": "dlp-numeracy-warmup",
   "release_policy": "fail_closed",
   "boundaries": [
     {
+      "id": "NW.PAIR.COUNT",
+      "statement": "The default warm-up contains exactly five question/answer pairs (10 slides). A different count is valid only when the current user explicitly requested it.",
+      "evidence": [
+        "slide-count inspection",
+        "current request when count is overridden"
+      ]
+    },
+    {
       "id": "NW.PROMPT.THREE_TIERS_ONLY",
-      "statement": "Every question slide contains exactly three student tasks labelled All, Most and Some. It contains no Why box, reasoning prompt, explanation prompt or fourth student task.",
+      "statement": "Every question slide contains exactly three student tasks with literal labels ALL, MOST and SOME. It contains no WHY box, reasoning prompt, explanation prompt or fourth student task.",
       "evidence": [
         "semantic review of the question slide",
         "rendered-slide inspection"
@@ -20,7 +28,7 @@
     },
     {
       "id": "NW.ANSWER.MIRROR",
-      "statement": "Every answer slide preserves the All, Most and Some order and positions from the preceding question slide and supplies the matched answer for all three tasks.",
+      "statement": "Every answer slide preserves the ALL, MOST and SOME order and positions from the preceding question slide and supplies the matched answer for all three tasks.",
       "evidence": [
         "semantic comparison of each adjacent question/answer pair",
         "rendered-slide inspection"
@@ -28,12 +36,28 @@
     },
     {
       "id": "NW.REASONING.ANSWER_ONLY",
-      "statement": "Reasoning or explanation appears on the answer slide only, in the established bottom green Why panel. The answer-slide explanation is concise mathematical reasoning rather than a generic checking instruction.",
+      "statement": "Reasoning or explanation appears on the answer slide only, in the established bottom green WHY panel. The answer-slide explanation is concise mathematical reasoning rather than a generic checking instruction.",
       "evidence": [
         "semantic review of both slides in every pair",
         "rendered-slide inspection"
       ]
+    },
+    {
+      "id": "NW.GRAPH.EXACT_SCALE",
+      "statement": "Every graph, chart or pictograph used in the warm-up exposes the key or unit interval needed to recover every exact answer; sparse scales that require guessing an unmarked exact value fail.",
+      "evidence": [
+        "graph/key/axis inspection",
+        "comparison of every graph question with the visible scale"
+      ]
+    },
+    {
+      "id": "NW.PRESENTATION.FONT_FLOOR",
+      "statement": "Every meaningful ALL/MOST/SOME task or answer is at least 36 pt and the answer-slide WHY explanation is at least 28 pt.",
+      "evidence": [
+        "PPTX text-run inspection",
+        "rendered-slide inspection"
+      ]
     }
   ],
-  "release_rule": "Every boundary must have explicit PASS evidence for every warm-up pair. A missing result or any FAIL makes the dlp-numeracy-warmup component FAIL and blocks classroom-ready release."
+  "release_rule": "Every applicable boundary requires explicit PASS evidence. A missing result or any FAIL makes the standalone component not component-ready and blocks whole-pack release when used inside Daily Lesson Pack."
 }

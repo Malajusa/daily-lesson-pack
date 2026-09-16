@@ -1,6 +1,6 @@
 {
-  "version": "3.10.0-rc.1",
-  "created": "2026-09-09",
+  "version": "3.10.0-rc.2",
+  "created": "2026-09-16",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
   "base_commit": "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
   "reconciled_sources": [
@@ -44,6 +44,10 @@
       "line": "teacher-approved-morning-work-exemplar",
       "artefact_sha256": "1C114304DBC69E5EC8B112F98952291048C5818A0B7DDA3899EBEC0DC80519D5",
       "contribution": "Teacher-approved T3W8 Wednesday Morning Work exemplar, adaptation contract and complete/component package dependencies"
+    },
+    {
+      "line": "standalone-numeracy-warmup-hardening",
+      "contribution": "Standalone-first Numeracy Warm-up mode, immutable question-answer grammar, graph-scale contract, deterministic standalone PPTX validation and portable component packaging"
     }
   ],
   "intentional_removals": [

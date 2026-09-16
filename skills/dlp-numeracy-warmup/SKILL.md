@@ -1,147 +1,74 @@
 ---
 name: dlp-numeracy-warmup
-description: Use when generating or reviewing the Daily Lesson Pack Mathematics warm-up for a supported year-level profile.
+description: Use when a teacher asks for a short Mathematics or numeracy warm-up, retrieval deck, All/Most/Some warm-up, or graph-reading warm-up for a supplied year level or planning context.
 ---
 
 # DLP Numeracy Warm-up
 
-## Mandatory evidence workflow (v3)
+## Output contract
 
-Read `references/qa-workflow-v3.md` and the applicable entries in
-`references/qa-requirements.json` before generation or review. This workflow
-governs release evidence and supersedes older run-ID-only independence checks
-and report-only release commands below. Use `scripts/content_source.py` for
-canonical task text and complete review coverage. Required checks cannot be
-replaced by a broad component PASS. Only the complete-pack release command may
-authorise classroom-ready output.
+Default output is exactly **5 adjacent question/answer pairs = 10 slides total**:
 
-## Warm-up release boundaries
+`QUESTION 1 → ANSWER 1 → QUESTION 2 → ANSWER 2 → QUESTION 3 → ANSWER 3 → QUESTION 4 → ANSWER 4 → QUESTION 5 → ANSWER 5`
 
-Read `references/release-boundaries.json` before generating or reviewing this
-component. Its `NW.*` checks are **release-blocking invariants in addition to**
-the shared QA requirements.
+Every question slide has literal labels `ALL`, `MOST`, `SOME`, with one separate task under each. There is **no WHY content** on a question slide.
 
-For every warm-up pair, record explicit PASS evidence for:
+Every answer slide immediately follows its question, keeps `ALL`, `MOST`, `SOME` in the same order and positions, answers all three tasks, and adds one bottom green `WHY` panel containing concise mathematical reasoning.
 
-- `NW.PROMPT.THREE_TIERS_ONLY`
-- `NW.PAIR.ADJACENT`
-- `NW.ANSWER.MIRROR`
-- `NW.REASONING.ANSWER_ONLY`
+A request such as “graphs toward the end” changes the **content of the final pairs**, not the number or ordering of slides. Unless the user specifies otherwise, Pairs 4 and 5 use graph reading.
 
-A missing result or any FAIL makes `dlp-numeracy-warmup` fail. Do not assemble,
-label or release the pack as classroom-ready when this component has failed.
-When repository benchmarks are available, use
-`examples/benchmarks/numeracy-warmup-release-boundaries-regression.md` as the
-regression case.
+## Mode selection
 
-## Resolved instructional preferences
+### Standalone mode — default for direct invocation
 
-Read `references/creator-settings-contract.md` and use the orchestrator's frozen
-`instructional_calibration` when present. Do not independently reload or save
-private settings, change the requested warm-up count, or infer student attainment
-from enrolment year. Legacy inputs use the documented public defaults, not hidden
-chat memory. Existing final-artifact and independent-review gates still apply.
+Use the year level, mixed-year band, topic and planning supplied by the user. User planning is the authority for what has been taught. Do not require a DLP orchestrator, private settings store or registered year profile.
 
-## Ownership
+If only a year level is supplied, pitch conservatively to that level/band using familiar prior knowledge. Do not claim verified curriculum alignment; state internally that curriculum alignment is unverified unless the user supplied curriculum/planning evidence.
 
-Own the Mathematics warm-up only. It is cumulative retrieval and does not replace the main lesson's prerequisite check, modelling, guided practice or exit assessment.
+### Orchestrated mode
 
-## Mandatory year-level context
+Use this only when the caller supplies an actual DLP context with an active year-profile record. Then apply the supplied profile and parent pack release workflow. Do not switch to orchestrated mode merely because Year 4/5 or Year 6 examples exist in the package.
 
-Before generation, read `references/year-level-context-contract.md` and the active year-level profile supplied by the orchestrator.
+## Difficulty
 
-The active profile controls expected prior knowledge, number types and magnitudes, appropriate retrieval floor, reasoning demand and the ceiling for `Some`. Do not use another year level's calibration merely because its examples are available.
+`ALL` is the accessible entry point. `MOST` represents secure expected performance. `SOME` extends the same mathematical focus through meaningful complexity, representation or reasoning; it does not automatically jump a year level.
 
-## Sequence
+Within a pair, keep all three tiers on the same mathematical focus. Do not substitute three unrelated retrieval skills for All/Most/Some.
 
-Create exactly **5 question-and-answer pairs** (**10 slides total**) unless the current request or validated classroom profile explicitly changes the count.
+## Graph-reading contract
 
-Every question slide must be followed **immediately** by its matched answer slide. No reminder, model, transition, unrelated answer or other slide may sit between the pair.
+For graph pairs:
 
-Use this default daily mix:
-
-1. Addition
-2. Subtraction
-3. Multiplication
-4. Division
-5. one rotating retrieval focus selected from `State it`, `Recognise it`,
-   `Complete it`, `Apply it`, `Distinguish it` or cumulative retrieval.
-
-Rotate the fifth focus across the week rather than expanding the daily deck to
-include every category.
-
-## All / Most / Some principle
-
-On **question slides**, `All`, `Most` and `Some` must be **three separate questions/tasks of increasing complexity**. Never use one question where `All` is a partial answer, `Most` is the complete answer and `Some` is checking/explaining the same work.
-
-- **All:** a genuinely accessible question essentially all students can attempt successfully within the active year profile.
-- **Most:** a moderately more demanding independent question representing secure expected performance for the active profile.
-- **Some:** a further extension that remains appropriate to the active profile; it should not leap automatically into the next year level.
-
-A question slide contains **only those three student tasks**. It must not contain a `Why` box, reasoning prompt, explanation prompt or fourth student task.
-
-On **answer slides**, preserve the same All / Most / Some order and positions and show the matched answer corresponding to each question.
-
-`Most` represents success, not a consolation tier.
-
-## Layout
-
-### Question slide
-
-- Use the established three-column All / Most / Some body layout.
-- Show exactly one task in each tier.
-- Do **not** place the green `Why` panel on the question slide.
-- Do **not** place a reasoning or explanation demand elsewhere on the question slide as a workaround.
-
-### Answer slide
-
-- Mirror the preceding question slide's three-column All / Most / Some layout and tier positions.
-- Supply the matched answer for all three tasks.
-- Place the established green `Why` panel at the bottom **on the answer slide only**.
-- The `Why` panel gives concise mathematical reasoning/explanation; it is not a fourth tier and must not contain generic checking language such as `Check your answer`.
-
-No generic whiteboard-use footer is required.
-
-## Content calibration
-
-Apply the active year-level profile rather than hard-coding one class or year band.
-
-- Questions 1-4 should sit near the accessible retrieval floor defined by the active profile while remaining worthwhile.
-- Question 5 should retrieve the active profile's expected current/prior knowledge or earlier prerequisite knowledge.
-- Do not force the warm-up to preview the day's lesson or next-year content merely to manufacture challenge.
-- Difficulty should come from mathematically meaningful variation, not arbitrary larger numbers or extra steps.
-
-For `year-4-5`, apply the specific calibration in `references/year-level-profiles/year-4-5.md`.
-For `year-6`, apply `references/year-level-profiles/year-6.md` and treat the profile's current release status honestly.
-
-Use proper fraction formatting with a vinculum/stacked fraction on student-facing slides.
+- `ALL` reads one value directly.
+- `MOST` compares two values or finds a difference.
+- `SOME` combines values, infers a missing value, or justifies a conclusion.
+- Every exact answer must be visibly recoverable from the graph.
+- Pictographs show an explicit key.
+- Bar/column/line graphs show unit intervals needed by the questions, or an explicit statement such as `Each interval = 1`.
+- Never ask students to infer an exact unmarked value from a sparse scale.
 
 ## Presentation
 
-Use Trebuchet MS and the shared projected-readability hierarchy. Every meaningful
-student-facing prompt and answer in the three tier cards is at least **36 pt**.
-The substantive answer-slide `Why` explanation is at least **28 pt**. Structural
-labels may use the shared structural floor. A 36 pt heading does not compensate
-for a smaller task. Keep colour restrained and semantic. Do not use red/amber/green
-traffic-light coding for tiers. The green `Why` panel is reserved for answer-slide
-reasoning.
+Use Trebuchet MS. Meaningful tier tasks and answers are at least **36 pt**. The `WHY` explanation is at least **28 pt**. Keep colour restrained and semantic. Use proper stacked fraction notation where practical.
 
-## QA
+When creating a PPTX, use the canonical header `NUMERACY WARM-UP n OF total • QUESTION` or `• ANSWER`. Where the presentation tool permits shape names, tag tier task/answer text `DLP:main` and the answer explanation `DLP:why`.
 
-Fail if:
-- the active year-level profile is missing, unresolved or inconsistent with the orchestrator;
-- content relies on another year profile's pitch without explicit authorisation;
-- any question slide does not contain exactly three separate All / Most / Some tasks;
-- any question slide contains a `Why` box, reasoning prompt, explanation prompt or fourth student task;
-- any question slide is not followed immediately by its matched answer slide;
-- any answer slide changes the All / Most / Some order or positions so the pair no longer mirrors cleanly;
-- any answer slide omits or mismatches one of the three tier answers;
-- any answer slide lacks the established bottom green `Why` reasoning/explanation panel;
-- the answer-slide `Why` panel contains generic checking instructions instead of mathematical reasoning;
-- `Some` is an unreasonable leap;
-- there are not exactly five question/answer pairs under the default profile;
-- text overflows a tier or answer-slide `Why` panel;
-- fractions use a forward slash where stacked notation is practical.
+## Validation and release
 
-The four `NW.*` release-boundary checks must all PASS for every pair before the
-component can PASS.
+Read `references/release-boundaries.json`. If Python execution is available, run:
+
+`python scripts/validate_warmup_deck.py <deck.pptx> --expected-pairs 5`
+
+Use the user-requested pair count instead of 5 only when they explicitly changed it. A validator FAIL blocks delivery as a finished standalone warm-up. If execution is unavailable, manually check the same contract and describe the result as unvalidated rather than claiming deterministic validation.
+
+Standalone validator PASS means **component-ready**, not whole-pack classroom-ready. In orchestrated mode, the parent DLP release authority still controls whole-pack release.
+
+## Common failures
+
+- all questions followed by all answers;
+- `1 / 2 / 3` instead of `ALL / MOST / SOME`;
+- a `WHY` prompt on the question slide;
+- no `WHY` explanation on the answer slide;
+- unrelated skills used as the three tiers;
+- graph values that cannot be read exactly from the displayed scale;
+- shrinking task text below the minimum to make content fit.
