@@ -2,7 +2,7 @@
 import argparse
 import json
 from pathlib import Path
-from pack_evidence import read, validate_content, expected_checks, digest
+from pack_evidence import read, validate_content, expected_checks, digest, requirements_digest
 
 class ContentSource:
     def __init__(self, path):
@@ -34,10 +34,9 @@ def main():
     args = p.parse_args()
     source = ContentSource(args.content)
     manifest = read(args.manifest)
-    from pack_evidence import ROOT
     record = {'schema_version':3, 'manifest_sha256':digest(args.manifest),
               'content_sha256':digest(args.content),
-              'requirements_sha256':digest(ROOT/'references/qa-requirements.json'),
+              'requirements_sha256':requirements_digest(source.content),
               'checks':[{'id':key,'subject':subject,'result':'UNREVIEWED','observation':'','citations':[]}
                         for key,subject in sorted(expected_checks(source.content,manifest,args.method))]}
     Path(args.out).write_text(json.dumps(record,indent=2)+'\n')
