@@ -29,6 +29,17 @@ class NumeracyWarmupReleaseBoundaryTests(unittest.TestCase):
         self.assertIn("missing result", payload["release_rule"].lower())
         self.assertIn("blocks classroom-ready release", payload["release_rule"].lower())
 
+    def test_pack_evidence_requires_every_boundary_for_numeracy_instance(self):
+        module = importlib.import_module("pack_evidence")
+        content = {
+            "instances": [{"id": "warmup-1", "owner": "dlp-numeracy-warmup"}],
+            "tasks": [],
+        }
+        manifest = {"artifacts": []}
+        checks = module.expected_checks(content, manifest, "semantic")
+        for boundary_id in BOUNDARY_IDS:
+            self.assertIn((boundary_id, "warmup-1"), checks)
+
     def test_complete_package_contains_numeracy_boundary_contract_and_benchmark(self):
         module = importlib.import_module("build_chatgpt_package")
         _, files = module.build_file_map(ROOT)
