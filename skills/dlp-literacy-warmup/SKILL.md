@@ -75,7 +75,19 @@ For example, when teaching a simple list without an Oxford comma, a reminder cou
 
 Place the concise applicable `Remember:` rule inside the yellow reminder panel. Put a separate short example beneath it when a model helps. Prefer showing the relevant punctuation clearly in the example over adding a long sentence that explains each insertion position.
 
-When the reminder teaches punctuation, format the target punctuation in its example in green, bold text at least 125% of the surrounding text size. Keep the punctuation in its normal sentence position.
+When the reminder teaches punctuation through a correct model, format the target punctuation in its example in green, bold text at least 125% of the surrounding text size. Keep the punctuation in its normal sentence position.
+
+## Non-examples and deliberate errors
+
+Whenever a reminder, question, answer or explanation deliberately shows a non-example or an element students should **not** use, render the incorrect element in red.
+
+- Isolate the smallest meaningful incorrect span: usually the punctuation mark, word, phrase or clause that causes the error.
+- Keep surrounding correct text in the normal text colour. Do not colour the whole sentence red when the specific error can be isolated.
+- Example: when teaching students not to use an Oxford comma, the unnecessary comma before `and` or `or` is red while the rest of the sentence remains in the normal text colour.
+- If the entire displayed example is genuinely incorrect as a unit and no smaller span accurately identifies the error, the whole relevant example may be red.
+- Red non-example styling overrides the general green target-punctuation styling rule for the deliberately incorrect element. Green remains for correct insertions, correct models and corrected answers.
+- When needed for clarity, pair the colour with a plain-language cue such as `Non-example:` or `Avoid:` so the meaning does not rely on colour alone.
+- Judge this styling from the exported render. Source code that requests red does not pass when the incorrect element renders in the normal colour, green, or otherwise loses the visual distinction.
 
 ## Task-operation fidelity
 
@@ -181,7 +193,11 @@ Fail if:
 - a question depends on remembered or unavailable content;
 - a reminder reveals the exact answer rather than teaching the method;
 - a reminder lacks a concise applicable `Remember:` rule inside its yellow panel;
-- a punctuation reminder fails to highlight the target punctuation in its separate example;
+- a punctuation reminder using a correct model fails to highlight the target punctuation in its separate example;
+- a deliberate non-example fails to render the incorrect element in red;
+- a non-example colours surrounding correct text red when the specific incorrect element can be isolated;
+- a deliberately incorrect punctuation mark is styled green instead of red;
+- red non-example styling is requested in source code but is missing or visually indistinguishable in the exported render;
 - student language is ambiguous, adult-facing or inappropriate for the active profile;
 - a question adds an `explain why`, `explain how you know` or `justify` demand to the direct response contrary to the active warm-up contract;
 - a question requires more than one student action or response contrary to the active warm-up contract;
