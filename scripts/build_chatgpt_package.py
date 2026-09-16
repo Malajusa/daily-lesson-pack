@@ -59,6 +59,12 @@ MEMORY_INDEPENDENT_BENCHMARK = (
 YEAR_PROFILE_ISOLATION_BENCHMARK = (
     "examples/benchmarks/year-profile-isolation-regression.md"
 )
+NUMERACY_WARMUP_RELEASE_BOUNDARIES = (
+    "skills/dlp-numeracy-warmup/references/release-boundaries.json"
+)
+NUMERACY_WARMUP_BENCHMARK = (
+    "examples/benchmarks/numeracy-warmup-release-boundaries-regression.md"
+)
 YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
 REGRESSION_BENCHMARKS = (
     "examples/benchmarks/t3w6-monday-modular-regression.md",
@@ -67,6 +73,7 @@ REGRESSION_BENCHMARKS = (
     UNIVERSAL_MATHS_BENCHMARK,
     MEMORY_INDEPENDENT_BENCHMARK,
     YEAR_PROFILE_ISOLATION_BENCHMARK,
+    NUMERACY_WARMUP_BENCHMARK,
     "examples/benchmarks/t3w7-thursday-known-failure.md",
     "examples/benchmarks/t3w8-tuesday-bypass-known-failure.md",
     MORNING_WORK_EXEMPLAR_BENCHMARK,
@@ -213,6 +220,14 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
 
         for reference in component_references:
             files[f"{component_root}/{reference}"] = read_required(repo, reference)
+
+        if name == "dlp-numeracy-warmup":
+            files[f"{component_root}/references/release-boundaries.json"] = read_required(
+                repo, NUMERACY_WARMUP_RELEASE_BOUNDARIES
+            )
+            files[f"{component_root}/{NUMERACY_WARMUP_BENCHMARK}"] = read_required(
+                repo, NUMERACY_WARMUP_BENCHMARK
+            )
 
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             files[f"{component_root}/{UNIVERSAL_MATHS_BENCHMARK}"] = read_required(
