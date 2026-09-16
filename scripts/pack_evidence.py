@@ -55,8 +55,53 @@ def extract(path, location):
     with fitz.open(path) as doc:
         return doc[page-1].get_text(clip=fitz.Rect(box))
 
+def _release_boundary_path(owner):
+    repo_path = ROOT/'skills'/owner/'references/release-boundaries.json'
+    if repo_path.is_file():
+        return repo_path
+    package_path = ROOT/'PACKAGE.json'
+    if package_path.is_file():
+        package = read(package_path)
+        if package.get('name') == owner:
+            direct_path = ROOT/'references/release-boundaries.json'
+            if direct_path.is_file():
+                return direct_path
+    return None
+
+def release_boundary_rules(content):
+    rules = []
+    for owner in sorted({i['owner'] for i in content['instances']}):
+        path = _release_boundary_path(owner)
+        if path is None:
+            continue
+        contract = read(path)
+        if contract.get('owner') != owner:
+            raise ValueError(f'Release boundary owner mismatch for {owner}')
+        if contract.get('release_policy') != 'fail_closed':
+            raise ValueError(f'Release boundary policy must be fail_closed for {owner}')
+        boundaries = contract.get('boundaries')
+        if not isinstance(boundaries, list) or not boundaries:
+            raise ValueError(f'Release boundary contract is empty for {owner}')
+        seen = set()
+        for boundary in boundaries:
+            boundary_id = boundary.get('id') if isinstance(boundary, dict) else None
+            statement = boundary.get('statement') if isinstance(boundary, dict) else None
+            if not isinstance(boundary_id, str) or not boundary_id.strip() or boundary_id in seen:
+                raise ValueError(f'Invalid or duplicate release boundary ID for {owner}')
+            if not isinstance(statement, str) or not statement.strip():
+                raise ValueError(f'Release boundary statement missing for {owner}:{boundary_id}')
+            seen.add(boundary_id)
+            rules.append({
+                'id': boundary_id,
+                'owner': owner,
+                'scope': 'instance',
+                'method': 'semantic',
+            })
+    return rules
+
 def expected_checks(content, manifest, method):
-    registry = read(ROOT/'references/qa-requirements.json')['requirements']
+    registry = list(read(ROOT/'references/qa-requirements.json')['requirements'])
+    registry.extend(release_boundary_rules(content))
     expected = set()
     for rule in registry:
         if rule['method'] != method:
