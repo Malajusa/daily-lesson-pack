@@ -37,7 +37,12 @@ class InstallationCalibrationTests(unittest.TestCase):
             for package in Path(tmp).glob('dlp-*.zip'):
                 with self.subTest(component=package.stem),zipfile.ZipFile(package) as archive:
                     names=set(archive.namelist())
-                    for rel in ('config/creator-defaults.json','schemas/instructional-calibration.schema.json'):
-                        self.assertIn(package.stem+'/'+rel,names)
+                    calibration = ('config/creator-defaults.json','schemas/instructional-calibration.schema.json')
+                    if package.stem == 'dlp-numeracy-warmup':
+                        for rel in calibration:
+                            self.assertNotIn(package.stem+'/'+rel,names)
+                    else:
+                        for rel in calibration:
+                            self.assertIn(package.stem+'/'+rel,names)
 
 if __name__=='__main__': unittest.main()
