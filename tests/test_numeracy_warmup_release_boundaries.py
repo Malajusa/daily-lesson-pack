@@ -13,10 +13,13 @@ sys.path.insert(0, str(ROOT / "scripts"))
 BOUNDARY_SOURCE = "skills/dlp-numeracy-warmup/references/release-boundaries.json"
 BENCHMARK_SOURCE = "examples/benchmarks/numeracy-warmup-release-boundaries-regression.md"
 BOUNDARY_IDS = {
+    "NW.PAIR.COUNT",
     "NW.PROMPT.THREE_TIERS_ONLY",
     "NW.PAIR.ADJACENT",
     "NW.ANSWER.MIRROR",
     "NW.REASONING.ANSWER_ONLY",
+    "NW.GRAPH.EXACT_SCALE",
+    "NW.PRESENTATION.FONT_FLOOR",
 }
 
 
@@ -27,7 +30,7 @@ class NumeracyWarmupReleaseBoundaryTests(unittest.TestCase):
         self.assertEqual(payload["release_policy"], "fail_closed")
         self.assertEqual({item["id"] for item in payload["boundaries"]}, BOUNDARY_IDS)
         self.assertIn("missing result", payload["release_rule"].lower())
-        self.assertIn("blocks classroom-ready release", payload["release_rule"].lower())
+        self.assertIn("blocks whole-pack release", payload["release_rule"].lower())
 
     def test_pack_evidence_requires_every_boundary_for_numeracy_instance(self):
         module = importlib.import_module("pack_evidence")
