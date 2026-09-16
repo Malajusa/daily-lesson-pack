@@ -1,6 +1,6 @@
 ---
 name: dlp-numeracy-warmup
-description: Generate the Daily Lesson Pack Mathematics warm-up as cumulative retrieval using separate All, Most and Some questions of increasing complexity.
+description: Use when generating or reviewing the Daily Lesson Pack Mathematics warm-up for a supported year-level profile.
 ---
 
 # DLP Numeracy Warm-up
@@ -14,6 +14,25 @@ and report-only release commands below. Use `scripts/content_source.py` for
 canonical task text and complete review coverage. Required checks cannot be
 replaced by a broad component PASS. Only the complete-pack release command may
 authorise classroom-ready output.
+
+## Warm-up release boundaries
+
+Read `references/release-boundaries.json` before generating or reviewing this
+component. Its `NW.*` checks are **release-blocking invariants in addition to**
+the shared QA requirements.
+
+For every warm-up pair, record explicit PASS evidence for:
+
+- `NW.PROMPT.THREE_TIERS_ONLY`
+- `NW.PAIR.ADJACENT`
+- `NW.ANSWER.MIRROR`
+- `NW.REASONING.ANSWER_ONLY`
+
+A missing result or any FAIL makes `dlp-numeracy-warmup` fail. Do not assemble,
+label or release the pack as classroom-ready when this component has failed.
+When repository benchmarks are available, use
+`examples/benchmarks/numeracy-warmup-release-boundaries-regression.md` as the
+regression case.
 
 ## Resolved instructional preferences
 
@@ -35,7 +54,9 @@ The active profile controls expected prior knowledge, number types and magnitude
 
 ## Sequence
 
-Create exactly **5 prompt-and-answer pairs** (**10 slides total**) unless the current request or validated classroom profile explicitly changes the count. Every prompt is followed immediately by its matched answer slide.
+Create exactly **5 question-and-answer pairs** (**10 slides total**) unless the current request or validated classroom profile explicitly changes the count.
+
+Every question slide must be followed **immediately** by its matched answer slide. No reminder, model, transition, unrelated answer or other slide may sit between the pair.
 
 Use this default daily mix:
 
@@ -51,23 +72,35 @@ include every category.
 
 ## All / Most / Some principle
 
-On **prompt slides**, `All`, `Most` and `Some` must be **three separate questions/tasks of increasing complexity**. Never use one question where `All` is a partial answer, `Most` is the complete answer and `Some` is checking/explaining the same work.
+On **question slides**, `All`, `Most` and `Some` must be **three separate questions/tasks of increasing complexity**. Never use one question where `All` is a partial answer, `Most` is the complete answer and `Some` is checking/explaining the same work.
 
 - **All:** a genuinely accessible question essentially all students can attempt successfully within the active year profile.
 - **Most:** a moderately more demanding independent question representing secure expected performance for the active profile.
 - **Some:** a further extension that remains appropriate to the active profile; it should not leap automatically into the next year level.
 
-On **answer slides**, show the answer corresponding to each of the three questions.
+A question slide contains **only those three student tasks**. It must not contain a `Why` box, reasoning prompt, explanation prompt or fourth student task.
+
+On **answer slides**, preserve the same All / Most / Some order and positions and show the matched answer corresponding to each question.
 
 `Most` represents success, not a consolation tier.
 
 ## Layout
 
-- Use the same three-column All / Most / Some body layout on question and answer slides.
-- Keep `Why` in the established green panel at the bottom: a reasoning prompt on the question slide and concise reasoning/explanation on the answer slide.
-- Do not turn `Why` into a fourth body card.
-- Do not use a generic `Check your answer` message in place of mathematical reasoning.
-- No generic whiteboard-use footer is required.
+### Question slide
+
+- Use the established three-column All / Most / Some body layout.
+- Show exactly one task in each tier.
+- Do **not** place the green `Why` panel on the question slide.
+- Do **not** place a reasoning or explanation demand elsewhere on the question slide as a workaround.
+
+### Answer slide
+
+- Mirror the preceding question slide's three-column All / Most / Some layout and tier positions.
+- Supply the matched answer for all three tasks.
+- Place the established green `Why` panel at the bottom **on the answer slide only**.
+- The `Why` panel gives concise mathematical reasoning/explanation; it is not a fourth tier and must not contain generic checking language such as `Check your answer`.
+
+No generic whiteboard-use footer is required.
 
 ## Content calibration
 
@@ -87,20 +120,28 @@ Use proper fraction formatting with a vinculum/stacked fraction on student-facin
 
 Use Trebuchet MS and the shared projected-readability hierarchy. Every meaningful
 student-facing prompt and answer in the three tier cards is at least **36 pt**.
-The substantive `Why` prompt/answer is at least **28 pt**. Structural labels may
-use the shared structural floor. A 36 pt heading does not compensate for a
-smaller task. Keep colour restrained and semantic. Do not use red/amber/green
-traffic-light coding for tiers. The green `Why` panel is reserved for reasoning.
+The substantive answer-slide `Why` explanation is at least **28 pt**. Structural
+labels may use the shared structural floor. A 36 pt heading does not compensate
+for a smaller task. Keep colour restrained and semantic. Do not use red/amber/green
+traffic-light coding for tiers. The green `Why` panel is reserved for answer-slide
+reasoning.
 
 ## QA
 
 Fail if:
 - the active year-level profile is missing, unresolved or inconsistent with the orchestrator;
 - content relies on another year profile's pitch without explicit authorisation;
-- any prompt uses one question split into quality tiers rather than three questions;
+- any question slide does not contain exactly three separate All / Most / Some tasks;
+- any question slide contains a `Why` box, reasoning prompt, explanation prompt or fourth student task;
+- any question slide is not followed immediately by its matched answer slide;
+- any answer slide changes the All / Most / Some order or positions so the pair no longer mirrors cleanly;
+- any answer slide omits or mismatches one of the three tier answers;
+- any answer slide lacks the established bottom green `Why` reasoning/explanation panel;
+- the answer-slide `Why` panel contains generic checking instructions instead of mathematical reasoning;
 - `Some` is an unreasonable leap;
-- answer slides do not match the three prompts;
-- there are not exactly five prompt/answer pairs under the default profile;
-- the green `Why` panel contains generic checking instructions instead of reasoning;
-- text overflows a tier or `Why` panel;
+- there are not exactly five question/answer pairs under the default profile;
+- text overflows a tier or answer-slide `Why` panel;
 - fractions use a forward slash where stacked notation is practical.
+
+The four `NW.*` release-boundary checks must all PASS for every pair before the
+component can PASS.
