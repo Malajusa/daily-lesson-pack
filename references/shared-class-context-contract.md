@@ -7,6 +7,7 @@ This contract defines the **runtime context** a teacher supplies so the Daily Le
 It is deliberately separate from `year-level-context-contract.md`.
 
 - Runtime context answers: **What is this class teaching now, when, and under what local constraints?**
+- A selected maintained Level A/Level B plan answers: **What is the agreed term scope and ordered teaching sequence for this week?**
 - The active year-level profile answers: **What is an appropriate developmental and curriculum-facing pitch for this year level?**
 - The creator-settings contract answers: **Which authorised preferences apply for this class and date?**
 - The pack profile answers: **What stable slide counts and release behaviours apply across supported profiles?**
@@ -24,11 +25,17 @@ Resolve these from the current request, current-run files, connected authoritati
 1. active registered profile, automatically selected from creator defaults or authorised preferences unless the current request overrides it;
 2. exact date, term, week and day;
 3. that teacher's timetable for the requested day, including interruptions;
-4. current Mathematics overview/topic and day-level focus;
-5. current English/literacy overview/toolkit stage and day-level focus where applicable;
-6. any explicit lesson-status exception from the preceding scheduled lesson;
-7. current class size or printing quantity when printing is requested;
-8. any local scope changes, specialist blocks or school-specific routines that materially affect the pack.
+4. the selected maintained term/week plan, when the current request or authorised
+   class context selects one;
+5. current Mathematics overview/topic and day-level focus, resolved from the
+   selected weekly plan when it covers Mathematics or otherwise from another
+   authoritative current source;
+6. current English/literacy overview/toolkit stage and day-level focus, resolved
+   from the selected weekly plan when it covers English or otherwise from another
+   authoritative current source;
+7. any explicit lesson-status exception from the preceding scheduled lesson;
+8. current class size or printing quantity when printing is requested;
+9. any local scope changes, specialist blocks or school-specific routines that materially affect the pack.
 
 Do not require the same timetable, overview format, term sequence or class size from different users.
 
@@ -57,7 +64,13 @@ These may be used only when they are supplied or explicitly selected as current 
 
 ## Source hierarchy for runtime facts
 
-Use runtime facts in this order:
+For lesson focus inside an explicitly selected maintained plan, apply
+`term-week-day-planning-contract.md`: current user instruction first, then any
+authoritative lesson-status exception, then the selected Level B weekly teaching
+overview, then its Level A term overview. The actual timetable controls Level C
+placement and available time.
+
+For other runtime facts, use:
 
 1. the user's current explicit instruction;
 2. current-run timetable/overview/unit files;
@@ -65,13 +78,23 @@ Use runtime facts in this order:
 4. authoritative school planning material explicitly supplied for this run;
 5. older local planning only when it is clearly still current.
 
+The presence of a bundled dated creator plan is not selection. Do not apply it
+to another teacher or class unless that current run explicitly selects it.
+
 Chat memory, saved personal context and another account's Project context may help identify what to look for, but must not silently supply timetable facts, lesson focus, class size, copy quantity or local routines.
 
 ## Progression rule
 
 Assume the preceding scheduled lesson was completed sufficiently to advance unless an authoritative runtime source records partial completion, cancellation or required reteaching.
 
-If an overview defines a day-level sequence, follow that sequence. If it does not define a requested day, use the teacher's supplied current focus rather than inventing a bridge from another day.
+If a selected Level B weekly overview defines an ordered lesson sequence, keep
+that sequence timetable-agnostic and map the next applicable lesson onto the
+actual Level C day/block. Do not invent weekday labels in Level B.
+
+If another overview defines a day-level sequence, follow that sequence. If it
+does not define a requested day and no selected Level B plan resolves the focus,
+use the teacher's supplied current focus rather than inventing a bridge from
+another day.
 
 ## Missing-input behaviour
 
@@ -92,7 +115,8 @@ The skill is portable only when a fresh account with no relevant memory can prod
 - the installed repository release;
 - an active year-level profile;
 - that user's current timetable;
-- that user's Maths and English/literacy overviews or explicit day-level focus;
+- either that user's selected maintained Level A/Level B planning sources or
+  their current Maths and English/literacy overviews/explicit day-level focus;
 - any required lesson-status exception;
 - any local class/output constraints needed for the requested artefacts.
 
