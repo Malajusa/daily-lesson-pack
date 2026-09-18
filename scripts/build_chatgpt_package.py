@@ -42,6 +42,13 @@ YEAR_LEVEL_CONTEXT_REFERENCE = "references/year-level-context-contract.md"
 MATH_REFERENCE = "references/universal-maths-instruction-canon.md"
 FRACTION_REFERENCE = "references/fraction-equivalence-standard.md"
 SHARED_CONTEXT_REFERENCE = "references/shared-class-context-contract.md"
+PLANNING_CONTRACT_REFERENCE = "references/term-week-day-planning-contract.md"
+CREATOR_TERM4_PLAN_FILES = (
+    "planning/2026/term-4/README.md",
+    "planning/2026/term-4/term-overview.md",
+    "planning/2026/term-4/status/lesson-status.json",
+    *(f"planning/2026/term-4/weeks/week-{week:02d}.md" for week in range(1, 11)),
+)
 VISUAL_EXEMPLAR_REFERENCE = "references/visual-exemplar-standard.md"
 VISUAL_EXEMPLAR_ASSET = (
     "assets/visual-exemplars/t3w6-tuesday-edited-visual-exemplar.pptx"
@@ -55,6 +62,9 @@ MORNING_WORK_EXEMPLAR_BENCHMARK = (
 UNIVERSAL_MATHS_BENCHMARK = "examples/benchmarks/universal-maths-canon-regression.md"
 MEMORY_INDEPENDENT_BENCHMARK = (
     "examples/benchmarks/memory-independent-wednesday-regression.md"
+)
+TERM_WEEK_DAY_PLANNING_BENCHMARK = (
+    "examples/benchmarks/term-week-day-planning-regression.md"
 )
 YEAR_PROFILE_ISOLATION_BENCHMARK = (
     "examples/benchmarks/year-profile-isolation-regression.md"
@@ -75,6 +85,7 @@ REGRESSION_BENCHMARKS = (
     "examples/benchmarks/t3w6-thursday-literacy-regression.md",
     UNIVERSAL_MATHS_BENCHMARK,
     MEMORY_INDEPENDENT_BENCHMARK,
+    TERM_WEEK_DAY_PLANNING_BENCHMARK,
     YEAR_PROFILE_ISOLATION_BENCHMARK,
     NUMERACY_WARMUP_BENCHMARK,
     "examples/benchmarks/t3w7-thursday-known-failure.md",
@@ -127,6 +138,8 @@ ROOT_RUNTIME_FILES = (
     MATH_REFERENCE,
     FRACTION_REFERENCE,
     SHARED_CONTEXT_REFERENCE,
+    PLANNING_CONTRACT_REFERENCE,
+    *CREATOR_TERM4_PLAN_FILES,
     VISUAL_EXEMPLAR_REFERENCE,
     *REGRESSION_BENCHMARKS,
     "examples/context-record-wednesday.json",

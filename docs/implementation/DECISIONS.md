@@ -14,6 +14,8 @@ Prepared 8 September 2026. This is the implementation authority distilled from t
 | DEC-06 | Routine use should not repeat setup. | Load known defaults, saved settings and valid sources automatically; ask only for genuinely missing material facts. |
 | DEC-07 | Sharing must remain possible across different year levels. | Allow optional isolated recalibration and explicit profile/domain maturity without changing creator defaults. |
 | DEC-08 | Implement the retained brainstorming, not another unbounded feature discussion. | Every retained capability is allocated to a bounded issue, acceptance test and milestone; later ideas do not block initial useful delivery. |
+| DEC-09 | Planning uses an A → B → C hierarchy: Term overview → timetable-agnostic weekly teaching overview → actual daily plan. | Daily Lesson Pack consumes the selected Week B sequence before the Term A overview and maps it onto the real timetable at Level C rather than reinterpreting the term each day. |
+| DEC-10 | The 2026 Term 4 Room 11 plan is maintained in the repository, but lesson delivery status is exception-only and the dated plan is not universal. | Bundle the plan for clean-context use; select it only for the intended class/run, assume normal progression when no exception exists, and never treat a generated pack as evidence that teaching occurred. |
 
 ## Retained proposals are features, not invented permanent preferences
 

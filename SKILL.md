@@ -111,12 +111,16 @@ A complete Term/Week Mathematics pack belongs to the standalone `weekly-maths-pa
 
 ## Context architecture
 
-Before resolving a pack, read both:
+Before resolving a pack, read all three:
 
 - `references/year-level-context-contract.md`;
-- `references/shared-class-context-contract.md`.
+- `references/shared-class-context-contract.md`;
+- `references/term-week-day-planning-contract.md`.
 
-They serve different purposes and must not be collapsed.
+They serve different purposes and must not be collapsed. The term/week/day
+contract governs how a selected maintained Level A/Level B plan becomes the
+requested Level C day plan; it does not replace the year profile or the actual
+timetable.
 
 ### Year-level contextual base
 
@@ -136,27 +140,66 @@ Current profiles include:
 
 ### User/school runtime context
 
-The teacher supplies or connects the current timetable, Maths/English overviews, current sequence, interruptions, class/output constraints and lesson-status exceptions. These determine **what is being taught now and when**, not the definition of the year level.
+The teacher supplies or connects the current timetable, Maths/English overviews,
+current sequence, maintained term/week planning where selected, interruptions,
+class/output constraints and lesson-status exceptions. These determine **what is
+being taught now and when**, not the definition of the year level.
 
-A user's timetable, class size or overview must never be copied into a year-level profile merely because it was used to generate a pack.
+A user's timetable, class size or overview must never be copied into a year-level
+profile merely because it was used to generate a pack.
+
+### Term → Week → Day planning hierarchy
+
+When the current run explicitly selects a maintained plan, apply
+`references/term-week-day-planning-contract.md`.
+
+- **Level A — Term overview** owns term scope, curriculum mapping, assessment
+  timing and major constraints.
+- **Level B — Weekly teaching overview** owns the timetable-agnostic ordered
+  lesson sequence for the selected week.
+- **Level C — Daily plan** maps the next applicable Level B lessons onto the
+  actual timetable and expands them through the owning component skills.
+
+For the creator's maintained 2026 Term 4 Year 4/5 plan, the repository source is
+`planning/2026/term-4/` and the plan ID is
+`2026-t4-year-4-5-room-11`. Use it only when the current request or an
+authoritative maintained class context selects that plan. Its presence in the
+package does not make it a universal Year 4/5 default and does not authorise its
+use for another teacher/class.
+
+A Level C generator may elaborate pedagogy, examples, resources, warm-ups,
+printables and slide treatment, but it must not silently replace the selected
+Level B lesson focus with another topic.
 
 ## Source hierarchy
 
 Read `references/shared-class-context-contract.md`,
+`references/term-week-day-planning-contract.md`,
 `references/default-pack-profile.json` and
 `references/component-instance-contract.md` before resolving a daily pack.
-They define the reproducible pack defaults, required day inputs,
-instance-level timetable model and memory-independence boundary.
+They define the reproducible pack defaults, required day inputs, maintained
+planning resolution, instance-level timetable model and memory-independence
+boundary.
 
 Use sources in this order:
 
 1. the user's current explicit instruction;
-2. current-run user/school context: timetable, overviews, unit plans, day-level focus and explicit status exceptions;
-3. the active year-level profile for developmental/curriculum pitch;
-4. authoritative school planning sources explicitly supplied for this run;
-5. bundled universal component-skill defaults and instructional canons.
+2. an authoritative lesson-status exception for the selected sequence;
+3. the selected maintained Level B weekly teaching overview;
+4. the selected maintained Level A term overview and other current-run
+   user/school planning sources;
+5. the actual timetable and interruptions for Level C placement/time feasibility;
+6. the active year-level profile for developmental/curriculum pitch;
+7. bundled universal component-skill defaults and instructional canons.
 
-For **current lesson focus and local sequencing**, the user's current overview/program outranks the year-level profile.
+When no maintained Level A/B plan is selected, current-run timetable, overviews,
+unit plans and explicit day-level focus remain the lesson-planning sources under
+the existing runtime-context rules.
+
+For **current lesson focus and local sequencing**, a selected weekly overview or
+the user's current overview/program outranks the year-level profile. The actual
+timetable constrains placement and available time; it does not silently rewrite
+the selected weekly sequence.
 
 For **developmental pitch**, the active year-level profile outranks historical examples from another year level or class.
 
@@ -244,21 +287,30 @@ Every content-component handoff must include:
 1. Load creator defaults and configured private settings, apply source-backed current overrides, and resolve the active registered profile without asking for a preset.
 2. Load the matching registered profile under `references/year-level-profiles/`. Use its registered status and revision; a caller cannot promote a scaffold to calibrated. If no supported profile exists, mark year profile `unresolved` and block classroom-ready release rather than borrowing another profile.
 3. Resolve exact date, term, week, day, timetable and interruptions from the current run's supplied sources.
-4. Resolve current Maths and English/literacy sequence, day-level focus and explicit status exceptions from the user's current sources.
-5. Verify and load the approved visual-only exemplar.
-6. Build one shared context object containing only information the components need: active year profile/path/status, pack profile, runtime source provenance, lesson focus, curriculum boundary, authorised local allocation, time available and output constraints. Record each scheduled block as a unique instance under `references/component-instance-contract.md`.
-7. Prepare an instance-level time and slide budget before generation. Include response, discussion, transition and resource-handling time. If the estimate exceeds the timetable allocation, reduce scope or ask for a decision; do not build an overfull deck.
-8. Route each required instance to its specialised skill and require an evidence-bearing component acceptance result before assembly. Repeated owners are valid when instance IDs differ. For `dlp-maths-lesson`, require the universal Mathematics planning contract, active profile and canon checks in the evidence.
-9. Record schema-v2 scheduled instances, a generation run ID and each instance's `PASS` or `FAIL`, active year profile, estimated minutes, stable check IDs, concrete evidence and artefact/slide range. After assembly, bind the unchanged evidence record to the assembled deck SHA-256. A freeform assertion is not evidence.
-10. Block assembly until every scheduled content instance records `PASS`. This gate does not replace independent final QA.
-11. Keep Morning Work, Literacy warm-up and Shared Reading distinct. Represent Guided Reading only according to its current component contract.
-12. Keep the Mathematics warm-up separate from prerequisite checking and the main Mathematics lesson.
-13. Assemble components in timetable order. Slide 1 is Morning Work when required. Mark resumptions after timetable breaks visibly.
-14. Create only useful printables. Prefer books, mini-whiteboards, oral work and manipulatives when a worksheet adds no value and those modes are authorised by runtime context.
-15. Create the teacher briefing and any weekly printing plan from the actual generated resources and current-run quantities.
-16. Send the complete assembled pack, context-source record, active year-profile record, presentation-audit evidence and component-acceptance record to `dlp-pack-qa`.
-17. If QA returns FAIL, route each defect only to its owning component, revise, and rerun the full applicable suite.
-18. Release only after repository-owned contract and year-profile audits, warning dispositions, independent semantic review and independent rendered visual review pass for the same deck hash and the active year profile's release requirements are satisfied.
+4. If a maintained Level A/B plan is explicitly selected, resolve the requested
+   week and next applicable lesson focus under
+   `references/term-week-day-planning-contract.md`: apply any authoritative
+   lesson-status exception first, then Level B, then Level A, and map the result
+   onto the actual timetable. Otherwise resolve Maths and English/literacy
+   sequence, day-level focus and status exceptions from the user's current
+   overview/unit sources as before.
+5. Record the selected Level A file, Level B file, timetable source and any
+   status exception in source provenance. Missing status means no exception; it
+   is not evidence that teaching was missed or that learning was mastered.
+6. Verify and load the approved visual-only exemplar.
+7. Build one shared context object containing only information the components need: active year profile/path/status, pack profile, runtime source provenance, lesson focus, curriculum boundary, authorised local allocation, time available and output constraints. Record each scheduled block as a unique instance under `references/component-instance-contract.md`.
+8. Prepare an instance-level time and slide budget before generation. Include response, discussion, transition and resource-handling time. If the estimate exceeds the timetable allocation, reduce scope or ask for a decision; do not build an overfull deck.
+9. Route each required instance to its specialised skill and require an evidence-bearing component acceptance result before assembly. Repeated owners are valid when instance IDs differ. For `dlp-maths-lesson`, require the universal Mathematics planning contract, active profile and canon checks in the evidence.
+10. Record schema-v2 scheduled instances, a generation run ID and each instance's `PASS` or `FAIL`, active year profile, estimated minutes, stable check IDs, concrete evidence and artefact/slide range. After assembly, bind the unchanged evidence record to the assembled deck SHA-256. A freeform assertion is not evidence.
+11. Block assembly until every scheduled content instance records `PASS`. This gate does not replace independent final QA.
+12. Keep Morning Work, Literacy warm-up and Shared Reading distinct. Represent Guided Reading only according to its current component contract.
+13. Keep the Mathematics warm-up separate from prerequisite checking and the main Mathematics lesson.
+14. Assemble components in timetable order. Slide 1 is Morning Work when required. Mark resumptions after timetable breaks visibly.
+15. Create only useful printables. Prefer books, mini-whiteboards, oral work and manipulatives when a worksheet adds no value and those modes are authorised by runtime context.
+16. Create the teacher briefing and any weekly printing plan from the actual generated resources and current-run quantities.
+17. Send the complete assembled pack, context-source record, active year-profile record, presentation-audit evidence and component-acceptance record to `dlp-pack-qa`.
+18. If QA returns FAIL, route each defect only to its owning component, revise, and rerun the full applicable suite.
+19. Release only after repository-owned contract and year-profile audits, warning dispositions, independent semantic review and independent rendered visual review pass for the same deck hash and the active year profile's release requirements are satisfied.
 
 If actual printing is requested and copy quantity cannot be resolved from an authoritative runtime source, treat quantity as unresolved rather than inventing it.
 
@@ -274,7 +326,9 @@ If the active year-level profile itself is marked calibration/candidate-only, ge
 - Guided Reading follows its own current component contract and authorised schedule; never infer ability labels from the year profile.
 - Numeracy warm-up uses 5 `Question -> Answer` pairs (10 slides total) under the default pack profile. Each question slide contains separate All, Most and Some tasks.
 - Shared Reading must alternate each paragraph-and-question slide with its immediately following matched answer slide; answers are not revealed early on question slides.
-- The writing lesson teaches the current writing focus supplied by the user's overview; a historical class genre or weekday progression is not a universal default.
+- The writing lesson teaches the current writing focus resolved from the selected
+  weekly plan or the user's current overview; a historical class genre or weekday
+  progression is not a universal default.
 - Student-facing instructions must state the action, mathematical/literacy focus, any required representation or resource, and the expected student output where applicable.
 - When a task transforms supplied language, name the exact operation. For example, say `Combine the two sentences using the conjunction “because”`, not merely `Write a sentence`.
 - Student-facing task language must be understandable within the active year profile. Accurate technical terminology is retained and explained rather than replaced by vague substitutes.
