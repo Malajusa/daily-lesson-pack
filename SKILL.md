@@ -326,7 +326,9 @@ If the active year-level profile itself is marked calibration/candidate-only, ge
 - Guided Reading follows its own current component contract and authorised schedule; never infer ability labels from the year profile.
 - Numeracy warm-up uses 5 `Question -> Answer` pairs (10 slides total) under the default pack profile. Each question slide contains separate All, Most and Some tasks.
 - Shared Reading must alternate each paragraph-and-question slide with its immediately following matched answer slide; answers are not revealed early on question slides.
-- The writing lesson teaches the current writing focus supplied by the user's overview; a historical class genre or weekday progression is not a universal default.
+- The writing lesson teaches the current writing focus resolved from the selected
+  weekly plan or the user's current overview; a historical class genre or weekday
+  progression is not a universal default.
 - Student-facing instructions must state the action, mathematical/literacy focus, any required representation or resource, and the expected student output where applicable.
 - When a task transforms supplied language, name the exact operation. For example, say `Combine the two sentences using the conjunction “because”`, not merely `Write a sentence`.
 - Student-facing task language must be understandable within the active year profile. Accurate technical terminology is retained and explained rather than replaced by vague substitutes.
