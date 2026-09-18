@@ -9,6 +9,15 @@
   registered main-curriculum coverage and distribute calibration dependencies.
 - Add digest-first archive verification, per-component manifests and clean-source
   identity; do not execute an installed runtime after its static audit fails.
+- Add an explicit Term → Week → Day planning hierarchy: a selected Level B
+  weekly teaching sequence now outranks its Level A term overview for lesson
+  focus, while the actual timetable controls Level C placement.
+- Bundle the creator's 2026 Term 4 Year 4/5 Level A/B plan and an exception-only
+  lesson-status ledger so clean-context generation does not need the long DOCX or
+  chat memory.
+- Keep the dated Room 11 plan opt-in/current-class scoped rather than a universal
+  Year 4/5 default; a generated pack remains planning evidence, not proof a lesson
+  was taught.
 - Production integration, blind model evaluation, independent review, active
   installation, classroom pilot and unattended delivery remain unaccepted.
 
