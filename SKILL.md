@@ -297,7 +297,7 @@ Every content-component handoff must include:
 5. Record the selected Level A file, Level B file, timetable source and any
    status exception in source provenance. Missing status means no exception; it
    is not evidence that teaching was missed or that learning was mastered.
-7. Verify and load the approved visual-only exemplar.
+6. Verify and load the approved visual-only exemplar.
 7. Build one shared context object containing only information the components need: active year profile/path/status, pack profile, runtime source provenance, lesson focus, curriculum boundary, authorised local allocation, time available and output constraints. Record each scheduled block as a unique instance under `references/component-instance-contract.md`.
 8. Prepare an instance-level time and slide budget before generation. Include response, discussion, transition and resource-handling time. If the estimate exceeds the timetable allocation, reduce scope or ask for a decision; do not build an overfull deck.
 9. Route each required instance to its specialised skill and require an evidence-bearing component acceptance result before assembly. Repeated owners are valid when instance IDs differ. For `dlp-maths-lesson`, require the universal Mathematics planning contract, active profile and canon checks in the evidence.
