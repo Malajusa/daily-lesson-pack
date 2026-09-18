@@ -16,3 +16,10 @@ planning document.
   timetable + interruptions/status exceptions.
 
 Do not place student records or private student information in this directory.
+
+## Editing rule
+
+For Daily Lesson Pack, these repository files are the executable planning source.
+The teacher-facing DOCX is a human-readable snapshot/mirror. Do not maintain two
+independent versions of the same plan: when planning changes, update the relevant
+Level A or Level B repository file, then regenerate or resynchronise the DOCX.
