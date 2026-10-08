@@ -203,6 +203,11 @@ Any failure in this section blocks release and is routed to `dlp-maths-lesson`.
 
 ## Visual QA
 
+Read `examples/projected-readability-regression.md`,
+`examples/semantic-colour-regression.md` and
+`examples/panel-containment-regression.md` for concrete pass/fail cases.
+Apply current component release boundaries before illustrative size ranges.
+
 Apply the repository standards:
 - `references/universal-maths-instruction-canon.md` for Mathematics content;
 - `references/slide-deck-quality-standards.md`;

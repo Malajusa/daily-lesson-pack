@@ -1,5 +1,9 @@
 # 3.10.0-rc.1 — Unreleased candidate
 
+- Include projected-readability, semantic-colour and panel-containment regression
+  examples in complete and standalone QA packages; route their use from the
+  orchestrator and QA owner. Reconcile Numeracy examples with answer-only WHY
+  reasoning and the current 36 pt task/answer and 28 pt WHY minimums.
 - Integrate D02 registry and preserve the 72-item creator-first roadmap.
 - Add source-backed creator defaults, private revisioned SQLite preferences,
   scoped overrides, cautious conversational count parsing and actual host-CLI loading.

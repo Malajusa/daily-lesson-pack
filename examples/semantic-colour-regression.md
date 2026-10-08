@@ -14,46 +14,50 @@ Adding and subtracting fractions with like denominators.
 
 ### Prompt slide structure
 
-Keep the established three-column layout and green `Why` footer.
+Keep the established three-column layout with literal labels ALL, MOST and
+SOME. The question slide contains these three tasks only: no WHY panel,
+reasoning prompt or fourth task. Reserve the bottom green WHY panel for the
+immediately following answer slide.
 
-**All**
+**ALL**
 
 Calculate: `2/7 + 3/7`
 
-**Most**
+**MOST**
 
 A bottle is `7/10` full. Sam drinks `3/10` of the bottle. What fraction of the bottle remains?
 
-**Some**
+**SOME**
 
 Complete: `□/12 + 5/12 = 11/12`
-
-**Why footer**
-
-What stays the same when you add or subtract fractions with the same denominator?
 
 ### Semantic-colour mapping
 
 - neutral background and ordinary text;
 - one blue instructional accent identifies the denominator in each fraction and the matching denominator in any fraction bar used on the slide;
 - do not assign unrelated colours to the three calculations;
-- `All`, `Most` and `Some` retain their fixed labels and positions, so colour is not required to know the level;
+- `ALL`, `MOST` and `SOME` retain their fixed labels and positions, so colour is not required to know the task tier;
 - the green footer treatment means `Why/reasoning` only.
 
 ### Answer slide
 
-**All:** `5/7`
+**ALL:** `5/7`
 
-**Most:** `4/10`
+**MOST:** `4/10`
 
-**Some:** `6/12 + 5/12 = 11/12`
+**SOME:** `6/12 + 5/12 = 11/12`
 
 **Why:** The denominator stays the same because the size of the equal parts has not changed; only the number of those parts changes.
+
+Mirror the preceding question's tier order and positions. Keep meaningful
+tasks and answers at least 36 pt and the answer-slide WHY explanation at least
+28 pt. Reflow or shorten content before reducing type.
 
 The denominator receives the same blue signal wherever it reappears. The complete answers remain readable and meaningful if the colour is removed.
 
 ### Fail examples
 
+- placing a WHY panel or reasoning task on the question slide;
 - red `All`, amber `Most`, green `Some` traffic-light coding;
 - every numerator and denominator given a different colour;
 - different denominator colours in question and answer slides;

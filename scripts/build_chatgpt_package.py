@@ -79,7 +79,13 @@ NUMERACY_WARMUP_VALIDATOR = (
     "skills/dlp-numeracy-warmup/scripts/validate_warmup_deck.py"
 )
 YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
+VISUAL_REGRESSION_EXAMPLES = (
+    "examples/projected-readability-regression.md",
+    "examples/semantic-colour-regression.md",
+    "examples/panel-containment-regression.md",
+)
 REGRESSION_BENCHMARKS = (
+    *VISUAL_REGRESSION_EXAMPLES,
     "examples/benchmarks/t3w6-monday-modular-regression.md",
     "examples/benchmarks/t3w6-tuesday-release-regression.md",
     "examples/benchmarks/t3w6-thursday-literacy-regression.md",
