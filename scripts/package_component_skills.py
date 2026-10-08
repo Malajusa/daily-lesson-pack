@@ -64,6 +64,9 @@ NUMERACY_WARMUP_VALIDATOR = (
 YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
 
 QA_ONLY_FILES = (
+    "examples/projected-readability-regression.md",
+    "examples/semantic-colour-regression.md",
+    "examples/panel-containment-regression.md",
     "examples/benchmarks/t3w6-monday-modular-regression.md",
     "examples/benchmarks/t3w6-tuesday-release-regression.md",
     "examples/benchmarks/t3w6-thursday-literacy-regression.md",

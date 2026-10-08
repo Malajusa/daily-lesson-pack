@@ -371,6 +371,12 @@ If the user explicitly changes a warm-up count, also pass `--literacy-count <n>`
 
 Run the projected-readability and panel-containment audits on the final deck:
 
+Read `examples/projected-readability-regression.md`,
+`examples/semantic-colour-regression.md` and
+`examples/panel-containment-regression.md` when generating or reviewing teaching
+slides. Use their concrete failure cases alongside the controlling standards;
+illustrative ranges never override a component's current release boundaries.
+
 - `python scripts/audit_slide_typography.py --deck <deck> --dispositions <warning-ledger.json> --out <report.json>`
 - `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`
 - `python scripts/audit_visual_exemplar.py --deck <deck> --review-record <visual-review.json> --out <report.json>`
