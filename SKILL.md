@@ -80,6 +80,12 @@ The sidecar and narrow candidate-status guards do not install or activate a host
 
 ## Purpose
 
+Apply `references/strategic-animation-standard.md` to projected models and
+explanations. Route reveal planning to component owners and preserve native
+within-slide timing during assembly. Maintain component question/answer pairs,
+static print views and final-file evidence. Do not assume sshow is required.
+No animation instruction waives the supported build or independent QA workflow.
+
 Coordinate a classroom-ready daily pack. Do not generate detailed subject content in this skill when a specialised component skill owns it.
 
 The orchestrator owns:

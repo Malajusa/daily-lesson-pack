@@ -309,6 +309,14 @@ A context image MUST NOT contradict the quantities in the text or imply measurem
 
 ## 16. Visual hierarchy and cognitive load
 
+Apply `references/strategic-animation-standard.md`. Stage a complex model by
+meaningful mathematical decisions using native on-click object effects. Keep
+givens and useful prior working visible; synchronise corresponding equations,
+labels and representations. Verify quantities and invariants at every click.
+Do not use decorative motion, automatic pacing or duplicated transition slides
+as substitutes. Keep independent tasks and compulsory question/answer pairs
+unresolved until their authorised answer stage.
+
 Each slide MUST have one dominant instructional purpose.
 
 The hierarchy SHOULD make this order clear where applicable:

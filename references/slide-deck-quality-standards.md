@@ -8,6 +8,12 @@ For any shaded, coloured or bordered content region, also apply `references/pane
 
 ## Core design rule
 
+Read `references/strategic-animation-standard.md` when planning or reviewing
+projected teaching. Use native on-click Appear for useful stages within worked
+models; preserve needed prior working. Make a deliberate static choice where
+staging adds no value. Keep mandatory separate question/answer slides. Transitions
+and duplicated build slides do not satisfy a native-animation request.
+
 Build in this order:
 
 1. instructional content and intended thinking;

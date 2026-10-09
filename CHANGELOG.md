@@ -1,3 +1,13 @@
+# 3.10.0-rc.3 — Strategic teaching animations, unreleased runtime candidate
+
+- Add a shared strategic-animation contract, native on-click model reveals,
+  persistent working, purposeful removal, and exact intermediate-state checks.
+- Preserve compulsory question/answer architecture and make static print exports,
+  unavailable native authoring and unverified playback explicit.
+- Integrate orchestration, Mathematics, writing, independent QA, requirements
+  coverage and complete/component packages. Include addition and equivalence
+  regression cases; do not claim measured classroom cognitive-load effects.
+
 # 3.10.0-rc.1 — Unreleased candidate
 
 - Include projected-readability, semantic-colour and panel-containment regression

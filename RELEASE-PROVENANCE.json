@@ -1,5 +1,5 @@
 {
-  "version": "3.10.0-rc.2",
+  "version": "3.10.0-rc.3",
   "created": "2026-09-16",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
   "base_commit": "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
@@ -48,6 +48,11 @@
     {
       "line": "standalone-numeracy-warmup-hardening",
       "contribution": "Standalone-first Numeracy Warm-up mode, immutable question-answer grammar, graph-scale contract, deterministic standalone PPTX validation and portable component packaging"
+    },
+    {
+      "line": "strategic-teaching-animations",
+      "base_commit": "97adf1a44be81eba094ae0e86322f75c250c5d40",
+      "contribution": "Shared native within-slide reveal guidance; persistent working and mathematical invariants; unchanged question/answer pairs; explicit static-export and playback-evidence boundaries; complete/component dependency coverage."
     }
   ],
   "intentional_removals": [

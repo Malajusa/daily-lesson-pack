@@ -31,6 +31,7 @@ COMMON_REFERENCES = (
     "references/qa-workflow-v3.md",
     "references/qa-requirements.json",
     "references/slide-deck-quality-standards.md",
+    "references/strategic-animation-standard.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
     "references/default-pack-profile.json",
@@ -85,6 +86,7 @@ VISUAL_REGRESSION_EXAMPLES = (
     "examples/panel-containment-regression.md",
 )
 REGRESSION_BENCHMARKS = (
+    "examples/benchmarks/strategic-animation-regression.md",
     *VISUAL_REGRESSION_EXAMPLES,
     "examples/benchmarks/t3w6-monday-modular-regression.md",
     "examples/benchmarks/t3w6-tuesday-release-regression.md",

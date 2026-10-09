@@ -24,6 +24,7 @@ COMMON_REFERENCES = (
     "references/qa-workflow-v3.md",
     "references/qa-requirements.json",
     "references/slide-deck-quality-standards.md",
+    "references/strategic-animation-standard.md",
     "references/semantic-colour-standard.md",
     "references/panel-containment-standard.md",
     "references/default-pack-profile.json",
@@ -64,6 +65,7 @@ NUMERACY_WARMUP_VALIDATOR = (
 YEAR_PROFILE_AUDIT = "scripts/audit_year_profile_context.py"
 
 QA_ONLY_FILES = (
+    "examples/benchmarks/strategic-animation-regression.md",
     "examples/projected-readability-regression.md",
     "examples/semantic-colour-regression.md",
     "examples/panel-containment-regression.md",

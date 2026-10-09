@@ -79,6 +79,15 @@ the complete applicable release command.
 
 ## Executed independent review
 
+For staged slides, apply `references/strategic-animation-standard.md`. Review
+entry, every meaningful click and final state alongside native final-file timing.
+Retain stage captures and actual playback evidence in the host review transcript
+or its referenced evidence files, recording slide/click and final deck hash.
+Bind any external evidence file by path and SHA-256. A final-state screenshot or
+simulated capture cannot establish PowerPoint playback. Mark unavailable playback
+unverified rather than PASS; an animated pack then remains review-pending.
+Check exported student/answer views independently because animation may flatten.
+
 Use a fresh review agent/process with this skill, resolved context, canonical
 content, final artefacts/renders, the central register, and any applicable
 component release-boundary contracts. Do not supply generator PASS assertions

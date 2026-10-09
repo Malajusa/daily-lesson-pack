@@ -203,6 +203,18 @@ Any failure in this section blocks release and is routed to `dlp-maths-lesson`.
 
 ## Visual QA
 
+Read `references/strategic-animation-standard.md` and run
+`examples/benchmarks/strategic-animation-regression.md` for animation changes.
+Check each staged model's entry, every meaningful click and final state, plus
+its native targets/order and answer visibility in the final assembled deck.
+Keep original givens and needed prior working available. Fail decorative motion,
+automatic progression and duplicated transition slides claimed as native reveals.
+Preserve all compulsory question/answer pair boundaries.
+Distinguish XML checks, simulated state renders and actual host playback; a static
+image is not playback evidence. Unavailable playback remains unverified and the
+animated pack remains review-pending. Check flattened student PDFs for hidden
+answers and answer/teacher views for mutually overlapping animation states.
+
 Read `examples/projected-readability-regression.md`,
 `examples/semantic-colour-regression.md` and
 `examples/panel-containment-regression.md` for concrete pass/fail cases.
