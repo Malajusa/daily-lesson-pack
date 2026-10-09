@@ -9,29 +9,37 @@ Use these examples to prevent two recurring failures:
 
 The examples test hierarchy, not uniform font sizing.
 
+Apply the current component contract before illustrative size ranges. Numeracy
+Warm-up tasks and answers have a 36 pt minimum; answer-slide WHY reasoning has
+a 28 pt minimum. These examples do not waive either floor.
+
 ## Test A — Mathematics warm-up answer
 
 ### Content
 
-- `All` label
+- `ALL` label
 - answer: `84`
-- `Most` label
+- `MOST` label
 - answer: `7 × 12 = 84`
-- `Some` label
+- `SOME` label
 - answer: `12 × 7 = 84, so 84 ÷ 7 = 12`
-- green `Why` footer: `How can the inverse help you check?`
+- green answer-slide `WHY` footer: `Multiplication and division undo each other.`
 
 ### Expected hierarchy
 
 - `84` may be 48–60 pt because it is short and the panel has room.
 - `7 × 12 = 84` should normally be around 36–44 pt.
-- the longer `Some` response may be around 30–36 pt.
-- `All / Most / Some` labels may be around 24–30 pt.
-- the `Why` question should normally be around 28–34 pt.
+- the longer `SOME` response should be at least 36 pt, commonly 36–44 pt.
+- `ALL / MOST / SOME` labels may be around 24–30 pt; this range never applies to the task or answer itself.
+- the answer-slide `WHY` explanation should normally be around 28–34 pt.
 
 ### Pass condition
 
 The three responses are not forced to the same font size. Each uses the largest sensible size for its role and length while maintaining a clear hierarchy.
+Reflow or shorten a response that cannot fit at its required minimum; do not
+lower the minimum to retain a fixed card layout. Keep tier order and positions
+matched across each adjacent question/answer pair. WHY appears on the answer
+slide only.
 
 ### Fail examples
 

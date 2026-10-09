@@ -1,9 +1,17 @@
 ---
 name: daily-lesson-pack
-description: Use when creating, revising or reviewing a teacher’s timetable-aligned Daily Lesson Pack, including individual daily teaching components and Python-entry-script requests.
+description: Use when creating, revising or reviewing a teacher’s timetable-aligned Daily Lesson Pack, including individual daily teaching components, Python-entry-script requests and authorised interactive Mathematics lesson adaptations.
 ---
 
 # Daily Lesson Pack — Orchestrator
+
+## Interactive Mathematics lessons
+
+When adapting or auditing an existing browser/app lesson bank, read
+`references/interactive-maths-lessons.md` before authoring. Use its authored
+teaching contract, problem-first state review and four separate QA verdicts.
+The application mode retains the application build/acceptance workflow; it does
+not claim complete-pack release or require a fictional timetable/PPTX.
 
 ## Mandatory evidence workflow (v3)
 
@@ -79,6 +87,12 @@ placements. A timetable, current lesson focus or attainment still needs evidence
 The sidecar and narrow candidate-status guards do not install or activate a host.
 
 ## Purpose
+
+Apply `references/strategic-animation-standard.md` to projected models and
+explanations. Route reveal planning to component owners and preserve native
+within-slide timing during assembly. Maintain component question/answer pairs,
+static print views and final-file evidence. Do not assume sshow is required.
+No animation instruction waives the supported build or independent QA workflow.
 
 Coordinate a classroom-ready daily pack. Do not generate detailed subject content in this skill when a specialised component skill owns it.
 
@@ -370,6 +384,12 @@ Run the profile-isolation audit against the same inputs and deck:
 If the user explicitly changes a warm-up count, also pass `--literacy-count <n>` or `--numeracy-count <n>` with the authorised count.
 
 Run the projected-readability and panel-containment audits on the final deck:
+
+Read `examples/projected-readability-regression.md`,
+`examples/semantic-colour-regression.md` and
+`examples/panel-containment-regression.md` when generating or reviewing teaching
+slides. Use their concrete failure cases alongside the controlling standards;
+illustrative ranges never override a component's current release boundaries.
 
 - `python scripts/audit_slide_typography.py --deck <deck> --dispositions <warning-ledger.json> --out <report.json>`
 - `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`

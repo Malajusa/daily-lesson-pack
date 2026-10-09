@@ -1,5 +1,5 @@
 {
-  "version": "3.10.0-rc.2",
+  "version": "3.10.0-rc.4",
   "created": "2026-09-16",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
   "base_commit": "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
@@ -48,6 +48,15 @@
     {
       "line": "standalone-numeracy-warmup-hardening",
       "contribution": "Standalone-first Numeracy Warm-up mode, immutable question-answer grammar, graph-scale contract, deterministic standalone PPTX validation and portable component packaging"
+    },
+    {
+      "line": "installed-strategic-animation-rc3",
+      "source_commit": "1ebd4c4e6744246d6519e043645a9cf89f30708b",
+      "contribution": "Preserved installed rc.3 instruction changes on live main f86c6e4; unrelated local edits excluded."
+    },
+    {
+      "line": "interactive-maths-quality-contract",
+      "contribution": "Authored goals, success/exit alignment, problem-first state review, semantic visual correspondence/containment and separate structural/teaching evidence."
     }
   ],
   "intentional_removals": [
@@ -61,6 +70,6 @@
     "No production host activation",
     "No live blind benchmark acceptance",
     "No teacher pilot or unattended-delivery acceptance",
-    "No independent review of these new changes"
+    "Independent bounded instruction/validator/package review completed; general host and classroom acceptance remain unverified"
   ]
 }

@@ -13,6 +13,14 @@ private settings, change the requested warm-up count, or infer student attainmen
 from enrolment year. Legacy inputs use the documented public defaults, not hidden
 chat memory. Existing final-artifact and independent-review gates still apply.
 
+## Interactive Mathematics lessons
+
+When adapting or auditing an existing browser/app lesson bank, read
+`references/interactive-maths-lessons.md` before authoring. Use its authored
+teaching contract, problem-first state review and four separate QA verdicts.
+The application mode retains the application build/acceptance workflow; it does
+not claim complete-pack release or require a fictional timetable/PPTX.
+
 ## Mandatory evidence workflow (v3)
 
 Read `references/qa-workflow-v3.md` and the applicable entries in
@@ -202,6 +210,23 @@ Apply `references/fraction-equivalence-standard.md` when equivalence or fraction
 Any failure in this section blocks release and is routed to `dlp-maths-lesson`.
 
 ## Visual QA
+
+Read `references/strategic-animation-standard.md` and run
+`examples/benchmarks/strategic-animation-regression.md` for animation changes.
+Check each staged model's entry, every meaningful click and final state, plus
+its native targets/order and answer visibility in the final assembled deck.
+Keep original givens and needed prior working available. Fail decorative motion,
+automatic progression and duplicated transition slides claimed as native reveals.
+Preserve all compulsory question/answer pair boundaries.
+Distinguish XML checks, simulated state renders and actual host playback; a static
+image is not playback evidence. Unavailable playback remains unverified and the
+animated pack remains review-pending. Check flattened student PDFs for hidden
+answers and answer/teacher views for mutually overlapping animation states.
+
+Read `examples/projected-readability-regression.md`,
+`examples/semantic-colour-regression.md` and
+`examples/panel-containment-regression.md` for concrete pass/fail cases.
+Apply current component release boundaries before illustrative size ranges.
 
 Apply the repository standards:
 - `references/universal-maths-instruction-canon.md` for Mathematics content;

@@ -5,6 +5,14 @@ description: Generate the main Daily Lesson Pack Mathematics teaching sequence u
 
 # DLP Mathematics Lesson
 
+## Interactive Mathematics lessons
+
+When adapting or auditing an existing browser/app lesson bank, read
+`references/interactive-maths-lessons.md` before authoring. Use its authored
+teaching contract, problem-first state review and four separate QA verdicts.
+The application mode retains the application build/acceptance workflow; it does
+not claim complete-pack release or require a fictional timetable/PPTX.
+
 ## Mandatory evidence workflow (v3)
 
 Read `references/qa-workflow-v3.md` and the applicable entries in
@@ -40,6 +48,7 @@ Before planning or generating the lesson, read and apply:
 - `references/slide-deck-quality-standards.md`;
 - `references/semantic-colour-standard.md`;
 - `references/panel-containment-standard.md`.
+- `references/strategic-animation-standard.md`.
 
 The universal Mathematics canon is the authoritative pedagogical and mathematical-communication standard for this component. The active year-level profile controls developmental pitch, expected prior knowledge, reasonable number types/magnitudes, scaffolding and demand. The user's current overview controls what is being taught now.
 
@@ -151,6 +160,14 @@ Photographs may establish context but must not function as mathematical models u
 When colour identifies corresponding quantities or meaningful changes, maintain the same colour relationship across the representation, language and notation. Do not rely on colour alone.
 
 ## Question and answer architecture
+
+Before building each worked model, record its entry state, meaningful click
+stages, native target IDs, retained working, prediction prompts and final state.
+Use on-click Appear within the same slide by default where staging supports the
+reasoning; use Disappear only for a meaningful removal. Keep exact quantities
+and invariants at every stage. Do not depend on sshow or substitute transitions
+and duplicated slides. Apply the standard's export and playback checks to the
+final assembled file; disclose unavailable playback truthfully.
 
 Task slides must not reveal the answer through completed working, answer-coloured objects, final landing points, completed models or teaching-only cues.
 

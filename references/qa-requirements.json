@@ -1419,9 +1419,75 @@
         "observation",
         "citations"
       ]
+    },
+    {
+      "id": "QA.ANIM.PLAN",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "Every projected model has a deliberate static or staged choice. Staged models have a teacher-facing entry/click/final-state plan with purpose, target IDs, retained evidence and response hold points; native within-slide on-click effects implement useful reveals without sshow dependence, decorative motion, automatic pacing or unlabelled transition/duplicate fallback.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.ANIM.STATES",
+      "owner": "*",
+      "scope": "page",
+      "statement": "For a staged deck page, inspect entry, every meaningful click and final state for accurate quantities/invariants, synchronised labels and notation, needed persistent working, answer timing, stable placement, projected readability and containment. Preserve component question/answer pairs. A static page requires no unnecessary animation.",
+      "method": "visual",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.ANIM.EVIDENCE",
+      "owner": "*",
+      "scope": "pack",
+      "statement": "For an animated deck, verify effects in the final delivered PPTX and distinguish structural checks, simulated state captures and actual intended-host playback, all bound to the final deck hash. Playback unavailable is unverified, never PASS; the animated pack remains review-pending. No cognitive-load improvement is claimed from animation presence.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.ANIM.EXPORT",
+      "owner": "*",
+      "scope": "page",
+      "statement": "For each print/PDF page containing animated source content, inspect its explicit static view for hidden-answer leakage, lost essential content and mutually overlapping animation states while preserving canonical question/answer bindings. Animation does not waive any required artefact. A deck page is checked under the staged-state requirement.",
+      "method": "visual",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.MATHS.GOAL.ALIGNMENT",
+      "owner": "dlp-maths-lesson",
+      "scope": "pack",
+      "statement": "An authored learning goal states mathematical action rather than only a topic. Observable success criteria and the exit task agree with the goal and modelled demand; screen completion is not understanding evidence.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.MATHS.PROBLEM.CORRESPONDENCE",
+      "owner": "dlp-maths-lesson",
+      "scope": "page",
+      "statement": "The original problem or relationship appears before worked results. Words, notation and a useful mathematical representation explicitly correspond in quantities, units and actions; every staged entry/reveal is reviewed. Diagram presence is not evidence of instructional purpose.",
+      "method": "visual",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
     }
   ],
-  "requirements_revision": "2026-09-09-point-of-need-1",
+  "requirements_revision": "2026-10-09-interactive-maths-1",
   "retired_requirements": [
     {
       "id": "QA.B4081F2450",

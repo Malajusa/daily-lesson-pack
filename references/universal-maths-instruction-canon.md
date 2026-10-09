@@ -30,6 +30,14 @@ Before generating the main Mathematics lesson, record an internal planning contr
 10. the highest independent demand students will face;
 11. the evidence the exit check will collect.
 
+Also record an authored learning goal (an action with mathematical content),
+observable success criteria and an exit task aligned to those criteria. A topic
+title or screen-completion statement is not a learning goal. Each model starts
+with its actual problem/relationship before worked results. Record what the
+representation demonstrates and trace the same quantities/units/actions through
+words, notation and the drawing. Review the learner-visible entry and reveal
+states, not only the completed model.
+
 The planning contract is teacher-facing or internal. Do not place it on student slides.
 
 For mixed-year classes, also record the common central idea, each year-level
@@ -308,6 +316,14 @@ Australian and Western Australian contexts MAY be preferred when they fit natura
 A context image MUST NOT contradict the quantities in the text or imply measurements, partitions or scales that are not mathematically valid.
 
 ## 16. Visual hierarchy and cognitive load
+
+Apply `references/strategic-animation-standard.md`. Stage a complex model by
+meaningful mathematical decisions using native on-click object effects. Keep
+givens and useful prior working visible; synchronise corresponding equations,
+labels and representations. Verify quantities and invariants at every click.
+Do not use decorative motion, automatic pacing or duplicated transition slides
+as substitutes. Keep independent tasks and compulsory question/answer pairs
+unresolved until their authorised answer stage.
 
 Each slide MUST have one dominant instructional purpose.
 
