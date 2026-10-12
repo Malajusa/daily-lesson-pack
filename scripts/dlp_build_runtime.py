@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -80,6 +81,65 @@ def validate_request(request: dict) -> list[str]:
     return errors
 
 
+def validate_source_provenance(context: dict) -> list[str]:
+    """Validate structural source binding on every runtime entry path.
+
+    The orchestration path additionally re-hashes source files against its
+    source root. Direct finalisation has no source-root argument, so it must at
+    minimum require the same explicit hashed provenance records and bind every
+    resolved runtime field to one of them.
+    """
+    errors: list[str] = []
+    provenance = context.get("source_provenance")
+    if not isinstance(provenance, list) or not provenance:
+        return ["context source_provenance must contain hashed sources"]
+
+    allowed_kinds = {
+        "user_request",
+        "runtime_school_source",
+        "year_profile",
+        "repository_reference",
+    }
+    ids: set[str] = set()
+    paths: set[str] = set()
+    for index, source in enumerate(provenance):
+        if not isinstance(source, dict):
+            errors.append(f"context source_provenance item {index} must be an object")
+            continue
+        source_id = str(source.get("id", "")).strip()
+        kind = str(source.get("kind", "")).strip()
+        path = str(source.get("path", "")).strip()
+        digest = str(source.get("sha256", "")).strip()
+        if not source_id:
+            errors.append(f"context source_provenance item {index} has no id")
+        elif source_id in ids:
+            errors.append(f"context source_provenance id {source_id} is duplicated")
+        else:
+            ids.add(source_id)
+        if kind not in allowed_kinds:
+            errors.append(f"context source_provenance item {index} has invalid kind {kind!r}")
+        if not path:
+            errors.append(f"context source_provenance item {index} has no path")
+        elif path in paths:
+            errors.append(f"context source_provenance path {path} is duplicated")
+        else:
+            paths.add(path)
+        if re.fullmatch(r"[a-f0-9]{64}", digest) is None:
+            errors.append(f"context source_provenance item {index} has invalid sha256")
+
+    bound_sources = ids | paths
+    for name in REQUIRED_CONTEXT_FIELDS:
+        entry = context.get(name)
+        if not isinstance(entry, dict):
+            continue
+        source = str(entry.get("source", "")).strip()
+        if source and source not in bound_sources:
+            errors.append(
+                f"context field {name} source is not bound to hashed source_provenance"
+            )
+    return errors
+
+
 def validate_resolved_context(context: dict) -> list[str]:
     from resolve_instructional_calibration import instructional_context_errors
     errors: list[str] = instructional_context_errors(context)
@@ -95,6 +155,8 @@ def validate_resolved_context(context: dict) -> list[str]:
             errors.append(f"context field {name} is unresolved")
         if not str(entry.get("source", "")).strip():
             errors.append(f"context field {name} has no source provenance")
+
+    errors.extend(validate_source_provenance(context))
 
     instances = context.get("timetable_instances")
     if not isinstance(instances, list) or not instances:
