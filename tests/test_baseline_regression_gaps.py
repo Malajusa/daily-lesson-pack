@@ -27,6 +27,8 @@ class BaselineRegressionGapTests(unittest.TestCase):
         lower = routing.lower()
 
         self.assertIn("component-only", lower)
+        self.assertIn("request_scope", lower)
+        self.assertIn("required_artifacts", lower)
         self.assertIn("stop-after components", lower)
 
     def test_component_only_context_can_request_deck_without_briefing(self) -> None:
