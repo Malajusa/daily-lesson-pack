@@ -80,9 +80,41 @@ def validate_request(request: dict) -> list[str]:
     return errors
 
 
+def validate_source_provenance(context: dict) -> list[str]:
+    """Require every resolved runtime field to bind to canonical provenance."""
+    errors: list[str] = []
+    provenance = context.get("source_provenance")
+    if not isinstance(provenance, list) or not provenance:
+        return ["context source_provenance must contain hashed sources"]
+
+    bound_sources = {
+        str(source.get(key, "")).strip()
+        for source in provenance
+        if isinstance(source, dict)
+        for key in ("id", "path")
+        if str(source.get(key, "")).strip()
+    }
+    for name in REQUIRED_CONTEXT_FIELDS:
+        entry = context.get(name)
+        if not isinstance(entry, dict):
+            continue
+        source = str(entry.get("source", "")).strip()
+        if source and source not in bound_sources:
+            errors.append(
+                f"context field {name} source is not bound to hashed source_provenance"
+            )
+    return errors
+
 def validate_resolved_context(context: dict) -> list[str]:
+    from agent_protocol import ProtocolError, validate_json
     from resolve_instructional_calibration import instructional_context_errors
+
     errors: list[str] = instructional_context_errors(context)
+    try:
+        validate_json(context, ROOT.parent / "schemas" / "run-context.schema.json")
+    except ProtocolError as exc:
+        errors.extend(f"context schema invalid: {line}" for line in str(exc).splitlines())
+
     if context.get("schema_version") != 2:
         errors.append("context schema_version must be 2")
 
@@ -95,6 +127,8 @@ def validate_resolved_context(context: dict) -> list[str]:
             errors.append(f"context field {name} is unresolved")
         if not str(entry.get("source", "")).strip():
             errors.append(f"context field {name} has no source provenance")
+
+    errors.extend(validate_source_provenance(context))
 
     instances = context.get("timetable_instances")
     if not isinstance(instances, list) or not instances:
