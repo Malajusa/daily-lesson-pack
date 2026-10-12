@@ -41,6 +41,8 @@ class BuildRuntimeTests(unittest.TestCase):
 
         self.context = {
             "schema_version": 2,
+            "generation_run_id": "generation-1",
+            "frozen": True,
             "active_year_profile": field("year-4-5", "profile-source"),
             "pack_profile": field("default-daily-pack-architecture"),
             "date": field("2026-09-08"),
@@ -61,6 +63,7 @@ class BuildRuntimeTests(unittest.TestCase):
             ],
             "request_scope": "component-only",
             "required_artifacts": ["deck"],
+            "unresolved_fields": [],
             "source_provenance": [
                 {
                     "id": "request-source",
