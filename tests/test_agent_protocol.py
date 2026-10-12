@@ -24,6 +24,77 @@ class ProtocolTests(unittest.TestCase):
         self.assertNotIn('timetable',self.envelope['context'])
         self.assertEqual(self.envelope['instance']['id'],'instance-1')
 
+
+    def _request_with_distinct_subject_sources(self, owner):
+        from agent_registry import AgentRegistry
+        from agent_protocol import component_request, sha256_file
+        from build_execution_plan import freeze_context
+
+        root = Path(self.tmp.name) / ("sources-" + owner)
+        _, context = context_fixture(root, (owner,))
+        english = root / "english-focus.json"
+        mathematics = root / "mathematics-focus.json"
+        english.write_text('{"focus":"Narrative"}\n', encoding="utf-8")
+        mathematics.write_text('{"focus":"Mass"}\n', encoding="utf-8")
+        context["english_focus"]["source"] = "english-focus.json"
+        context["mathematics_focus"]["source"] = "mathematics-focus.json"
+        context["source_provenance"].extend([
+            dict(id="english-focus", kind="runtime_school_source",
+                 path="english-focus.json", sha256=sha256_file(english)),
+            dict(id="mathematics-focus", kind="runtime_school_source",
+                 path="mathematics-focus.json", sha256=sha256_file(mathematics)),
+        ])
+        registry = AgentRegistry.load()
+        frozen = freeze_context(context, registry, root)
+        return frozen, component_request(
+            frozen, frozen["timetable_instances"][0], registry, "projection-test"
+        )
+
+    def test_morning_work_provenance_omits_unprojected_subject_sources(self):
+        _, envelope = self._request_with_distinct_subject_sources("dlp-morning-work")
+        ids = {item["id"] for item in envelope["context"]["source_provenance"]}
+        self.assertNotIn("english-focus", ids)
+        self.assertNotIn("mathematics-focus", ids)
+
+    def test_literacy_provenance_keeps_english_but_omits_mathematics(self):
+        _, envelope = self._request_with_distinct_subject_sources("dlp-literacy-warmup")
+        ids = {item["id"] for item in envelope["context"]["source_provenance"]}
+        self.assertIn("english-focus", ids)
+        self.assertNotIn("mathematics-focus", ids)
+
+    def test_component_request_rejects_unbound_projected_field_source(self):
+        from agent_protocol import component_request, ProtocolError
+        from agent_registry import AgentRegistry
+
+        root = Path(self.tmp.name) / "unbound-source"
+        _, context = context_fixture(root, ("dlp-morning-work",))
+        context["lesson_status"]["source"] = "unbound-status.json"
+        registry = AgentRegistry.load()
+        with self.assertRaises(ProtocolError):
+            component_request(
+                context, context["timetable_instances"][0], registry, "unbound-test"
+            )
+
+    def test_every_generator_keeps_governing_calibration(self):
+        from agent_protocol import component_request
+        from agent_registry import AgentRegistry
+        from build_execution_plan import freeze_context
+
+        registry = AgentRegistry.load()
+        for agent in registry.generators():
+            with self.subTest(agent=agent.id):
+                root = Path(self.tmp.name) / ("calibration-" + agent.id)
+                _, context = context_fixture(root, (agent.id,))
+                frozen = freeze_context(context, registry, root)
+                envelope = component_request(
+                    frozen, frozen["timetable_instances"][0], registry,
+                    "calibration-" + agent.id
+                )
+                self.assertEqual(
+                    envelope["context"]["instructional_calibration"],
+                    frozen["instructional_calibration"],
+                )
+
     def test_projection_cannot_mutate_context(self):
         self.envelope['context']['active_year_profile']['value']='other'
         self.assertEqual(self.context['active_year_profile']['value'],'year-4-5')
