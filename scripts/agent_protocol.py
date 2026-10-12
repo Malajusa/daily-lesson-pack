@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import tempfile
 from functools import lru_cache
 from pathlib import Path
@@ -169,17 +170,81 @@ def reference_record(root: Path, relative: str, *, include_text: bool = True) ->
     return record
 
 
+def project_source_provenance(context: dict, fields: list[str]) -> list[dict]:
+    """Project only hashed provenance needed by the fields visible to one agent."""
+    provenance = context.get('source_provenance')
+    if not isinstance(provenance, list):
+        raise ProtocolError('Projected context requires source_provenance')
+
+    selected: set[int] = set()
+
+    def matches(source: str) -> list[int]:
+        return [
+            index for index, record in enumerate(provenance)
+            if isinstance(record, dict) and source in (record.get('id'), record.get('path'))
+        ]
+
+    def select(source: str, *, label: str, required: bool = True) -> None:
+        found = matches(source)
+        if not found and not required:
+            return
+        if len(found) != 1:
+            raise ProtocolError(
+                f'Projected context {label} source is not bound to exactly one hashed provenance record: {source}'
+            )
+        record = provenance[found[0]]
+        digest = record.get('sha256')
+        if not isinstance(digest, str) or re.fullmatch(r'[a-f0-9]{64}', digest) is None:
+            raise ProtocolError(f'Projected context {label} source lacks a valid sha256 binding: {source}')
+        selected.add(found[0])
+
+    for field in fields:
+        if field in ('source_provenance', 'instructional_calibration'):
+            continue
+        entry = context.get(field)
+        if isinstance(entry, dict) and entry.get('resolved') is True:
+            source = entry.get('source')
+            if not isinstance(source, str) or not source.strip():
+                raise ProtocolError(f'Projected context field {field} has no source')
+            select(source, label=f'field {field}')
+
+    if 'instructional_calibration' in fields and context.get('instructional_calibration') is not None:
+        from resolve_instructional_calibration import DEFAULTS
+        from year_profile_registry import REGISTRY_PATH
+
+        select(DEFAULTS, label='instructional calibration defaults')
+        select('references/default-pack-profile.json', label='pack defaults')
+        select(REGISTRY_PATH, label='profile registry')
+
+        calibration_source = context.get('calibration_source')
+        if isinstance(calibration_source, str) and calibration_source and calibration_source != DEFAULTS:
+            select(calibration_source, label='instructional calibration sidecar')
+
+    elif 'active_year_profile' in fields:
+        from year_profile_registry import REGISTRY_PATH
+        select(REGISTRY_PATH, label='profile registry', required=False)
+
+    return [copy.deepcopy(record) for index, record in enumerate(provenance) if index in selected]
+
+
 def component_request(context: dict, instance: dict, registry, invocation_id: str,
                       *, defects: list[dict] | None = None) -> dict:
     agent = registry.get(instance['owner'])
     definition = agent.raw
     fields = definition['input']
+    projected_context = project_context(
+        context, fields['context_projection'], fields['required_context']
+    )
+    if 'source_provenance' in fields['context_projection']:
+        projected_context['source_provenance'] = project_source_provenance(
+            context, fields['context_projection']
+        )
     request = {
         'protocol_version': 1, 'generation_run_id': context['generation_run_id'],
         'invocation_id': invocation_id, 'agent_id': agent.id,
         'task_type': 'REPAIR_COMPONENT' if defects else 'GENERATE_COMPONENT',
         'context_sha256': sha256_json(context),
-        'context': project_context(context, fields['context_projection'], fields['required_context']),
+        'context': projected_context,
         'instance': copy.deepcopy(instance),
         'references': registry.references_for(agent.id, context),
         'defects': copy.deepcopy(defects or []),
