@@ -21,6 +21,30 @@
     "unresolved_fields",
     "required_artifacts"
   ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "request_scope": {
+            "const": "component-only"
+          }
+        },
+        "required": [
+          "request_scope"
+        ]
+      },
+      "then": {},
+      "else": {
+        "properties": {
+          "required_artifacts": {
+            "contains": {
+              "const": "briefing"
+            }
+          }
+        }
+      }
+    }
+  ],
   "properties": {
     "active_year_profile": {
       "type": "object",
@@ -383,31 +407,9 @@
         ]
       },
       "uniqueItems": true,
-      "allOf": [
-        {
-          "contains": {
-            "const": "deck"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "request_scope": {
-                "const": "component-only"
-              }
-            },
-            "required": [
-              "request_scope"
-            ]
-          },
-          "then": {},
-          "else": {
-            "contains": {
-              "const": "briefing"
-            }
-          }
-        }
-      ]
+      "contains": {
+        "const": "deck"
+      }
     },
     "instructional_calibration": {
       "$ref": "instructional-calibration.schema.json"
