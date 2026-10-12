@@ -117,7 +117,7 @@ Use this orchestrator for a named day's Daily Lesson Pack. Resolve the active ye
 
 ### Component-only request
 
-When the user asks for one named Daily Lesson Pack component, use the **component-only** path. Resolve the shared context needed by that component, create only the requested component instance, and invoke its owning specialist. On the executable orchestration path use `--stop-after components`.
+When the user asks for one named Daily Lesson Pack component, use the **component-only** path. Resolve the shared context needed by that component, create only the requested component instance, and invoke its owning specialist. Set the frozen run context `request_scope` to `component-only` and set `required_artifacts` to the artefacts actually requested or required by that component; a deck-only component request must not acquire a full-pack briefing merely because Daily Pack normally includes one. On the executable orchestration path use `--stop-after components`.
 
 Do not assemble or release a full Daily Lesson Pack, and do not generate unrelated components merely because they normally appear on the same day. A component-only result remains subject to its owning component contract and release boundary; complete-pack release evidence must not be implied when full-pack assembly and QA did not run.
 
