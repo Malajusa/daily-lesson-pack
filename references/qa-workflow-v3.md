@@ -79,6 +79,15 @@ the complete applicable release command.
 
 ## Executed independent review
 
+For staged slides, apply `references/strategic-animation-standard.md`. Review
+entry, every meaningful click and final state alongside native final-file timing.
+Retain stage captures and actual playback evidence in the host review transcript
+or its referenced evidence files, recording slide/click and final deck hash.
+Bind any external evidence file by path and SHA-256. A final-state screenshot or
+simulated capture cannot establish PowerPoint playback. Mark unavailable playback
+unverified rather than PASS; an animated pack then remains review-pending.
+Check exported student/answer views independently because animation may flatten.
+
 Use a fresh review agent/process with this skill, resolved context, canonical
 content, final artefacts/renders, the central register, and any applicable
 component release-boundary contracts. Do not supply generator PASS assertions
@@ -127,3 +136,12 @@ educational quality. Do not reuse an earlier pack's release decision.
 Run `python -m unittest discover -s tests -v` after changes to these controls.
 Keep both valid and deliberately faulty fixtures. Changes to pedagogy also
 require the existing concept-family and year-profile regression benchmarks.
+
+## Interactive application adaptation
+
+For an authorised browser/app lesson overhaul, apply
+`references/interactive-maths-lessons.md`. Its lesson/scene/state inventory and
+separate verdicts govern adaptation review. Pack-specific release artefacts are
+not fabricated for this mode. Application checks remain required, and neither
+a structural contract audit nor passing software checks establishes pedagogical
+or classroom acceptance.

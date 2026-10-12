@@ -1,9 +1,17 @@
 ---
 name: daily-lesson-pack
-description: Use when creating, revising or reviewing a teacher’s timetable-aligned Daily Lesson Pack, including individual daily teaching components and Python-entry-script requests.
+description: Use when creating, revising or reviewing a teacher’s timetable-aligned Daily Lesson Pack, including individual daily teaching components, Python-entry-script requests and authorised interactive Mathematics lesson adaptations.
 ---
 
 # Daily Lesson Pack — Orchestrator
+
+## Interactive Mathematics lessons
+
+When adapting or auditing an existing browser/app lesson bank, read
+`references/interactive-maths-lessons.md` before authoring. Use its authored
+teaching contract, problem-first state review and four separate QA verdicts.
+The application mode retains the application build/acceptance workflow; it does
+not claim complete-pack release or require a fictional timetable/PPTX.
 
 ## Mandatory evidence workflow (v3)
 
@@ -80,6 +88,12 @@ The sidecar and narrow candidate-status guards do not install or activate a host
 
 ## Purpose
 
+Apply `references/strategic-animation-standard.md` to projected models and
+explanations. Route reveal planning to component owners and preserve native
+within-slide timing during assembly. Maintain component question/answer pairs,
+static print views and final-file evidence. Do not assume sshow is required.
+No animation instruction waives the supported build or independent QA workflow.
+
 Coordinate a classroom-ready daily pack. Do not generate detailed subject content in this skill when a specialised component skill owns it.
 
 The orchestrator owns:
@@ -100,6 +114,12 @@ The specialised skills own the pedagogy, wording and slide rules for their compo
 ### Daily pack
 
 Use this orchestrator for a named day's Daily Lesson Pack. Resolve the active year profile and runtime teacher context, invoke the required components, assemble them, then run independent QA.
+
+### Component-only request
+
+When the user asks for one named Daily Lesson Pack component, use the **component-only** path. Resolve the shared context needed by that component, create only the requested component instance, and invoke its owning specialist. Set the frozen run context `request_scope` to `component-only` and set `required_artifacts` to the artefacts actually requested or required by that component; a deck-only component request must not acquire a full-pack briefing merely because Daily Pack normally includes one. On the executable orchestration path use `--stop-after components`.
+
+Do not assemble or release a full Daily Lesson Pack, and do not generate unrelated components merely because they normally appear on the same day. A component-only result remains subject to its owning component contract and release boundary; complete-pack release evidence must not be implied when full-pack assembly and QA did not run.
 
 ### Existing-pack audit or revision
 
@@ -370,6 +390,12 @@ Run the profile-isolation audit against the same inputs and deck:
 If the user explicitly changes a warm-up count, also pass `--literacy-count <n>` or `--numeracy-count <n>` with the authorised count.
 
 Run the projected-readability and panel-containment audits on the final deck:
+
+Read `examples/projected-readability-regression.md`,
+`examples/semantic-colour-regression.md` and
+`examples/panel-containment-regression.md` when generating or reviewing teaching
+slides. Use their concrete failure cases alongside the controlling standards;
+illustrative ranges never override a component's current release boundaries.
 
 - `python scripts/audit_slide_typography.py --deck <deck> --dispositions <warning-ledger.json> --out <report.json>`
 - `python scripts/audit_panel_containment.py --deck <deck> --out <report.json>`

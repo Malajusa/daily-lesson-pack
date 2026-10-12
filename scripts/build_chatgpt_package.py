@@ -20,7 +20,11 @@ from package_identity import manifest, source_revision
 from year_profile_registry import PROFILE_REGISTRY_FILES, profile_reference_paths
 
 
+INTERACTIVE_FILES = ('tests/test_interactive_lesson_contract.py', 'references/strategic-animation-standard.md', 'examples/benchmarks/strategic-animation-regression.md', 'references/interactive-maths-lessons.md', 'scripts/audit_interactive_lesson_contract.py', 'examples/benchmarks/interactive-maths-regression.json', 'examples/benchmarks/interactive-maths-review.md')
+
 COMMON_REFERENCES = (
+    "references/interactive-maths-lessons.md",
+    "references/strategic-animation-standard.md",
     "references/creator-settings-contract.md",
     "scripts/resolve_overrides.py",
     "scripts/verify_package_archive.py",
@@ -89,11 +93,16 @@ REGRESSION_BENCHMARKS = (
     YEAR_PROFILE_ISOLATION_BENCHMARK,
     NUMERACY_WARMUP_BENCHMARK,
     "examples/benchmarks/t3w7-thursday-known-failure.md",
+    "examples/projected-readability-regression.md",
+    "examples/semantic-colour-regression.md",
+    "examples/panel-containment-regression.md",
     "examples/benchmarks/t3w8-tuesday-bypass-known-failure.md",
     MORNING_WORK_EXEMPLAR_BENCHMARK,
 )
 
 ROOT_RUNTIME_FILES = (
+    *INTERACTIVE_FILES,
+    "tests/test_interactive_lesson_contract.py",
     "requirements.txt",
     "skills/registry.v2.json",
     "agents/maths-critic.md",
@@ -216,7 +225,7 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
             *PROFILE_REGISTRY_FILES,
         )
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
-            component_references = (*component_references, MATH_REFERENCE, FRACTION_REFERENCE)
+            component_references = (*component_references, MATH_REFERENCE, FRACTION_REFERENCE, *INTERACTIVE_FILES)
         if name == "dlp-pack-qa":
             component_references = (
                 *component_references,

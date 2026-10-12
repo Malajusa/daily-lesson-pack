@@ -1,3 +1,18 @@
+# 3.10.0-rc.4 — Unreleased candidate
+
+- Add an interactive maths adaptation with authored learning goals, observable
+  success criteria, concept boundaries and aligned exit tasks.
+- Require each teaching state to connect its explanation, notation and purposeful
+  visual model, presenting the problem before its worked answer.
+- Separate mathematical, instructional, rendered visual and software verdicts;
+  complete bank coverage and evidence bindings cannot be replaced by sample passes.
+- Add defective lesson benchmarks and a structural contract checker, including
+  missing goals, misleading representations and incomplete reveal-state reviews.
+- Preserve the installed rc.3 strategic-animation guidance while retaining the
+  accepted source branch's planning hierarchy and dated-plan boundaries.
+- Package all new references, regression examples, checker and checker tests in
+  the complete archive and relevant standalone components.
+
 # 3.10.0-rc.1 — Unreleased candidate
 
 - Integrate D02 registry and preserve the 72-item creator-first roadmap.

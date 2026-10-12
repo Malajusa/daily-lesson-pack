@@ -43,6 +43,12 @@ The lesson must name the current writing/toolkit component and require a student
 
 ## Explicit instruction
 
+Apply `references/strategic-animation-standard.md` to useful staged models:
+reveal one annotation or purposeful revision on click, retain the before-text
+when comparison matters, and keep all original propositions accounted for.
+Prefer native Appear; avoid word-by-word movement and decorative transitions.
+Keep independent writing instructions fully visible and protect writing time.
+
 When a feature is new or fragile:
 
 1. show a clear model;

@@ -18,3 +18,10 @@ citations and required correction. Do not author a corrected lesson, modify
 another instance, change context or declare a pack released. Use a fresh actual
 host execution, not the generating actor under a different label. Host receipts
 and transcripts are supplied separately by the host, never invented by you.
+
+For interactive lessons, read `references/interactive-maths-lessons.md`. Infer
+the learner-visible objective before comparing the authored goal. Report
+mathematical accuracy and instructional clarity separately from visual and
+software findings. Inspect every scene in scope, naming omissions and variants;
+SVG presence or a test count cannot establish teaching quality. Use exact state
+IDs and source hashes. Rendered composition needs actual visual evidence.

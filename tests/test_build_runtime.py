@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import shutil
 import sys
@@ -29,12 +30,20 @@ class BuildRuntimeTests(unittest.TestCase):
         self.source.mkdir()
         self.run_root = self.root / "build" / "run-1"
 
-        def field(value: object, source: str = "current-run fixture") -> dict:
+        self.request = {
+            "schema_version": 1,
+            "requested_date": "2026-09-08",
+            "requested_output": "powerpoint",
+        }
+
+        def field(value: object, source: str = "request-source") -> dict:
             return {"resolved": True, "value": value, "source": source}
 
         self.context = {
             "schema_version": 2,
-            "active_year_profile": field("year-4-5", "year-level profile"),
+            "generation_run_id": "generation-1",
+            "frozen": True,
+            "active_year_profile": field("year-4-5", "profile-source"),
             "pack_profile": field("default-daily-pack-architecture"),
             "date": field("2026-09-08"),
             "term_week": field("T3W8"),
@@ -52,7 +61,27 @@ class BuildRuntimeTests(unittest.TestCase):
                     "purpose": "independent retrieval",
                 }
             ],
+            "request_scope": "component-only",
             "required_artifacts": ["deck"],
+            "unresolved_fields": [],
+            "source_provenance": [
+                {
+                    "id": "request-source",
+                    "kind": "user_request",
+                    "path": "request.json",
+                    "sha256": hashlib.sha256(
+                        json.dumps(self.request).encode("utf-8")
+                    ).hexdigest(),
+                },
+                {
+                    "id": "profile-source",
+                    "kind": "year_profile",
+                    "path": "references/year-level-profiles/year-4-5.md",
+                    "sha256": hashlib.sha256(
+                        (ROOT / "references/year-level-profiles/year-4-5.md").read_bytes()
+                    ).hexdigest(),
+                },
+            ],
         }
         self.components = {
             "schema_version": 2,
@@ -75,11 +104,6 @@ class BuildRuntimeTests(unittest.TestCase):
                     ],
                 }
             ],
-        }
-        self.request = {
-            "schema_version": 1,
-            "requested_date": "2026-09-08",
-            "requested_output": "powerpoint",
         }
         self.content = {
             "schema_version": 3,

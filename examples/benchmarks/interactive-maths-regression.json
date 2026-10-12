@@ -1,0 +1,62 @@
+{
+  "source": "fixture source for teaching contract regression",
+  "valid": {
+    "source_sha256": "bac04c9f0a4e59400259c9cf3c1350663c51a3dcb47e50f7dcbbbaef8db48117",
+    "expected_lessons": [
+      "mass"
+    ],
+    "lessons": [
+      {
+        "id": "mass",
+        "title": "g and kg",
+        "goal": "Convert masses between grams and kilograms.",
+        "success_criteria": [
+          "Find an equivalent mass in the requested unit."
+        ],
+        "concept_boundary": "Unit conversion; the mass stays unchanged.",
+        "representation_purpose": "Show equal mass in different units.",
+        "exit_task": "1500 g = ? kg",
+        "scenes": [
+          {
+            "id": "meaning",
+            "role": "meaning",
+            "prompt": "What mass in grams equals 1 kg?",
+            "explanation": "The mass stays the same.",
+            "notation": "1 kg = 1000 g",
+            "representation": "Level balance with 1 kg versus 500 g plus 500 g.",
+            "states": [
+              "entry"
+            ]
+          }
+        ]
+      }
+    ],
+    "reviews": []
+  },
+  "faults": [
+    {
+      "name": "topic-as-goal",
+      "field": "goal",
+      "value": "g and kg",
+      "code": "AUTHORED_GOAL"
+    },
+    {
+      "name": "missing-purpose",
+      "field": "representation_purpose",
+      "value": "",
+      "code": "PLANNING_FIELD"
+    },
+    {
+      "name": "missing-success-criteria",
+      "field": "success_criteria",
+      "value": [],
+      "code": "SUCCESS_CRITERIA"
+    },
+    {
+      "name": "missing-exit",
+      "field": "exit_task",
+      "value": "",
+      "code": "PLANNING_FIELD"
+    }
+  ]
+}

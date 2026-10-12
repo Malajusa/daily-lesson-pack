@@ -4,13 +4,16 @@
 
 Use these examples to prevent a recurring layout failure: readable text that crosses, touches or visually escapes the shaded/coloured panel that is meant to contain it.
 
-## Test A — Mathematics Why footer
+## Test A — Mathematics answer-slide WHY footer
 
 ### Intended layout
 
-A green `Why` footer contains:
+A green `WHY` footer on the Numeracy answer slide contains:
 
-`Why: What rule are you using?`
+`WHY: Adding equal-sized parts changes their number, not their size.`
+
+The preceding question slide contains only ALL, MOST and SOME tasks, without
+a WHY panel or reasoning prompt.
 
 ### Pass
 
@@ -18,7 +21,7 @@ A green `Why` footer contains:
 - top, bottom, left and right clearance are deliberate;
 - nominal padding is at least about `0.15 in`;
 - the footer height grows when the line wraps;
-- the font remains within the role-based Why range.
+- the explanation font remains at least 28 pt.
 
 ### Fail
 
@@ -45,7 +48,7 @@ Three warm-up cards retain the established left-to-right structure. `All` has a 
 
 - identical internal geometry causes `Some` to cross its card boundary;
 - one card has excessive blank space while another clips;
-- a longer response is reduced below its role range solely to preserve equal card geometry.
+- a meaningful Numeracy task or answer is reduced below 36 pt solely to preserve equal card geometry.
 
 ## Test C — Shared Reading question panel
 
