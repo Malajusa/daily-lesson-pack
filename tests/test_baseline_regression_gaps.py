@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from agent_fixtures import context_fixture  # noqa: E402
-from agent_protocol import validate_json  # noqa: E402
+from agent_protocol import ProtocolError, validate_json  # noqa: E402
 from dlp_build_runtime import validate_resolved_context  # noqa: E402
 
 
@@ -39,7 +39,10 @@ class BaselineRegressionGapTests(unittest.TestCase):
             context["required_artifacts"] = ["deck"]
 
             # Required behaviour: this is a valid frozen component-only context.
-            validate_json(context, ROOT / "schemas" / "run-context.schema.json")
+            try:
+                validate_json(context, ROOT / "schemas" / "run-context.schema.json")
+            except ProtocolError as exc:
+                self.fail(f"component-only deck context should be valid: {exc}")
 
     def test_direct_runtime_requires_hashed_source_provenance(self) -> None:
         """Direct finalisation must enforce the same provenance boundary as orchestration."""
