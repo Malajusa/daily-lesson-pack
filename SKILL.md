@@ -115,6 +115,12 @@ The specialised skills own the pedagogy, wording and slide rules for their compo
 
 Use this orchestrator for a named day's Daily Lesson Pack. Resolve the active year profile and runtime teacher context, invoke the required components, assemble them, then run independent QA.
 
+### Component-only request
+
+When the user asks for one named Daily Lesson Pack component, use the **component-only** path. Resolve the shared context needed by that component, create only the requested component instance, and invoke its owning specialist. On the executable orchestration path use `--stop-after components`.
+
+Do not assemble or release a full Daily Lesson Pack, and do not generate unrelated components merely because they normally appear on the same day. A component-only result remains subject to its owning component contract and release boundary; complete-pack release evidence must not be implied when full-pack assembly and QA did not run.
+
 ### Existing-pack audit or revision
 
 Route the supplied Daily Lesson Pack directly through `dlp-pack-qa`. If it fails, send each defect only to the owning component skill, revise that component, rebuild the affected artefact, and re-run the complete applicable QA suite.
