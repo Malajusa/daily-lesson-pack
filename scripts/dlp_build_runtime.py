@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import re
 import shutil
 import subprocess
 import sys
@@ -82,52 +81,19 @@ def validate_request(request: dict) -> list[str]:
 
 
 def validate_source_provenance(context: dict) -> list[str]:
-    """Validate structural source binding on every runtime entry path.
-
-    The orchestration path additionally re-hashes source files against its
-    source root. Direct finalisation has no source-root argument, so it must at
-    minimum require the same explicit hashed provenance records and bind every
-    resolved runtime field to one of them.
-    """
+    """Require every resolved runtime field to bind to canonical provenance."""
     errors: list[str] = []
     provenance = context.get("source_provenance")
     if not isinstance(provenance, list) or not provenance:
         return ["context source_provenance must contain hashed sources"]
 
-    allowed_kinds = {
-        "user_request",
-        "runtime_school_source",
-        "year_profile",
-        "repository_reference",
+    bound_sources = {
+        str(source.get(key, "")).strip()
+        for source in provenance
+        if isinstance(source, dict)
+        for key in ("id", "path")
+        if str(source.get(key, "")).strip()
     }
-    ids: set[str] = set()
-    paths: set[str] = set()
-    for index, source in enumerate(provenance):
-        if not isinstance(source, dict):
-            errors.append(f"context source_provenance item {index} must be an object")
-            continue
-        source_id = str(source.get("id", "")).strip()
-        kind = str(source.get("kind", "")).strip()
-        path = str(source.get("path", "")).strip()
-        digest = str(source.get("sha256", "")).strip()
-        if not source_id:
-            errors.append(f"context source_provenance item {index} has no id")
-        elif source_id in ids:
-            errors.append(f"context source_provenance id {source_id} is duplicated")
-        else:
-            ids.add(source_id)
-        if kind not in allowed_kinds:
-            errors.append(f"context source_provenance item {index} has invalid kind {kind!r}")
-        if not path:
-            errors.append(f"context source_provenance item {index} has no path")
-        elif path in paths:
-            errors.append(f"context source_provenance path {path} is duplicated")
-        else:
-            paths.add(path)
-        if re.fullmatch(r"[a-f0-9]{64}", digest) is None:
-            errors.append(f"context source_provenance item {index} has invalid sha256")
-
-    bound_sources = ids | paths
     for name in REQUIRED_CONTEXT_FIELDS:
         entry = context.get(name)
         if not isinstance(entry, dict):
@@ -139,10 +105,16 @@ def validate_source_provenance(context: dict) -> list[str]:
             )
     return errors
 
-
 def validate_resolved_context(context: dict) -> list[str]:
+    from agent_protocol import ProtocolError, validate_json
     from resolve_instructional_calibration import instructional_context_errors
+
     errors: list[str] = instructional_context_errors(context)
+    try:
+        validate_json(context, ROOT.parent / "schemas" / "run-context.schema.json")
+    except ProtocolError as exc:
+        errors.extend(f"context schema invalid: {line}" for line in str(exc).splitlines())
+
     if context.get("schema_version") != 2:
         errors.append("context schema_version must be 2")
 
