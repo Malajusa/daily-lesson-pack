@@ -36,6 +36,7 @@ class BaselineRegressionGapTests(unittest.TestCase):
                 directory,
                 owners=("dlp-morning-work",),
             )
+            context["request_scope"] = "component-only"
             context["required_artifacts"] = ["deck"]
 
             # Required behaviour: this is a valid frozen component-only context.
@@ -43,6 +44,19 @@ class BaselineRegressionGapTests(unittest.TestCase):
                 validate_json(context, ROOT / "schemas" / "run-context.schema.json")
             except ProtocolError as exc:
                 self.fail(f"component-only deck context should be valid: {exc}")
+
+    def test_daily_pack_context_still_requires_briefing(self) -> None:
+        """Relaxing component-only output must not weaken the full-pack contract."""
+        with tempfile.TemporaryDirectory() as directory:
+            _, context = context_fixture(
+                directory,
+                owners=("dlp-morning-work",),
+            )
+            context["request_scope"] = "daily-pack"
+            context["required_artifacts"] = ["deck"]
+
+            with self.assertRaises(ProtocolError):
+                validate_json(context, ROOT / "schemas" / "run-context.schema.json")
 
     def test_direct_runtime_requires_hashed_source_provenance(self) -> None:
         """Direct finalisation must enforce the same provenance boundary as orchestration."""
@@ -57,6 +71,26 @@ class BaselineRegressionGapTests(unittest.TestCase):
 
         self.assertTrue(
             any("source_provenance" in error or "hashed source" in error for error in errors),
+            errors,
+        )
+
+    def test_direct_runtime_rejects_unbound_field_source(self) -> None:
+        """A non-empty source label is insufficient unless it binds to provenance."""
+        with tempfile.TemporaryDirectory() as directory:
+            _, context = context_fixture(
+                directory,
+                owners=("dlp-morning-work",),
+            )
+            context["mathematics_focus"]["source"] = "unbound-current-focus"
+
+            errors = validate_resolved_context(context)
+
+        self.assertTrue(
+            any(
+                "mathematics_focus" in error
+                and ("source_provenance" in error or "hashed source" in error)
+                for error in errors
+            ),
             errors,
         )
 
