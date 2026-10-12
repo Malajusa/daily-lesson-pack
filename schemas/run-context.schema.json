@@ -365,6 +365,12 @@
       "type": "array",
       "maxItems": 0
     },
+    "request_scope": {
+      "enum": [
+        "daily-pack",
+        "component-only"
+      ]
+    },
     "required_artifacts": {
       "type": "array",
       "items": {
@@ -384,8 +390,21 @@
           }
         },
         {
-          "contains": {
-            "const": "briefing"
+          "if": {
+            "properties": {
+              "request_scope": {
+                "const": "component-only"
+              }
+            },
+            "required": [
+              "request_scope"
+            ]
+          },
+          "then": {},
+          "else": {
+            "contains": {
+              "const": "briefing"
+            }
           }
         }
       ]
