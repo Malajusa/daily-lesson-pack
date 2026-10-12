@@ -58,6 +58,13 @@ class CalibrationIntegrationTests(unittest.TestCase):
             kind='runtime_school_source',sha256=sha256_file(file)))
         frozen=freeze_context(self.context,self.registry,self.sources)
         self.assertEqual(frozen['warmup_counts']['literacy'],5)
+        request=component_request(
+            frozen,frozen['timetable_instances'][0],self.registry,'sidecar-projection'
+        )
+        self.assertIn(
+            'calibration.json',
+            [source['path'] for source in request['context']['source_provenance']],
+        )
         file.write_text('{}')
         with self.assertRaises(ProtocolError):freeze_context(self.context,self.registry,self.sources)
 
