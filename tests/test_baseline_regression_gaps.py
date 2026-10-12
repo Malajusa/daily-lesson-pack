@@ -1,7 +1,7 @@
-"""Executable RED regressions for remaining Daily Lesson Pack baseline gaps.
+"""Regressions captured from the Daily Lesson Pack 3.10.0-rc.4 baseline.
 
-These tests intentionally describe required behaviour that the 3.10.0-rc.4
-baseline does not yet enforce. Do not weaken them to make the baseline green.
+These behaviours were verified RED against the pinned baseline before the
+minimal implementation was added. Keep them as permanent regression guards.
 """
 
 from __future__ import annotations
@@ -59,7 +59,7 @@ class BaselineRegressionGapTests(unittest.TestCase):
                 validate_json(context, ROOT / "schemas" / "run-context.schema.json")
 
     def test_direct_runtime_requires_hashed_source_provenance(self) -> None:
-        """Direct finalisation must enforce the same provenance boundary as orchestration."""
+        """Direct finalisation must require explicit hashed provenance records."""
         with tempfile.TemporaryDirectory() as directory:
             _, context = context_fixture(
                 directory,
