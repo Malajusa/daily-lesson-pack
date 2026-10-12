@@ -40,6 +40,11 @@ The RED sequence was verified in GitHub Actions before implementation:
 - first clean baseline: 254 tests, exactly 3 intended failures;
 - tightened baseline: 256 tests, exactly 4 intended failures and no errors.
 
+A later diff review identified one missing interface detail: the router named the
+component-only mode but did not explicitly populate `request_scope` and
+`required_artifacts`. A regression was added first and verified as the single
+failure in a 256-test run before the routing text was corrected.
+
 ## GREEN implementation
 
 The branch now:
