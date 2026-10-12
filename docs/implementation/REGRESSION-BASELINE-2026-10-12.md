@@ -7,10 +7,11 @@ This baseline audits the exact 3.10.0-rc.4 candidate at
 as the basis of the installed Daily Lesson Pack Workflows 0.1.3 plugin.
 
 The purpose of this pass is to distinguish historical failures that are already
-contracted/tested from remaining enforcement gaps. No generation behaviour is
-changed in this RED phase.
+contracted/tested from remaining enforcement gaps. The initial RED pass changed
+no generation behaviour; this branch then implements only the gaps proven by
+those regressions.
 
-## Historical failure matrix
+## Historical failure matrix at the pinned baseline
 
 | Failure class | Current baseline evidence | Classification |
 | --- | --- | --- |
@@ -25,14 +26,29 @@ changed in this RED phase.
 
 ## RED tranche
 
-The executable RED suite covers only the three remaining gaps:
+The executable RED suite captured only the three remaining gap classes:
 
 1. root request routing must define a first-class `component-only` path and
    bind it to `--stop-after components`;
 2. a component-only frozen context must be valid with `required_artifacts:
    ["deck"]` and no forced full-pack briefing;
-3. direct finalisation must reject contexts without hashed source provenance,
-   matching the trust boundary already enforced by orchestration.
+3. direct finalisation must reject contexts without hashed source provenance
+   and must bind resolved field sources to those records. The orchestration path
+   remains stronger because it also re-hashes the referenced source files.
+
+The RED sequence was verified in GitHub Actions before implementation:
+- first clean baseline: 254 tests, exactly 3 intended failures;
+- tightened baseline: 256 tests, exactly 4 intended failures and no errors.
+
+## GREEN implementation
+
+The branch now:
+- adds first-class `component-only` request routing using
+  `--stop-after components`;
+- adds an explicit `request_scope` contract so component-only contexts may
+  request a deck without weakening the normal Daily Pack briefing requirement;
+- applies the canonical run-context schema on the direct runtime path and binds
+  every resolved runtime source to explicit source provenance.
 
 ## Deliberate exclusions
 
