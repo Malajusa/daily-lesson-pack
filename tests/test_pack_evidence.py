@@ -92,7 +92,7 @@ class EvidenceTests(unittest.TestCase):
         self.assertTrue(any('exact action' in e for e in validate_content(self.content)))
     def test_implausible_distractor(self):
         t=self.content['tasks'][0];t['fields']['prompt']='Choose Across these habitats or For no reason.'
-        t['options']=[{'text':'Across these habitats','correct':True},{'text':'For no reason','correct':False,'misconception':'invented','rejection_reason':'invented'}]
+        t['options']=[{'text':'Across these habitats','correct':True},{'text':'For no reason','misconception':'invented','rejection_reason':'invented'}]
         self.assertTrue(any('implausible' in e for e in validate_content(self.content)))
     def test_missing_proposition(self):
         t=self.content['tasks'][0];t['operation']='revise';t['fields'].update(before='Wetlands are valuable habitats.',after='These habitats reduce flooding.')
@@ -135,19 +135,27 @@ class EvidenceTests(unittest.TestCase):
         visual=copy.deepcopy(review);visual['checks']=[{'id':i,'subject':sub,'result':'PASS','observation':'Synthetic rendered page fixture','citations':[{'artifact':sub.rsplit(':',1)[0],'page':int(sub.rsplit(':',1)[1])}]} for i,sub in expected_checks(self.content,self.manifest,'visual')]
         (self.p/'visual-review.json').write_text(json.dumps(visual));vtrace=dict(trace,review_sha256=digest(self.p/'visual-review.json'));(self.p/'visual-trace.json').write_text(json.dumps(vtrace))
         (self.p/'components.json').write_text(json.dumps({'generation_run_id':'generation'}));(self.p/'warnings.json').write_text('{}')
+        render_manifest={
+            'schema_version':1,'renderer':'daily-lesson-pack','renderer_version':'test',
+            'deck_sha256':digest(self.p/'deck.pptx'),'context_sha256':digest(self.p/'context.json'),
+            'content_sha256':digest(self.p/'content.json'),'component_record_sha256':digest(self.p/'components.json'),
+            'slides':[]}
+        (self.p/'render-manifest.json').write_text(json.dumps(render_manifest))
         args=['gate','--deck',str(self.p/'deck.pptx'),'--out',str(self.p/'release.json')]
-        for flag in ['contract','year-profile','typography','containment','visual']:
+        for flag in ['contract','year-profile','typography','containment','visual','composition']:
             args+=['--'+flag,str(self.p/(flag+'.json'))]
         for flag,name in [('manifest','manifest.json'),('content','content.json'),('context-record','context.json'),('component-record','components.json'),('warning-ledger','warnings.json'),('visual-review','visual-review.json'),('semantic-review','review.json'),('semantic-trace','trace.json'),('visual-trace','visual-trace.json')]:args+=['--'+flag,str(self.p/name)]
         def screen(command,**kwargs):
             report = {'status':'PASS','artifact_sha256':digest(self.p/'deck.pptx')}
             if Path(command[1]).name == 'audit_year_profile_context.py':
                 report['release_mode'] = 'normal'
+            if Path(command[1]).name == 'audit_visual_composition.py':
+                report['render_manifest_sha256'] = digest(self.p/'render-manifest.json')
             Path(command[command.index('--out')+1]).write_text(json.dumps(report))
             return type('Result',(),{'returncode':0,'stderr':''})()
         with patch.object(sys,'argv',args),patch.object(gate.subprocess,'run',side_effect=screen) as screens,redirect_stdout(io.StringIO()):
             self.assertEqual(gate.main(),0)
-            self.assertEqual(screens.call_count,5)
+            self.assertEqual(screens.call_count,6)
         self.assertEqual(json.loads((self.p/'release.json').read_text())['status'],'PASS')
         # The same supplied PASS files cannot rescue an incomplete new review.
         review['checks']=[];(self.p/'review.json').write_text(json.dumps(review));trace['review_sha256']=digest(self.p/'review.json');(self.p/'trace.json').write_text(json.dumps(trace))

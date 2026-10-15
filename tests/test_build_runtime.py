@@ -128,6 +128,7 @@ class BuildRuntimeTests(unittest.TestCase):
         self.component_path = self.source / "component-record.json"
         self.deck_path = self.source / "pack.pptx"
         self.manifest_path = self.source / "manifest.json"
+        self.render_manifest_path = self.source / "render-manifest.json"
         self.request_path.write_text(json.dumps(self.request), encoding="utf-8")
         self.context_path.write_text(json.dumps(self.context), encoding="utf-8")
         self.content_path.write_text(json.dumps(self.content), encoding="utf-8")
@@ -137,6 +138,21 @@ class BuildRuntimeTests(unittest.TestCase):
         prs.save(self.deck_path)
         self.manifest_path.write_text(
             json.dumps({"schema_version": 3, "artifacts": [], "bindings": []}),
+            encoding="utf-8",
+        )
+        self.render_manifest_path.write_text(
+            json.dumps(
+                {
+                    "schema_version": 1,
+                    "renderer": "daily-lesson-pack",
+                    "renderer_version": "test",
+                    "deck_sha256": sha256(self.deck_path),
+                    "context_sha256": sha256(self.context_path),
+                    "content_sha256": sha256(self.content_path),
+                    "component_record_sha256": sha256(self.component_path),
+                    "slides": [],
+                }
+            ),
             encoding="utf-8",
         )
 
@@ -176,6 +192,7 @@ class BuildRuntimeTests(unittest.TestCase):
             manifest_path=self.manifest_path,
         )
         self.assertEqual(result["status"], "CANDIDATE")
+        self.assertEqual(result["renderer_provenance"], "external")
         self.assertTrue((self.run_root / "candidate" / "pack.pptx").is_file())
         self.assertFalse((self.run_root / "released").exists())
 
@@ -195,7 +212,27 @@ class BuildRuntimeTests(unittest.TestCase):
         self.assertEqual(result["status"], "CANDIDATE")
         self.assertFalse((self.run_root / "released" / "pack.pptx").exists())
 
-    def test_successful_release_requires_audit_output_bound_to_current_deck(self) -> None:
+    def _complete_evidence(self, candidate: Path) -> dict[str, Path]:
+        evidence = {}
+        for key in (
+            "contract",
+            "year_profile",
+            "typography",
+            "containment",
+            "visual",
+            "composition",
+            "semantic_review",
+            "warning_ledger",
+            "visual_review",
+            "semantic_trace",
+            "visual_trace",
+        ):
+            path = candidate / f"{key}.json"
+            path.write_text("{}", encoding="utf-8")
+            evidence[key] = path
+        return evidence
+
+    def test_external_candidate_with_complete_evidence_is_blocked_and_audited(self) -> None:
         stage_candidate(
             self.run_root,
             request_path=self.request_path,
@@ -206,22 +243,26 @@ class BuildRuntimeTests(unittest.TestCase):
             manifest_path=self.manifest_path,
         )
         candidate = self.run_root / "candidate"
-        evidence = {}
-        for key in (
-            "contract",
-            "year_profile",
-            "typography",
-            "containment",
-            "visual",
-            "semantic_review",
-            "warning_ledger",
-            "visual_review",
-            "semantic_trace",
-            "visual_trace",
-        ):
-            path = candidate / f"{key}.json"
-            path.write_text("{}", encoding="utf-8")
-            evidence[key] = path
+        result = promote_release(candidate, self.run_root / "released", self._complete_evidence(candidate))
+        self.assertEqual(result["status"], "CANDIDATE")
+        self.assertIn("repo-rendered provenance", result["reason"])
+        report = json.loads((candidate / "release-audit.json").read_text(encoding="utf-8"))
+        self.assertEqual(report["status"], "FAIL")
+        self.assertEqual(report["artifact_sha256"], sha256(candidate / "pack.pptx"))
+
+    def test_successful_release_requires_audit_output_bound_to_current_deck(self) -> None:
+        stage_candidate(
+            self.run_root,
+            request_path=self.request_path,
+            context_path=self.context_path,
+            content_path=self.content_path,
+            component_record_path=self.component_path,
+            deck_path=self.deck_path,
+            manifest_path=self.manifest_path,
+            render_manifest_path=self.render_manifest_path,
+        )
+        candidate = self.run_root / "candidate"
+        evidence = self._complete_evidence(candidate)
 
         def runner(command, **kwargs):
             out = Path(command[command.index("--out") + 1])
@@ -231,6 +272,7 @@ class BuildRuntimeTests(unittest.TestCase):
                         "status": "PASS",
                         "artifact_sha256": sha256(candidate / "pack.pptx"),
                         "manifest_sha256": sha256(candidate / "manifest.json"),
+                        "render_manifest_sha256": sha256(candidate / "render-manifest.json"),
                         "failures": [],
                     }
                 ),
@@ -241,6 +283,7 @@ class BuildRuntimeTests(unittest.TestCase):
         result = promote_release(candidate, self.run_root / "released", evidence, runner=runner)
         self.assertEqual(result["status"], "RELEASED")
         self.assertTrue((self.run_root / "released" / "pack.pptx").is_file())
+        self.assertTrue((self.run_root / "released" / "render-manifest.json").is_file())
 
     def test_deck_mutation_after_audit_prevents_promotion(self) -> None:
         stage_candidate(
@@ -251,24 +294,10 @@ class BuildRuntimeTests(unittest.TestCase):
             component_record_path=self.component_path,
             deck_path=self.deck_path,
             manifest_path=self.manifest_path,
+            render_manifest_path=self.render_manifest_path,
         )
         candidate = self.run_root / "candidate"
-        evidence = {}
-        for key in (
-            "contract",
-            "year_profile",
-            "typography",
-            "containment",
-            "visual",
-            "semantic_review",
-            "warning_ledger",
-            "visual_review",
-            "semantic_trace",
-            "visual_trace",
-        ):
-            path = candidate / f"{key}.json"
-            path.write_text("{}", encoding="utf-8")
-            evidence[key] = path
+        evidence = self._complete_evidence(candidate)
 
         def runner(command, **kwargs):
             out = Path(command[command.index("--out") + 1])
@@ -279,6 +308,7 @@ class BuildRuntimeTests(unittest.TestCase):
                         "status": "PASS",
                         "artifact_sha256": old_hash,
                         "manifest_sha256": sha256(candidate / "manifest.json"),
+                        "render_manifest_sha256": sha256(candidate / "render-manifest.json"),
                         "failures": [],
                     }
                 ),
