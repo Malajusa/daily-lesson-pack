@@ -23,6 +23,8 @@ from year_profile_registry import PROFILE_REGISTRY_FILES, profile_reference_path
 INTERACTIVE_FILES = ('tests/test_interactive_lesson_contract.py', 'references/strategic-animation-standard.md', 'examples/benchmarks/strategic-animation-regression.md', 'references/interactive-maths-lessons.md', 'scripts/audit_interactive_lesson_contract.py', 'examples/benchmarks/interactive-maths-regression.json', 'examples/benchmarks/interactive-maths-review.md')
 
 COMMON_REFERENCES = (
+    "examples/benchmarks/literacy-reading-modes.json",
+    "references/literacy-reading-modes.md",
     "references/interactive-maths-lessons.md",
     "references/strategic-animation-standard.md",
     "references/creator-settings-contract.md",
@@ -104,6 +106,8 @@ REGRESSION_BENCHMARKS = (
 )
 
 ROOT_RUNTIME_FILES = (
+    "tests/test_literacy_reading_modes.py",
+    "references/literacy-reading-modes.md",
     *INTERACTIVE_FILES,
     "tests/test_interactive_lesson_contract.py",
     "requirements.txt",
@@ -157,6 +161,7 @@ ROOT_RUNTIME_FILES = (
     "examples/context-record-wednesday.json",
     "scripts/audit_package_dependencies.py",
     "scripts/audit_pack_contract.py",
+    "scripts/literacy_reading_audit.py",
     YEAR_PROFILE_AUDIT,
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",
@@ -283,6 +288,7 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
                 files[f"{component_root}/{benchmark}"] = read_required(repo, benchmark)
             for script in (
                 "scripts/audit_pack_contract.py",
+                "scripts/literacy_reading_audit.py",
                 YEAR_PROFILE_AUDIT,
                 "scripts/audit_slide_typography.py",
                 "scripts/audit_panel_containment.py",

@@ -35,15 +35,16 @@ The active profile controls language load, expected prior knowledge, misconcepti
 
 ## Length and sequence
 
-Create exactly **10 `Reminder -> Question -> Answer` sequences** (30 slides) unless the user explicitly changes the count.
+Read `references/literacy-reading-modes.md` before authoring or checking either mode.
+Default to ten supported `Reminder -> Question -> Answer` items (30 slides), unless
+the resolved count is explicitly changed. For explicitly selected item IDs, use
+`question_first_check`: Question -> Answer, or Question -> SUPPORT -> RETRY -> Answer
+when help is required. Preserve separate first attempts and retries. Record the
+selection source, sequence-wide cue audit and actual slide/time budget under the
+shared modes contract. Question-first format alone never establishes independence.
 
-For every sequence:
-
-1. The reminder slide briefly teaches or retrieves the rule needed for the task.
-2. The question slide immediately follows the reminder.
-3. The answer slide immediately follows and matches only that question.
-
-The reminder should usually take about 15-30 seconds. The question should usually take about 20-45 seconds and produce visible student thinking, speaking or writing.
+The reminder usually takes 15–30 seconds; a brief question usually 20–45 seconds.
+Adjust to the actual timetable and include support/response/feedback time.
 
 ## Response load
 
@@ -66,6 +67,8 @@ Every question must be achievable without remembering another warm-up slide.
 - Use a different example on the reminder so it supports the method without revealing the question's answer.
 
 ## Reminder slides
+
+These requirements apply when a reminder/support is present, not before an optional question-first initial attempt.
 
 Use direct, student-facing language. State the useful rule, not a broad teacher definition.
 
@@ -150,7 +153,7 @@ Questions must be immediately understandable to an average student within the ac
 
 - Use a concrete classroom action such as `add`, `choose`, `write`, `replace`, `join`, `explain` or `find`.
 - Prefer familiar terms such as `topic sentence` over unexplained teacher terminology such as `classification opening`.
-- If a technical term is the learning target, explain it on the reminder slide and restate enough meaning on the question slide for the task to stand alone.
+- In supported practice, explain a target technical term on the reminder and retain needed task information. In a question-first check, use only previously taught terms; do not restate an answer-bearing definition before the first attempt. If explanation is needed, record support and a separate retry.
 - Increase thinking demand without increasing ambiguity or adult-sounding language.
 
 ## Technical terminology and inverted commas
@@ -185,14 +188,16 @@ Put typographic inverted commas around a literal word or phrase when discussing 
 
 ## QA
 
+Also fail false independence/retention labels, incomplete sequence-wide cue audits, unknown history labelled uncued, or overwritten first attempts.
+
 Fail if:
 
 - the active year-level profile is missing, unresolved or inconsistent with the orchestrator;
 - a question uses another year profile's assumptions without explicit authorisation;
-- the sequence is not `Reminder -> Question -> Answer`;
+- the sequence violates its selected mode under `references/literacy-reading-modes.md`, or a question-first item lacks a teacher/plan selection source;
 - a question depends on remembered or unavailable content;
 - a reminder reveals the exact answer rather than teaching the method;
-- a reminder lacks a concise applicable `Remember:` rule inside its yellow panel;
+- a displayed reminder/support lacks a concise applicable `Remember:` rule inside its yellow panel;
 - a punctuation reminder using a correct model fails to highlight the target punctuation in its separate example;
 - a deliberate non-example fails to render the incorrect element in red;
 - a non-example colours surrounding correct text red when the specific incorrect element can be isolated;
@@ -208,7 +213,7 @@ Fail if:
 - spelling instruction has crept in without an authorised profile contract;
 - a multiple-choice distractor is implausible, structurally unmatched or obviously wrong without applying the target rule;
 - a claimed precision distinction changes meaning, is reasonably debatable or lacks a prepared defensible explanation;
-- an answer does not immediately follow its question;
+- feedback does not follow its question or optional supported retry;
 - a reminder, model, question and answer use conflicting rules or conventions;
 - a correction is difficult to locate;
 - inserted punctuation is not visibly green, bold and at least 125% of the surrounding size in the exported render;

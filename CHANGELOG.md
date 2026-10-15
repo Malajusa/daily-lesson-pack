@@ -1,3 +1,14 @@
+# 16 October 2026 — Optional literacy checks and whole-text reading
+
+- Preserve ten supported literacy items and paragraph-local reading as defaults.
+- Add explicitly selected question-first checks, optional separate support/retry,
+  sequence-wide cue labels and unknown-exposure handling.
+- Add selected whole-text comprehension with source access, teacher think-alouds,
+  guided/reduced-support application and bounded inference/transfer reporting.
+- Integrate structural evidence into the existing contract audit, preserve legacy
+  default inputs and include meaningful positive/negative package regressions.
+- This is an instruction/audit update, not evidence of classroom effectiveness.
+
 # 3.10.0-rc.5 — Unreleased candidate
 
 - Require pair-specific calibration, meaningful demand progression and

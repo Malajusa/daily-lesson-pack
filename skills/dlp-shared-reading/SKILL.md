@@ -35,16 +35,18 @@ The active profile controls passage density, syntax, vocabulary support, expecte
 
 ## Core slide architecture
 
-Build Shared Reading as alternating matched pairs:
+Read `references/literacy-reading-modes.md`. Default to `paragraph_local` with alternating matched pairs:
 
 1. **Question slide:** one short paragraph of the shared text plus one question about that paragraph.
 2. **Answer slide:** immediately follows, clearly identifies or repeats the question, and presents the complete model answer.
 
-Continue in a strict question/answer/question/answer sequence. Every question slide has exactly one answer slide, and every answer slide matches only the immediately preceding question.
+In paragraph-local mode, continue in a strict question/answer/question/answer sequence. Every question slide has exactly one answer slide, and every answer slide matches only the immediately preceding question.
 
 On question slides, the paragraph and question must be clearly separated through spacing, hierarchy and/or panel structure. One question means one question: do not hide multiple sub-questions in a sentence. Do not reveal the answer or teaching-only evidence cue on the question slide when students are meant to locate it independently.
 
-On answer slides, make the primary answer visually dominant, normally through size and bold emphasis. Add one short supporting sentence or evidence phrase only when it improves learning. Do not introduce a new paragraph, a new question or unrelated teaching content on the answer slide.
+On answer slides, make the primary answer visually dominant, normally through size and bold emphasis. Add one short supporting sentence or evidence phrase only when it improves learning. Do not introduce new source information, a new question or unrelated teaching content on the answer slide. Whole-text feedback may repeat relevant previously read extracts.
+
+For explicitly selected `whole_text` mode, use the shared modes contract: complete source access, exact teacher think-aloud, guided application, then reduced-support same-text application. Source/model stages sit outside numbered question/answer pairs. Keep the source accessible during every stage, including feedback. Do not label same-text application independent transfer.
 
 ## Text length and readability
 
@@ -64,7 +66,7 @@ A higher-year profile should increase legitimate comprehension demand through ri
 
 ## Evidence boundary
 
-Keep every question, slide title and model answer within the information supported by the displayed paragraph.
+In paragraph-local mode, keep every question, slide title and model answer within the information supported by the displayed paragraph. In whole-text mode, the accessible complete source defines the evidence boundary; identify evidence passages and explicit/inferred claims in notes. Accept supported alternatives and reject invented causes or outcomes.
 
 - A literal answer must be stated or directly paraphrasable from that paragraph.
 - An inference must follow reasonably from explicit clues in that paragraph; the model answer should identify the clue-to-conclusion connection.
@@ -77,16 +79,18 @@ Colour may connect a question to a relevant word, phrase or textual feature, but
 
 ## QA
 
+Also fail whole-text mode without a selected source, decision-making think-aloud, guided/reduced-support progression, or with false independence/transfer labels.
+
 Fail if:
 - the active year-level profile is missing, unresolved or inconsistent with the orchestrator;
 - passage or question demand uses another year profile's assumptions without explicit authorisation;
 - a slide has more than one question;
-- a question is not about the displayed paragraph;
-- a title, question or answer asserts information not supported by the displayed paragraph;
-- an inference is not reasonably supported by explicit clues in the paragraph;
+- a question exceeds its selected evidence boundary or whole-text source access is missing;
+- a title, question or answer asserts information not supported by the displayed paragraph (default) or accessible complete source (whole-text);
+- an inference is not reasonably supported by identified explicit source clues;
 - a question slide is not immediately followed by its matched answer slide;
 - an answer is missing, incomplete or mismatched to the immediately preceding question;
-- an answer slide introduces a new paragraph, new question or unrelated content;
+- an answer slide introduces new source information, a new question or unrelated content;
 - the answer or a teaching-only evidence cue is revealed on the question slide;
 - the primary answer is not visually dominant;
 - paragraph text is compressed to preserve layout;

@@ -79,14 +79,17 @@ Return:
 - Mathematics warm-up remains separate from the main Mathematics lesson.
 
 ### Literacy warm-up
-- 10 `Reminder -> Question -> Answer` sequences unless explicitly overridden.
+
+Read `references/literacy-reading-modes.md`; check mode selection, separate first/retry records, earlier same-rule feedback and unknown exposure. Question-first is not an independence label.
+
+- Ten items by default: supported Reminder -> Question -> Answer unless explicitly selected question-first checks follow literacy-reading-modes.md; preserve separate first attempts/retries and sequence-wide cue labels.
 - Every question contains all information needed to answer it and does not depend on another slide.
 - Every question follows the active year-profile warm-up response contract; by default it requires one direct response only and the answer slide supplies the concise teaching explanation.
 - In a choice task, students select only the option unless another response demand is explicitly authorised; any concise rationale normally belongs on the answer slide.
 - Every reminder teaches the method with a different example and does not reveal the next answer.
 - Every reminder places a concise applicable `Remember:` rule inside its yellow panel. A punctuation reminder uses a separate example with the target punctuation green, bold and at least 125% of the surrounding size.
 - No spelling/Sound Waves replacement content unless explicitly authorised by an active profile contract.
-- Every answer follows its question and the primary answer is visually dominant.
+- Every feedback answer follows its question or optional supported retry and the primary answer is visually dominant.
 - Inserted punctuation or changed wording is immediately locatable through green, bold, enlarged treatment plus a textual cue; meaning does not rely on colour alone.
 - Judge punctuation emphasis from the exported render as well as the PPTX text runs; intended styling that renders flat fails.
 - Explanations teach the relevant rule and do not use generic statements such as `the answer matches the prompt`.
@@ -101,17 +104,17 @@ Return:
 - A list-comma reminder must not require a comma after every non-final item while its model or answer omits the optional comma before `and` or `or`.
 
 ### Shared Reading
-- Uses a strict alternating question/answer sequence.
-- Every question slide contains exactly one short paragraph and one question about that paragraph.
+- Default paragraph-local question/answer pairs; selected whole-text source/model stages and guided/reduced-support pairs follow literacy-reading-modes.md.
+- Default: one short paragraph and one question. Selected whole-text: one question with the complete relevant source accessible throughout.
 - Passage density, syntax, vocabulary support and comprehension demand are appropriate to the active year profile; a higher year is not created merely by lengthening text or making words obscure.
 - Every answer slide immediately follows and matches only the preceding question slide.
 - The complete model answer is visually dominant; any supporting evidence is concise and relevant.
 - The question slide does not reveal the answer or teaching-only evidence cue when students are meant to locate it independently.
-- Answer slides do not introduce a new paragraph, new question or unrelated content.
+- Answer slides introduce no new source information, new question or unrelated content; whole-text feedback may repeat previously read evidence extracts.
 - Paragraph/question separation on question slides is visually obvious.
 - Text is projected at sensible size; split/shorten rather than shrink.
-- Every title, question and answer is supported by the displayed paragraph.
-- Any inference follows from explicit clues in the paragraph and the model answer makes that connection clear.
+- Every title, question and answer is supported by the displayed paragraph by default, or the accessible complete source in selected whole-text mode.
+- Any inference follows from identified explicit source clues and the model answer makes the connection clear without inventing causes/outcomes.
 
 ### Guided Reading
 - Guided Reading follows the current Guided Reading component contract.
