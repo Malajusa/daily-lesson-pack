@@ -96,9 +96,9 @@ class StandaloneSkillContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_version_is_bumped(self):
-        self.assertEqual((ROOT / "VERSION").read_text().strip(), "3.10.0-rc.4")
+        self.assertEqual((ROOT / "VERSION").read_text().strip(), "3.10.0-rc.5")
         provenance = json.loads((ROOT / "RELEASE-PROVENANCE.json").read_text())
-        self.assertEqual(provenance["version"], "3.10.0-rc.4")
+        self.assertEqual(provenance["version"], "3.10.0-rc.5")
 
     def test_validator_exists(self):
         self.assertTrue(VALIDATOR.is_file())

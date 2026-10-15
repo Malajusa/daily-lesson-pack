@@ -1,0 +1,28 @@
+{
+  "schema_version": 2,
+  "owner": "dlp-maths-lesson",
+  "release_policy": "fail_closed",
+  "boundaries": [
+    {
+      "id": "MATHS.OPENING.DIAGNOSTIC",
+      "statement": "Each Mathematics block has a concise probe capable of revealing existing understanding of the intended learning, not only its prerequisites. Use independent task-specific evidence; vocal or fast responses alone do not establish mastery. One task may check both prerequisite and intended learning when it genuinely exposes both.",
+      "evidence": ["opening task and response look-fors", "teacher route table", "exact final task citations"]
+    },
+    {
+      "id": "MATHS.TASK.PROGRESSION",
+      "statement": "For each substantial task identify its added mathematical demand or justified practice purpose. Do not allocate a long block to recording solutions already established. Permit independent transfer using established concepts; do not require a demonstrated copy of every problem-solving pathway.",
+      "evidence": ["task-by-task demand and duration comparison", "model-to-practice review", "exact final task citations"]
+    },
+    {
+      "id": "MATHS.ADVANCE.ROUTE",
+      "statement": "Each block provides executable conditional support, normal-teaching and advancement routes with task IDs/final slide destinations and explicit skip points. Students demonstrating the opening learning independently can proceed to substantial prepared mathematics. Mixed readiness uses independent evidence and concurrent tasks; supported success requires an independent recheck.",
+      "evidence": ["teacher route table", "immediate-understanding, mixed-readiness and initial-difficulty walkthroughs", "exact task and solution citations"]
+    },
+    {
+      "id": "MATHS.TASK.SUFFICIENCY",
+      "statement": "Task substance and estimated duration are plausible for the available time including immediate understanding. Prepared advancement tasks include hints and exact answers or valid-solution criteria and remain connected to the central idea. Exit evidence uses an aligned fresh application without introducing a new concept. Headings, slide count and busywork do not establish sufficiency.",
+      "evidence": ["time and task budget", "challenge answers/hints", "fresh exit task", "exact final task citations"]
+    }
+  ],
+  "release_rule": "Every scheduled Mathematics instance needs explicit PASS evidence for every applicable boundary. A missing result, NA or FAIL blocks whole-pack release. Structural validity alone is not pedagogical acceptance."
+}

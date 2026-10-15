@@ -1,5 +1,5 @@
 {
-  "version": "3.10.0-rc.4",
+  "version": "3.10.0-rc.5",
   "created": "2026-09-16",
   "base_repository": "https://github.com/Malajusa/daily-lesson-pack.git",
   "base_commit": "01b5bd0f81e627e2ee3eb7bd84987ad6dcd90539",
@@ -57,6 +57,11 @@
     {
       "line": "interactive-maths-quality-contract",
       "contribution": "Authored goals, success/exit alignment, problem-first state review, semantic visual correspondence/containment and separate structural/teaching evidence."
+    },
+    {
+      "line": "maths-demand-responsive-progression",
+      "base_commit": "18aa531182e359e29833f63f5327d506c8451d4d",
+      "contribution": "Pair-by-pair numeracy calibration, responsive main-lesson routes, non-waivable owner boundaries and standalone reviewer dependency closure. Candidate; classroom confirmation remains separate."
     }
   ],
   "intentional_removals": [
@@ -71,5 +76,6 @@
     "No live blind benchmark acceptance",
     "No teacher pilot or unattended-delivery acceptance",
     "Independent bounded instruction/validator/package review completed; general host and classroom acceptance remain unverified"
-  ]
+  ],
+  "updated": "2026-10-15"
 }

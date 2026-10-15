@@ -153,7 +153,7 @@ def audit_slide(slide, slide_index: int, slide_width: int, slide_height: int, fo
             continue
 
         # Named roles are assigned by the shared-content compiler and visually reviewed.
-        role = item["shape"].name.lower()
+        role = item["shape"].name.lower().split("|", 1)[0]
         structural = is_incidental_label(text)
         support = role in {"dlp:instruction", "dlp:explanation", "dlp:cue", "dlp:why"}
         why_text = warmup and text.lower().startswith("why") and len(text.split()) > 3

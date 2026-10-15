@@ -334,6 +334,12 @@ def audit_review(review_path, method, manifest_path, content_path, content, mani
     tasks = {t['id']: t for t in content['tasks']}
     instances = {i['id'] for i in content['instances']}
     expected = expected_checks(content, manifest, method)
+    boundary_keys = {
+        (rule['id'], instance['id'])
+        for rule in release_boundary_rules(content)
+        for instance in content['instances']
+        if rule['owner'] == instance['owner'] and rule['method'] == method
+    }
     found = set()
     artifact_ids = {a['id']:a for a in manifest['artifacts']}
     renders = {(r['artifact'],r['page']):r for r in manifest.get('renders',[])}
@@ -345,7 +351,7 @@ def audit_review(review_path, method, manifest_path, content_path, content, mani
         # N/A is a reasoned applicability decision, never an absent entry.
         if check.get('result') not in ('PASS','NA') or not check.get('observation') or not check.get('citations'):
             errors.append(method+': incomplete/failed check '+str(key))
-        if check.get('result') == 'NA' and check['id'].startswith('NW.'):
+        if check.get('result') == 'NA' and key in boundary_keys:
             errors.append('Release boundary cannot be waived: '+str(key))
         if check.get('result') == 'NA' and (not check.get('applicability_reason') or method == 'visual'):
             errors.append(method+': invalid applicability decision '+str(key))

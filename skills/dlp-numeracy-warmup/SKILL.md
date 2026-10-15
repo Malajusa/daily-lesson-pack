@@ -35,6 +35,32 @@ Use this only when the caller supplies an actual DLP context with an active year
 
 Within a pair, keep all three tiers on the same mathematical focus. Do not substitute three unrelated retrieval skills for All/Most/Some.
 
+### Calibrate the actual demand
+
+Read `examples/benchmarks/maths-demand-progression-regression.md` when
+authoring or reviewing tiers. Keep the resolved retrieval emphasis and an
+accessible All entry; do not infer attainment from enrolment or make every tier
+harder after feedback about Most/Some.
+
+Most must be worthwhile secure retrieval for the resolved context. Some must
+add a named mathematical demand (for example missing information, strategy
+selection or interpreting a representation). Larger numbers, extra steps,
+different labels or reversing a fact do not alone establish extension.
+Check the three tasks together: a neighbouring tier must not supply the answer
+or reduce the intended demand to a trivial restatement. Useful inverse
+relationships and deliberate fluency are allowed when independently worthwhile.
+
+In the existing teacher briefing/notes, record one compact row for **every**
+pair: focus and prior-learning basis; Most demand; Some's additional demand;
+answer-leakage check. If prior learning is unknown, describe the candidate
+assumption honestly rather than claiming taught knowledge or verified pitch.
+Keep the student response concise. Do not add a fourth task, a WHY prompt or
+an extra compulsory written explanation to manufacture difficulty.
+
+The structural validator below does not assess difficulty or teaching quality.
+Review all pairs under `NW.CALIBRATION`, `NW.DEMAND.PROGRESSION` and
+`NW.TIER.INDEPENDENCE`; a structural PASS cannot replace those semantic results.
+
 ## Graph-reading contract
 
 For graph pairs:
@@ -61,7 +87,10 @@ Read `references/release-boundaries.json`. If Python execution is available, run
 
 Use the user-requested pair count instead of 5 only when they explicitly changed it. A validator FAIL blocks delivery as a finished standalone warm-up. If execution is unavailable, manually check the same contract and describe the result as unvalidated rather than claiming deterministic validation.
 
-Standalone validator PASS means **component-ready**, not whole-pack classroom-ready. In orchestrated mode, the parent DLP release authority still controls whole-pack release.
+Standalone validator PASS establishes **structural compliance only**.
+Component-ready status also requires actual PASS evidence for all applicable
+semantic boundaries, including the three calibration checks. In orchestrated
+mode, the parent DLP release authority still controls whole-pack release.
 
 ## Common failures
 

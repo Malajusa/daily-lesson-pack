@@ -10,7 +10,7 @@ import fitz
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
-from pack_evidence import audit_pack, audit_review, validate_content, digest, expected_checks
+from pack_evidence import audit_pack, audit_review, validate_content, digest, expected_checks, requirements_digest
 from audit_pack_contract import validate_sequence
 from audit_slide_typography import audit_slide, font_sizes, is_incidental_label
 
@@ -110,7 +110,7 @@ class EvidenceTests(unittest.TestCase):
         binding=self.manifest['bindings'][0]
         citation={k:v for k,v in binding.items() if k in ('artifact','page','shape_id')};citation['quote']=self.content['tasks'][0]['fields']['prompt']
         checks=[{'id':i,'subject':s,'result':'PASS','observation':'Synthetic fixture observation','citations':[citation]} for i,s in expected_checks(self.content,self.manifest,'semantic')]
-        review={'manifest_sha256':digest(self.p/'manifest.json'),'content_sha256':digest(self.p/'content.json'),'requirements_sha256':digest(ROOT/'references/qa-requirements.json'),'execution_id':'execution-2','checks':checks}
+        review={'manifest_sha256':digest(self.p/'manifest.json'),'content_sha256':digest(self.p/'content.json'),'requirements_sha256':requirements_digest(self.content),'execution_id':'execution-2','checks':checks}
         (self.p/'review.json').write_text(json.dumps(review));(self.p/'host.txt').write_text('Synthetic host execution fixture')
         trace={'source':'external-runner','execution_id':'execution-2','reviewer_actor':'reviewer','generator_actor':'generator','review_sha256':digest(self.p/'review.json'),'manifest_sha256':digest(self.p/'manifest.json'),'transcript_path':'host.txt','transcript_sha256':digest(self.p/'host.txt')}
         (self.p/'trace.json').write_text(json.dumps(trace));return review,trace
@@ -155,6 +155,67 @@ class EvidenceTests(unittest.TestCase):
             self.assertEqual(gate.main(),1)
             self.assertEqual(screens.call_count,0)
         self.assertEqual(json.loads((self.p/'release.json').read_text())['status'],'FAIL')
+    def test_pedagogical_failure_cannot_reuse_structural_pass_reports(self):
+        """Real bundle parsing/review rejection; only structural subprocesses are isolated."""
+        from unittest.mock import patch
+        from contextlib import redirect_stdout
+        import io
+        import audit_release_bundle as gate
+        self.content['instances'][0]['owner'] = 'dlp-maths-lesson'
+        self.manifest['renders'] = []
+        for artifact in self.manifest['artifacts']:
+            for page in range(1, artifact['pages'] + 1):
+                path = self.p / (artifact['id'] + str(page) + '.png')
+                pix = fitz.Pixmap(fitz.csRGB, fitz.IRect(0, 0, 10, 10), False)
+                pix.clear_with(255)
+                pix.save(path)
+                self.manifest['renders'].append({
+                    'artifact': artifact['id'], 'page': page, 'path': path.name,
+                    'sha256': digest(path), 'artifact_sha256': artifact['sha256']})
+        self.save()
+        review, trace = self.make_review()
+        visual = copy.deepcopy(review)
+        visual['checks'] = [
+            {'id': key, 'subject': subject, 'result': 'PASS',
+             'observation': 'Synthetic visual fixture only.',
+             'citations': [{'artifact': subject.rsplit(':', 1)[0],
+                            'page': int(subject.rsplit(':', 1)[1])}]}
+            for key, subject in expected_checks(self.content, self.manifest, 'visual')]
+        (self.p / 'visual-review.json').write_text(json.dumps(visual))
+        visual_trace = dict(trace, review_sha256=digest(self.p / 'visual-review.json'))
+        (self.p / 'visual-trace.json').write_text(json.dumps(visual_trace))
+        (self.p / 'components.json').write_text(json.dumps({'generation_run_id': 'fixture'}))
+        (self.p / 'warnings.json').write_text('{}')
+        args = ['gate', '--deck', str(self.p / 'deck.pptx'), '--out', str(self.p / 'release.json')]
+        for flag in ('contract', 'year-profile', 'typography', 'containment', 'visual'):
+            path = self.p / (flag + '.json')
+            path.write_text(json.dumps({'status': 'PASS', 'release_mode': 'normal',
+                                        'artifact_sha256': digest(self.p / 'deck.pptx')}))
+            args += ['--' + flag, str(path)]
+        for flag, name in [
+                ('manifest', 'manifest.json'), ('content', 'content.json'),
+                ('context-record', 'context.json'), ('component-record', 'components.json'),
+                ('warning-ledger', 'warnings.json'), ('visual-review', 'visual-review.json'),
+                ('semantic-review', 'review.json'), ('semantic-trace', 'trace.json'),
+                ('visual-trace', 'visual-trace.json')]:
+            args += ['--' + flag, str(self.p / name)]
+        for outcome in ('FAIL', 'MISSING'):
+            with self.subTest(outcome=outcome):
+                review, trace = self.make_review()
+                check = next(c for c in review['checks'] if c['id'] == 'MATHS.ADVANCE.ROUTE')
+                if outcome == 'MISSING':
+                    review['checks'].remove(check)
+                else:
+                    check['result'] = 'FAIL'
+                (self.p / 'review.json').write_text(json.dumps(review))
+                trace['review_sha256'] = digest(self.p / 'review.json')
+                (self.p / 'trace.json').write_text(json.dumps(trace))
+                with patch.object(sys, 'argv', args), patch.object(gate.subprocess, 'run'), redirect_stdout(io.StringIO()):
+                    self.assertEqual(gate.main(), 1)
+                result = json.loads((self.p / 'release.json').read_text())
+                self.assertEqual(result['status'], 'FAIL')
+                self.assertTrue(any('MATHS.ADVANCE.ROUTE' in e for e in result['failures']))
+
     def test_complete_review_structure(self): self.make_review();self.assertEqual(self.review_audit(),[])
     def test_unscoped_semantic_assertion(self):
         review,trace=self.make_review();review['checks']=[]
