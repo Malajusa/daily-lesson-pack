@@ -194,6 +194,18 @@ For a new or fragile concept, the default sequence is:
 
 The general Mathematics warm-up remains separate from prerequisite checking and from the main lesson.
 
+Probe the intended learning as well as prerequisites: an easy prerequisite
+response does not show whether planned teaching is already understood. One
+concise task MAY serve both checks. Use independent evidence, not speed or vocal
+confidence alone. Prepare conditional support, normal teaching and advancement
+with exact next-task/final-slide destinations and skip points in teacher notes.
+Supported success requires an independent recheck.
+
+Each substantial task MUST add mathematical demand or have a justified practice
+purpose, with a plausible duration, hints and teacher solutions/valid-solution
+criteria. Walk through immediate understanding, mixed readiness and initial
+difficulty; the lesson MUST contain substantial prepared work in each case.
+
 Do not present a long passive run of explanation slides. During concept introduction or procedure development, students SHOULD make an observable response after no more than two consecutive explanation/model slides unless an explicit current instruction requires another structure.
 
 An observable response may be oral, gestural, mini-whiteboard, manipulative-based, selected-response or written. It must require students to process the mathematics rather than merely repeat a displayed answer.
@@ -205,6 +217,12 @@ An `I do` slide models the thinking and process explicitly.
 A `We do` slide MUST require student participation. It MUST NOT already display the completed answer, final landing point, completed model or all working before students have an opportunity to respond.
 
 A `You do` task MUST be solvable using concepts, representations and demands that have already been modelled, unless it is clearly identified as an extension.
+
+This protects access to concepts; it does not require a demonstrated copy of
+every problem-solving pathway. An unfamiliar application of established ideas
+MAY require independent strategy selection or transfer. Teach new concepts before
+treating them as secure independent work; label connected extension and provide
+optional hints without pre-solving the challenge.
 
 Scaffolds SHOULD fade deliberately, for example:
 

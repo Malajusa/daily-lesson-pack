@@ -131,6 +131,15 @@ Return:
 - Comparison tables are split before their content becomes undersized.
 
 ### Numeracy warm-up
+
+Read `examples/benchmarks/maths-demand-progression-regression.md`.
+Review every pair under `NW.CALIBRATION`, `NW.DEMAND.PROGRESSION` and
+`NW.TIER.INDEPENDENCE`, using the component boundary contract. In each
+observation name every pair, its Most demand, Some's added demand and whether
+neighbouring tasks leak answers. Cite the actual final task/answer locations.
+An accessible All, a large number or one strong pair does not establish that the
+whole warm-up is well calibrated. Check the teacher rationale against the tasks
+and known taught content; a structural-validator PASS is not pedagogical approval.
 - 5 prompt/answer pairs (10 slides total) unless the validated profile or current request explicitly overrides the count.
 - Prompt slides contain three separate All / Most / Some questions, not three answer-quality expectations for one question.
 - The active year profile determines reasonable retrieval floor, number types/magnitudes and the ceiling for `Some`.
@@ -176,6 +185,26 @@ Apply `references/fraction-equivalence-standard.md` when equivalence or fraction
 - Fraction equivalence is shown through the original partition, repartitioning of every part, the invariant amount and the multiplicative relationship. A finished hundred grid alone fails.
 
 #### Teaching sequence and gradual release
+
+For every maths instance apply its component boundary contract:
+`MATHS.OPENING.DIAGNOSTIC`, `MATHS.TASK.PROGRESSION`,
+`MATHS.ADVANCE.ROUTE` and `MATHS.TASK.SUFFICIENCY`.
+Inspect the intended-learning probe, all substantial tasks, prepared challenge
+with hints/solutions and the fresh exit. Name what each task adds or why practice
+is justified, and assess its plausible duration.
+
+Walk through immediate independent understanding (R1), mixed readiness with vocal
+responders (R2), and initial difficulty/supported success (R3). Verify actual
+next-task/final-slide destinations and skip points. Reject generic claims that
+differentiation exists, repeating established solutions to fill time, or a
+token extension that leaves the teacher improvising the rest of the block.
+Do not equate speed with mastery or insist every unfamiliar application be
+pre-solved. New concepts still need teaching and support still needs independent
+rechecks. Record failures against exact tasks and route repairs to their owner.
+
+The release software enforces required results, citations and hash bindings; it
+does not independently assess the difficulty or completeness of a reviewer's
+educational judgement. Only actual independent review can supply that evidence.
 - For a new or fragile concept, meaning and a complete model precede guided and independent work.
 - During concept introduction or procedure development, students normally make an observable response after no more than two consecutive explanation/model slides unless an explicit instruction or active profile requires another structure.
 - A `We do` slide genuinely requires student participation and does not already display the completed answer, final landing point, completed model or all working.

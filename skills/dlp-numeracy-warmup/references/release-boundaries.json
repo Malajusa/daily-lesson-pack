@@ -57,6 +57,21 @@
         "PPTX text-run inspection",
         "rendered-slide inspection"
       ]
+    },
+    {
+      "id": "NW.CALIBRATION",
+      "statement": "Inspect every pair against the resolved context and prior-learning evidence or explicit candidate assumptions. All remains accessible and Most provides worthwhile secure retrieval; an accessible floor is not a ceiling for Most/Some. Do not claim actual attainment or taught knowledge without evidence.",
+      "evidence": ["pair-by-pair briefing rationale", "exact task and answer citations"]
+    },
+    {
+      "id": "NW.DEMAND.PROGRESSION",
+      "statement": "For every pair name the mathematical demand Some adds beyond Most in the same focus. Larger numbers, extra steps or a task label alone are insufficient. Keep concise retrieval responses and do not add untaught procedures or additional compulsory explanation demands merely to create challenge.",
+      "evidence": ["all pair demand comparisons", "exact task and answer citations"]
+    },
+    {
+      "id": "NW.TIER.INDEPENDENCE",
+      "statement": "Evaluate the three tasks together in every pair. A neighbouring tier must not give away the answer or collapse the intended demand into a trivial restatement. Useful inverse relationships or deliberate fluency remain valid when independently worthwhile and justified.",
+      "evidence": ["pair-by-pair answer-leakage inspection", "exact task and answer citations"]
     }
   ],
   "release_rule": "Every applicable boundary requires explicit PASS evidence. A missing result or any FAIL makes the standalone component not component-ready and blocks whole-pack release when used inside Daily Lesson Pack."

@@ -139,6 +139,38 @@ For a new or fragile concept, use this default sequence:
 
 Calibrate the amount of scaffolding, independent load and reasoning demand to the active year-level profile rather than to historical examples from another class.
 
+### Respond to demonstrated understanding
+
+Read `examples/benchmarks/maths-demand-progression-regression.md` when planning
+or reviewing demand. Use a concise opening probe of the **intended learning**
+as well as any prerequisite check; one task may serve both if it exposes both.
+An easier prerequisite alone cannot show whether the planned teaching is needed.
+Collect independent responses: speed or vocal confidence alone does not establish
+readiness for a group or the class.
+
+In the existing teacher briefing/notes name the evidence, teacher action,
+destination task ID/final slide and skipped models for each conditional route:
+
+- **Support:** teach the identified difficulty, then independently recheck a
+  fresh task before fading support.
+- **Normal teaching:** model/guided work addresses what the opening reveals.
+- **Advance:** skip already demonstrated work and use a prepared unfamiliar or
+  constrained task. Keep enough connected mathematics available for the block.
+
+For mixed readiness make concurrent support and advancement usable without the
+teacher inventing resources. Do not turn routes into permanent groups or infer
+readiness from enrolment. Each substantial task needs a stated added demand or
+justified practice purpose, plausible duration, hints and exact teacher answers
+or valid-solution criteria. Record task IDs before assembly and actual slide
+destinations afterwards. Do not allocate long practice to copying established
+solutions.
+
+Check immediate understanding, mixed readiness and initial difficulty before
+returning the component. Use a fresh aligned exit application. Review
+`MATHS.OPENING.DIAGNOSTIC`, `MATHS.TASK.PROGRESSION`,
+`MATHS.ADVANCE.ROUTE` and `MATHS.TASK.SUFFICIENCY` under
+`references/release-boundaries.json`; every scheduled block needs its own evidence.
+
 Do not treat a token warm-up as prerequisite teaching.
 
 During concept introduction or procedure development, students should make an observable response after no more than two consecutive explanation/model slides unless an explicit current instruction or active profile requires another structure.
@@ -187,7 +219,12 @@ If the prompt asks students to explain with a model, a verbal answer without the
 
 Compare the hardest independent task with the teaching sequence before release.
 
-Independent work must not introduce an unmodelled conceptual demand. Check alignment in:
+Independent work must not introduce an unmodelled conceptual demand. An unfamiliar
+application of established concepts can require independent strategy selection:
+alignment does not require demonstrating every solution pathway or supplying a
+nearly identical example. Identify connected extension and provide optional hints;
+teach genuinely new concepts/representations before treating them as secure
+independent work. Check alignment in:
 
 - concept;
 - operation or relationship;

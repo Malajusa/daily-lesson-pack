@@ -1,3 +1,22 @@
+# 3.10.0-rc.5 — Unreleased candidate
+
+- Require pair-specific calibration, meaningful demand progression and
+  independent tier answers in Numeracy warm-ups. A standalone structural PASS
+  no longer claims pedagogical/component acceptance.
+- Add intended-learning probes, explicit support/advance routes and substantial
+  prepared tasks to main Mathematics, with fresh aligned exit evidence.
+- Require pedagogical review for each scheduled Mathematics block, including
+  immediate understanding, mixed readiness and initial difficulty.
+- Reject NA for all applicable component boundaries, not only numeracy IDs.
+- Preserve supporting-text role floors when the renderer appends panel
+  ownership to shape names; main text and below-floor support still fail.
+- Include owner contracts and calibration/progression benchmarks in complete
+  and relevant standalone packages; standalone QA carries both reviewed owners'
+  boundary contracts so sibling installations are unnecessary.
+- Preserve creator defaults and presentation standards. Technical tests,
+  independent teaching review, host playback and classroom confirmation are
+  separate evidence; this candidate does not claim installation or classroom use.
+
 # 3.10.0-rc.4 — Unreleased candidate
 
 - Add an interactive maths adaptation with authored learning goals, observable

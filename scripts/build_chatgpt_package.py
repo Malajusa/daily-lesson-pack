@@ -76,6 +76,8 @@ YEAR_PROFILE_ISOLATION_BENCHMARK = (
 NUMERACY_WARMUP_RELEASE_BOUNDARIES = (
     "skills/dlp-numeracy-warmup/references/release-boundaries.json"
 )
+MATHS_RELEASE_BOUNDARIES = "skills/dlp-maths-lesson/references/release-boundaries.json"
+MATHS_DEMAND_BENCHMARK = "examples/benchmarks/maths-demand-progression-regression.md"
 NUMERACY_WARMUP_BENCHMARK = (
     "examples/benchmarks/numeracy-warmup-release-boundaries-regression.md"
 )
@@ -92,6 +94,7 @@ REGRESSION_BENCHMARKS = (
     TERM_WEEK_DAY_PLANNING_BENCHMARK,
     YEAR_PROFILE_ISOLATION_BENCHMARK,
     NUMERACY_WARMUP_BENCHMARK,
+    MATHS_DEMAND_BENCHMARK,
     "examples/benchmarks/t3w7-thursday-known-failure.md",
     "examples/projected-readability-regression.md",
     "examples/semantic-colour-regression.md",
@@ -226,6 +229,8 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
         )
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             component_references = (*component_references, MATH_REFERENCE, FRACTION_REFERENCE, *INTERACTIVE_FILES)
+        if name in {"dlp-numeracy-warmup", "dlp-maths-lesson", "dlp-pack-qa"}:
+            component_references = (*component_references, MATHS_DEMAND_BENCHMARK)
         if name == "dlp-pack-qa":
             component_references = (
                 *component_references,
@@ -256,6 +261,14 @@ def build_file_map(repo: Path) -> tuple[str, dict[str, bytes]]:
             files[f"{component_root}/{NUMERACY_WARMUP_BENCHMARK}"] = read_required(
                 repo, NUMERACY_WARMUP_BENCHMARK
             )
+
+        if name == "dlp-maths-lesson":
+            files[f"{component_root}/references/release-boundaries.json"] = read_required(
+                repo, MATHS_RELEASE_BOUNDARIES
+            )
+        if name == "dlp-pack-qa":
+            for boundary_path in (NUMERACY_WARMUP_RELEASE_BOUNDARIES, MATHS_RELEASE_BOUNDARIES):
+                files[f"{component_root}/{boundary_path}"] = read_required(repo, boundary_path)
 
         if name in {"dlp-maths-lesson", "dlp-pack-qa"}:
             files[f"{component_root}/{UNIVERSAL_MATHS_BENCHMARK}"] = read_required(
