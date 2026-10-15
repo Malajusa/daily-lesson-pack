@@ -117,7 +117,7 @@ See the independent review and evidence JSON alongside this report. Candidate
 sample files include a teacher briefing with exact final slide/card destinations;
 answers remain outside the student-card presentation notes.
 
-## Publication status
+## Publication status — initial attempt
 
 The branch and all source/candidate changes are committed locally. Automatic
 approval review rejected the attempted push to Malajusa/daily-lesson-pack because
@@ -125,3 +125,19 @@ it treated the destination as unverified and the payload as potentially private.
 No GitHub push or draft PR was completed. The exact reviewed branch and candidate
 are preserved for user review; publication requires explicit approval. This is
 separate from the plan’s prohibition on automatic merge or plugin activation.
+
+## Publication after approval — 15 October 2026
+
+The user explicitly approved publication. Native Git authentication was unavailable,
+so the connected GitHub service published a snapshot commit, `10e0c82e6eab86bab7a661a37e9e8d7b9f28347c`,
+whose tree is byte-identical to reviewed local commit `ec9881a586a71b0c26504b6a3e71cc05179343c5`
+(tree `41af24f7c8e502a55ed1837514979be3baefda00`). A following handoff commit adds only this publication
+record, the candidate README and the original reviewed Git history bundle.
+
+The snapshot has a new commit ID because the connected service creates commits.
+The original tested source `67c85b32a5be9a78dc0edb1ed047f5e3b72b91c7` and focused
+commits remain recoverable from `dist/plugins/maths-calibration-reviewed-history.bundle`,
+with base `18aa531182e359e29833f63f5327d506c8451d4d` already present in this repository.
+Package source bindings and frozen reviews therefore retain their original identities.
+The published branch is `codex/maths-calibration-progression-20261015`.
+A draft PR is prepared for review; no merge or plugin activation is authorised.
