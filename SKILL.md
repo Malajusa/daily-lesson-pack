@@ -342,10 +342,10 @@ If the active year-level profile itself is marked calibration/candidate-only, ge
 
 - Every content component uses the same active year-level profile as the orchestrator.
 - Morning Work and Shared Reading must not reuse the same passage.
-- Literacy warm-up uses 10 self-contained `Reminder -> Question -> Answer` sequences unless the user changes the count. A question must not depend on remembered content from another slide.
+- Literacy warm-up defaults to 10 self-contained supported `Reminder -> Question -> Answer` items unless the resolved count changes. Explicitly selected question-first checks follow `references/literacy-reading-modes.md`, preserving separate first/retry attempts and sequence-wide cue labels. Every question retains essential task data.
 - Guided Reading follows its own current component contract and authorised schedule; never infer ability labels from the year profile.
 - Numeracy warm-up uses 5 `Question -> Answer` pairs (10 slides total) under the default pack profile. Each question slide contains separate All, Most and Some tasks.
-- Shared Reading must alternate each paragraph-and-question slide with its immediately following matched answer slide; answers are not revealed early on question slides.
+- Shared Reading defaults to paragraph-local question/answer pairs. Explicitly selected whole-text mode follows `references/literacy-reading-modes.md` with accessible complete source, teacher think-aloud and guided/reduced-support pairs. Answers are not revealed early on question slides.
 - The writing lesson teaches the current writing focus resolved from the selected
   weekly plan or the user's current overview; a historical class genre or weekday
   progression is not a universal default.

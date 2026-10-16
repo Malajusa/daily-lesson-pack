@@ -16,6 +16,8 @@ from year_profile_registry import PROFILE_REGISTRY_FILES, profile_reference_path
 INTERACTIVE_FILES = ('tests/test_interactive_lesson_contract.py', 'references/strategic-animation-standard.md', 'examples/benchmarks/strategic-animation-regression.md', 'references/interactive-maths-lessons.md', 'scripts/audit_interactive_lesson_contract.py', 'examples/benchmarks/interactive-maths-regression.json', 'examples/benchmarks/interactive-maths-review.md')
 
 COMMON_REFERENCES = (
+    "examples/benchmarks/literacy-reading-modes.json",
+    "references/literacy-reading-modes.md",
     "references/interactive-maths-lessons.md",
     "references/strategic-animation-standard.md",
     "references/creator-settings-contract.md",
@@ -85,6 +87,7 @@ QA_ONLY_FILES = (
     "examples/benchmarks/t3w8-tuesday-bypass-known-failure.md",
     MORNING_WORK_EXEMPLAR_BENCHMARK,
     "scripts/audit_pack_contract.py",
+    "scripts/literacy_reading_audit.py",
     YEAR_PROFILE_AUDIT,
     "scripts/audit_slide_typography.py",
     "scripts/audit_panel_containment.py",

@@ -65,7 +65,7 @@ UNQUOTED_METALANGUAGE = (
 )
 REMINDER_PANEL_COLOURS = {"FFF3BF", "FFF2CC", "FFE699"}
 LITERACY_HEADER = re.compile(
-    r"LITERACY\s+WARM[- ]?UP\s+(\d+)\s+OF\s+(\d+).*?\b(REMINDER|QUESTION|ANSWER)\b",
+    r"LITERACY\s+WARM[- ]?UP\s+(\d+)\s+OF\s+(\d+).*?\b(REMINDER|QUESTION|ANSWER|SUPPORT|RETRY)\b",
     re.I | re.S,
 )
 SHARED_HEADER = re.compile(
@@ -749,7 +749,7 @@ def audit_deck(path: str, literacy_count: int = 10, numeracy_count: int = 5, res
                 "total": int(literacy_match.group(2)),
                 "role": literacy_role,
             })
-            if literacy_role == "REMINDER":
+            if literacy_role in {"REMINDER", "SUPPORT"}:
                 if not re.search(r"\bRemember\s*:", full_text, re.I):
                     issues.append(issue(
                         "literacy_reminder_rule_missing",
@@ -769,7 +769,7 @@ def audit_deck(path: str, literacy_count: int = 10, numeracy_count: int = 5, res
                         "A punctuation reminder must visibly enlarge, bold and colour the target mark in its example.",
                         slide=slide_number,
                     ))
-            if literacy_role == "QUESTION" and re.search(r"\b(?:because|but|and|although|so|or|yet)\b", full_text, re.I):
+            if literacy_role in {"QUESTION", "RETRY"} and re.search(r"\b(?:because|but|and|although|so|or|yet)\b", full_text, re.I):
                 has_two_sentence_source = any(
                     TWO_SENTENCE_TEXT.search(shape_text(shape)) for shape in slide.shapes
                 )
@@ -783,7 +783,7 @@ def audit_deck(path: str, literacy_count: int = 10, numeracy_count: int = 5, res
                         "A sentence-combination task must explicitly say combine or join, not merely write a sentence.",
                         slide=slide_number,
                     ))
-            if literacy_role == "QUESTION" and slide_number not in (response_override_slides or set()) and (PROHIBITED_LITERACY_REASONING.search(full_text) or re.search(r"\band\s+(?:name|write|give|complete)\b", full_text, re.I)):
+            if literacy_role in {"QUESTION", "RETRY"} and slide_number not in (response_override_slides or set()) and (PROHIBITED_LITERACY_REASONING.search(full_text) or re.search(r"\band\s+(?:name|write|give|complete)\b", full_text, re.I)):
                 issues.append(issue(
                     "literacy_extra_reasoning_demand",
                     "A Literacy warm-up question must require one direct response without an added explain or justify demand.",
@@ -857,12 +857,17 @@ def audit_deck(path: str, literacy_count: int = 10, numeracy_count: int = 5, res
                     text=text[:240],
                 ))
 
-    issues.extend(validate_sequence(
-        literacy_entries,
-        ["REMINDER", "QUESTION", "ANSWER"],
-        "literacy_warmup",
-        required_total=literacy_count,
-    ))
+    # Load the colocated helper even when this module is imported by file path.
+    import importlib.util
+    helper_spec = importlib.util.spec_from_file_location("literacy_reading_audit", Path(__file__).with_name("literacy_reading_audit.py"))
+    helper = importlib.util.module_from_spec(helper_spec)
+    helper_spec.loader.exec_module(helper)
+    mode_issues = helper.audit_literacy(literacy_entries, presentation, literacy_count)
+    if mode_issues is None:
+        issues.extend(validate_sequence(literacy_entries, ["REMINDER", "QUESTION", "ANSWER"], "literacy_warmup", required_total=literacy_count))
+    else:
+        issues.extend(mode_issues)
+    issues.extend(helper.audit_reading(presentation, path))
     issues.extend(validate_sequence(
         numeracy_entries,
         ["QUESTION", "ANSWER"],

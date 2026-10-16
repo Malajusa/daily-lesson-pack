@@ -291,7 +291,7 @@
       "id": "QA.FB7A8041EC",
       "owner": "dlp-literacy-warmup",
       "scope": "instance",
-      "statement": "10 `Reminder -> Question -> Answer` sequences unless explicitly overridden.",
+      "statement": "Ten items by default: supported Reminder -> Question -> Answer unless explicitly selected question-first checks follow literacy-reading-modes.md; preserve separate first attempts/retries and sequence-wide cue labels.",
       "method": "semantic",
       "evidence": [
         "observation",
@@ -368,7 +368,7 @@
       "id": "QA.0856B63FD6",
       "owner": "dlp-literacy-warmup",
       "scope": "instance",
-      "statement": "Every answer follows its question and the primary answer is visually dominant.",
+      "statement": "Every feedback answer follows its question or optional supported retry and the primary answer is visually dominant.",
       "method": "semantic",
       "evidence": [
         "observation",
@@ -511,7 +511,7 @@
       "id": "QA.3EE117A487",
       "owner": "dlp-shared-reading",
       "scope": "instance",
-      "statement": "Uses a strict alternating question/answer sequence.",
+      "statement": "Default paragraph-local question/answer pairs; selected whole-text source/model stages and guided/reduced-support pairs follow literacy-reading-modes.md.",
       "method": "semantic",
       "evidence": [
         "observation",
@@ -522,7 +522,7 @@
       "id": "QA.B458198D1A",
       "owner": "dlp-shared-reading",
       "scope": "instance",
-      "statement": "Every question slide contains exactly one short paragraph and one question about that paragraph.",
+      "statement": "Default: one short paragraph and one question. Selected whole-text: one question with the complete relevant source accessible throughout.",
       "method": "semantic",
       "evidence": [
         "observation",
@@ -577,7 +577,7 @@
       "id": "QA.2C49D2E4B3",
       "owner": "dlp-shared-reading",
       "scope": "instance",
-      "statement": "Answer slides do not introduce a new paragraph, new question or unrelated content.",
+      "statement": "Answer slides introduce no new source information, new question or unrelated content; whole-text feedback may repeat previously read evidence extracts.",
       "method": "semantic",
       "evidence": [
         "observation",
@@ -610,7 +610,7 @@
       "id": "QA.4E4FC82990",
       "owner": "dlp-shared-reading",
       "scope": "instance",
-      "statement": "Every title, question and answer is supported by the displayed paragraph.",
+      "statement": "Every title, question and answer is supported by the displayed paragraph by default, or the accessible complete source in selected whole-text mode.",
       "method": "semantic",
       "evidence": [
         "observation",
@@ -621,7 +621,7 @@
       "id": "QA.1A4EC82438",
       "owner": "dlp-shared-reading",
       "scope": "instance",
-      "statement": "Any inference follows from explicit clues in the paragraph and the model answer makes that connection clear.",
+      "statement": "Any inference follows from identified explicit source clues and the model answer makes the connection clear without inventing causes/outcomes.",
       "method": "semantic",
       "evidence": [
         "observation",
@@ -1481,6 +1481,28 @@
       "scope": "page",
       "statement": "The original problem or relationship appears before worked results. Words, notation and a useful mathematical representation explicitly correspond in quantities, units and actions; every staged entry/reveal is reviewed. Diagram presence is not evidence of instructional purpose.",
       "method": "visual",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.LIT.CUE",
+      "owner": "dlp-literacy-warmup",
+      "scope": "instance",
+      "statement": "Apply literacy-reading-modes.md: selected question-first checks have sequence-wide cue audits; known earlier feedback cues later same-rule items; unknown exposure stays unknown; preserve first attempts and retries separately.",
+      "method": "semantic",
+      "evidence": [
+        "observation",
+        "citations"
+      ]
+    },
+    {
+      "id": "QA.READ.ACCESS",
+      "owner": "dlp-shared-reading",
+      "scope": "instance",
+      "statement": "Apply literacy-reading-modes.md: selected whole-text mode keeps the complete source accessible, models a comprehension decision, includes guided/reduced-support application, supports every inference and does not claim same-text independent transfer.",
+      "method": "semantic",
       "evidence": [
         "observation",
         "citations"

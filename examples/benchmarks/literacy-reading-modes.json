@@ -1,0 +1,1223 @@
+{
+  "synthetic": true,
+  "source_text": "On Friday, Maya arranged twenty seedlings beside the school gate. She hoped to sell them to buy replacement hand tools for the garden club. She wrote “Seedlings $2” on a small sign and placed it flat on the table. By lunchtime, eighteen pots remained. Families hurried past, and several glanced towards the table without stopping.\n\nLeo stopped beside her. “I thought these were waiting to be planted,” he said. Maya looked down at the sign, hidden behind the front row of pots. She propped it against a box and added “School garden fundraiser”. For the next few minutes, nobody stopped.\n\nThen a gust knocked two pots sideways. Maya moved the stall into the sheltered entrance. Leo carried the box. As people slowed to open the door, they read the raised sign. One parent bought three seedlings; another asked what the money would buy.\n\nAt home time, Maya counted six remaining pots. She put a note in the garden club book: “Next time: entrance, upright sign, explain our purpose.” She left a space underneath for the other members' suggestions.",
+  "teacher_think_aloud": "At first, I wondered whether families simply did not want seedlings. But the opening only says they hurried past; it doesn't tell me what they wanted. Leo's comment and the hidden sign make me reconsider: perhaps some people didn't realise this was a sale. Maya raises the sign and explains the fundraiser, but nobody stops straight away. Later, in the entrance, people slow down and read it. I think visibility and the location may both have helped. The story doesn't let me prove that one change caused all the extra sales.",
+  "specs": {
+    "default-supported": {
+      "meta": {
+        "title": "Default supported literacy — synthetic review example",
+        "theme": "dlp",
+        "frame": "rail",
+        "profile": "classroom"
+      },
+      "slides": [
+        {
+          "id": "s1",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 1 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 1 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 1 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 1 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unsafe’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s3",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 1 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 1 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unsafe means not safe."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s4",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 2 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 2 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s5",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 2 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 2 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unfair’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s6",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 2 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 2 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unfair means not fair."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s7",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 3 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 3 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s8",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 3 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 3 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unkind’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s9",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 3 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 3 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unkind means not kind."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s10",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 4 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 4 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s11",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 4 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 4 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unhelpful’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s12",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 4 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 4 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unhelpful means not helpful."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s13",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 5 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 5 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s14",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 5 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 5 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unhappy’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s15",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 5 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 5 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unhappy means not happy."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s16",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 6 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 6 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s17",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 6 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 6 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unwell’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s18",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 6 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 6 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unwell means not well."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s19",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 7 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 7 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s20",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 7 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 7 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unclear’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s21",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 7 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 7 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unclear means not clear."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s22",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 8 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 8 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s23",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 8 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 8 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unusual’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s24",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 8 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 8 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unusual means not usual."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s25",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 9 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 9 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s26",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 9 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 9 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘untrue’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s27",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 9 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 9 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Untrue means not true."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s28",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 10 OF 10",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 10 OF 10 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Example: ‘unready’ means ‘not ready’."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s29",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 10 OF 10",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 10 OF 10 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unlucky’."
+              }
+            ]
+          }
+        },
+        {
+          "id": "s30",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 10 OF 10",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 10 OF 10 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unlucky means not lucky."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, the prefix ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "optional-checks": {
+      "meta": {
+        "title": "Optional literacy checks — synthetic review example",
+        "theme": "dlp",
+        "frame": "rail",
+        "profile": "classroom"
+      },
+      "slides": [
+        {
+          "id": "s1",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 1 OF 3",
+          "title": "REMINDER",
+          "eyebrow": "LITERACY WARM-UP 1 OF 3 • REMINDER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The prefix ‘un-’ can mean ‘not’."
+              }
+            ]
+          },
+          "notes": "DLP_LITERACY:{\"mode\": \"supported_practice\", \"target_rule\": \"prefix-un\", \"selection_source\": \"synthetic review plan: items 2 and 3\", \"history_known\": true, \"prior_cues\": [], \"cue_status\": \"supported\"}\nConditional SUPPORT/RETRY: skip both if the first attempt needs no help. Record first and retry separately. Labels are planned conditions, not actual pupil outcomes."
+        },
+        {
+          "id": "s2",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 1 OF 3",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 1 OF 3 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unsafe’."
+              }
+            ]
+          },
+          "notes": "DLP_LITERACY:{\"mode\": \"supported_practice\", \"target_rule\": \"prefix-un\", \"selection_source\": \"synthetic review plan: items 2 and 3\", \"history_known\": true, \"prior_cues\": [], \"cue_status\": \"supported\", \"initial_response\": null}\nConditional SUPPORT/RETRY: skip both if the first attempt needs no help. Record first and retry separately. Labels are planned conditions, not actual pupil outcomes."
+        },
+        {
+          "id": "s3",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 1 OF 3",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 1 OF 3 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unsafe means not safe."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ],
+          "notes": "DLP_LITERACY:{\"mode\": \"supported_practice\", \"target_rule\": \"prefix-un\", \"selection_source\": \"synthetic review plan: items 2 and 3\", \"history_known\": true, \"prior_cues\": [], \"cue_status\": \"supported\"}\nConditional SUPPORT/RETRY: skip both if the first attempt needs no help. Record first and retry separately. Labels are planned conditions, not actual pupil outcomes."
+        },
+        {
+          "id": "s4",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 2 OF 3",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 2 OF 3 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘unhelpful’."
+              }
+            ]
+          },
+          "notes": "DLP_LITERACY:{\"mode\": \"question_first_check\", \"target_rule\": \"prefix-un\", \"selection_source\": \"synthetic review plan: items 2 and 3\", \"history_known\": true, \"prior_cues\": [], \"cue_status\": \"recently_cued\", \"initial_response\": null}\nConditional SUPPORT/RETRY: skip both if the first attempt needs no help. Record first and retry separately. Labels are planned conditions, not actual pupil outcomes."
+        },
+        {
+          "id": "s5",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 2 OF 3",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 2 OF 3 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Unhelpful means not helpful."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, ‘un-’ means ‘not’."
+                }
+              ]
+            }
+          ],
+          "notes": "DLP_LITERACY:{\"mode\": \"question_first_check\", \"target_rule\": \"prefix-un\", \"selection_source\": \"synthetic review plan: items 2 and 3\", \"history_known\": true, \"prior_cues\": [], \"cue_status\": \"recently_cued\"}\nConditional SUPPORT/RETRY: skip both if the first attempt needs no help. Record first and retry separately. Labels are planned conditions, not actual pupil outcomes."
+        },
+        {
+          "id": "s6",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 3 OF 3",
+          "title": "QUESTION",
+          "eyebrow": "LITERACY WARM-UP 3 OF 3 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘careless’."
+              }
+            ]
+          },
+          "notes": "DLP_LITERACY:{\"mode\": \"question_first_check\", \"target_rule\": \"suffix-less\", \"selection_source\": \"synthetic review plan: items 2 and 3\", \"history_known\": false, \"prior_cues\": [], \"cue_status\": \"unknown\", \"initial_response\": null}\nConditional SUPPORT/RETRY: skip both if the first attempt needs no help. Record first and retry separately. Labels are planned conditions, not actual pupil outcomes."
+        },
+        {
+          "id": "s7",
+          "layout": "focus",
+          "role": "amber",
+          "component": "LITERACY WARM-UP 3 OF 3",
+          "title": "SUPPORT",
+          "eyebrow": "LITERACY WARM-UP 3 OF 3 • SUPPORT",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Remember: The suffix ‘-less’ can mean ‘without’."
+              }
+            ]
+          },
+          "notes": "DLP_LITERACY:{\"mode\": \"question_first_check\", \"target_rule\": \"suffix-less\", \"selection_source\": \"synthetic review plan: items 2 and 3\", \"history_known\": false, \"prior_cues\": [], \"cue_status\": \"supported\"}\nConditional SUPPORT/RETRY: skip both if the first attempt needs no help. Record first and retry separately. Labels are planned conditions, not actual pupil outcomes."
+        },
+        {
+          "id": "s8",
+          "layout": "focus",
+          "role": "blue",
+          "component": "LITERACY WARM-UP 3 OF 3",
+          "title": "RETRY",
+          "eyebrow": "LITERACY WARM-UP 3 OF 3 • RETRY",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Write the meaning of ‘careless’."
+              }
+            ]
+          },
+          "notes": "DLP_LITERACY:{\"mode\": \"question_first_check\", \"target_rule\": \"suffix-less\", \"selection_source\": \"synthetic review plan: items 2 and 3\", \"history_known\": false, \"prior_cues\": [], \"cue_status\": \"supported\", \"retry_response\": null}\nConditional SUPPORT/RETRY: skip both if the first attempt needs no help. Record first and retry separately. Labels are planned conditions, not actual pupil outcomes."
+        },
+        {
+          "id": "s9",
+          "layout": "focus",
+          "role": "green",
+          "component": "LITERACY WARM-UP 3 OF 3",
+          "title": "ANSWER",
+          "eyebrow": "LITERACY WARM-UP 3 OF 3 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Careless means without care."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Here, ‘-less’ means ‘without’."
+                }
+              ]
+            }
+          ],
+          "notes": "DLP_LITERACY:{\"mode\": \"question_first_check\", \"target_rule\": \"suffix-less\", \"selection_source\": \"synthetic review plan: items 2 and 3\", \"history_known\": false, \"prior_cues\": [], \"cue_status\": \"unknown\"}\nConditional SUPPORT/RETRY: skip both if the first attempt needs no help. Record first and retry separately. Labels are planned conditions, not actual pupil outcomes."
+        }
+      ]
+    },
+    "default-paragraph": {
+      "meta": {
+        "title": "Default paragraph-local reading — synthetic review example",
+        "theme": "dlp",
+        "frame": "rail",
+        "profile": "classroom"
+      },
+      "slides": [
+        {
+          "id": "s1",
+          "layout": "focus",
+          "role": "blue",
+          "component": "SHARED READING 1 OF 1",
+          "title": "QUESTION",
+          "eyebrow": "SHARED READING 1 OF 1 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "body",
+                "text": "Maya placed the sign flat on the table. The front row of pots hid it."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Where did Maya place the sign?"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "layout": "focus",
+          "role": "green",
+          "component": "SHARED READING 1 OF 1",
+          "title": "ANSWER",
+          "eyebrow": "SHARED READING 1 OF 1 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "She placed it flat on the table."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "whole-text": {
+      "meta": {
+        "title": "Accessible whole-text reading — synthetic review example",
+        "theme": "dlp",
+        "frame": "rail",
+        "profile": "classroom"
+      },
+      "slides": [
+        {
+          "id": "s1",
+          "layout": "focus",
+          "role": "neutral",
+          "component": "SHARED READING",
+          "title": "The seedling stall",
+          "eyebrow": "SHARED READING • The seedling stall",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "On Friday, Maya arranged twenty seedlings beside the school gate. She hoped to sell them to buy replacement hand tools for the garden club."
+              }
+            ]
+          },
+          "notes": "DLP_READING:{\"source_id\": \"seedling-stall\", \"mode\": \"whole_text\", \"role\": \"SOURCE\", \"source_text\": \"On Friday, Maya arranged twenty seedlings beside the school gate. She hoped to sell them to buy replacement hand tools for the garden club. She wrote “Seedlings $2” on a small sign and placed it flat on the table. By lunchtime, eighteen pots remained. Families hurried past, and several glanced towards the table without stopping.\\n\\nLeo stopped beside her. “I thought these were waiting to be planted,” he said. Maya looked down at the sign, hidden behind the front row of pots. She propped it against a box and added “School garden fundraiser”. For the next few minutes, nobody stopped.\\n\\nThen a gust knocked two pots sideways. Maya moved the stall into the sheltered entrance. Leo carried the box. As people slowed to open the door, they read the raised sign. One parent bought three seedlings; another asked what the money would buy.\\n\\nAt home time, Maya counted six remaining pots. She put a note in the garden club book: “Next time: entrance, upright sign, explain our purpose.” She left a space underneath for the other members' suggestions.\", \"handout_path\": \"seedling-source.pdf\", \"handout_sha256\": \"903472728baeff08d022890c1aa8536284c5e9ad857a4e65ab0386724b8b532f\"}\nRead the complete text before synthesis. Every pupil/pair keeps the identical complete handout throughout subsequent stages."
+        },
+        {
+          "id": "s2",
+          "layout": "focus",
+          "role": "neutral",
+          "component": "SHARED READING",
+          "title": "The seedling stall",
+          "eyebrow": "SHARED READING • The seedling stall",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "She wrote “Seedlings $2” on a small sign and placed it flat on the table. By lunchtime, eighteen pots remained. Families hurried past, and several glanced towards the table without stopping."
+              }
+            ]
+          },
+          "notes": "Read the complete text before synthesis. Every pupil/pair keeps the identical complete handout throughout subsequent stages."
+        },
+        {
+          "id": "s3",
+          "layout": "focus",
+          "role": "neutral",
+          "component": "SHARED READING",
+          "title": "The seedling stall",
+          "eyebrow": "SHARED READING • The seedling stall",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Leo stopped beside her. “I thought these were waiting to be planted,” he said."
+              }
+            ]
+          },
+          "notes": "Read the complete text before synthesis. Every pupil/pair keeps the identical complete handout throughout subsequent stages."
+        },
+        {
+          "id": "s4",
+          "layout": "focus",
+          "role": "neutral",
+          "component": "SHARED READING",
+          "title": "The seedling stall",
+          "eyebrow": "SHARED READING • The seedling stall",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Maya looked down at the sign, hidden behind the front row of pots. She propped it against a box and added “School garden fundraiser”. For the next few minutes, nobody stopped."
+              }
+            ]
+          },
+          "notes": "Read the complete text before synthesis. Every pupil/pair keeps the identical complete handout throughout subsequent stages."
+        },
+        {
+          "id": "s5",
+          "layout": "focus",
+          "role": "neutral",
+          "component": "SHARED READING",
+          "title": "The seedling stall",
+          "eyebrow": "SHARED READING • The seedling stall",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Then a gust knocked two pots sideways. Maya moved the stall into the sheltered entrance."
+              }
+            ]
+          },
+          "notes": "Read the complete text before synthesis. Every pupil/pair keeps the identical complete handout throughout subsequent stages."
+        },
+        {
+          "id": "s6",
+          "layout": "focus",
+          "role": "neutral",
+          "component": "SHARED READING",
+          "title": "The seedling stall",
+          "eyebrow": "SHARED READING • The seedling stall",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Leo carried the box. As people slowed to open the door, they read the raised sign. One parent bought three seedlings; another asked what the money would buy."
+              }
+            ]
+          },
+          "notes": "Read the complete text before synthesis. Every pupil/pair keeps the identical complete handout throughout subsequent stages."
+        },
+        {
+          "id": "s7",
+          "layout": "focus",
+          "role": "neutral",
+          "component": "SHARED READING",
+          "title": "The seedling stall",
+          "eyebrow": "SHARED READING • The seedling stall",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "At home time, Maya counted six remaining pots."
+              }
+            ]
+          },
+          "notes": "Read the complete text before synthesis. Every pupil/pair keeps the identical complete handout throughout subsequent stages."
+        },
+        {
+          "id": "s8",
+          "layout": "focus",
+          "role": "neutral",
+          "component": "SHARED READING",
+          "title": "The seedling stall",
+          "eyebrow": "SHARED READING • The seedling stall",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "She put a note in the garden club book: “Next time: entrance, upright sign, explain our purpose.” She left a space underneath for the other members' suggestions."
+              }
+            ]
+          },
+          "notes": "Read the complete text before synthesis. Every pupil/pair keeps the identical complete handout throughout subsequent stages."
+        },
+        {
+          "id": "s9",
+          "layout": "focus",
+          "role": "amber",
+          "component": "SHARED READING",
+          "title": "Connecting clues",
+          "eyebrow": "SHARED READING • Connecting clues",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "A first idea can change when we reread."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Keep the complete text open."
+                }
+              ]
+            }
+          ],
+          "notes": "DLP_READING:{\"source_id\": \"seedling-stall\", \"mode\": \"whole_text\", \"role\": \"MODEL\", \"think_aloud\": \"At first, I wondered whether families simply did not want seedlings. But the opening only says they hurried past; it doesn't tell me what they wanted. Leo's comment and the hidden sign make me reconsider: perhaps some people didn't realise this was a sale. Maya raises the sign and explains the fundraiser, but nobody stops straight away. Later, in the entrance, people slow down and read it. I think visibility and the location may both have helped. The story doesn't let me prove that one change caused all the extra sales.\"}\nTeacher think-aloud, read exactly: At first, I wondered whether families simply did not want seedlings. But the opening only says they hurried past; it doesn't tell me what they wanted. Leo's comment and the hidden sign make me reconsider: perhaps some people didn't realise this was a sale. Maya raises the sign and explains the fundraiser, but nobody stops straight away. Later, in the entrance, people slow down and read it. I think visibility and the location may both have helped. The story doesn't let me prove that one change caused all the extra sales."
+        },
+        {
+          "id": "s10",
+          "layout": "focus",
+          "role": "blue",
+          "component": "SHARED READING 1 OF 2",
+          "title": "QUESTION",
+          "eyebrow": "SHARED READING 1 OF 2 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "What does Maya's final note suggest she learnt about running the stall?"
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Use the complete source handout."
+                }
+              ]
+            }
+          ],
+          "notes": "DLP_READING:{\"source_id\": \"seedling-stall\", \"mode\": \"whole_text\", \"role\": \"QUESTION\", \"stage\": \"guided\", \"evidence_quotes\": [\"Next time: entrance, upright sign, explain our purpose.\", \"hidden behind the front row of pots\"], \"selection_source\": \"synthetic review plan\", \"independent_transfer\": false}\nGuided prompt if needed: Connect her note with the changes she tried. Accept alternatives supported by source. The tools were not stated to have been bought. Do not assert a single proven cause for sales."
+        },
+        {
+          "id": "s11",
+          "layout": "focus",
+          "role": "green",
+          "component": "SHARED READING 1 OF 2",
+          "title": "ANSWER",
+          "eyebrow": "SHARED READING 1 OF 2 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "She seems to have learnt to put the stall where people can notice it, keep the sign upright and explain what the sale supports."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Her final note names these choices; earlier events show why they mattered."
+                }
+              ]
+            }
+          ],
+          "notes": "DLP_READING:{\"source_id\": \"seedling-stall\", \"mode\": \"whole_text\", \"role\": \"ANSWER\", \"stage\": \"guided\", \"evidence_quotes\": [\"Next time: entrance, upright sign, explain our purpose.\", \"hidden behind the front row of pots\"], \"selection_source\": \"synthetic review plan\", \"independent_transfer\": false}\nGuided prompt if needed: Connect her note with the changes she tried. Accept alternatives supported by source. The tools were not stated to have been bought. Do not assert a single proven cause for sales."
+        },
+        {
+          "id": "s12",
+          "layout": "focus",
+          "role": "blue",
+          "component": "SHARED READING 2 OF 2",
+          "title": "QUESTION",
+          "eyebrow": "SHARED READING 2 OF 2 • QUESTION",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "How would you describe Leo's contribution to the stall?"
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "Use the complete source handout."
+                }
+              ]
+            }
+          ],
+          "notes": "DLP_READING:{\"source_id\": \"seedling-stall\", \"mode\": \"whole_text\", \"role\": \"QUESTION\", \"stage\": \"reduced_support\", \"evidence_quotes\": [\"I thought these were waiting to be planted\", \"Leo carried the box.\"], \"selection_source\": \"synthetic review plan\", \"independent_transfer\": false}\nUnmarked handout. No leading prompt. Same-text application after modelling; no independent transfer claim. Accept alternatives supported by source. The tools were not stated to have been bought. Do not assert a single proven cause for sales."
+        },
+        {
+          "id": "s13",
+          "layout": "focus",
+          "role": "green",
+          "component": "SHARED READING 2 OF 2",
+          "title": "ANSWER",
+          "eyebrow": "SHARED READING 2 OF 2 • ANSWER",
+          "primary": {
+            "blocks": [
+              {
+                "style": "main",
+                "text": "Leo helped Maya understand a problem and helped her move the stall."
+              }
+            ]
+          },
+          "secondary": [
+            {
+              "blocks": [
+                {
+                  "style": "support",
+                  "text": "His comment showed that the sale was unclear to him; later he carried the box."
+                }
+              ]
+            }
+          ],
+          "notes": "DLP_READING:{\"source_id\": \"seedling-stall\", \"mode\": \"whole_text\", \"role\": \"ANSWER\", \"stage\": \"reduced_support\", \"evidence_quotes\": [\"I thought these were waiting to be planted\", \"Leo carried the box.\"], \"selection_source\": \"synthetic review plan\", \"independent_transfer\": false}\nUnmarked handout. No leading prompt. Same-text application after modelling; no independent transfer claim. Accept alternatives supported by source. The tools were not stated to have been bought. Do not assert a single proven cause for sales."
+        }
+      ]
+    }
+  }
+}
