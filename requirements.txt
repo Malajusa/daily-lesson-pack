@@ -3,3 +3,4 @@ PyMuPDF
 jsonschema>=4.18,<5
 referencing>=0.30,<1
 tzdata>=2024.1
+reportlab
