@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "case_id": "t3w8-tuesday-mass-narrative-known-failure",
+  "classification": "known_failure",
+  "expected_release": "FAIL",
+  "artifact": {
+    "path": "assets/qa-regressions/t3w8-tuesday-mass-narrative-known-failure.pptx",
+    "sha256": "f9321b698a7b6c497ea4908e24aa7a90abe57cf83a8171f844395aefecc30ccd",
+    "bytes": 354365,
+    "slides": 95
+  },
+  "review": {
+    "path": "examples/benchmarks/t3w8-tuesday-mass-narrative-known-failure/review.md",
+    "sha256": "0b82054ac8572b83e204ccb8882025679a53b79a0f364488cee264b06f9a0965"
+  },
+  "blind_context": "examples/benchmarks/t3w8-tuesday-mass-narrative-known-failure/blind-request-context.md",
+  "required_findings": [
+    {
+      "id": "RUNTIME-WRONG-DAY",
+      "component": "orchestrator",
+      "severity": "release_blocking",
+      "expectation": "The reviewer identifies that the candidate is for Monday 7 September 2026 even though the requested day is Tuesday 8 September 2026.",
+      "required_correction": "Resolve and rebuild for the actual requested day rather than merely renaming the file.",
+      "match": {
+        "slides_any": [1],
+        "text_any": ["wrong day", "wrong date", "date mismatch", "monday 7 september", "tuesday 8 september"]
+      }
+    },
+    {
+      "id": "RUNTIME-UNRESOLVED-TIMETABLE",
+      "component": "orchestrator",
+      "severity": "release_blocking",
+      "expectation": "The reviewer identifies that essential timetable/runtime context remained unresolved while the deck proceeded as an untimed sequence.",
+      "required_correction": "Resolve the current timetable/class context or block finished/classroom-ready release.",
+      "match": {
+        "slides_any": [1],
+        "text_any": ["unresolved timetable", "unverified timetable", "untimed teaching sequence", "runtime context", "timetable allocation"]
+      }
+    },
+    {
+      "id": "MATH-INDEPENDENT-REPEATS-MODEL",
+      "component": "dlp-maths-lesson",
+      "severity": "release_blocking",
+      "expectation": "The reviewer identifies that both Year 4 independent conversions on slide 34 reuse values whose answers were already demonstrated on slides 19–20 and 27, weakening evidence of transfer.",
+      "required_correction": "Use fresh values that preserve the taught demands, including a grams component below 100.",
+      "match": {
+        "slides_any": [19, 20, 27, 34],
+        "text_any": ["repeated independent", "repeats worked", "already demonstrated", "fresh example", "evidence of transfer", "recall the earlier answers"]
+      }
+    },
+    {
+      "id": "MATH-INDEPENDENT-PRACTICE-THIN",
+      "component": "dlp-maths-lesson",
+      "severity": "release_blocking",
+      "expectation": "The reviewer distinguishes genuine guided responses from the relatively small amount of explicitly independent practice and identifies the independent evidence as too thin for the proposed lesson.",
+      "required_correction": "Protect a substantive independent-practice period with several varied examples rather than more explanation slides.",
+      "match": {
+        "slides_any": [34, 36, 38],
+        "text_any": ["independent practice is too thin", "thin independent practice", "limited independent practice", "insufficient independent", "too few independent"]
+      }
+    },
+    {
+      "id": "VISUAL-INSTRUCTION-HIERARCHY",
+      "component": "dlp-maths-lesson",
+      "severity": "release_blocking",
+      "expectation": "The reviewer identifies that essential task directions on slides 36 and 38 are visually treated as subordinate/supporting explanation instead of primary student instructions.",
+      "required_correction": "Promote the directions to a prominent task instruction role and size them accordingly.",
+      "match": {
+        "slides_any": [36, 38],
+        "text_any": ["instruction hierarchy", "visual hierarchy", "26 pt", "supporting text", "support text", "dlp:explanation:support"]
+      }
+    },
+    {
+      "id": "WRITING-COMPLICATION-NOT-OBSTACLE",
+      "component": "dlp-writing-lesson",
+      "severity": "release_blocking",
+      "expectation": "The reviewer identifies that the library-book prompt on slide 90 introduces an unusual event without clearly making it an obstacle to returning the book.",
+      "required_correction": "Make the message explicitly obstruct the goal or require students to establish how it creates that obstacle.",
+      "match": {
+        "slides_any": [90],
+        "text_any": ["does not clearly provide a complication", "does not obstruct", "does not necessarily prevent", "goal-complication", "obstacle to returning"]
+      }
+    },
+    {
+      "id": "WRITING-JOINT-SCENARIO-PLAUSIBILITY",
+      "component": "dlp-writing-lesson",
+      "severity": "major",
+      "expectation": "The reviewer notices the awkward physical plausibility of a gust sliding a parcel beneath a locked office door on slides 88–89.",
+      "required_correction": "Use a slim envelope or another obstacle that avoids distracting physical implausibility.",
+      "match": {
+        "slides_any": [88, 89],
+        "text_any": ["plausibility", "parcel", "gust", "locked office door", "awkward physical"]
+      }
+    },
+    {
+      "id": "WRITING-EXIT-MISALIGNED",
+      "component": "dlp-writing-lesson",
+      "severity": "release_blocking",
+      "expectation": "The reviewer identifies that slide 94 mainly checks showing reaction through action rather than the lesson's central goal–complication relationship.",
+      "required_correction": "Make exit evidence directly test whether the complication obstructs the character's goal.",
+      "match": {
+        "slides_any": [94],
+        "text_any": ["exit check is misaligned", "exit evidence is misaligned", "secondary feature", "goal-complication", "reaction through action"]
+      }
+    },
+    {
+      "id": "DELIVERY-OVERSTATED-COMPLETION",
+      "component": "orchestrator",
+      "severity": "release_blocking",
+      "expectation": "The reviewer identifies that presenting the wrong-day, unresolved-context artefact as today's PowerPoint overstated completion while also recognising that independent QA was disclosed as pending.",
+      "required_correction": "Describe the artefact as an unreleased candidate/review-pending output until runtime context and independent release evidence are complete.",
+      "match": {
+        "slides_any": [],
+        "text_any": ["overstated completion", "today's powerpoint", "presented as today", "delivery claim", "unreleased candidate"]
+      }
+    }
+  ],
+  "advisory_findings": [
+    {
+      "id": "MATH-SCOPE-REQUIRES-SEQUENCE-CONFIRMATION",
+      "expectation": "Kilogram–gram conversion/comparison is a defensible focused mass lesson, but the sequence position was not confirmed from current runtime sources."
+    },
+    {
+      "id": "SHARED-READING-LITERARY-LOOSE-ENDS",
+      "expectation": "The grandfather's initials and Mara's unseen new ending are literary refinements rather than release defects equivalent to the runtime or independent-practice failures."
+    },
+    {
+      "id": "NATIVE-POWERPOINT-WRAPPING-UNVERIFIED",
+      "expectation": "The preserved review records renderer font substitution, so exact native PowerPoint wrapping was not verified by that review."
+    }
+  ],
+  "must_not_flag": [
+    {
+      "id": "NUMERACY-FIVE-PAIRS-IS-CORRECT",
+      "expectation": "Do not fail the deck merely because the Numeracy warm-up has five question/answer pairs; five is the current default contract.",
+      "match": {
+        "text_any": ["numeracy warm-up should have ten", "five numeracy pairs is too few", "only five numeracy pairs"]
+      }
+    },
+    {
+      "id": "NO-WIDESPREAD-CLIPPING-CLAIM",
+      "expectation": "Do not generalise the specific hierarchy issue into a claim that the entire deck has widespread clipping or is visually broken.",
+      "match": {
+        "text_any": ["widespread clipping", "deck is visually broken", "text escapes panels throughout"]
+      }
+    },
+    {
+      "id": "LITERACY-WARMUP-GENERALLY-SUCCESSFUL",
+      "expectation": "Do not claim the Literacy warm-up structure broadly fails; the preserved review found the ten reminder–question–answer sequences generally successful.",
+      "match": {
+        "text_any": ["literacy warm-up is structurally defective", "literacy warm-up structure fails throughout"]
+      }
+    },
+    {
+      "id": "SHARED-READING-GENERALLY-SUCCESSFUL",
+      "expectation": "Do not claim Shared Reading fails its matched alternating question/answer structure.",
+      "match": {
+        "text_any": ["shared reading does not alternate", "shared reading question/answer alternation fails"]
+      }
+    }
+  ]
+}
